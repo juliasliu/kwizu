@@ -1,0 +1,41 @@
+{
+	"chats": {
+		"--userId1--": {
+			"--userId2----userId1--": {
+				"contactId": "--userId2--",
+				"image": "https://images.com/person2.jpg",
+				"name": "Jason"
+			}
+		},
+		"--userId2--": {
+			"--userId2----userId1--": {
+				"contactId": "--userId1--",
+				"image": "https://images.com/person1.jpg",
+				"name": "John"
+			}
+		}
+	},
+	"messages": {
+		"--userId2----userId1--": {
+			"-KpEwU8sr01vHSy3qvRY": {
+				"_id": "2367ad00-301d-46b5-a7b5-97cb88781489",
+				"createdAt": 1500284842672,
+				"text": "Hey man!",
+				"user": {
+					"_id": "--userId2--",
+					"name": "Jason"
+				}
+			}
+		}
+	},
+	"users": {
+		"--userId1--": {
+			"name": "John",
+			"notificationsToken": ""
+		},
+		"--userId2--": {
+			"name": "Jason",
+			"notificationsToken": "--notificationsId1--"
+		}
+	}
+}
