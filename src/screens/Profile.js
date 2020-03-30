@@ -1,8 +1,15 @@
 import React, { PropTypes } from 'react'
-import { View, Image, Button, Text } from 'react-native' 
 import { observer, inject } from 'mobx-react' 
 import Icon from 'react-native-vector-icons/FontAwesome'
 import notifications from '../notifications'
+
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import * as WebBrowser from 'expo-web-browser';
+
+import { MonoText } from '../components/StyledText';
+import allStyles from '../styles/AllScreens';
+import styles from '../styles/MatchScreen';
 
 @inject('users') @observer
 class Profile extends React.Component {
@@ -19,7 +26,8 @@ class Profile extends React.Component {
 
 	render () {
 		return (
-				<View style={{ padding: 20 }}>
+				<View style={allStyles.container}>
+			      <ScrollView style={allStyles.container} contentContainerStyle={styles.contentContainer}>
 				{
 					this.props.users.name &&
 					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -35,7 +43,8 @@ class Profile extends React.Component {
 					</View> 
 				}
 				<Button onPress={this.onPressLogout.bind(this)} title="Logout" />
-					</View>
+					</ScrollView>
+				</View>
 		)
 	}
 }
