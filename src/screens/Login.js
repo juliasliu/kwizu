@@ -6,36 +6,30 @@ import {
 	Text,
 	View,
 	Image,
-	ActivityIndicator
+	ActivityIndicator,
+	StyleSheet,
+	Link,
+	TouchableOpacity,
 } from 'react-native';
 
 import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import allStyles from '../styles/AllScreens';
+import styles from '../styles/WelcomeScreen';
 
 import LoginForm from '../components/LoginForm'
-import RegistrationForm from '../components/RegistrationForm'
 
 @inject('users') @observer
 class Login extends React.Component {
 	onLogin(email, password) { 
 		this.props.users.login(email, password);
 	}
-	onPressRegister(email, password, name) { 
-		this.props.users.register(email, password, name);
-	}
 	render() {
 		return (
-				<KeyboardAwareScrollView style={{padding: 20, marginTop: 20, backgroundColor: '#eee'}}>
-					<Icon name="comments" size={60} color='#ccc' style={{alignSelf: 'center', paddingBottom: 20}}></Icon> 
-					<View style={{alignItems: 'center', marginBottom: 20}}>
-						<Text>- please, login to continue -</Text> 
-					</View>
-					<LoginForm onPress={this.onLogin.bind(this)} busy={this.props.users.loggingIn} loggingError={this.props.users.loggingError}></LoginForm>
-					<View style={{alignItems: 'center', marginTop: 20, marginBottom: 20}}>
-						<Text>- or register -</Text> 
-					</View>
-					<RegistrationForm onPress={this.onPressRegister.bind(this)} busy={this.props.users.registering} registeringError={this.props.users.registeringError}></RegistrationForm>
+				<KeyboardAwareScrollView style={{padding: 50, marginTop: 50}}>
+					<Text style={[ allStyles.title, { textAlign: 'center', marginTop: 50, marginBottom: 50 } ]}>Sign In</Text>
+					<LoginForm onPress={this.onLogin.bind(this)} busy={this.props.users.loggingIn} loggingError={this.props.users.loggingError} navigation={this.props.navigation}></LoginForm>
 				</KeyboardAwareScrollView>
 		) 
 	}

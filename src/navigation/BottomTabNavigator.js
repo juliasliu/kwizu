@@ -1,9 +1,16 @@
 import * as React from 'react';
+import {
+	Text,
+	Button,
+	TouchableOpacity,
+} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBarIcon from '../components/TabBarIcon';
 import Home from '../screens/Home';
 import Match from '../screens/Match';
 import Profile from '../screens/Profile';
+
+import allStyles from '../styles/AllScreens';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -12,7 +19,7 @@ export default function BottomTabNavigator({ navigation, route }) {
   // Set the header title on the parent stack navigator depending on the
   // currently active tab. Learn more in the documentation:
   // https://reactnavigation.org/docs/en/screen-options-resolution.html
-  navigation.setOptions({ headerTitle: getHeaderTitle(route) });
+  navigation.setOptions({ headerTitle: getHeaderTitle(route), headerRight: getHeaderButton(route) });
 
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
@@ -20,8 +27,8 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Home"
         component={Home}
         options={{
-          title: 'Kwizzes',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-bulb" />,
+          title: 'Home',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-home" />,
         }}
       />
       <BottomTab.Screen
@@ -29,7 +36,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={Match}
         options={{
           title: 'Match',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-contacts" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-heart" />,
         }}
       />
       <BottomTab.Screen
@@ -49,10 +56,41 @@ function getHeaderTitle(route) {
 
   switch (routeName) {
     case 'Home':
-      return 'Take a Kwiz!';
+      return 'Kwizu';
     case 'Match':
-        return 'Matchmaker';
-      case 'Profile':
-      return 'Me';
+        return 'Match';
+    case 'Profile':
+      return 'Profile';
   }
+}
+
+function getHeaderButton(route) {
+	  const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
+	
+	switch (routeName) {
+		case 'Home':
+			return () => (
+				<TabBarIcon
+				onPress={() => alert('This is a button!')}
+				name="md-add"
+					style={ allStyles.headerRightIcon }
+					/>
+				);
+		case 'Match':
+			return () => (
+				<TabBarIcon
+				onPress={() => alert('This is a button!')}
+				name="md-map"
+					style={ allStyles.headerRightIcon }
+					/>
+				);
+		case 'Profile':
+			return () => (
+				<TabBarIcon
+				onPress={() => alert('This is a button!')}
+				name="md-chatbubbles"
+					style={ allStyles.headerRightIcon }
+					/>
+				);
+	}
 }
