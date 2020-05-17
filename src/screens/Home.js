@@ -1,96 +1,89 @@
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import * as WebBrowser from 'expo-web-browser';
+import Modal from 'react-native-modal';
 
 import { MonoText } from '../components/StyledText';
+import QuizPreview from '../components/QuizPreview';
+import QuizThumbnail from '../components/QuizThumbnail';
+
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
 
-export default function HomeScreen() {
-  return (
-    <View style={allStyles.container}>
-      <ScrollView style={allStyles.container} contentContainerStyle={styles.contentContainer}>
-
-      <View style={styles.box}>
-      	<Text style={styles.boxTitle}>Daily</Text>
-      	<ScrollView contentContainerStyle={styles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={250} snapToAlignment={"center"}>
-      		<TouchableOpacity onPress={handleHelpPress} style={styles.quizPreview}>
-		        <Text style={styles.quizThumbnailTitle}>Find your personality this should be 50 words max</Text>
-		        <Text style={styles.quizThumbnailDescription}>Hi this is a description of the quiz hahahh trying to fill up space it should overflow</Text>
-		      </TouchableOpacity>
-		      <TouchableOpacity onPress={handleHelpPress} style={styles.quizPreview}>
-		        <Text style={styles.quizThumbnailTitle}>Find your personality this should be 50 words max</Text>
-		        <Text style={styles.quizThumbnailDescription}>Hi this is a description of the quiz hahahh trying to fill up space it should overflow</Text>
-		      </TouchableOpacity>
-		      <TouchableOpacity onPress={handleHelpPress} style={styles.quizPreview}>
-		        <Text style={styles.quizThumbnailTitle}>Find your personality this should be 50 words max</Text>
-		        <Text style={styles.quizThumbnailDescription}>Hi this is a description of the quiz hahahh trying to fill up space it should overflow</Text>
-		      </TouchableOpacity>
-		</ScrollView>
-      </View>
-      <View style={styles.box}>
-    	<Text style={styles.boxTitle}>Seasonal</Text>
-    	<ScrollView contentContainerStyle={styles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
-  		<TouchableOpacity onPress={handleHelpPress} style={styles.quizThumbnail}>
-	        <Text style={styles.quizThumbnailTitle}>Find your personality this should be 50 words max</Text>
-	        <Text style={styles.quizThumbnailDescription}>Hi this is a description of the quiz hahahh trying to fill up space it should overflow</Text>
-	      </TouchableOpacity>
-	      <TouchableOpacity onPress={handleHelpPress} style={styles.quizThumbnail}>
-	        <Text style={styles.quizThumbnailTitle}>Find your personality this should be 50 words max</Text>
-	        <Text style={styles.quizThumbnailDescription}>Hi this is a description of the quiz hahahh trying to fill up space it should overflow</Text>
-	      </TouchableOpacity>
-	      <TouchableOpacity onPress={handleHelpPress} style={styles.quizThumbnail}>
-	        <Text style={styles.quizThumbnailTitle}>Find your personality this should be 50 words max</Text>
-	        <Text style={styles.quizThumbnailDescription}>Hi this is a description of the quiz hahahh trying to fill up space it should overflow</Text>
-	      </TouchableOpacity>
-	</ScrollView>
-      </View>
-      <View style={styles.box}>
-      	<Text style={styles.boxTitle}>Personality</Text>
-      </View>
-      <View style={styles.box}>
-      	<Text style={styles.boxTitle}>Trivia</Text>
-      </View>
-      
-      </ScrollView>
-    </View>
-  );
+class HomeScreen extends React.Component {
+	
+	render() {
+		  return (
+		    <View style={allStyles.container}>
+		      <ScrollView style={allStyles.container}>
+		
+			      <View style={allStyles.section}>
+			      	<Text style={allStyles.sectionTitle}>Daily</Text>
+			      	<Text style={allStyles.sectionSubtitle}>These kwizzes are updated every 24 hours. Come back every day and check them out!</Text>
+			      	<ScrollView contentContainerStyle={[ styles.quizThumbnailContainer, styles.dailyQuizContainer ]} horizontal= {true} decelerationRate={0} snapToInterval={250} snapToAlignment={"center"}>
+			      		<QuizPreview navigation={this.props.navigation}/>
+			      		<QuizPreview navigation={this.props.navigation} />
+			      		<QuizPreview navigation={this.props.navigation} />
+					</ScrollView>
+			      </View>
+			      <View style={allStyles.section}>
+			    	<Text style={allStyles.sectionTitle}>Seasonal</Text>
+			      	<Text style={allStyles.sectionSubtitle}>We cycle through categories of kwizzes based on the time of the year. See how you do on them!</Text>
+			    	<ScrollView contentContainerStyle={styles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
+			  			<QuizThumbnail navigation={this.props.navigation} />
+			  			<QuizThumbnail navigation={this.props.navigation} />
+			  			<QuizThumbnail navigation={this.props.navigation} />
+			  		</ScrollView>
+			      </View>
+			      <View style={allStyles.section}>
+			      	<Text style={allStyles.sectionTitle}>Personality</Text>
+			      	<Text style={allStyles.sectionSubtitle}>Take these kwizzes to uncover layers of your personality or just explore various fun aspects of life!</Text>
+			    	<ScrollView contentContainerStyle={styles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
+						<QuizThumbnail navigation={this.props.navigation} />
+						<QuizThumbnail navigation={this.props.navigation} />
+						<QuizThumbnail navigation={this.props.navigation} />
+					</ScrollView>
+			      </View>
+			      <View style={allStyles.section}>
+			      	<Text style={allStyles.sectionTitle}>Trivia</Text>
+			      	<Text style={allStyles.sectionSubtitle}>See how you measure up to others in your trivia game. Take these kwizzes to find out!</Text>
+			    	<ScrollView contentContainerStyle={styles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
+						<QuizThumbnail navigation={this.props.navigation} />
+						<QuizThumbnail navigation={this.props.navigation} />
+						<QuizThumbnail navigation={this.props.navigation} />
+					</ScrollView>
+			      </View>
+		      </ScrollView>
+		    </View>
+		  );
+		}
 }
 
 HomeScreen.navigationOptions = {
   header: null,
 };
 
-function DevelopmentModeNotice() {
-  if (__DEV__) {
-    const learnMoreButton = (
-      <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
-        Learn more
-      </Text>
-    );
+export default HomeScreen;
 
-    return (
-      <Text style={styles.developmentModeText}>
-        Development mode is enabled: your app will be slower but you can use useful development
-        tools. {learnMoreButton}
-      </Text>
-    );
-  } else {
-    return (
-      <Text style={styles.developmentModeText}>
-        You are not in development mode: your app will run at full speed.
-      </Text>
-    );
-  }
-}
-
-function handleLearnMorePress() {
-  WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/workflow/development-mode/');
-}
-
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
-  );
-}
+//function DevelopmentModeNotice() {
+//  if (__DEV__) {
+//    const learnMoreButton = (
+//      <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
+//        Learn more
+//      </Text>
+//    );
+//
+//    return (
+//      <Text style={styles.developmentModeText}>
+//        Development mode is enabled: your app will be slower but you can use useful development
+//        tools. {learnMoreButton}
+//      </Text>
+//    );
+//  } else {
+//    return (
+//      <Text style={styles.developmentModeText}>
+//        You are not in development mode: your app will run at full speed.
+//      </Text>
+//    );
+//  }
+//}

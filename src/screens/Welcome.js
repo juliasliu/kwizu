@@ -28,7 +28,7 @@ class Welcome extends React.Component {
 						<Icon name="user" size={100} style={ styles.logo }></Icon>
 					</View>
 					<View style={ styles.welcomeButtonsContainer }>
-						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
+						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton ]}
 			                onPress={() => alert("")}>
 							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Sign in with Facebook</Text>
 						</TouchableOpacity>

@@ -1,17 +1,11 @@
 import { Platform, StyleSheet, StatusBar } from 'react-native';
 
 const styles = StyleSheet.create({
-	  contentContainer: {
-		flex: 1,
-	    flexDirection: 'column',
-	    alignItems: 'center',
-	  },
 	  matchProfileContainer: {
 		  alignSelf: 'stretch',
 		  flexGrow: 3,
 //		  backgroundColor: 'gray',
 	      justifyContent: 'center',
-		  padding: 50,
 	  },
 	  matchButtonContainer: {
 		  alignSelf: 'stretch',
@@ -28,9 +22,6 @@ const styles = StyleSheet.create({
 	  profilePreview: {
 		  padding: 20,
 		  backgroundColor: 'white',
-		    borderWidth: 1,
-		    borderStyle: 'dashed',
-		    borderColor: 'darkslategray',
 	  },
 	  profilePreviewPhoto: {
 		  
