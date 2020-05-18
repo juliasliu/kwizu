@@ -39,8 +39,8 @@ class New extends React.Component {
 		return (
 				<KeyboardAwareScrollView style={[allStyles.container, styles.quizFormContainer ]}>
 					
-					<View style={allStyles.section}>
-						<Text style={ allStyles.heading }>New Personality Kwiz</Text>
+					<View style={[ allStyles.section, allStyles.sectionClear ]}>
+						<Text style={allStyles.sectionTitle}>Kwiz Description</Text>
 					
 						<TextInput
 						ref='registerName' 
@@ -62,19 +62,19 @@ class New extends React.Component {
 						
 					</View>
 
-					<View style={allStyles.section}>
+					<View style={[ allStyles.section, allStyles.sectionClear ]}>
 						<Text style={allStyles.sectionTitle}>Kwiz Results</Text>
 						<Text style={allStyles.sectionSubtitle}>Each result is a "bucket" for a type of response. The result will appear at the end of the kwiz.</Text>
 						<NewResultForm onPress={this.onPressRegister.bind(this)} busy={this.props.users.registering} registeringError={this.props.users.registeringError} navigation={this.props.navigation}></NewResultForm>
 					</View>
 					
-					<View style={allStyles.section}>
+					<View style={[ allStyles.section, allStyles.sectionClear ]}>
 						<Text style={allStyles.sectionTitle}>Kwiz Questions</Text>
 						<Text style={allStyles.sectionSubtitle}>Make sure the number of choices for each question match the number of results.</Text>
 						<NewQuestionForm onPress={this.onPressRegister.bind(this)} busy={this.props.users.registering} registeringError={this.props.users.registeringError} navigation={this.props.navigation}></NewQuestionForm>
 					</View>
 						
-					<View style={allStyles.section}>
+					<View style={[ allStyles.section, allStyles.sectionClear ]}>
 						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
 			                onPress={() => this.props.navigation.navigate("Save and Share Kwiz")}>
 							<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>

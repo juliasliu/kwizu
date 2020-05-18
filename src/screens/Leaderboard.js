@@ -32,10 +32,6 @@ class Leaderboard extends React.Component {
 	render() {
 		return (
 				<KeyboardAwareScrollView style={[allStyles.container, styles.quizFormContainer ]}>
-					
-					<View style={[ allStyles.section, allStyles.sectionClear ]}>
-						<Text style={[ allStyles.heading, { textAlign: 'center' } ]}>Results of your Kwiz</Text>
-					</View>
 						
 					<View style={[ allStyles.section, allStyles.sectionClear ]}>
 						<View style={[ allStyles.card, allStyles.quizResult, styles.takeResult, allStyles.button, allStyles.grayButton, styles.shareButton, styles.topShareButton ]}>
