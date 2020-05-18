@@ -15,10 +15,12 @@ import Home from '../screens/Home';
 import Take from '../screens/Take';
 import New from '../screens/New';
 import Save from '../screens/Save';
+import Leaderboard from '../screens/Leaderboard';
 
 import Match from '../screens/Match';
 
 import Profile from '../screens/Profile' 
+import Friends from '../screens/Friends' 
 import Chats from '../screens/Chats' 
 import Chat from '../screens/Chat' 
 import Settings from '../screens/Settings' 
@@ -73,6 +75,11 @@ class HomeStackScreen extends React.Component {
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',
 			      	}} />
+			      <HomeStack.Screen name="Kwiz Results" component={Leaderboard} options={{
+			    	  headerTitle: 'Kwiz Leaderboard',
+			    	  headerTitleStyle: { color: '#515d6e' },
+			    	  headerTintColor: '#B2BECF',
+			      	}} />
 			      </HomeStack.Navigator>
 			      
 			      <Modal isVisible={this.state.isModalVisible} 
@@ -119,13 +126,30 @@ function MatchStackScreen() {
 					/>
 				)
       }} />
+      <MatchStack.Screen name="Profile" component={Profile} options={{
+    	  headerTitle: 'Profile', 
+    	  headerTitleStyle: { color: '#515d6e' },
+    	  headerTintColor: '#B2BECF',
+    	  headerRight: () => (
+    		<TabBarIcon
+  				onPress={() => navigation.navigate("Chats")}
+  				name="md-chatbubbles"
+  				style={ allStyles.headerRightIcon }
+  				/>  
+    	  )
+      }} />
+      <MatchStack.Screen name="Friends" component={Friends} options={{
+    	  headerTitle: 'Friends', 
+		  headerTitleStyle: { color: '#515d6e' },
+		  headerTintColor: '#B2BECF',
+      }}/>
     </MatchStack.Navigator>
   );
 }
 
 const ProfileStack = createStackNavigator();
 
-function ProfileStackScreen() {
+function ProfileStackScreen({navigation}) {
 	return (
     <ProfileStack.Navigator>
       <ProfileStack.Screen name="Profile" component={Profile} options={{
@@ -134,12 +158,17 @@ function ProfileStackScreen() {
     	  headerTintColor: '#B2BECF',
     	  headerRight: () => (
     		<TabBarIcon
-  				onPress={() => alert('This is a button!')}
+  				onPress={() => navigation.navigate("Chats")}
   				name="md-chatbubbles"
   				style={ allStyles.headerRightIcon }
   				/>  
     	  )
       }} />
+      <ProfileStack.Screen name="Friends" component={Friends} options={{
+    	  headerTitle: 'Friends', 
+		  headerTitleStyle: { color: '#515d6e' },
+		  headerTintColor: '#B2BECF',
+      }}/>
       <ProfileStack.Screen name="Chats" component={Chats} options={{
     	  headerTitle: 'Chats', 
 		  headerTitleStyle: { color: '#515d6e' },
@@ -157,6 +186,11 @@ function ProfileStackScreen() {
       }} />
 			      <ProfileStack.Screen name="Take Kwiz" component={Take} options={{
 			    	  headerTitle: 'Take Kwiz',
+			    	  headerTitleStyle: { color: '#515d6e' },
+			    	  headerTintColor: '#B2BECF',
+			      	}} />
+			      <HomeStack.Screen name="Save and Share Kwiz" component={Save} options={{
+			    	  headerTitle: 'New Personality Kwiz',
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',
 			      	}} />

@@ -1,46 +1,28 @@
 import React, { PropTypes } from 'react'
-import { View, Image, ActivityIndicator } from 'react-native'; 
-import { observer, inject } from 'mobx-react'
-import { GiftedChat } from 'react-native-gifted-chat'
+import { observer, inject } from 'mobx-react' 
+import Icon from 'react-native-vector-icons/FontAwesome'
+import notifications from '../notifications'
 
-@inject('chats', 'users') @observer
-class Chat extends React.Component {
-	static navigationOptions = ({ navigation, screenProps }) => ({
-		title: navigation.state.params.name,
-		headerRight: <Image source={{uri: navigation.state.params.image}}
-		style={{
-			width: 30,
-			height: 30,
-			borderRadius: 15,
-			marginRight: 10,
-			resizeMode: 'cover'
-		}}/> 
-	})
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import * as WebBrowser from 'expo-web-browser';
 
-	onSend(messages) {
-		this.props.chats.addMessages(this.chatId, this.contactId, messages);
-	}
-	componentWillMount() {
-		this.contactId = this.props.navigation.state.params.contactId; 
-		this.chatId = this.props.navigation.state.params.id; 
-		this.props.chats.selectChat(this.chatId);
-	}
+import { MonoText } from '../components/StyledText';
+import ProfileThumbnail from '../components/ProfileThumbnail';
+
+import allStyles from '../styles/AllScreens';
+import styles from '../styles/ProfileScreen';
+
+@inject('users') @observer
+class Chats extends React.Component {
 	render () {
-		var messages = this.props.chats.selectedChatMessages; 
-		if(this.props.chats.downloadingChat) {
-			return <View><ActivityIndicator style={{marginTop: 20}}/></View> 
-		}
-		return ( 
-				<GiftedChat
-				onSend={(messages) => this.onSend(messages)} 
-				messages={messages ? messages.toJS().reverse() : []}
-				user={{
-					_id: this.props.users.id, 
-					name: this.props.users.name, 
-					avatar: this.props.users.avatar
-				}} 
-				/>
+		return (
+				<View style={allStyles.container}>
+			      <ScrollView style={allStyles.container}>
+				      
+					</ScrollView>
+				</View>
 		)
 	}
 }
-export default Chat;
+export default Chats;

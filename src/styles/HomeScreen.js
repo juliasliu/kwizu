@@ -85,7 +85,6 @@ const styles = StyleSheet.create({
 	display: 'flex',
 	flexDirection: 'row',
 	  alignItems: 'center',
-	  padding: 10,
   },
   choiceInputField: {
 	  width: '75%',
@@ -104,9 +103,6 @@ const styles = StyleSheet.create({
   quizSaveText: {
 	  textAlign: 'center', 
 	  marginTop: 10,
-  },
-  shareSection: {
-	  marginVertical: 20, 
   },
   shareLinkCard: {
 	  display: 'flex',
@@ -136,6 +132,9 @@ const styles = StyleSheet.create({
   takeResultContainer: {
 	  justifyContent: 'center',
 	  height: 'auto',
+  },
+  resultLeaderboardTitle: {
+	  marginTop: 0,
   },
   question: {
 	  fontSize: 18,

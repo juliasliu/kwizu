@@ -61,7 +61,6 @@ class NewQuestionForm extends React.Component {
 								    }}
 									checkBoxColor="#a0acba"
 								    isChecked={this.state.isChecked}
-									style={{ height: 10 }}
 								/>
 							</View>
 							<TextInput

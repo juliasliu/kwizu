@@ -45,14 +45,6 @@ class Take extends React.Component {
 					<TakeResult />
 					
 					<View style={[allStyles.section]}>
-						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton, { height: 60, } ]}
-					        onPress={() => this.props.navigation.navigate("Kwiz Results")}>
-							<TabBarIcon name="md-happy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>See how your friends did!</Text>
-						</TouchableOpacity>
-					</View>
-					
-					<View style={[allStyles.section]}>
 						<Text style={allStyles.sectionTitle}>Share your results!</Text>
 						<Text style={allStyles.sectionSubtitle}>Share the fun by sending your results to your friends or posting on social media.</Text>
 						<ShareForm />

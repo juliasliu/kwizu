@@ -3,8 +3,34 @@ import { Platform, StyleSheet, StatusBar } from 'react-native';
 const styles = StyleSheet.create({
 	  profileCard: {
 		  width: '100%',
-		  marginBottom: 20,
 	  },
+	  profileThumbnailCard: {
+//		marginBottom: 20,  
+		  borderRadius: 0,
+		  borderWidth: 1,
+		  borderColor: "#e6e6e6",
+	  },
+	  topProfileThumbnailCard: {
+		  borderTopLeftRadius: 20,
+		  borderTopRightRadius: 20,
+	  },
+	  bottomProfileThumbnailCard: {
+		  borderBottomLeftRadius: 20,
+		  borderBottomRightRadius: 20,
+	  },
+	  chatThumbnailCard: {
+		  borderRadius: 0,
+		  borderWidth: 1,
+		  borderColor: "#e6e6e6",
+		  },
+		  topChatThumbnailCard: {
+			  borderTopLeftRadius: 20,
+			  borderTopRightRadius: 20,
+		  },
+		  bottomChatThumbnailCard: {
+			  borderBottomLeftRadius: 20,
+			  borderBottomRightRadius: 20,
+		  },
 	  profileTopCard: {
 		  display: 'flex',
 		  flexDirection: 'row',
@@ -14,7 +40,7 @@ const styles = StyleSheet.create({
 		  flexDirection: 'row',
 		  justifyContent: 'center',
 		  width: '50%',
-		  marginTop: 20,
+		  marginVertical: 20,
 		  shadowColor: "#e6e6e6",
 		  shadowOffset: {
 			  width: 0,
@@ -24,19 +50,54 @@ const styles = StyleSheet.create({
 		  shadowRadius: 0,
 		  elevation: 1,
 	  },
+	  profileThumbnailPictureContainer: {
+		  width: '25%',
+		  marginVertical: 10,
+	  },
+	  chatThumbnailPictureContainer: {
+		  width: '25%',
+		  marginVertical: 10,
+	  },
 	  profilePicture: {
 		  width: 125,
 		  height: 125,
 			borderRadius: 100,
 			resizeMode: 'cover',
 	  },
+	  profileThumbnailPicture: {
+		  width: 75,
+		  height: 75,
+	  },
+	  chatThumbnailPicture: {
+		  width: 75,
+		  height: 75,
+	  },
 	  profileDescriptionContainer: {
 		  width: '50%',
-		  marginTop: 20,
+		  marginVertical: 20,
+		  display: 'flex',
+		  flexDirection: 'column',
+		  justifyContent: 'center',
+	  },
+	  profileThumbnailDescriptionContainer: {
+		  width: '75%',
+		  marginVertical: 10,
+		  paddingLeft: 10,
+	  },
+	  chatThumbnailDescriptionContainer: {
+		  width: '75%',
+		  marginVertical: 20,
+		  paddingLeft: 10,
 	  },
 	  profileName: {
 		  fontSize: 20,
 		  fontWeight: 'bold',
+	  },
+	  profileThumbnailName: {
+		  fontSize: 18,
+	  },
+	  chatThumbnailName: {
+		  fontSize: 18,
 	  },
 	  profileUsername: {
 		  fontSize: 16,
@@ -45,6 +106,20 @@ const styles = StyleSheet.create({
 	  },
 	  profileCaption: {
 		  marginTop: 10,
+		  color: '#515d6e',
+	  },
+	  chatThumbnailCaption: {
+		  marginTop: 10,
+		  color: '#515d6e',
+		  display: 'flex',
+		  flexDirection: 'row',
+		  flex: 1,
+	  },
+	  chatThumbnailText: {
+		  width: '75%',
+	  },
+	  chatThumbnailTime: {
+		  width: '25%',
 		  color: '#515d6e',
 	  },
 	  profileLevel: {
@@ -69,7 +144,6 @@ const styles = StyleSheet.create({
 		  display: 'flex',
 		  flexDirection: 'row',
 		  justifyContent: 'space-between',
-		  marginTop: 20,
 	  },
 	  settingsButton: {
 		  position: 'absolute',
@@ -77,6 +151,9 @@ const styles = StyleSheet.create({
 		  fontSize: 24,
 		  color: "#B2BECF",
 	  },
+	  friendsList: {
+		  marginTop: 20,
+	  }
 });
 
 export default styles;

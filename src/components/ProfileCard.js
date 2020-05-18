@@ -38,15 +38,14 @@ class ProfileCard extends React.Component {
 					<View style={ styles.profileTopCard }>
 						<View style={ styles.profilePictureContainer }>
 							<Image
-							source={{uri: this.props.users.avatar ||
-								this.imgPlaceholder}}
+							source={{uri: this.imgPlaceholder}}
 								style={ styles.profilePicture }
 							/>
 						</View>
 						<View style={ styles.profileDescriptionContainer }>
 							<Text style={ styles.profileName }>First Last Name</Text>
 							<Text style={ styles.profileUsername }>@username</Text>
-							<Text style={ styles.profileCaption }>user caption lorem ipsum @{this.props.users.id} </Text>
+							<Text style={ styles.profileCaption }>user caption lorem ipsum we love waffles hehehe 3 </Text>
 							<Text style={ styles.profileLevel }>Level 12</Text>
 							<View style={ styles.profileLevelBar }>
 								<ProgressBarAnimated
@@ -60,11 +59,12 @@ class ProfileCard extends React.Component {
 					</View>
 					<View style={ styles.profileSocialBar }>
 						<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.grayButton ]}
-		                	onPress={() => alert('nice friends!')}>
+						 	onPress={() => this.props.navigation.navigate('Friends')}>
 							<Text style={ allStyles.whiteText }>31 mutual friends</Text>
 						</TouchableOpacity>
 						<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.blackButton ]}
 		                	onPress={() => alert('add friend!')}>
+							<TabBarIcon name="md-add" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 							<Text style={ allStyles.whiteText }>Add friend</Text>
 						</TouchableOpacity>
 					</View>

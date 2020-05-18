@@ -32,26 +32,26 @@ class Save extends React.Component {
 		return (
 				<KeyboardAwareScrollView style={[allStyles.container, styles.quizFormContainer ]}>
 					
-					<View style={[ allStyles.section, allStyles.sectionClear ]}>
+					<View style={styles.shareSection}>
 						<Text style={[ allStyles.heading, { textAlign: 'center' } ]}>Your Kwiz is ready!</Text>
 					</View>
+					
+					<ShareForm />
 						
-					<View style={[ allStyles.section, allStyles.sectionClear ]}>
+					<View style={styles.shareSection}>
 						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton, styles.shareButton, styles.topShareButton ]}
 			                onPress={() => alert("")}>
 							<TabBarIcon name="md-trash" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Take your own kwiz</Text>
 						</TouchableOpacity>
 						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton, styles.shareButton, styles.bottomShareButton, { height: 60, } ]}
-					        onPress={() => this.props.navigation.navigate("Kwiz Results")}>
+					        onPress={() => alert("")}>
 							<TabBarIcon name="md-happy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>See results of your kwiz!</Text>
 						</TouchableOpacity>
 					</View>
 					
-					<ShareForm />
-					
-					<View style={[ allStyles.section, allStyles.sectionClear ]}>
+					<View style={styles.shareSection}>
 						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
 			                onPress={() => alert("")}>
 							<TabBarIcon name="md-create" style={[ allStyles.buttonIcon ]}/>

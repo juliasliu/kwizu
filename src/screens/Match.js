@@ -4,6 +4,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 
 import { MonoText } from '../components/StyledText';
+import ProfileCard from '../components/ProfileCard';
+
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/MatchScreen';
 
@@ -21,29 +23,23 @@ class Match extends React.Component {
 	
 	render() {
 		return (
-		    <View style={allStyles.container}>
-		      <ScrollView style={allStyles.container} contentContainerStyle={allStyles.contentContainer}>
-		        <View style={styles.matchProfileContainer}>
-		        	<View style={[ allStyles.card, styles.profilePreview ]}>
-		          		<Image source={require('../assets/images/robot-dev.png')} style={styles.profilePreviewPhoto}/>
-		          		<Text style={styles.profilePreviewName}>my name</Text>
-		          		<Text style={styles.profilePreviewCaption}>hi im a quaranteeen asdkjfhaj</Text>
-		          	</View>
-		        </View>
-		        <View style={styles.matchButtonContainer}>
-		        	<TouchableOpacity onPress={this.handleHelpPress} style={[ allStyles.button, allStyles.halfWidthButton, allStyles.redButton ]}>
-		        		<Text style={ allStyles.whiteText }>Match</Text>
-		        	</TouchableOpacity>
-		        </View>
-		        <View style={styles.matchProfileContainer}>
-			        <View style={[ allStyles.card, styles.profilePreview ]}>
-				  		<Image source={require('../assets/images/robot-dev.png')} style={styles.profilePreviewPhoto}/>
-				  		<Text style={styles.profilePreviewName}>my name</Text>
-				  		<Text style={styles.profilePreviewCaption}>hi im a quaranteeen asdkjfhaj</Text>
-				  	</View>
+		      <ScrollView style={allStyles.container}>
+			    <View style={[allStyles.container, styles.matchContainer]}>
+			        <View style={styles.matchProfileContainer}>
+			        	<ProfileCard navigation={this.props.navigation}/>
+			        </View>
+			        <View style={styles.matchButtonContainer}>
+			        	<TouchableOpacity onPress={this.handleHelpPress} style={[ allStyles.button, allStyles.halfWidthButton, allStyles.redButton ]}>
+			        		<Text style={ allStyles.whiteText }>Match</Text>
+			        	</TouchableOpacity>
+			        </View>
+			        <View style={styles.matchProfileContainer}>
+				        <View style={styles.matchProfileContainer}>
+				        	<ProfileCard navigation={this.props.navigation} />
+				        </View>
+			        </View>
 		        </View>
 		      </ScrollView>
-		    </View>
 	  );
 	}
 }

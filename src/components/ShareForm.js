@@ -22,7 +22,7 @@ class ShareForm extends React.Component {
 	render() {
 		return (
 			<View>
-				<View style={styles.shareSection}>
+				<View style={[ allStyles.section, allStyles.sectionClear ]}>
 					<View style={[ styles.quizFormHeader, styles.questionHeader ]}>
 						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Share the link</Text>
 					</View>
@@ -36,7 +36,7 @@ class ShareForm extends React.Component {
 					</View>
 				</View>
 					
-				<View style={styles.shareSection}>
+				<View style={[ allStyles.section, allStyles.sectionClear ]}>
 					<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton, styles.shareButton, styles.topShareButton ]}
 		                onPress={() => alert("")}>
 						<TabBarIcon name="md-chatbubbles" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>

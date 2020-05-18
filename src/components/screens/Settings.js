@@ -8,39 +8,32 @@ import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 
 import { MonoText } from '../components/StyledText';
-import ProfileCard from '../components/ProfileCard';
-import QuizResult from '../components/QuizResult';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/ProfileScreen';
 
 @inject('users') @observer
-class Profile extends React.Component {
+class Settings extends React.Component {
 	static navigationOptions = { 
 		tabBarLabel: 'Profile', 
 		tabBarIcon: ({ tintColor }) => (
 				<Icon name="user" size={30} color={tintColor}/> 
 		),
 	};
-	
+	onPressLogout() {
+		this.props.users.logout();
+	}
+
 	render () {
 		return (
 				<View style={allStyles.container}>
-			      <ScrollView style={allStyles.container}>
-						<View style={{marginBottom: 20,}}>
-							{
-								this.props.users.id &&
-								<ProfileCard users={this.props.users} navigation={this.props.navigation} />
-							}
-				      	</View>
-						<Text style={[ allStyles.sectionTitle, {marginTop: 20} ]}>Kwiz Feed</Text>
-				      	<Text style={allStyles.sectionSubtitle}>First has taken these kwizzes. Result descriptions will only appear once you have taken the kwiz.</Text>
-						<QuizResult navigation={this.props.navigation} />
-						<QuizResult navigation={this.props.navigation} />
-						<QuizResult navigation={this.props.navigation} />
+			      <ScrollView style={allStyles.container} contentContainerStyle={allStyles.contentContainer}>
+						<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.redButton ]} onPress={this.onPressLogout.bind(this)} title="Logout">
+							<Text style={ allStyles.whiteText }>Log Out</Text>
+						</TouchableOpacity>
 					</ScrollView>
 				</View>
 		)
 	}
 }
-export default Profile;
+export default Settings;

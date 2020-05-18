@@ -51,6 +51,9 @@ const styles = StyleSheet.create({
       borderBottomColor: '#B2BECF',
       paddingVertical: 20,
   },
+  sectionClear: {
+	borderBottomWidth: 0,  
+  },
     sectionTitle: {
       fontWeight: 'bold',
       fontSize: 20,
@@ -288,6 +291,20 @@ const styles = StyleSheet.create({
   quizResultDropdownButton: {
 	  fontSize: 32,
   },
+  profileThumbnailCard: {
+//		marginBottom: 20,  
+		  borderRadius: 0,
+		  borderWidth: 1,
+		  borderColor: "#e6e6e6",
+	  },
+	  topProfileThumbnailCard: {
+		  borderTopLeftRadius: 20,
+		  borderTopRightRadius: 20,
+	  },
+	  bottomProfileThumbnailCard: {
+		  borderBottomLeftRadius: 20,
+		  borderBottomRightRadius: 20,
+	  },
 });
 
 export default styles;
