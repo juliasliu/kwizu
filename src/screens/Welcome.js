@@ -33,7 +33,7 @@ class Welcome extends React.Component {
 						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton, styles.shareButton ]}
 			                onPress={() => alert("")}>
 							<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Sign up with Facebook</Text>
+							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Sign in with Facebook</Text>
 						</TouchableOpacity>
 						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
 			                onPress={() => this.props.navigation.navigate('Login')}>
@@ -47,8 +47,11 @@ class Welcome extends React.Component {
 			                onPress={() => this.props.navigation.navigate('Register')}>
 							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Sign up</Text>
 						</TouchableOpacity>
-						<Text style={{ textAlign: 'center', marginTop: 25 }}>By continuing, you agree to our <Text style={ allStyles.link } onPress={() => Linking.openURL('http://google.com')}>
-							Terms and Privacy Policy</Text>.</Text>
+						<Text style={{ textAlign: 'center', marginTop: 25 }}>
+							By continuing, you agree to our 
+							<Text style={ allStyles.link } onPress={() => Linking.openURL('http://google.com')}>
+								Terms and Privacy Policy</Text>.
+						</Text>
 					</View>
 				</KeyboardAwareScrollView>
 		) 

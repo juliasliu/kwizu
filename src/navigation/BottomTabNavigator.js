@@ -222,14 +222,6 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
-        name="Match"
-        component={MatchStackScreen}
-        options={{
-          title: 'Match',
-          tabBarIcon: ({ focused, color }) => <TabBarIcon focused={focused} style={{ color: color }} color={color} name="md-heart" />,
-        }}
-      />
-      <BottomTab.Screen
         name="Profile"
         component={ProfileStackScreen}
         options={{

@@ -53,6 +53,16 @@ class HomeScreen extends React.Component {
 						<QuizThumbnail navigation={this.props.navigation} />
 					</ScrollView>
 			      </View>
+
+			      <View style={allStyles.section}>
+			      	<Text style={allStyles.sectionTitle}>My Tests</Text>
+			      	<Text style={allStyles.sectionSubtitle}>All your homemade kwizzes show up here. Edit them, share them, or even create a new one!</Text>
+			    	<ScrollView contentContainerStyle={styles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
+						<QuizThumbnail navigation={this.props.navigation} />
+						<QuizThumbnail navigation={this.props.navigation} />
+						<QuizThumbnail navigation={this.props.navigation} />
+					</ScrollView>
+			      </View>
 		      </ScrollView>
 		    </View>
 		  );

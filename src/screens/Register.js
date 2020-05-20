@@ -23,8 +23,8 @@ import RegistrationForm from '../components/RegistrationForm'
 @inject('users') @observer
 //function Welcome({ navigation }) {
 class Register extends React.Component {
-	onPressRegister(email, password, name) { 
-		this.props.users.register(email, password, name);
+	onPressRegister(email, name, username, password, password_confirmation) { 
+		this.props.users.register(email, name, username, password, password_confirmation);
 	}
 	render() {
 		return (
@@ -38,7 +38,10 @@ class Register extends React.Component {
 
 					<Text style={{ textAlign: 'center', fontSize: 16, marginTop: 50, marginBottom: 25 }}>Or, if you have an email:</Text>
 					
-					<RegistrationForm onPress={this.onPressRegister.bind(this)} busy={this.props.users.registering} registeringError={this.props.users.registeringError} navigation={this.props.navigation}></RegistrationForm>
+					<RegistrationForm onPress={this.onPressRegister.bind(this)} 
+					busy={this.props.users.registering} 
+					registeringError={this.props.users.registeringError} 
+					navigation={this.props.navigation}></RegistrationForm>
 				</KeyboardAwareScrollView>
 		) 
 	}

@@ -28,10 +28,7 @@ class Profile extends React.Component {
 				<View style={allStyles.container}>
 			      <ScrollView style={allStyles.container}>
 						<View style={{marginBottom: 20,}}>
-							{
-								this.props.users.id &&
-								<ProfileCard users={this.props.users} navigation={this.props.navigation} />
-							}
+							<ProfileCard users={this.props.users} navigation={this.props.navigation} />
 				      	</View>
 						<Text style={[ allStyles.sectionTitle, {marginTop: 20} ]}>Kwiz Feed</Text>
 				      	<Text style={allStyles.sectionSubtitle}>First has taken these kwizzes. Result descriptions will only appear once you have taken the kwiz.</Text>

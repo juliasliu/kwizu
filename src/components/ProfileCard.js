@@ -55,7 +55,9 @@ class ProfileCard extends React.Component {
 						          />
 							</View>
 						</View>
-						<TouchableOpacity onPress={() => this.props.navigation.navigate('Settings')}><TabBarIcon name="md-settings" style={styles.settingsButton}/></TouchableOpacity>
+						<TouchableOpacity onPress={() => this.props.navigation.navigate('Settings')}>
+							<TabBarIcon name="md-settings" style={styles.settingsButton}/>
+						</TouchableOpacity>
 					</View>
 					<View style={ styles.profileSocialBar }>
 						<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.grayButton ]}

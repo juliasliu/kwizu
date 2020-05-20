@@ -16,11 +16,13 @@ import styles from '../styles/WelcomeScreen';
 class RegisterForm extends React.Component {
 	state= { 
 			registerEmail: '', 
-			registerPassword: '', 
-			registerName: ''
+			registerName: '',
+			registerUsername: '',
+			registerPassword: '',
+			registerPasswordConfirmation: ''
 	}
 	onPressRegister() { 
-		this.props.onPress(this.state.registerEmail, this.state.registerPassword, this.state.registerName);
+		this.props.onPress(this.state.registerEmail, this.state.registerName, this.state.registerUsername, this.state.registerPassword, this.state.registerPasswordConfirmation);
 	}
 	render() {
 		return (
@@ -52,6 +54,19 @@ class RegisterForm extends React.Component {
 					value={this.state.registerName} 
 					placeholder='Name' 
 					onSubmitEditing={(event) => {
+						this.refs.registerUsername.focus();
+					}}
+				/>
+				<TextInput
+					autoCapitalize='none'
+					autoCorrect={false}
+					ref='registerUsername' 
+					style={ allStyles.input } 
+					onChangeText={(registerUsername) => this.setState({registerUsername})} 
+					returnKeyType='next' 
+					value={this.state.registerUsername} 
+					placeholder='Username' 
+					onSubmitEditing={(event) => {
 						this.refs.registerPassword.focus();
 					}}
 				/>
@@ -59,10 +74,22 @@ class RegisterForm extends React.Component {
 					ref='registerPassword' 
 					style={ allStyles.input } 
 					onChangeText={(registerPassword) => this.setState({registerPassword})} 
+					returnKeyType='next' 
 					value={this.state.registerPassword} 
 					secureTextEntry={true} 
 					placeholder='Password'
-					/>
+					onSubmitEditing={(event) => {
+						this.refs.registerPasswordConfirmation.focus();
+					}}
+				/>
+				<TextInput
+					ref='registerPasswordConfirmation' 
+					style={ allStyles.input } 
+					onChangeText={(registerPasswordConfirmation) => this.setState({registerPasswordConfirmation})} 
+					value={this.state.registerPasswordConfirmation} 
+					secureTextEntry={true} 
+					placeholder='Password Confirmation'
+				/>
 				<View style={ allStyles.flexContainer }>
 					<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.redButton ]}
 	                	onPress={() => this.props.navigation.navigate('Welcome')}>

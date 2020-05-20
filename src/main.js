@@ -9,8 +9,7 @@ import Login from './screens/Login'
 import Register from './screens/Register' 
 import Chats from './screens/Chats' 
 import Profile from './screens/Profile' 
-import Search from './screens/Search' 
-import { users, chats } from './stores'
+import Search from './screens/Search'
 
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
@@ -25,7 +24,6 @@ export default class App extends React.Component {
 	}
 	render() { 
 		if(this.props.users.isLoggedIn){
-			console.log("logged in");
 			return (
 					<NavigationContainer>
 			          <Stack.Navigator>

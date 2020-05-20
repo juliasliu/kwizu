@@ -25,6 +25,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import TakeQuestion from '../components/TakeQuestion'
 import TakeResult from '../components/TakeResult'
 import ShareForm from '../components/ShareForm'
+import QuizThumbnail from '../components/QuizThumbnail'
 
 @inject('users') @observer
 class Take extends React.Component {
@@ -51,6 +52,16 @@ class Take extends React.Component {
 							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>See how your friends did!</Text>
 						</TouchableOpacity>
 					</View>
+
+				      <View style={allStyles.section}>
+				    	<Text style={allStyles.sectionTitle}>Recommended</Text>
+				      	<Text style={allStyles.sectionSubtitle}>Take another one! We promise it's not an addiction. ;)</Text>
+				    	<ScrollView contentContainerStyle={styles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
+				  			<QuizThumbnail navigation={this.props.navigation} />
+				  			<QuizThumbnail navigation={this.props.navigation} />
+				  			<QuizThumbnail navigation={this.props.navigation} />
+				  		</ScrollView>
+				      </View>
 					
 					<View style={[allStyles.section]}>
 						<Text style={allStyles.sectionTitle}>Share your results!</Text>

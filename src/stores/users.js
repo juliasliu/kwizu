@@ -1,124 +1,116 @@
 import {observable, computed, map, toJS, action} from 'mobx'; 
-import chats from './chats'
-import firebase from 'firebase';
-import { firebaseApp } from '../firebase';
-import notifications from '../notifications'
+import axios from 'axios'
 
 class Users {
-	@observable id = null;
-	@observable isLoggedIn = false; 
-	@observable name = null;
-	@observable avatar = null; 
-	@observable notificationsToken = null;
+	@observable user = null;
+	@observable isLoggedIn = false;
 	@observable loggingIn = false; 
-	@observable registering = false; 
 	@observable loggingError = null;
+	@observable registering = false; 
 	@observable registeringError = null;
 	
-	@action login = function(username, password) { 
-		//login with Firebase email/password method
+	@action login = function(email, password) { 
+		let user = {
+				email: email,
+				password: password
+		}
 		this.loggingIn = true;
 		this.loggingError = null;
-		firebase.auth().signInWithEmailAndPassword(username, password)
-		.then(() => {
-			this.loggingIn = false;
-			notifications.init((notificationsToken) => {
-				this.setNotificationsToken(notificationsToken);
-			});
+		
+		axios.post('http://localhost:3001/login', {user}, {withCredentials: true})
+		.then(response => {
+			if (response.data.logged_in) {
+				this.handleLogin(response.data)
+				console.log()
+			} else {
+				this.handleLogout()
+				this.loggingError = response.data.errors
+			}
 		})
-		.catch((error) => { 
-			this.loggingIn = false;
-			this.loggingError = error.message;
-		});
+		.catch(error => console.log('api errors:', error))
 	}
 	@action logout = function() {
-		//logout from Firebase authentication service
-		notifications.unbind();
-		this.setNotificationsToken('');
-		firebase.auth().signOut();
+		axios.delete('http://localhost:3001/logout', {withCredentials: true})
+	    .then(response => {
+	    	this.handleLogout()
+	    })
+	    .catch(error => console.log(error))
 	}
-	@action register = function(email, password, name) { 
-		//register through firebase authentication service
+	@action register = function(email, name, username, password, password_confirmation) {
+		if(!email || email == '') {
+			this.registering = false; 
+			this.registeringError = 'Email was not entered'; 
+			return;
+		}
 		if(!name || name == '') {
-			this.registering = false; this.registeringError = 'Name was not entered'; return;
+			this.registering = false; 
+			this.registeringError = 'Name was not entered'; 
+			return;
+		}
+		if(!username || username == '') {
+			this.registering = false; 
+			this.registeringError = 'Username was not entered'; 
+			return;
+		}
+		if(!password || password == '') {
+			this.registering = false; 
+			this.registeringError = 'Password was not entered';
+			return;
+		}
+		if(!password_confirmation || password_confirmation != password) {
+			this.registering = false; 
+			this.registeringError = 'Password did not match'; 
+			return;
+		}
+		let user = {
+				email: email,
+				name: name,
+				username: username,
+				password: password,
+				password_confirmation: password_confirmation
 		}
 		this.registering = true;
-		this.registeringError = null; 
-		firebase.auth().createUserWithEmailAndPassword(email, password)
-		.then((user) => {
-			this.registering = false;
-			notifications.init((notificationsToken) => {
-				this.setNotificationsToken(notificationsToken);
-			});
-			firebaseApp.database().ref('/users/' + user.uid).set({
-				name: name
-			});
-		})
-		.catch((error) => {
-			this.registering = false;
-			this.registeringError = error.message;
-		})
-	}
-	@action setNotificationsToken(token) {
-		//store the notifications token for this device
-		if(!this.id) return;
-		this.notificationsToken = token;
-		firebaseApp.database().ref('/users/' + this.id).update({
-			notificationsToken: token
-		});
-	}
-	searchUsers(name) {
-		//helper for searching users by name in the database
-		return new Promise(function(resolve) {
-			firebaseApp.database().ref('/users/').once('value')
-			.then(function(snapshot) {
-				let foundUsers = [];
-				const users = snapshot.val();
-				for(var id in users) {
-					if(users[id].name === name) { 
-						foundUsers.push({
-							name: users[id].name, 
-							avatar: users[id].avatar, 
-							notificationsToken: users[id].notificationsToken, 
-							id
-						})
-					}
-				}
-				resolve(foundUsers);
-			})
-		})
-	}
-	constructor() {
-		this.bindToFirebase();
-	}
-	bindToFirebase() {
-		//Initialise connection to Firebase user
-		//authentication status and data
-		return firebase.auth().onAuthStateChanged((user) => {
-			if(this.chatsBind && typeof this.chatsBind.off === 'function') 
-				this.chatsBind.off();
-			if(this.userBind && typeof this.userBind.off === 'function') 
-				this.userBind.off();
-
-			if (user) {
-				this.id = user.uid;
-				this.isLoggedIn = true;
-				this.chatsBind = chats.bindToFirebase(user.uid);
-				this.userBind = firebaseApp.database().ref('/users/' + this.id).on('value', (snapshot) =>
-				{
-					const userObj = snapshot.val(); 
-					if(!userObj) return;
-					this.name = userObj.name;
-					this.avatar = userObj.avatar;
-				});
+		this.registeringError = null;
+		
+		axios.post('http://localhost:3001/users', {user}, {withCredentials: true})
+		.then(response => {
+			if (response.data.status === 'created') {
+				this.handleLogin(response.data)
 			} else {
-				this.id = null; 
-				this.isLoggedIn = false;
-				this.userBind = null;
-				this.name = null; 
-				this.avatar = null;
-			} 
-		});
+				this.handleLogout()
+				this.registeringError = response.data.errors
+			}
+		})
+		.catch(error => console.log('api errors:', error))
+	}
+	
+	@action async loginStatus() {
+		this.isLoggedIn = false; 
+		
+		axios.get('http://localhost:3001/logged_in', 
+				{withCredentials: true})
+				.then(response => {
+					if (response.data.logged_in) {
+						this.handleLogin(response)
+					} else {
+						this.handleLogout()
+					}
+				})
+				.catch(error => console.log('api errors:', error))
+	}
+	
+	handleLogin(data) {
+		this.user = data.user;
+		this.isLoggedIn = true;
+		this.loggingIn = false;
+		this.registering = false;
+	}
+	
+	handleLogout() {
+		this.user = null; 
+		this.isLoggedIn = false;
+		this.loggingIn = false;
+		this.registering = false;
 	}
 }
 

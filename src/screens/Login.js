@@ -29,7 +29,10 @@ class Login extends React.Component {
 		return (
 				<KeyboardAwareScrollView style={{padding: 50, marginTop: 50}}>
 					<Text style={[ allStyles.title, { textAlign: 'center', marginTop: 50, marginBottom: 50 } ]}>Sign In</Text>
-					<LoginForm onPress={this.onLogin.bind(this)} busy={this.props.users.loggingIn} loggingError={this.props.users.loggingError} navigation={this.props.navigation}></LoginForm>
+					<LoginForm onPress={this.onLogin.bind(this)} 
+					busy={this.props.users.loggingIn} 
+					loggingError={this.props.users.loggingError} 
+					navigation={this.props.navigation}></LoginForm>
 				</KeyboardAwareScrollView>
 		) 
 	}
