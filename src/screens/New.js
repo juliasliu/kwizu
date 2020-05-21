@@ -55,84 +55,175 @@ class New extends React.Component {
 					],
 	}
 	
+	/* destructive method for reassigning indices for an array
+	 * input: array: [0, 1, 3, 4], indexDeleted: 2
+	 * output: newArray: [0, 1, 2, 3]
+	 */
+	indexHelper(array, indexDeleted) {
+		var i = 0;
+		while (i < array.length) {
+			if (array[i].index >= indexDeleted) {
+				array[i].index--;
+				if(array[i].weight) {
+					array[i].weight--;
+				}
+			}
+			i++;
+		}
+	}
+	
 	onPressCreate(email, password, name) { 
 		this.props.users.register(email, password, name);
 	}
 
 	onPressAddResult() {
-		
+		const newResult = { 
+				index: this.state.results.length, 
+				title: '' ,
+				description: '',
+				weight: this.state.results.length+1,
+				image: '', };
+		var results = [...this.state.results, newResult]
+	    this.setState({results});
 	}
-	onPressDeleteResult() {
-		
-	}
-	onPressAddQuestion() {
-		
-	}
-	onPressDeleteQuestion() {
-		
-	}
-
-	onPressAddChoice() {
-		const newChoice = { index: this.state.choiceIndex+1, content: '', weight: 1, };
-		 
-	    this.setState({
-	      choices: [...this.state.choices, newChoice],
-	      choiceIndex: this.state.choiceIndex+1
-	    });
-	}
-	onPressDeleteChoice = (index) => {
-		if (this.state.choices.length != 1) {
-			const newChoicesArray = [...this.state.choices]
-			newChoicesArray.splice(newChoicesArray.findIndex(elem => elem.index === index), 1);
+	onPressDeleteResult(resultIndex) {
+		if (this.state.results.length != 1) {
+			var newResultsArray = [...this.state.results]
+			newResultsArray.splice(newResultsArray.findIndex(elem => elem.index === resultIndex), 1);
+			this.indexHelper(newResultsArray, resultIndex)
 			
-			this.setState({
-				choices: newChoicesArray
-			});
+			this.setState({results : newResultsArray});
 		}
 	}
 	
-	setQuestionValue = (value) => {
-		var question = this.state.question
-		question.title = value;
-		this.setState({question})
+	setResultTitleValue(resultIndex, value) {
+		var results = [...this.state.results]
+		results[results.findIndex(elem => elem.index === resultIndex)].title = value;
+		this.setState({results})
 	}
-	setSelectedResultValue = (index, value) => {
-		var choices = [...this.state.choices]
-		choices[choices.findIndex(elem => elem.index === index)].weight = value;
-		this.setState({choices})
+	setResultDescriptionValue(resultIndex,value) {
+		var results = [...this.state.results]
+		results[results.findIndex(elem => elem.index === resultIndex)].description = value;
+		this.setState({results})
 	}
-	setChoiceValue = (index, value) => {
-		var choices = [...this.state.choices]
-		choices[choices.findIndex(elem => elem.index === index)].content = value;
-		this.setState({choices})
+	
+	onPressAddQuestion() {
+		const newQuestion = {
+				index: this.state.questions.length,
+				question: { title: '' },
+				choices: [ 
+					{
+						index: 0,
+						content: '',
+						weight: 1
+					},
+					], 
+				};
+		var questions = [...this.state.questions, newQuestion]
+	    this.setState({questions});
+	}
+	onPressDeleteQuestion(questionIndex) {
+		if (this.state.questions.length != 1) {
+			var newQuestionsArray = [...this.state.questions]
+			newQuestionsArray.splice(newQuestionsArray.findIndex(elem => elem.index === questionIndex), 1);
+			this.indexHelper(newQuestionsArray, questionIndex)
+			
+			this.setState({questions : newQuestionsArray});
+		}
+	}
+
+	onPressAddChoice(questionIndex) {
+		var questions = [...this.state.questions]
+		var question = questions[questions.findIndex(elem => elem.index === questionIndex)];
+		
+		const newChoice = { 
+				index: question.choices.length, 
+				content: '', 
+				weight: 1, };
+		question.choices = [...question.choices, newChoice]
+		
+	    this.setState({questions});
+	}
+	onPressDeleteChoice(questionIndex, choiceIndex) {
+		var questions = [...this.state.questions]
+		var question = questions[questions.findIndex(elem => elem.index === questionIndex)];
+		
+		if (question.choices.length != 1) {
+			var newChoicesArray = [...question.choices]
+			newChoicesArray.splice(newChoicesArray.findIndex(elem => elem.index === choiceIndex), 1);
+			this.indexHelper(newChoicesArray, choiceIndex)
+			question.choices = [...newChoicesArray]
+			
+			this.setState({questions});
+		}
+	}
+	
+	setQuestionValue(questionIndex, value) {
+		var questions = [...this.state.questions]
+		questions[questions.findIndex(elem => elem.index === questionIndex)].title = value;
+		this.setState({questions})
+	}
+	setSelectedResultValue(questionIndex, choiceIndex, value) {
+		var questions = [...this.state.questions]
+		var question = questions[questions.findIndex(elem => elem.index === questionIndex)];
+		
+		var choices = [...question.choices]
+		choices[choices.findIndex(elem => elem.index === choiceIndex)].weight = value;
+		question.choices = [...choices]
+		
+		this.setState({questions})
+	}
+	setChoiceValue(questionIndex, choiceIndex, value) {
+		var questions = [...this.state.questions]
+		var question = questions[questions.findIndex(elem => elem.index === questionIndex)];
+		
+		var choices = [...question.choices]
+		choices[choices.findIndex(elem => elem.index === choiceIndex)].content = value;
+		question.choices = [...choices]
+		
+		this.setState({questions})
 	}
 	
 	render() {
+		console.log("--------------------")
+		console.log("Results: ")
+		console.log(this.state.results)
+		console.log("Questions: ")
+		console.log(this.state.questions)
 		
 		let resultsArray = this.state.results.map(( item, key ) =>
 		{
-			let actualArrayIndex = item != undefined ? this.state.results.findIndex(elem => elem.index === item.index) : null;
 			return item != undefined ? (
 					<NewResultForm 
+					result={item}
+					onPressAdd={this.onPressAddResult.bind(this)}
 					onPressDelete={this.onPressDeleteResult.bind(this)}
+					setTitleValue={this.setResultTitleValue.bind(this)}
+					setDescriptionValue={this.setResultDescriptionValue.bind(this)}
 					registeringError={this.props.users.registeringError}></NewResultForm>
 					) : null
 		});
 		
 		let questionsArray = this.state.questions.map(( item, key ) =>
 		{
-			let actualArrayIndex = item != undefined ? this.state.questions.findIndex(elem => elem.index === item.index) : null;
 			return item != undefined ? (
 					<NewQuestionForm 
 					results={this.state.results}
+					question={item}
+					onPressAdd={this.onPressAddQuestion.bind(this)}
 					onPressDelete={this.onPressDeleteQuestion.bind(this)}
+					onPressAddChoice={this.onPressAddChoice.bind(this)}
+					onPressDeleteChoice={this.onPressDeleteChoice.bind(this)}
+					setQuestionValue={this.setQuestionValue.bind(this)}
+					setSelectedResultValue={this.setSelectedResultValue.bind(this)}
+					setChoiceValue={this.setChoiceValue.bind(this)}
 					registeringError={this.props.users.registeringError}></NewQuestionForm>
 					) : null
 		});
 		
 		let resultSection = () => {
 			const {type} = this.props.route.params;
-			return JSON.stringify(type) == 'Personality' 
+			return type == 'Personality' 
 					? (
 							<View style={[ allStyles.section, allStyles.sectionClear ]}>
 								<Text style={allStyles.sectionTitle}>Kwiz Results</Text>
@@ -174,7 +265,7 @@ class New extends React.Component {
 					</View>
 
 					{
-						resultSection
+						resultSection()
 					}
 					
 					<View style={[ allStyles.section ]}>
@@ -193,10 +284,15 @@ class New extends React.Component {
 					</View>
 						
 					<View style={[ allStyles.section, allStyles.sectionClear ]}>
+						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
+			                onPress={() => alert("preview")}>
+							<TabBarIcon name="md-eye" style={[ allStyles.buttonIcon ]}/>
+							<Text style={[ allStyles.fullWidthButtonText ]}>Save and preview</Text>
+						</TouchableOpacity>
 						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
-			                onPress={() => this.props.navigation.navigate("Save and Share Kwiz")}>
+			                onPress={() => this.props.navigation.navigate("Publish and Share Kwiz")}>
 							<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Save and share</Text>
+							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Publish and share</Text>
 						</TouchableOpacity>
 						<Text style={[ allStyles.sectionSubtitle, styles.quizSaveText ]}>You can save a draft if you are not finished editing your kwiz. You can publish later when you're ready.</Text>
 					</View>

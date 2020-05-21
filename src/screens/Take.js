@@ -48,7 +48,7 @@ class Take extends React.Component {
 					<View style={[allStyles.section]}>
 						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton, { height: 60, } ]}
 					        onPress={() => this.props.navigation.navigate("Kwiz Results")}>
-							<TabBarIcon name="md-happy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+							<TabBarIcon name="md-trophy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>See how your friends did!</Text>
 						</TouchableOpacity>
 					</View>

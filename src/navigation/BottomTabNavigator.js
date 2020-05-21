@@ -14,7 +14,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import Home from '../screens/Home';
 import Take from '../screens/Take';
 import New from '../screens/New';
-import Save from '../screens/Save';
+import Publish from '../screens/Publish';
 import Leaderboard from '../screens/Leaderboard';
 
 import Match from '../screens/Match';
@@ -70,7 +70,7 @@ class HomeStackScreen extends React.Component {
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',
 			      	}} />
-			      <HomeStack.Screen name="Save and Share Kwiz" component={Save} options={{
+			      <HomeStack.Screen name="Publish and Share Kwiz" component={Publish} options={{
 			    	  headerTitle: 'New Personality Kwiz',
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',

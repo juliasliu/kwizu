@@ -16,26 +16,31 @@ import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
 
 class NewResultForm extends React.Component {
-	state= {
-			index: 0,
-			title: '' ,
-			description: '',
-			weight: 1,
-			image: '',
+	state = {
+		
 	};
 	
 	onPressAddResult() { 
 		this.props.onPressAdd();
 	}
 	onPressDeleteResult() { 
-		this.props.onPressDelete();
+		this.props.onPressDelete(this.state.index);
+	}
+	
+	setTitleValue = (value) => {
+		this.props.setTitleValue(this.state.index, value);
+	}
+	setDescriptionValue = (value) => {
+		this.props.setDescriptionValue(this.state.index, value);
 	}
 	
 	render() {
+		this.state = this.props.result
+		
 		return (
 				<View style={[ styles.quizForm ]}>
 					<View style={[ styles.quizFormHeader, styles.resultHeader ]}>
-						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Result 1</Text>
+						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Result {this.state.index + 1}</Text>
 					</View>
 					<View style={[ allStyles.card ]}>
 						{
@@ -47,7 +52,7 @@ class NewResultForm extends React.Component {
 						<TextInput
 							returnKeyType='next' 
 							style={ allStyles.input } 
-							onChangeText={(title) => this.setState({title})} 
+							onChangeText={(value) => this.setTitleValue(value)} 
 							value={this.state.title} 
 							placeholder='Result title (25 words max)' 
 							onSubmitEditing={(event) => {
@@ -58,7 +63,7 @@ class NewResultForm extends React.Component {
 							ref='resultDescription' 
 							returnKeyType='next' 
 							style={[ allStyles.input, allStyles.textarea ]} 
-							onChangeText={(description) => this.setState({description})} 
+							onChangeText={(value) => this.setDescriptionValue(value)} 
 							returnKeyType='next' 
 							value={this.state.description} 
 							multiline={true}

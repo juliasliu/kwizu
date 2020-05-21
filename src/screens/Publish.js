@@ -23,7 +23,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import ShareForm from '../components/ShareForm'
 
 @inject('users') @observer
-class Save extends React.Component {
+class Publish extends React.Component {
 	onPressRegister(email, password, name) { 
 		this.props.users.register(email, password, name);
 	}
@@ -39,12 +39,12 @@ class Save extends React.Component {
 					<View style={[ allStyles.section, allStyles.sectionClear ]}>
 						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton, styles.shareButton, styles.topShareButton ]}
 			                onPress={() => alert("")}>
-							<TabBarIcon name="md-trash" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+							<TabBarIcon name="md-happy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Take your own kwiz</Text>
 						</TouchableOpacity>
 						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton, styles.shareButton, styles.bottomShareButton, { height: 60, } ]}
 					        onPress={() => this.props.navigation.navigate("Kwiz Results")}>
-							<TabBarIcon name="md-happy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+							<TabBarIcon name="md-trophy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>See results of your kwiz!</Text>
 						</TouchableOpacity>
 					</View>
@@ -68,4 +68,4 @@ class Save extends React.Component {
 	}
 }
 
-export default Save;
+export default Publish;

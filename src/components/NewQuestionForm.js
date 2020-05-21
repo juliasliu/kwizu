@@ -17,62 +17,36 @@ import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
 
 class NewQuestionForm extends React.Component {
-	state= {
-			index: 0,
-			question: { title: '' },
-			choices: [ 
-				{
-					index: 0,
-					content: '',
-					weight: 1
-				},
-				],
-			choiceIndex: 0,
-	};
+	state = {
+		
+	}
 	
 	onPressAddQuestion() { 
 		this.props.onPressAdd();
 	}
 	onPressDeleteQuestion() { 
-		this.props.onPressDelete();
+		this.props.onPressDelete(this.state.index);
 	}
 
 	onPressAddChoice() {
-		const newChoice = { index: this.state.choiceIndex+1, content: '', weight: 1, };
-		 
-	    this.setState({
-	      choices: [...this.state.choices, newChoice],
-	      choiceIndex: this.state.choiceIndex+1
-	    });
+		this.props.onPressAddChoice(this.state.index);
 	}
 	onPressDeleteChoice = (index) => {
-		if (this.state.choices.length != 1) {
-			const newChoicesArray = [...this.state.choices]
-			newChoicesArray.splice(newChoicesArray.findIndex(elem => elem.index === index), 1);
-			
-			this.setState({
-				choices: newChoicesArray
-			});
-		}
+		this.props.onPressDeleteChoice(this.state.index, index);
 	}
 	
 	setQuestionValue = (value) => {
-		var question = this.state.question
-		question.title = value;
-		this.setState({question})
+		this.props.setQuestionValue(this.state.index, value);
 	}
 	setSelectedResultValue = (index, value) => {
-		var choices = [...this.state.choices]
-		choices[choices.findIndex(elem => elem.index === index)].weight = value;
-		this.setState({choices})
+		this.props.setSelectedResultValue(this.state.index, index, value);
 	}
 	setChoiceValue = (index, value) => {
-		var choices = [...this.state.choices]
-		choices[choices.findIndex(elem => elem.index === index)].content = value;
-		this.setState({choices})
+		this.props.setChoiceValue(this.state.index, index, value);
 	}
 	
 	render() {
+		this.state = this.props.question
 		
 		// convert this.prop.results into { label, value }
 		let data = []
@@ -116,7 +90,7 @@ class NewQuestionForm extends React.Component {
 		return (
 				<View style={[ styles.quizForm ]}>
 					<View style={[ styles.quizFormHeader, styles.questionHeader ]}>
-						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Question 1</Text>
+						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Question {this.state.index + 1}</Text>
 					</View>
 					<View style={[ allStyles.card ]}>
 					{
@@ -132,7 +106,7 @@ class NewQuestionForm extends React.Component {
 						value={this.state.question.title} 
 						multiline={true}
 				    	numberOfLines={3}
-						placeholder='Question title (50 words max)'
+						placeholder='Question (50 words max)'
 					/>
 
 					{
