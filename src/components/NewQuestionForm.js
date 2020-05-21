@@ -58,33 +58,35 @@ class NewQuestionForm extends React.Component {
 		let choicesArray = this.state.choices.map(( item, key ) =>
 		{
 			let actualArrayIndex = item != undefined ? this.state.choices.findIndex(elem => elem.index === item.index) : null;
-			return item != undefined ? (<View style={ styles.choiceContainer } key = { item.index }>
-				<View style={ styles.choiceInput }>
-					<Dropdown
-				        label='' labelFontSize={0} labelHeight={0}
-				        data={data}
-						value={this.state.choices[actualArrayIndex].weight}
-						fontSize={14}
-						onChangeText={(value,index,data) => this.setSelectedResultValue(item.index, value)} 
-						containerStyle={[ allStyles.input, allStyles.dropdown, styles.choiceInputSelect ]}
-						inputContainerStyle={[allStyles.dropdownInput]}
-						pickerStyle={[allStyles.card, allStyles.dropdownPicker]}
-						dropdownOffset={{top: 50, left: 20}}
-				      />
-					<TextInput
-						ref='choice' 
-						returnKeyType='next' 
-						style={[ allStyles.input, styles.choiceInputField ]} 
-						onChangeText={(value) => this.setChoiceValue(item.index, value)}
-						value={this.state.choices[actualArrayIndex].content} 
-						placeholder='Choice (25 words max)'
-					/>
-					<TouchableOpacity style={[ allStyles.button, allStyles.grayButton, styles.choiceInputDelete ]}
-		                onPress={() => this.onPressDeleteChoice(item.index)}>
-						<TabBarIcon name="md-trash" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-					</TouchableOpacity>
+			return item != undefined ? (
+					<View style={ styles.choiceContainer } key = { item.index }>
+						<View style={ styles.choiceInput }>
+						<Dropdown
+					        label='' labelFontSize={0} labelHeight={0}
+					        data={data}
+							value={this.state.choices[actualArrayIndex].weight}
+							fontSize={14}
+							onChangeText={(value,index,data) => this.setSelectedResultValue(item.index, value)} 
+							containerStyle={[ allStyles.input, allStyles.dropdown, styles.choiceInputSelect ]}
+							inputContainerStyle={[allStyles.dropdownInput]}
+							pickerStyle={[allStyles.card, allStyles.dropdownPicker]}
+							dropdownOffset={{top: 50, left: 20}}
+					      />
+						<TextInput
+							ref='choice' 
+							returnKeyType='next' 
+							style={[ allStyles.input, styles.choiceInputField ]} 
+							onChangeText={(value) => this.setChoiceValue(item.index, value)}
+							value={this.state.choices[actualArrayIndex].content} 
+							placeholder='Choice (25 words max)'
+						/>
+						<TouchableOpacity style={[ allStyles.button, allStyles.grayButton, styles.choiceInputDelete ]}
+			                onPress={() => this.onPressDeleteChoice(item.index)}>
+							<TabBarIcon name="md-trash" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+						</TouchableOpacity>
+					</View>
 				</View>
-			</View>) : null
+				) : null
 		});
 		
 		return (

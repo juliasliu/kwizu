@@ -149,13 +149,13 @@ const styles = StyleSheet.create({
   choice: {
 		display: 'flex',
 		flexDirection: 'row',
-		  alignItems: 'center',
 		  borderColor: '#e1e7ed',
 		  borderWidth: 1,
+		  marginVertical: 0,
   },
   choiceText: {
-	  width: '75%',
-	  paddingLeft: 10,
+	  width: '90%',
+	  paddingLeft: '10%',
   },
 });
 

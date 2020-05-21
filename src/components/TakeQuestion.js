@@ -17,19 +17,48 @@ import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
 
 class TakeQuestion extends React.Component {
-	state= { 
-			registerEmail: '', 
-			registerPassword: '', 
-			registerName: ''
+	state = { 
+			
 	}
-	onPressRegister() { 
-		this.props.onPress(this.state.registerEmail, this.state.registerPassword, this.state.registerName);
+	setSelectedChoiceValue(weight) {
+		this.props.setSelectedChoiceValue(this.state.index, weight);
 	}
+	
+	getSelectedChoiceStyle(type, isChecked) {
+		if (type == "button")
+			return isChecked ? allStyles.greenButton : null
+		if (type == "checkbox")
+			return isChecked ? '#fff' : "#a0acba"
+		if (type == "text")
+			return isChecked ? allStyles.whiteText : null
+	}
+	
 	render() {
+		this.state = this.props.question;
+
+		let choicesArray = this.state.choices.map(( item, key ) =>
+		{
+			// isChecked is true if there is an answer in this.props.answers with the same questionIndex and choiceWeight
+			let isChecked = this.props.answers.findIndex(elem => elem.questionIndex === this.state.index && elem.choiceWeight === item.weight) != -1;
+			return item != undefined ? (
+					<View style={[ styles.choiceContainer]} key = { item.index } >
+						<TouchableOpacity style={[ allStyles.button, styles.choice, this.getSelectedChoiceStyle("button", isChecked) ]}
+							onPress={() => this.setSelectedChoiceValue(item.weight)}>
+							<CheckBox
+								onClick={() => this.setSelectedChoiceValue(item.weight)}
+								checkBoxColor= {this.getSelectedChoiceStyle("checkbox", isChecked)}
+								isChecked={isChecked}
+							/>
+							<Text style={[ styles.choiceText, this.getSelectedChoiceStyle("text", isChecked) ]}>{item.content}</Text>
+						</TouchableOpacity>
+					</View>
+					) : null
+		});
+		
 		return (
 				<View style={[ styles.quizForm ]}>
 					<View style={[ styles.quizFormHeader, styles.questionHeader ]}>
-						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Question 1</Text>
+						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Question {this.state.index + 1}</Text>
 					</View>
 					<View style={[ allStyles.card ]}>
 					{
@@ -38,63 +67,10 @@ class TakeQuestion extends React.Component {
 							<Text>{this.props.registeringError}</Text>
 						</View>
 					}
-					<Text style={styles.question}>How much wood could a wood chuck chuck if a wood chuck could chuck wood?</Text>
-					<View style={[ styles.choiceContainer]} >
-						<View style={[ allStyles.card, styles.choice ]}>
-							<CheckBox
-									onClick={()=>{
-										this.setState({
-										     isChecked:!this.state.isChecked1
-										})
-									}}
-									checkBoxColor="#a0acba"
-									isChecked={this.state.isChecked1}
-								/>
-							<Text style={ styles.choiceText }>Choice #1 whttevr asfkjas ies her</Text>
-						</View>
-					</View>
-					<View style={[ styles.choiceContainer]} >
-						<View style={[ allStyles.card, styles.choice ]}>
-							<CheckBox
-									onClick={()=>{
-										this.setState({
-										     isChecked:!this.state.isChecked2
-										})
-									}}
-									checkBoxColor="#a0acba"
-									isChecked={this.state.isChecked2}
-								/>
-							<Text style={ styles.choiceText }>Choice #2 whttevr asfkjas ies her</Text>
-						</View>
-					</View>
-					<View style={[ styles.choiceContainer]} >
-						<View style={[ allStyles.card, styles.choice ]}>
-							<CheckBox
-									onClick={()=>{
-										this.setState({
-										     isChecked:!this.state.isChecked3
-										})
-									}}
-									checkBoxColor="#a0acba"
-									isChecked={this.state.isChecked3}
-								/>
-							<Text style={ styles.choiceText }>Choice #3 whttevr asfkjas ies her</Text>
-						</View>
-					</View>
-					<View style={[ styles.choiceContainer]} >
-						<View style={[ allStyles.card, styles.choice ]}>
-							<CheckBox
-									onClick={()=>{
-										this.setState({
-										     isChecked:!this.state.isChecked4
-										})
-									}}
-									checkBoxColor="#a0acba"
-									isChecked={this.state.isChecked4}
-								/>
-							<Text style={ styles.choiceText }>Choice #4 whttevr asfkjas ies her</Text>
-						</View>
-					</View>
+					<Text style={styles.question}>{ this.state.question.title }</Text>
+					{
+						choicesArray
+					}
 				</View>
 			</View>
 		)

@@ -73,6 +73,7 @@ class New extends React.Component {
 	}
 	
 	onPressCreate(email, password, name) { 
+		// create new quiz, todo later
 		this.props.users.register(email, password, name);
 	}
 
