@@ -39,7 +39,7 @@ class TakeQuestion extends React.Component {
 						</View>
 					}
 					<Text style={styles.question}>How much wood could a wood chuck chuck if a wood chuck could chuck wood?</Text>
-					<View style={ styles.choiceContainer }>
+					<View style={[ styles.choiceContainer]} >
 						<View style={[ allStyles.card, styles.choice ]}>
 							<CheckBox
 									onClick={()=>{
@@ -52,6 +52,8 @@ class TakeQuestion extends React.Component {
 								/>
 							<Text style={ styles.choiceText }>Choice #1 whttevr asfkjas ies her</Text>
 						</View>
+					</View>
+					<View style={[ styles.choiceContainer]} >
 						<View style={[ allStyles.card, styles.choice ]}>
 							<CheckBox
 									onClick={()=>{
@@ -64,6 +66,8 @@ class TakeQuestion extends React.Component {
 								/>
 							<Text style={ styles.choiceText }>Choice #2 whttevr asfkjas ies her</Text>
 						</View>
+					</View>
+					<View style={[ styles.choiceContainer]} >
 						<View style={[ allStyles.card, styles.choice ]}>
 							<CheckBox
 									onClick={()=>{
@@ -76,6 +80,8 @@ class TakeQuestion extends React.Component {
 								/>
 							<Text style={ styles.choiceText }>Choice #3 whttevr asfkjas ies her</Text>
 						</View>
+					</View>
+					<View style={[ styles.choiceContainer]} >
 						<View style={[ allStyles.card, styles.choice ]}>
 							<CheckBox
 									onClick={()=>{

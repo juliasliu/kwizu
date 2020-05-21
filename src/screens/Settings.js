@@ -24,15 +24,15 @@ class Settings extends React.Component {
 		this.props.users.logout();
 	}
 	state= { 
-			registerEmail: '', 
-			registerName: '',
-			registerUsername: '',
-			registerCaption: '',
-			registerPassword: '',
-			registerPasswordConfirmation: ''
+			editEmail: '', 
+			editName: '',
+			editUsername: '',
+			editCaption: '',
+			editPassword: '',
+			editPasswordConfirmation: ''
 	}
-	onPressRegister() { 
-		this.props.onPress(this.state.registerEmail, this.state.registerName, this.state.registerUsername, this.state.registerPassword, this.state.registerPasswordConfirmation);
+	onPressEdit() { 
+		this.props.onPress(this.state.editEmail, this.state.editName, this.state.editUsername, this.state.editPassword, this.state.editPasswordConfirmation);
 	}
 
 	render () {
@@ -41,9 +41,9 @@ class Settings extends React.Component {
 			      <ScrollView style={allStyles.container}>
 					<View>	
 						{
-							this.props.registeringError &&
+							this.props.editingError &&
 							<View style={ allStyles.error }>
-								<Text>{this.props.registeringError}</Text>
+								<Text>{this.props.editingError}</Text>
 							</View>
 						}
 						<TextInput
@@ -52,35 +52,35 @@ class Settings extends React.Component {
 							keyboardType='email-address' 
 							returnKeyType='next' 
 							style={ allStyles.input } 
-							onChangeText={(registerEmail) => this.setState({registerEmail})} 
-							value={this.state.registerEmail} 
+							onChangeText={(editEmail) => this.setState({editEmail})} 
+							value={this.state.editEmail} 
 							placeholder='Email' 
 							onSubmitEditing={(event) => {
-								this.refs.registerName.focus(); 
+								this.refs.editName.focus(); 
 							}}
 						/>
 						<TextInput
-							ref='registerName' 
+							ref='editName' 
 							style={ allStyles.input } 
-							onChangeText={(registerName) => this.setState({registerName})} 
+							onChangeText={(editName) => this.setState({editName})} 
 							returnKeyType='next' 
-							value={this.state.registerName} 
+							value={this.state.editName} 
 							placeholder='Name' 
 							onSubmitEditing={(event) => {
-								this.refs.registerUsername.focus();
+								this.refs.editUsername.focus();
 							}}
 						/>
 						<TextInput
 							autoCapitalize='none'
 							autoCorrect={false}
-							ref='registerUsername' 
+							ref='editUsername' 
 							style={ allStyles.input } 
-							onChangeText={(registerUsername) => this.setState({registerUsername})} 
+							onChangeText={(editUsername) => this.setState({editUsername})} 
 							returnKeyType='next' 
-							value={this.state.registerUsername} 
+							value={this.state.editUsername} 
 							placeholder='Username' 
 							onSubmitEditing={(event) => {
-								this.refs.registerPassword.focus();
+								this.refs.editPassword.focus();
 							}}
 						/>
 						<TextInput
@@ -93,26 +93,26 @@ class Settings extends React.Component {
 							placeholder='Caption' 
 								multiline={true}
 							onSubmitEditing={(event) => {
-								this.refs.registerPassword.focus();
+								this.refs.editPassword.focus();
 							}}
 						/>
 						<TextInput
-							ref='registerPassword' 
+							ref='editPassword' 
 							style={ allStyles.input } 
-							onChangeText={(registerPassword) => this.setState({registerPassword})} 
+							onChangeText={(editPassword) => this.setState({editPassword})} 
 							returnKeyType='next' 
-							value={this.state.registerPassword} 
+							value={this.state.editPassword} 
 							secureTextEntry={true} 
 							placeholder='Password'
 							onSubmitEditing={(event) => {
-								this.refs.registerPasswordConfirmation.focus();
+								this.refs.editPasswordConfirmation.focus();
 							}}
 						/>
 						<TextInput
-							ref='registerPasswordConfirmation' 
+							ref='editPasswordConfirmation' 
 							style={ allStyles.input } 
-							onChangeText={(registerPasswordConfirmation) => this.setState({registerPasswordConfirmation})} 
-							value={this.state.registerPasswordConfirmation} 
+							onChangeText={(editPasswordConfirmation) => this.setState({editPasswordConfirmation})} 
+							value={this.state.editPasswordConfirmation} 
 							secureTextEntry={true} 
 							placeholder='Password Confirmation'
 						/>

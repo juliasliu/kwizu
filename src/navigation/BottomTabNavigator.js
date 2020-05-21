@@ -60,12 +60,12 @@ class HomeStackScreen extends React.Component {
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',
 			      	}} />
-			      <HomeStack.Screen name="New Personality Kwiz" component={New} options={{
+			      <HomeStack.Screen name="New Personality Kwiz" component={New} type={"Personality"} options={{
 			    	  headerTitle: 'New Personality Kwiz',
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',
 			      	}} />
-			      <HomeStack.Screen name="New Trivia Kwiz" component={New} options={{
+			      <HomeStack.Screen name="New Trivia Kwiz" component={New} type={"Trivia"} options={{
 			    	  headerTitle: 'New Trivia Kwiz',
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',
@@ -91,11 +91,11 @@ class HomeStackScreen extends React.Component {
 			      style={[ allStyles.modal ]}>
 				      <View style={[ allStyles.card, allStyles.modalView, allStyles.modalViewDark ]}>
 				        <Text style={ allStyles.modalTitle }>Create a new Kwiz</Text>
-				        <TouchableOpacity onPress={() => {this.toggleModal(); this.props.navigation.navigate('New Personality Kwiz'); }} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
+				        <TouchableOpacity onPress={() => {this.toggleModal(); this.props.navigation.navigate('New Personality Kwiz', {type: "Personality"}); }} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
 				        	<TabBarIcon name="md-paw" style={[ allStyles.buttonIcon ]}/>
 				        	<Text>Personality</Text>
 				        </TouchableOpacity>
-				        <TouchableOpacity onPress={() => { this.toggleModal(); this.props.navigation.navigate('New Trivia Kwiz'); }} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
+				        <TouchableOpacity onPress={() => { this.toggleModal(); this.props.navigation.navigate('New Trivia Kwiz', {type: "Trivia"}); }} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
 					        <TabBarIcon name="md-trophy" style={[ allStyles.buttonIcon ]}/>
 				        	<Text>Trivia</Text>
 				        </TouchableOpacity>
@@ -189,8 +189,8 @@ function ProfileStackScreen({navigation}) {
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',
 			      	}} />
-			      <HomeStack.Screen name="Save and Share Kwiz" component={Save} options={{
-			    	  headerTitle: 'New Personality Kwiz',
+			      <ProfileStack.Screen name="Kwiz Results" component={Leaderboard} options={{
+			    	  headerTitle: 'Kwiz Leaderboard',
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',
 			      	}} />

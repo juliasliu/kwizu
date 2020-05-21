@@ -111,21 +111,18 @@ const styles = StyleSheet.create({
 	    textAlignVertical: 'top',
 	    borderRadius: 20,
 	  },
-	  checkbox: {
+	  dropdown: {
 		  flex: 1, 
 		  width: 'auto',
-			  backgroundColor: "#fff",
-			  marginVertical: 10,
-			  padding: 10,
-			  borderRadius: 20,
-			  shadowColor: "#e1e7ed",
-			  shadowOffset: {
-				  width: 0,
-				  height: 5,
-			  },
-			  shadowOpacity: 1,
-			  shadowRadius: 0,
-			  elevation: 1,
+	  },
+	  dropdownInput: {
+		borderBottomWidth: 0,
+	  },
+	  dropdownPicker: {
+		  width: 'auto',
+		  padding: 0,
+		  borderWidth: 1,
+		  borderColor: '#e1e7ed',
 	  },
   button: {
 	  display: 'flex',

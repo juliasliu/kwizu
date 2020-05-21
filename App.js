@@ -3,7 +3,7 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import App from './src/main';
 
 import { Provider } from 'mobx-react'; 
-import {users, chats} from './src/stores';
+import {users, chats, quizzes} from './src/stores';
 
 export default function Kwizu(props) { 
 		return (

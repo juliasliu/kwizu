@@ -35,7 +35,12 @@ const styles = StyleSheet.create({
 	  paddingHorizontal: 20,
   },
   quizForm: {
-		marginTop: 20,  
+		marginVertical: 20,  
+	  },
+	  quizFormHeaderContainer: {
+		  display: 'flex',
+		  flexDirection: 'row',
+		  justifyContent: 'space-between',
 	  },
   quizFormHeader: {
 	  marginLeft: 'auto',
@@ -64,41 +69,40 @@ const styles = StyleSheet.create({
 	  justifyContent: 'space-between',
   },
   quizFormAddButton: {
-	  marginHorizontal: '5%',
+	  marginRight: '5%',
+	  marginLeft: 'auto',
 	  marginVertical: 0,
 	  borderTopLeftRadius: 0,
 	  borderTopRightRadius: 0,
-	  borderWidth: 0,
-	  padding: 10,
-	  shadowOffset: {
-		  width: 0,
-		  height: 5,
-	  },
-	  shadowOpacity: 1,
-	  shadowRadius: 0,
-	  elevation: 1,
   }, 
   choiceContainer: {
-	  
+	  marginVertical: 10,
   },
   choiceInput: {
-	display: 'flex',
-	flexDirection: 'row',
-	  alignItems: 'center',
-  },
-  choiceInputField: {
-	  width: '75%',
-	  borderRadius: 0,
+		display: 'flex',
+		flexDirection: 'row',
+		  alignItems: 'center',
+		width: '100%',
   },
   choiceInputSelect: {
+	  width: '30%',
+	  height: 50,
+	  marginVertical: 0,
 	  borderTopRightRadius: 0,
 	  borderBottomRightRadius: 0,
-	  height: 50,
+	  zIndex: 2,
+  },
+  choiceInputField: {
+	  width: '57.5%',
+	  marginVertical: 0,
+	  borderRadius: 0,
   },
   choiceInputDelete: {
+	  width: '12.5%',
+	  height: 50,
+	  marginVertical: 0,
 	  borderTopLeftRadius: 0,
 	  borderBottomLeftRadius: 0,
-	  height: 50,
   },
   quizSaveText: {
 	  textAlign: 'center', 
@@ -146,7 +150,6 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		flexDirection: 'row',
 		  alignItems: 'center',
-		  marginVertical: 10,
 		  borderColor: '#e1e7ed',
 		  borderWidth: 1,
   },

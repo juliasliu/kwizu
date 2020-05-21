@@ -34,6 +34,17 @@ class RegisterForm extends React.Component {
 					</View>
 				}
 				<TextInput
+					ref='registerName' 
+					style={ allStyles.input } 
+					onChangeText={(registerName) => this.setState({registerName})} 
+					returnKeyType='next' 
+					value={this.state.registerName} 
+					placeholder='Name' 
+					onSubmitEditing={(event) => {
+						this.refs.registerUsername.focus();
+					}}
+				/>
+				<TextInput
 					autoCapitalize='none' 
 					autoCorrect={false} 
 					keyboardType='email-address' 
@@ -44,17 +55,6 @@ class RegisterForm extends React.Component {
 					placeholder='Email' 
 					onSubmitEditing={(event) => {
 						this.refs.registerName.focus(); 
-					}}
-				/>
-				<TextInput
-					ref='registerName' 
-					style={ allStyles.input } 
-					onChangeText={(registerName) => this.setState({registerName})} 
-					returnKeyType='next' 
-					value={this.state.registerName} 
-					placeholder='Name' 
-					onSubmitEditing={(event) => {
-						this.refs.registerUsername.focus();
 					}}
 				/>
 				<TextInput

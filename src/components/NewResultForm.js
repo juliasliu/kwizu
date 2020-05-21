@@ -16,14 +16,21 @@ import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
 
 class NewResultForm extends React.Component {
-	state= { 
-			registerEmail: '', 
-			registerPassword: '', 
-			registerName: ''
+	state= {
+			index: 0,
+			title: '' ,
+			description: '',
+			weight: 1,
+			image: '',
+	};
+	
+	onPressAddResult() { 
+		this.props.onPressAdd();
 	}
-	onPressRegister() { 
-		this.props.onPress(this.state.registerEmail, this.state.registerPassword, this.state.registerName);
+	onPressDeleteResult() { 
+		this.props.onPressDelete();
 	}
+	
 	render() {
 		return (
 				<View style={[ styles.quizForm ]}>
@@ -40,26 +47,23 @@ class NewResultForm extends React.Component {
 						<TextInput
 							returnKeyType='next' 
 							style={ allStyles.input } 
-							onChangeText={(registerEmail) => this.setState({registerEmail})} 
-							value={this.state.registerEmail} 
+							onChangeText={(title) => this.setState({title})} 
+							value={this.state.title} 
 							placeholder='Result title (25 words max)' 
 							onSubmitEditing={(event) => {
-								this.refs.registerName.focus(); 
+								this.refs.resultDescription.focus(); 
 							}}
 						/>
 						<TextInput
 							ref='resultDescription' 
 							returnKeyType='next' 
 							style={[ allStyles.input, allStyles.textarea ]} 
-							onChangeText={(registerName) => this.setState({registerName})} 
+							onChangeText={(description) => this.setState({description})} 
 							returnKeyType='next' 
-							value={this.state.registerName} 
+							value={this.state.description} 
 							multiline={true}
 					    	numberOfLines={5}
-							placeholder='Result description (200 words max)' 
-							onSubmitEditing={(event) => {
-								this.refs.registerPassword.focus();
-							}}
+							placeholder='Result description (200 words max)'
 						/>
 	
 						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton ]}
@@ -71,14 +75,9 @@ class NewResultForm extends React.Component {
 					
 					<View style={ styles.quizFormAdd }>
 						<TouchableOpacity style={[ allStyles.button, allStyles.redButton, styles.quizFormAddButton ]}
-			                onPress={() => alert("")}>
+			                onPress={this.onPressDeleteResult.bind(this)}>
 							<TabBarIcon name="md-trash" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 							<Text style={ allStyles.whiteText }>Delete result</Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={[ allStyles.button, allStyles.greenButton, styles.quizFormAddButton ]}
-			                onPress={() => alert("")}>
-							<TabBarIcon name="md-add" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-							<Text style={ allStyles.whiteText }>New result</Text>
 						</TouchableOpacity>
 					</View>
 			</View>

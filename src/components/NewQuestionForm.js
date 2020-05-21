@@ -9,7 +9,7 @@ import {
 	ActivityIndicator,
 	TouchableOpacity
 } from 'react-native';
-import CheckBox from 'react-native-check-box'
+import { Dropdown } from 'react-native-material-dropdown';
 
 import TabBarIcon from '../components/TabBarIcon';
 
@@ -17,15 +17,102 @@ import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
 
 class NewQuestionForm extends React.Component {
-	state= { 
-			registerEmail: '', 
-			registerPassword: '', 
-			registerName: ''
+	state= {
+			index: 0,
+			question: { title: '' },
+			choices: [ 
+				{
+					index: 0,
+					content: '',
+					weight: 1
+				},
+				],
+			choiceIndex: 0,
+	};
+	
+	onPressAddQuestion() { 
+		this.props.onPressAdd();
 	}
-	onPressRegister() { 
-		this.props.onPress(this.state.registerEmail, this.state.registerPassword, this.state.registerName);
+	onPressDeleteQuestion() { 
+		this.props.onPressDelete();
 	}
+
+	onPressAddChoice() {
+		const newChoice = { index: this.state.choiceIndex+1, content: '', weight: 1, };
+		 
+	    this.setState({
+	      choices: [...this.state.choices, newChoice],
+	      choiceIndex: this.state.choiceIndex+1
+	    });
+	}
+	onPressDeleteChoice = (index) => {
+		if (this.state.choices.length != 1) {
+			const newChoicesArray = [...this.state.choices]
+			newChoicesArray.splice(newChoicesArray.findIndex(elem => elem.index === index), 1);
+			
+			this.setState({
+				choices: newChoicesArray
+			});
+		}
+	}
+	
+	setQuestionValue = (value) => {
+		var question = this.state.question
+		question.title = value;
+		this.setState({question})
+	}
+	setSelectedResultValue = (index, value) => {
+		var choices = [...this.state.choices]
+		choices[choices.findIndex(elem => elem.index === index)].weight = value;
+		this.setState({choices})
+	}
+	setChoiceValue = (index, value) => {
+		var choices = [...this.state.choices]
+		choices[choices.findIndex(elem => elem.index === index)].content = value;
+		this.setState({choices})
+	}
+	
 	render() {
+		
+		// convert this.prop.results into { label, value }
+		let data = []
+		for(var i = 0; i < this.props.results.length; i++) {
+			let weight = this.props.results[i].weight
+			data.push({ label: "Result " + weight, value: weight})
+		}
+		
+		let choicesArray = this.state.choices.map(( item, key ) =>
+		{
+			let actualArrayIndex = item != undefined ? this.state.choices.findIndex(elem => elem.index === item.index) : null;
+			return item != undefined ? (<View style={ styles.choiceContainer } key = { item.index }>
+				<View style={ styles.choiceInput }>
+					<Dropdown
+				        label='' labelFontSize={0} labelHeight={0}
+				        data={data}
+						value={this.state.choices[actualArrayIndex].weight}
+						fontSize={14}
+						onChangeText={(value,index,data) => this.setSelectedResultValue(item.index, value)} 
+						containerStyle={[ allStyles.input, allStyles.dropdown, styles.choiceInputSelect ]}
+						inputContainerStyle={[allStyles.dropdownInput]}
+						pickerStyle={[allStyles.card, allStyles.dropdownPicker]}
+						dropdownOffset={{top: 50, left: 20}}
+				      />
+					<TextInput
+						ref='choice' 
+						returnKeyType='next' 
+						style={[ allStyles.input, styles.choiceInputField ]} 
+						onChangeText={(value) => this.setChoiceValue(item.index, value)}
+						value={this.state.choices[actualArrayIndex].content} 
+						placeholder='Choice (25 words max)'
+					/>
+					<TouchableOpacity style={[ allStyles.button, allStyles.grayButton, styles.choiceInputDelete ]}
+		                onPress={() => this.onPressDeleteChoice(item.index)}>
+						<TabBarIcon name="md-trash" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+					</TouchableOpacity>
+				</View>
+			</View>) : null
+		});
+		
 		return (
 				<View style={[ styles.quizForm ]}>
 					<View style={[ styles.quizFormHeader, styles.questionHeader ]}>
@@ -41,51 +128,19 @@ class NewQuestionForm extends React.Component {
 					<TextInput
 						returnKeyType='next' 
 						style={[ allStyles.input, allStyles.textarea ]} 
-						onChangeText={(registerEmail) => this.setState({registerEmail})} 
-						value={this.state.registerEmail} 
+						onChangeText={(value) => this.setQuestionValue(value)} 
+						value={this.state.question.title} 
 						multiline={true}
 				    	numberOfLines={3}
-						placeholder='Question title (50 words max)' 
-						onSubmitEditing={(event) => {
-							this.refs.registerName.focus(); 
-						}}
+						placeholder='Question title (50 words max)'
 					/>
-					<View style={ styles.choiceContainer }>
-						<View style={ styles.choiceInput }>
-							<View style={[ allStyles.checkbox, allStyles.button, allStyles.whiteButton, styles.choiceInputSelect ]}>
-								<CheckBox
-								    onClick={()=>{
-								      this.setState({
-								          isChecked:!this.state.isChecked
-								      })
-								    }}
-									checkBoxColor="#a0acba"
-								    isChecked={this.state.isChecked}
-								/>
-							</View>
-							<TextInput
-								ref='choice' 
-								returnKeyType='next' 
-								style={[ allStyles.input, styles.choiceInputField ]} 
-								onChangeText={(registerName) => this.setState({registerName})} 
-								returnKeyType='next' 
-								value={this.state.registerName} 
-								placeholder='Choice 1 (25 words max)' 
-								onSubmitEditing={(event) => {
-									this.refs.registerPassword.focus();
-								}}
-							/>
-							<TouchableOpacity style={[ allStyles.button, allStyles.redButton, styles.choiceInputDelete ]}
-				                onPress={() => alert("")}>
-								<TabBarIcon name="md-close" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-							</TouchableOpacity>
-						</View>
-						
-						
-					</View>
+
+					{
+							choicesArray
+					}
 					
 					<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton ]}
-	                	onPress={() => alert('nice friends!')}>
+	                	onPress={this.onPressAddChoice.bind(this)}>
 						<TabBarIcon name="md-add" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 						<Text style={ allStyles.whiteText }>Add choice</Text>
 					</TouchableOpacity>
@@ -93,14 +148,9 @@ class NewQuestionForm extends React.Component {
 				
 				<View style={ styles.quizFormAdd }>
 					<TouchableOpacity style={[ allStyles.button, allStyles.redButton, styles.quizFormAddButton ]}
-		                onPress={() => alert("")}>
+		                onPress={this.onPressDeleteQuestion.bind(this)}>
 						<TabBarIcon name="md-trash" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 						<Text style={ allStyles.whiteText }>Delete question</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={[ allStyles.button, allStyles.greenButton, styles.quizFormAddButton ]}
-		                onPress={() => alert("")}>
-						<TabBarIcon name="md-add" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-						<Text style={ allStyles.whiteText }>New question</Text>
 					</TouchableOpacity>
 				</View>
 			</View>

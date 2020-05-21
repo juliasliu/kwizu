@@ -43,8 +43,8 @@ class ProfileCard extends React.Component {
 							/>
 						</View>
 						<View style={ styles.profileDescriptionContainer }>
-							<Text style={ styles.profileName }>First Last Name</Text>
-							<Text style={ styles.profileUsername }>@username</Text>
+							<Text style={ styles.profileName }>{this.props.user.name}</Text>
+							<Text style={ styles.profileUsername }>@{this.props.user.username}</Text>
 							<Text style={ styles.profileCaption }>user caption lorem ipsum we love waffles hehehe 3 </Text>
 							<Text style={ styles.profileLevel }>Level 12</Text>
 							<View style={ styles.profileLevelBar }>
