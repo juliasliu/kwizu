@@ -1,15 +1,10 @@
 import { Platform, StyleSheet, StatusBar } from 'react-native';
 
 const styles = StyleSheet.create({
-  quizThumbnailContainer: {
-	  flexDirection: 'row',
-	  alignItems: 'center',
-	  paddingVertical: 10,
-  },
   quizCard: {
 		backgroundColor: '#fff',
-	    padding: 10,
 	    marginRight: 20,
+	    padding: 0,
 	    display: 'flex',
 	    flexDirection: 'row',
 	    alignItems: 'flex-end',
@@ -22,10 +17,31 @@ const styles = StyleSheet.create({
 	width: 150,
 	height: 150,
   },
+  quizImageContainer: {
+	  flex: 1,
+		position: 'absolute',
+		width: '100%',
+		height: '100%',
+  },
+  quizImage: {
+	  resizeMode: 'cover',
+		width: '100%',
+		height: '100%',
+		borderRadius: 20,
+  },
+  quizImageOverlay: {
+	  flex: 1,
+	    position: 'absolute',
+		width: '100%',
+		height: '100%',
+		borderRadius: 20,
+	    opacity: 0.15,
+	    backgroundColor: '#000',
+  },
   quizThumbnailTitle: {
-    paddingVertical: 10,
+    padding: 10,
 	  fontWeight: 'bold',
-	  color: '#515d6e',
+	  color: '#fff',
   },
   quizThumbnailDescription: {
     fontSize: 14,

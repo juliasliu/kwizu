@@ -4,15 +4,72 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 
 import { MonoText } from '../components/StyledText';
-import QuizPreview from '../components/QuizPreview';
 import QuizThumbnail from '../components/QuizThumbnail';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
 
 class HomeScreen extends React.Component {
+	state = {
+		quizzes: [ 
+			[ // daily
+				{
+					id: 1348237,
+					title: 'Kwiz Title here: Find your personality this should be 50 words max',
+					image: 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg',
+					user: this.props.user,
+				},
+				{
+					id: 1348237,
+					title: 'Kwiz Title here: Find your personality this should be 50 words max',
+					image: 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg',
+					user: this.props.user,
+				},
+				{
+					id: 1348237,
+					title: 'Kwiz Title here: Find your personality this should be 50 words max',
+					image: 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg',
+					user: this.props.user,
+				},
+			],
+			[ // seasonal
+				{
+					id: 1348237,
+					title: 'Kwiz Title here: Find your personality this should be 50 words max',
+					image: 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg',
+					user: this.props.user,
+				},
+				{
+					id: 1348237,
+					title: 'Kwiz Title here: Find your personality this should be 50 words max',
+					image: 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg',
+					user: this.props.user,
+				},
+				{
+					id: 1348237,
+					title: 'Kwiz Title here: Find your personality this should be 50 words max',
+					image: 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg',
+					user: this.props.user,
+				},
+			],
+		],
+	}
 	
 	render() {
+		
+		let quizzesArray = (type) => {
+			return this.state.quizzes[type].map(( item, key ) =>
+			{
+				return item != undefined ? (
+						<QuizThumbnail 
+								quiz={item}
+								key={key}
+								type={ type == 0 ? "preview" : "thumbnail"}
+								navigation={this.props.navigation}/>
+					) : null
+			});
+		}
+		
 		  return (
 		    <View style={allStyles.container}>
 		      <ScrollView style={allStyles.container}>
@@ -20,47 +77,37 @@ class HomeScreen extends React.Component {
 			      <View style={allStyles.section}>
 			      	<Text style={allStyles.sectionTitle}>Daily</Text>
 			      	<Text style={allStyles.sectionSubtitle}>These kwizzes are updated every 24 hours. Come back every day and check them out!</Text>
-			      	<ScrollView contentContainerStyle={[ styles.quizThumbnailContainer, styles.dailyQuizContainer ]} horizontal= {true} decelerationRate={0} snapToInterval={250} snapToAlignment={"center"}>
-			      		<QuizPreview navigation={this.props.navigation}/>
-			      		<QuizPreview navigation={this.props.navigation} />
-			      		<QuizPreview navigation={this.props.navigation} />
+			      	<ScrollView contentContainerStyle={[ allStyles.quizThumbnailContainer ]} horizontal= {true} decelerationRate={0} snapToInterval={250} snapToAlignment={"center"}>
+			      		{
+			      			quizzesArray(0)
+			      		}
 					</ScrollView>
 			      </View>
 			      <View style={allStyles.section}>
 			    	<Text style={allStyles.sectionTitle}>Seasonal</Text>
 			      	<Text style={allStyles.sectionSubtitle}>We cycle through categories of kwizzes based on the time of the year. See how you do on them!</Text>
-			    	<ScrollView contentContainerStyle={styles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
-			  			<QuizThumbnail navigation={this.props.navigation} />
-			  			<QuizThumbnail navigation={this.props.navigation} />
-			  			<QuizThumbnail navigation={this.props.navigation} />
+			    	<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
+			    	{
+		      			quizzesArray(1)
+		      		}
 			  		</ScrollView>
 			      </View>
 			      <View style={allStyles.section}>
 			      	<Text style={allStyles.sectionTitle}>Personality</Text>
 			      	<Text style={allStyles.sectionSubtitle}>Take these kwizzes to uncover layers of your personality or just explore various fun aspects of life!</Text>
-			    	<ScrollView contentContainerStyle={styles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
-						<QuizThumbnail navigation={this.props.navigation} />
-						<QuizThumbnail navigation={this.props.navigation} />
-						<QuizThumbnail navigation={this.props.navigation} />
+			    	<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
+			    	{
+		      			quizzesArray(1)
+		      		}
 					</ScrollView>
 			      </View>
 			      <View style={allStyles.section}>
 			      	<Text style={allStyles.sectionTitle}>Trivia</Text>
 			      	<Text style={allStyles.sectionSubtitle}>See how you measure up to others in your trivia game. Take these kwizzes to find out!</Text>
-			    	<ScrollView contentContainerStyle={styles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
-						<QuizThumbnail navigation={this.props.navigation} />
-						<QuizThumbnail navigation={this.props.navigation} />
-						<QuizThumbnail navigation={this.props.navigation} />
-					</ScrollView>
-			      </View>
-
-			      <View style={allStyles.section}>
-			      	<Text style={allStyles.sectionTitle}>My Tests</Text>
-			      	<Text style={allStyles.sectionSubtitle}>All your homemade kwizzes show up here. Edit them, share them, or even create a new one!</Text>
-			    	<ScrollView contentContainerStyle={styles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
-						<QuizThumbnail navigation={this.props.navigation} />
-						<QuizThumbnail navigation={this.props.navigation} />
-						<QuizThumbnail navigation={this.props.navigation} />
+			    	<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
+			    	{
+		      			quizzesArray(1)
+		      		}
 					</ScrollView>
 			      </View>
 		      </ScrollView>
@@ -69,31 +116,4 @@ class HomeScreen extends React.Component {
 		}
 }
 
-HomeScreen.navigationOptions = {
-  header: null,
-};
-
 export default HomeScreen;
-
-//function DevelopmentModeNotice() {
-//  if (__DEV__) {
-//    const learnMoreButton = (
-//      <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
-//        Learn more
-//      </Text>
-//    );
-//
-//    return (
-//      <Text style={styles.developmentModeText}>
-//        Development mode is enabled: your app will be slower but you can use useful development
-//        tools. {learnMoreButton}
-//      </Text>
-//    );
-//  } else {
-//    return (
-//      <Text style={styles.developmentModeText}>
-//        You are not in development mode: your app will run at full speed.
-//      </Text>
-//    );
-//  }
-//}

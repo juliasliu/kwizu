@@ -246,6 +246,11 @@ const styles = StyleSheet.create({
 	  elevation: 1,
 	  width: '100%',  
   },
+  quizThumbnailContainer: {
+	  flexDirection: 'row',
+	  alignItems: 'center',
+	  paddingVertical: 10,
+  },
   quizResult: {
 	  alignItems: 'center',
 	  marginVertical: 10,
@@ -287,6 +292,8 @@ const styles = StyleSheet.create({
   },
   quizResultDropdownButton: {
 	  fontSize: 32,
+	  marginRight: 10,
+	  color: '#fff',
   },
   profileThumbnailCard: {
 //		marginBottom: 20,  

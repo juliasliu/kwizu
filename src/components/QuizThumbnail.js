@@ -17,23 +17,25 @@ import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
 
 class QuizThumbnail extends React.Component {
-
-	handleLearnMorePress() {
-	  WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/workflow/development-mode/');
-	}
-
-	handleHelpPress() {
-	  WebBrowser.openBrowserAsync(
-	    'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
-	  );
+	
+	getCardStyle(type) {
+		if (type == "preview")
+			return styles.quizPreview
+		if (type == "thumbnail")
+			return styles.quizThumbnail
 	}
 	
 	render() {
+		this.state = this.props.quiz;
 		
 		return (
-			      <TouchableOpacity style={[ allStyles.card, styles.quizCard, styles.quizThumbnail ]} 
+			      <TouchableOpacity style={[ allStyles.card, styles.quizCard, this.getCardStyle(this.props.type) ]} 
 			      	onPress={() => this.props.navigation.navigate("Take Kwiz")}>
-			        <Text style={styles.quizThumbnailTitle}>Find your personality this should be 50 words max</Text>
+				      <View style={[styles.quizImageContainer]}>
+						<Image style={[styles.quizImage]} source={{uri: this.state.image }}/>
+				        <View style={[styles.quizImageOverlay]} />
+					</View>
+			      	<Text style={styles.quizThumbnailTitle} numberOfLines={3}>{ this.state.title }</Text>
 			      </TouchableOpacity>
 		)
 	} 

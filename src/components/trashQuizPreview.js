@@ -18,22 +18,19 @@ import styles from '../styles/HomeScreen';
 
 class QuizPreview extends React.Component {
 
-	handleLearnMorePress() {
-	  WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/workflow/development-mode/');
-	}
-
-	handleHelpPress() {
-	  WebBrowser.openBrowserAsync(
-	    'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
-	  );
-	}
+	
 	
 	render() {
+		this.state = this.props.quiz;
 		
 		return (
 				<TouchableOpacity style={[ allStyles.card, styles.quizCard, styles.quizPreview ]}
 					onPress={() => this.props.navigation.navigate("Take Kwiz")}>
-				        <Text style={styles.quizThumbnailTitle}>Find your personality this should be 50 words max</Text>
+						<View style={[styles.quizImageContainer]}>
+							<Image style={[styles.quizImage]} source={{uri: this.state.image }}/>
+					        <View style={[styles.quizImageOverlay]} />
+						</View>
+						<Text style={styles.quizThumbnailTitle} numberOfLines={3}>{ this.state.title }</Text>
 			      </TouchableOpacity>
 		)
 	} 

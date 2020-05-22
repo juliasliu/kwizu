@@ -156,6 +156,12 @@ class Take extends React.Component {
 		scrollHeights: [],
 	}
 	
+	scrollIndexHelper() {
+		for (var i = 1; i < this.state.quiz.questions.length + 1; i++) {
+			this.state.scrollIndices[i] = this.state.scrollIndices[i-1] + this.state.scrollHeights[i];
+		}
+	}
+	
 	setSelectedChoiceValue(questionIndex, choiceWeight) {
 		if (!this.state.isDone) {
 			// remove the choice that is currently selected for this question
@@ -179,8 +185,7 @@ class Take extends React.Component {
 				}
 			}
 			if (nextIndex < this.state.quiz.questions.length) {
-
-				this.state.scrollIndices[nextIndex] = this.state.scrollIndices[nextIndex-1] + this.state.scrollHeights[nextIndex];
+				this.scrollIndexHelper();
 
 				console.log("nextIndex: " + nextIndex + ", scroll to: " + this.state.scrollIndices[nextIndex])
 				
@@ -230,7 +235,7 @@ class Take extends React.Component {
 				
 				// initate new quizzing: todo later
 			}
-				
+			
 			return this.state.isDone 
 					? (
 							<View>
@@ -258,10 +263,8 @@ class Take extends React.Component {
 							      <View style={allStyles.section}>
 							    	<Text style={allStyles.sectionTitle}>Recommended</Text>
 							      	<Text style={allStyles.sectionSubtitle}>Take another one! We promise it's not an addiction. ;)</Text>
-							    	<ScrollView contentContainerStyle={styles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
-							  			<QuizThumbnail navigation={this.props.navigation} />
-							  			<QuizThumbnail navigation={this.props.navigation} />
-							  			<QuizThumbnail navigation={this.props.navigation} />
+							    	<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
+							  			
 							  		</ScrollView>
 							      </View>
 								
