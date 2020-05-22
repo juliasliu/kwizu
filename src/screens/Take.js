@@ -10,6 +10,7 @@ import {
 	StyleSheet,
 	Link,
 	TouchableOpacity,
+	Dimensions,
 } from 'react-native';
 
 import { observer, inject } from 'mobx-react'
@@ -37,6 +38,69 @@ class Take extends React.Component {
 			questions: [ 
 				{
 					index: 0,
+					question: { title: 'How much wood could a wood chuck chuck if a wood chuck could chuck wood?' },
+					choices: [ 
+						{
+							index: 0,
+							content: 'Choice #1 whttevr asfkjas ies her',
+							weight: 1
+						},
+						{
+							index: 1,
+							content: 'Choice #2 whttevr asfkjas ies her',
+							weight: 2
+						},
+						{
+							index: 2,
+							content: 'Choice #3 whttevr asfkjas ies her',
+							weight: 3
+						},
+						],
+				},
+				{
+					index: 1,
+					question: { title: 'How much wood could a wood chuck chuck if a wood chuck could chuck wood?' },
+					choices: [ 
+						{
+							index: 0,
+							content: 'Choice #1 whttevr asfkjas ies her',
+							weight: 1
+						},
+						{
+							index: 1,
+							content: 'Choice #2 whttevr asfkjas ies her',
+							weight: 2
+						},
+						{
+							index: 2,
+							content: 'Choice #3 whttevr asfkjas ies her',
+							weight: 3
+						},
+						],
+				},
+				{
+					index: 2,
+					question: { title: 'How much wood could a wood chuck chuck if a wood chuck could chuck wood?' },
+					choices: [ 
+						{
+							index: 0,
+							content: 'Choice #1 whttevr asfkjas ies her',
+							weight: 1
+						},
+						{
+							index: 1,
+							content: 'Choice #2 whttevr asfkjas ies her',
+							weight: 2
+						},
+						{
+							index: 2,
+							content: 'Choice #3 whttevr asfkjas ies her',
+							weight: 3
+						},
+						],
+				},
+				{
+					index: 3,
 					question: { title: 'How much wood could a wood chuck chuck if a wood chuck could chuck wood?' },
 					choices: [ 
 						{
@@ -88,35 +152,65 @@ class Take extends React.Component {
 			}*/
 		],
 		isDone: false,
+		scrollIndices: [70,],	// starting scroll position is 50 given the title heading of the kwiz
+		scrollHeights: [],
 	}
 	
 	setSelectedChoiceValue(questionIndex, choiceWeight) {
 		if (!this.state.isDone) {
 			// remove the choice that is currently selected for this question
 			var answers = [...this.state.answers]
-			answers.splice(answers.findIndex(elem => elem.questionIndex === questionIndex && elem.choiceWeight === choiceWeight), 1);
+			answers.splice(answers.findIndex(elem => elem.questionIndex === questionIndex), 1);
 			
 			// select this choice by adding a new answer to answers
 			const newAnswer = { 
 					questionIndex: questionIndex,
 					choiceWeight: choiceWeight, };
-			answers = [...answers, newAnswer]
+			answers = [...this.state.answers, newAnswer]
 			
 			this.setState({answers})
+			
+			// scroll to next incomplete question if not done
+			var nextIndex = this.state.quiz.questions.length;
+			for (var i = questionIndex; i < this.state.quiz.questions.length; i++) {
+				if (answers.findIndex(elem => elem.questionIndex === i) < 0) {
+					nextIndex = i;
+					break;
+				}
+			}
+			if (nextIndex < this.state.quiz.questions.length) {
+
+				this.state.scrollIndices[nextIndex] = this.state.scrollIndices[nextIndex-1] + this.state.scrollHeights[nextIndex];
+
+				console.log("nextIndex: " + nextIndex + ", scroll to: " + this.state.scrollIndices[nextIndex])
+				
+		        this.scrollview_ref.scrollTo({
+		            x: 0,
+		            y: this.state.scrollIndices[nextIndex],
+		            animated: true,
+		        });
+			}
 		}
 	}
 	
 	render() {
 
-		console.log(this.state.answers)
 		let questionsArray = this.state.quiz.questions.map(( item, key ) =>
 		{
 			return item != undefined ? (
-					<TakeQuestion
-					question={item}
-					answers={this.state.answers}
-					setSelectedChoiceValue={this.setSelectedChoiceValue.bind(this)}/>
-					) : null
+					<View 
+					onLayout={event => {
+				        const layout = event.nativeEvent.layout;
+				        this.state.scrollHeights[item.index] = layout.height;
+						console.log("question " + item.index + ": " + this.state.scrollHeights[item.index])
+				      }}>
+						<TakeQuestion
+						question={item}
+						answers={this.state.answers}
+						setSelectedChoiceValue={this.setSelectedChoiceValue.bind(this)}
+						/>	
+					</View>
+			) : null
 		});
 		
 		let resultSection = () => {
@@ -128,12 +222,12 @@ class Take extends React.Component {
 			 * that weight is the weight of the corresponding result
 			 */
 			if (this.state.isDone) {
-				var sum = this.state.answers.reduce(function(previousValue, currentValue) {
-							return previousValue.choiceWeight + currentValue.choiceWeight
-						}).choiceWeight;
+				var sum = this.state.answers.reduce(function(a, b) {
+					return a + b.choiceWeight;
+				}, 0);
 				var roundedWeight = Math.round(sum / this.state.quiz.questions.length);
 				var resultOfQuiz = this.state.quiz.results[this.state.quiz.results.findIndex(elem => elem.weight === roundedWeight)];
-
+				
 				// initate new quizzing: todo later
 			}
 				
@@ -146,16 +240,13 @@ class Take extends React.Component {
 								<View style={[allStyles.section]}
 							      onLayout={event => {
 							        const layout = event.nativeEvent.layout;
-									this.scroll.props.scrollToPosition(
-										    0,
-										    layout.y + layout.height,
-										    true,
-										);
-							        console.log('height:', layout.height);
-							        console.log('width:', layout.width);
-							        console.log('x:', layout.x);
-							        console.log('y:', layout.y);
-								    console.log('scroll to:', layout.y + layout.height);
+							        var scrollIndex = this.state.scrollIndices[this.state.quiz.questions.length-1] + this.state.scrollHeights[this.state.quiz.questions.length-1]
+							        this.scrollview_ref.scrollTo({
+							            x: 0,
+							            y: scrollIndex,
+							            animated: true,
+							        });
+								    console.log('scroll to result:', scrollIndex);
 							      }}>
 									<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton, { height: 60, } ]}
 								        onPress={() => this.props.navigation.navigate("Kwiz Results")}>
@@ -185,10 +276,10 @@ class Take extends React.Component {
 		}
 		
 		return (
-				<KeyboardAwareScrollView style={[allStyles.container, styles.quizFormContainer ]}
-					innerRef={ref => {
-					    this.scroll = ref
-					  }}>
+				<ScrollView style={[allStyles.container, styles.quizFormContainer ]}
+				ref={ref => {
+				    this.scrollview_ref = ref;
+				  }}>
 					
 					<Text style={ allStyles.heading }>{ this.state.quiz.title }</Text>
 					
@@ -200,7 +291,7 @@ class Take extends React.Component {
 						resultSection()
 					}
 
-				</KeyboardAwareScrollView>
+				</ScrollView>
 		) 
 	}
 }
