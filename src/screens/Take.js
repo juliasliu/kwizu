@@ -28,13 +28,11 @@ import TakeResult from '../components/TakeResult'
 import ShareForm from '../components/ShareForm'
 import QuizThumbnail from '../components/QuizThumbnail'
 
-@inject('users') @observer
+@inject('users') @inject('quizzes') @observer
 class Take extends React.Component {
 	state = {
 		quiz: {
 			title: 'Kwiz Title here',
-			image: '',
-			user: this.props.user,
 			questions: [ 
 				{
 					index: 0,
@@ -154,6 +152,19 @@ class Take extends React.Component {
 		isDone: false,
 		scrollIndices: [70,],	// starting scroll position is 50 given the title heading of the kwiz
 		scrollHeights: [],
+	}
+	
+	componentDidMount() {
+		const {quiz_id} = this.props.route.params;
+		this.props.quizzes.show(quiz_id)
+		.then((res) => {
+			var quiz = this.state.quiz
+			quiz.title = res.title;
+			this.setState({quiz})
+		})
+		.catch((error) => {
+			console.log(error);
+		})
 	}
 	
 	scrollIndexHelper() {

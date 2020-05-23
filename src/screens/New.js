@@ -75,7 +75,7 @@ class New extends React.Component {
 	onPressCreate = (isPublic) => {
 		// check to see if kwiz already exists: if so, then only save/update; do this later
 		this.props.quizzes.create(this.state.title, isPublic)
-		.then((res) => {
+		.then(res => {
 			console.log("created!")
 			if (isPublic) {
 				this.props.navigation.dispatch(StackActions.pop(1));
@@ -84,7 +84,7 @@ class New extends React.Component {
 				this.props.quizzes.savingSuccess = "Your Kwiz was saved successfully"; // hard-coding the success message
 			}
 		})
-		.catch((error) => {
+		.catch(error => {
 			console.log(error);
 			this.props.quizzes.creatingError = error // hard-coding the error
 		})

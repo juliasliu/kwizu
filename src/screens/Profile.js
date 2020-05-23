@@ -14,52 +14,31 @@ import QuizThumbnail from '../components/QuizThumbnail';
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/ProfileScreen';
 
-@inject('users') @observer
+@inject('users') @inject('quizzes') @observer
 class Profile extends React.Component {
 	state = {
 			quizzes: [ 
-				[ // daily
-					{
-						id: 1348237,
-						title: 'Kwiz Title here: Find your personality this should be 50 words max',
-						image: 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg',
-						user: this.props.user,
-					},
-					{
-						id: 1348237,
-						title: 'Kwiz Title here: Find your personality this should be 50 words max',
-						image: 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg',
-						user: this.props.user,
-					},
-					{
-						id: 1348237,
-						title: 'Kwiz Title here: Find your personality this should be 50 words max',
-						image: 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg',
-						user: this.props.user,
-					},
-				],
-				[ // seasonal
-					{
-						id: 1348237,
-						title: 'Kwiz Title here: Find your personality this should be 50 words max',
-						image: 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg',
-						user: this.props.user,
-					},
-					{
-						id: 1348237,
-						title: 'Kwiz Title here: Find your personality this should be 50 words max',
-						image: 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg',
-						user: this.props.user,
-					},
-					{
-						id: 1348237,
-						title: 'Kwiz Title here: Find your personality this should be 50 words max',
-						image: 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg',
-						user: this.props.user,
-					},
-				],
+				[ /* daily */ ],
+				[ /* seasonal */ ],
+				[ /* personality */ ],
+				[ /* trivia */ ],
 			],
 		}
+	
+	componentDidMount() {
+		this.props.quizzes.index()
+		.then((res) => {
+			var quizzes = [...this.state.quizzes]
+			quizzes[0] = res;
+			quizzes[1] = res;
+			quizzes[2] = res;
+			quizzes[3] = res;
+			this.setState({quizzes})
+		})
+		.catch((error) => {
+			console.log(error);
+		})
+	}
 	
 	render () {
 		let quizzesArray = (type) => {
@@ -69,7 +48,7 @@ class Profile extends React.Component {
 						<QuizThumbnail 
 								quiz={item}
 								key={key}
-								type={ type == 0 ? "preview" : "thumbnail"}
+								type={"preview"}
 								navigation={this.props.navigation}/>
 					) : null
 			});
@@ -93,7 +72,7 @@ class Profile extends React.Component {
 						      	<Text style={allStyles.sectionSubtitle}>All your homemade kwizzes show up here. Edit them, share them, or even create a new one in Home!</Text>
 						    	<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={250} snapToAlignment={"center"}>
 						    	{
-					      			quizzesArray(0)
+					      			quizzesArray(1)
 					      		}
 								</ScrollView>
 						      </View>

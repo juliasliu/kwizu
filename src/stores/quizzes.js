@@ -33,7 +33,7 @@ class Quizzes {
 			this.creating = true;
 		
 			axios.post('http://localhost:3001/quizzes', {quiz}, {withCredentials: true})
-			.then((response) => {
+			.then(response => {
 				if (response.data.status === 'created') {
 					that.handleSuccess(response.data.quiz)
 					resolve(response.data.quiz);
@@ -43,10 +43,33 @@ class Quizzes {
 					reject(response.data.errors);
 				}
 			})
-			.catch((error) => {
+			.catch(error => {
 				console.log('api errors:', error)
 				reject(error);
 			})
+		})
+	}
+	
+	@action index = function() {
+		return new Promise(function(resolve, reject) {
+			axios.get('http://localhost:3001/quizzes', {withCredentials: true})
+	        .then(response => {
+	            resolve(response.data.quizzes);
+	        })
+	        .catch(error => reject(error))
+		})
+	}
+	
+	@action show = function(id) {
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+		
+		return new Promise(function(resolve, reject) {
+			axios.get('http://localhost:3001/quizzes/' + id, {withCredentials: true})
+	        .then(response => {
+				that.handleSuccess(response.data.quiz)
+	            resolve(response.data.quiz);
+	        })
+	        .catch(error => reject(error))
 		})
 	}
 	

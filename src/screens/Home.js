@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
+import { observer, inject } from 'mobx-react'
 
 import { MonoText } from '../components/StyledText';
 import QuizThumbnail from '../components/QuizThumbnail';
@@ -9,71 +10,35 @@ import QuizThumbnail from '../components/QuizThumbnail';
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
 
+@inject('users') @inject('quizzes') @observer
 class HomeScreen extends React.Component {
 	state = {
 		quizzes: [ 
-			[ // daily
-				{
-					id: 1348237,
-					title: 'Kwiz Title here: Find your personality this should be 50 words max',
-					image: 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg',
-					user: this.props.user,
-				},
-				{
-					id: 1348237,
-					title: 'Kwiz Title here: Find your personality this should be 50 words max',
-					image: 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg',
-					user: this.props.user,
-				},
-				{
-					id: 1348237,
-					title: 'Kwiz Title here: Find your personality this should be 50 words max',
-					image: 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg',
-					user: this.props.user,
-				},
-			],
-			[ // seasonal
-				{
-					id: 1348237,
-					title: 'Kwiz Title here: Find your personality this should be 50 words max',
-					image: 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg',
-					user: this.props.user,
-				},
-				{
-					id: 1348237,
-					title: 'Kwiz Title here: Find your personality this should be 50 words max',
-					image: 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg',
-					user: this.props.user,
-				},
-				{
-					id: 1348237,
-					title: 'Kwiz Title here: Find your personality this should be 50 words max',
-					image: 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg',
-					user: this.props.user,
-				},
-			],
+			[ /* daily */ ],
+			[ /* seasonal */ ],
+			[ /* personality */ ],
+			[ /* trivia */ ],
 		],
 	}
 	
+	componentDidMount() {
+		this.props.quizzes.index()
+		.then((res) => {
+			var quizzes = [...this.state.quizzes]
+			quizzes[0] = res;
+			quizzes[1] = res;
+			quizzes[2] = res;
+			quizzes[3] = res;
+			this.setState({quizzes})
+		})
+		.catch((error) => {
+			console.log(error);
+		})
+	}
+	
 	render() {
-//		this.props.quizzes.create(this.state.title, isPublic)
-//		.then((res) => {
-//			console.log("created!")
-//			console.log(res);
-//			if (isPublic) {
-//				this.props.navigation.dispatch(StackActions.pop(1));
-//				this.props.navigation.navigate("Publish and Share Kwiz");
-//			}
-//		})
-//		.catch((error) => {
-//			console.log(error);
-//			this.props.quizzes.creatingError = error // hard-coding the error
-//			this.scrollview_ref.scrollTo({
-//	            x: 0,
-//	            y: 0,
-//	            animated: true,
-//	        });
-//		})
+		
+		console.log("rendering")
 		let quizzesArray = (type) => {
 			return this.state.quizzes[type].map(( item, key ) =>
 			{
@@ -114,7 +79,7 @@ class HomeScreen extends React.Component {
 			      	<Text style={allStyles.sectionSubtitle}>Take these kwizzes to uncover layers of your personality or just explore various fun aspects of life!</Text>
 			    	<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
 			    	{
-		      			quizzesArray(1)
+		      			quizzesArray(2)
 		      		}
 					</ScrollView>
 			      </View>
@@ -123,7 +88,7 @@ class HomeScreen extends React.Component {
 			      	<Text style={allStyles.sectionSubtitle}>See how you measure up to others in your trivia game. Take these kwizzes to find out!</Text>
 			    	<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
 			    	{
-		      			quizzesArray(1)
+		      			quizzesArray(3)
 		      		}
 					</ScrollView>
 			      </View>
