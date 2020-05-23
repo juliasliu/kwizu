@@ -78,7 +78,7 @@ class NewQuestionForm extends React.Component {
 							style={[ allStyles.input, styles.choiceInputField ]} 
 							onChangeText={(value) => this.setChoiceValue(item.index, value)}
 							value={this.state.choices[actualArrayIndex].content} 
-							placeholder='Choice (25 words max)'
+							placeholder='Choice (150 chars max)'
 						/>
 						<TouchableOpacity style={[ allStyles.button, allStyles.grayButton, styles.choiceInputDelete ]}
 			                onPress={() => this.onPressDeleteChoice(item.index)}>
@@ -108,7 +108,7 @@ class NewQuestionForm extends React.Component {
 						value={this.state.question.title} 
 						multiline={true}
 				    	numberOfLines={3}
-						placeholder='Question (50 words max)'
+						placeholder='Question (300 chars max)'
 					/>
 
 					{

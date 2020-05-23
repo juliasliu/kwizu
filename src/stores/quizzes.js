@@ -2,117 +2,66 @@ import {observable, computed, map, toJS, action} from 'mobx';
 import axios from 'axios'
 
 class Quizzes {
-	@observable user = null;
-	@observable isLoggedIn = false;
-	@observable loggingIn = false; 
-	@observable loggingError = null;
-	@observable registering = false; 
-	@observable registeringError = null;
+	@observable quiz = null;
+	@observable id = null;
+	@observable isCreated = false;
+	@observable creating = false; 
+	@observable creatingError = null;
 	
-	@action login = function(email, password) { 
-		let user = {
-				email: email,
-				password: password
-		}
-		this.loggingIn = true;
-		this.loggingError = null;
+	@action create = function(title, isPublic) {
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
 		
-		axios.post('http://localhost:3001/login', {user}, {withCredentials: true})
-		.then(response => {
-			if (response.data.logged_in) {
-				this.handleLogin(response.data)
-				console.log()
-			} else {
-				this.handleLogout()
-				this.loggingError = response.data.errors
+		return new Promise(function(resolve, reject) {
+			if(!title || title == '' || title.length > 15) {
+				this.creating = false; 
+				this.creatingError = 'The Kwiz title was not entered or entered incorrectly (≤150 chars)'; 
+				reject(creatingError);
 			}
-		})
-		.catch(error => console.log('api errors:', error))
-	}
-	@action logout = function() {
-		axios.delete('http://localhost:3001/logout', {withCredentials: true})
-	    .then(response => {
-	    	this.handleLogout()
-	    })
-	    .catch(error => console.log(error))
-	}
-	@action register = function(email, name, username, password, password_confirmation) {
-		if(!email || email == '') {
-			this.registering = false; 
-			this.registeringError = 'Email was not entered'; 
-			return;
-		}
-		if(!name || name == '') {
-			this.registering = false; 
-			this.registeringError = 'Name was not entered'; 
-			return;
-		}
-		if(!username || username == '') {
-			this.registering = false; 
-			this.registeringError = 'Username was not entered'; 
-			return;
-		}
-		if(!password || password == '') {
-			this.registering = false; 
-			this.registeringError = 'Password was not entered';
-			return;
-		}
-		if(!password_confirmation || password_confirmation != password) {
-			this.registering = false; 
-			this.registeringError = 'Password did not match'; 
-			return;
-		}
-		let user = {
-				email: email,
-				name: name,
-				username: username,
-				password: password,
-				password_confirmation: password_confirmation
-		}
-		this.registering = true;
-		this.registeringError = null;
-		
-		axios.post('http://localhost:3001/users', {user}, {withCredentials: true})
-		.then(response => {
-			if (response.data.status === 'created') {
-				this.handleLogin(response.data)
-			} else {
-				this.handleLogout()
-				this.registeringError = response.data.errors
+			if(isPublic == undefined) {
+				this.creating = false; 
+				this.creatingError = 'Something went wrong with saving or publishing your Kwiz'; 
+				reject(creatingError);
 			}
-		})
-		.catch(error => console.log('api errors:', error))
-	}
-	
-	@action async loginStatus() {
-		this.isLoggedIn = false; 
+			let quiz = {
+					title: title,
+					public: isPublic,
+			}
+			this.creating = true;
+			this.creatingError = null;
 		
-		axios.get('http://localhost:3001/logged_in', 
-				{withCredentials: true})
-				.then(response => {
-					if (response.data.logged_in) {
-						this.handleLogin(response)
-					} else {
-						this.handleLogout()
-					}
-				})
-				.catch(error => console.log('api errors:', error))
+			axios.post('http://localhost:3001/quizzes', {quiz}, {withCredentials: true})
+			.then((response) => {
+				if (response.data.status === 'created') {
+					that.handleSuccess(response.data.quiz)
+					resolve(response.data.quiz);
+				} else {
+					that.handleErrors(response.data.errors)
+					console.log('creating errors:', response.data.errors)
+					reject(response.data.errors);
+				}
+			})
+			.catch((error) => {
+				console.log('api errors:', error)
+				reject(error);
+			})
+		})
 	}
 	
-	handleLogin(data) {
-		this.user = data.user;
-		this.isLoggedIn = true;
-		this.loggingIn = false;
-		this.registering = false;
+	handleSuccess(quiz) {
+		this.quiz = quiz;
+		this.id = quiz.id;
+		this.isCreated = true;
+		this.creating = false; 
 	}
 	
-	handleLogout() {
-		this.user = null; 
-		this.isLoggedIn = false;
-		this.loggingIn = false;
-		this.registering = false;
+	handleErrors(errors) {
+		this.creatingError = errors
+		this.quiz = null; 
+		this.id = null;
+		this.isCreated = false;
+		this.creating = false; 
 	}
 }
 
-const users = new Users();
-export default users;
+const quizzes = new Quizzes();
+export default quizzes;

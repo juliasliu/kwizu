@@ -22,13 +22,13 @@ import styles from '../styles/HomeScreen';
 import TabBarIcon from '../components/TabBarIcon';
 import ShareForm from '../components/ShareForm'
 
-@inject('users') @observer
+@inject('users') @inject('quizzes') @observer
 class Publish extends React.Component {
-	onPressRegister(email, password, name) { 
-		this.props.users.register(email, password, name);
-	}
+	
 	
 	render() {
+		console.log("HI I PUBLISHED")
+		
 		return (
 				<KeyboardAwareScrollView style={[allStyles.container, styles.quizFormContainer ]}>
 					
@@ -49,7 +49,7 @@ class Publish extends React.Component {
 						</TouchableOpacity>
 					</View>
 					
-					<ShareForm />
+					<ShareForm quiz={ this.props.quizzes.quiz } />
 					
 					<View style={[ allStyles.section, allStyles.sectionClear ]}>
 						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}

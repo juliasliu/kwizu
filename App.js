@@ -9,7 +9,7 @@ export default function Kwizu(props) {
 		return (
 			<View style={styles.container}>
 				{Platform.OS === 'ios' && <StatusBar barStyle="default" /> }
-				<Provider users={users} chats={chats}>
+				<Provider users={users} quizzes={quizzes} chats={chats}>
 					<App/>
 				</Provider>
 			</View>

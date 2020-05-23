@@ -25,12 +25,11 @@ import TabBarIcon from '../components/TabBarIcon';
 import NewResultForm from '../components/NewResultForm'
 import NewQuestionForm from '../components/NewQuestionForm'
 
-@inject('users') @observer
+@inject('users') @inject('quizzes') @observer
 class New extends React.Component {
 	state = {
 			title: '',
 			image: '',
-			user: this.props.user,
 			questions: [ 
 				{
 					index: 0,
@@ -72,9 +71,25 @@ class New extends React.Component {
 		}
 	}
 	
-	onPressCreate(email, password, name) { 
-		// create new quiz, todo later
-		this.props.users.register(email, password, name);
+	onPressCreate = (isPublic) => {
+		// check to see if kwiz already exists: if so, then only save/update
+		this.props.quizzes.create(this.state.title, isPublic)
+		.then((res) => {
+			console.log("created!")
+			console.log(res);
+			if (isPublic) {
+				this.props.navigation.navigate("Publish and Share Kwiz")
+			}
+		})
+		.catch((error) => {
+			console.log(error);
+			this.props.quizzes.creatingError = error // hard-coding the error
+			this.scrollview_ref.scrollTo({
+	            x: 0,
+	            y: 0,
+	            animated: true,
+	        });
+		})
 	}
 
 	onPressAddResult() {
@@ -200,8 +215,7 @@ class New extends React.Component {
 					onPressAdd={this.onPressAddResult.bind(this)}
 					onPressDelete={this.onPressDeleteResult.bind(this)}
 					setTitleValue={this.setResultTitleValue.bind(this)}
-					setDescriptionValue={this.setResultDescriptionValue.bind(this)}
-					registeringError={this.props.users.registeringError}></NewResultForm>
+					setDescriptionValue={this.setResultDescriptionValue.bind(this)}></NewResultForm>
 					) : null
 		});
 		
@@ -217,8 +231,7 @@ class New extends React.Component {
 					onPressDeleteChoice={this.onPressDeleteChoice.bind(this)}
 					setQuestionValue={this.setQuestionValue.bind(this)}
 					setSelectedResultValue={this.setSelectedResultValue.bind(this)}
-					setChoiceValue={this.setChoiceValue.bind(this)}
-					registeringError={this.props.users.registeringError}></NewQuestionForm>
+					setChoiceValue={this.setChoiceValue.bind(this)}></NewQuestionForm>
 					) : null
 		});
 		
@@ -244,17 +257,27 @@ class New extends React.Component {
 		}
 		
 		return (
-				<KeyboardAwareScrollView style={[allStyles.container, styles.quizFormContainer ]}>
+				<KeyboardAwareScrollView style={[allStyles.container, styles.quizFormContainer ]}
+				innerRef={ref => {
+				    this.scrollview_ref = ref;
+				  }}>
 					
 					<View style={[ allStyles.section, allStyles.sectionClear ]}>
 						<Text style={allStyles.sectionTitle}>Kwiz Description</Text>
 					
+						{
+							this.props.quizzes.creatingError &&
+							<View style={ allStyles.error }>
+								<Text>{this.props.quizzes.creatingError}</Text> 
+							</View>
+						} 
+						
 						<TextInput
 							returnKeyType='next' 
 							style={ allStyles.input } 
 							onChangeText={(title) => this.setState({title})} 
 							value={this.state.title} 
-							placeholder='Title (25 words max)'
+							placeholder='Title (150 chars max)'
 						/>
 					
 						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton ]}
@@ -286,12 +309,12 @@ class New extends React.Component {
 						
 					<View style={[ allStyles.section, allStyles.sectionClear ]}>
 						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
-			                onPress={() => alert("preview")}>
+			                onPress={() => this.onPressCreate(false).bind(this)}>
 							<TabBarIcon name="md-eye" style={[ allStyles.buttonIcon ]}/>
 							<Text style={[ allStyles.fullWidthButtonText ]}>Save and preview</Text>
 						</TouchableOpacity>
 						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
-			                onPress={() => this.props.navigation.navigate("Publish and Share Kwiz")}>
+			                onPress={() => this.onPressCreate(true)}>
 							<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Publish and share</Text>
 						</TouchableOpacity>

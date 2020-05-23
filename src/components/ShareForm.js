@@ -20,6 +20,8 @@ import styles from '../styles/HomeScreen';
 class ShareForm extends React.Component {
 		
 	render() {
+		let url = "https://kwizu.app/quizzes/"
+		
 		return (
 			<View>
 				<View style={[ allStyles.section, allStyles.sectionClear ]}>
@@ -27,7 +29,7 @@ class ShareForm extends React.Component {
 						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Share the link</Text>
 					</View>
 					<View style={[ allStyles.card, styles.shareLinkCard ]}>
-						<Text style={styles.shareLink}>https:kwizu.app/aksdfja134</Text>
+						<Text style={styles.shareLink}>{url}{this.props.quiz.id}</Text>
 						<TouchableOpacity style={[ allStyles.button, allStyles.whiteButton ]}
 			                onPress={() => alert("")}>
 							<TabBarIcon name="md-copy" style={[ allStyles.buttonIcon ]}/>

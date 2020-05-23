@@ -3,6 +3,7 @@ import axios from 'axios'
 
 class Users {
 	@observable user = null;
+	@observable username = null;
 	@observable isLoggedIn = false;
 	@observable loggingIn = false; 
 	@observable loggingError = null;
@@ -20,7 +21,7 @@ class Users {
 		axios.post('http://localhost:3001/login', {user}, {withCredentials: true})
 		.then(response => {
 			if (response.data.logged_in) {
-				this.handleLogin(response.data)
+				this.handleLogin(response.data.user)
 				console.log()
 			} else {
 				this.handleLogout()
@@ -75,7 +76,7 @@ class Users {
 		axios.post('http://localhost:3001/users', {user}, {withCredentials: true})
 		.then(response => {
 			if (response.data.status === 'created') {
-				this.handleLogin(response.data)
+				this.handleLogin(response.data.user)
 			} else {
 				this.handleLogout()
 				this.registeringError = response.data.errors
@@ -91,7 +92,7 @@ class Users {
 				{withCredentials: true})
 				.then(response => {
 					if (response.data.logged_in) {
-						this.handleLogin(response)
+						this.handleLogin(response.data.user)
 					} else {
 						this.handleLogout()
 					}
@@ -99,8 +100,9 @@ class Users {
 				.catch(error => console.log('api errors:', error))
 	}
 	
-	handleLogin(data) {
-		this.user = data.user;
+	handleLogin(user) {
+		this.user = user;
+		this.username = user.username;
 		this.isLoggedIn = true;
 		this.loggingIn = false;
 		this.registering = false;
@@ -108,6 +110,7 @@ class Users {
 	
 	handleLogout() {
 		this.user = null; 
+		this.username = null;
 		this.isLoggedIn = false;
 		this.loggingIn = false;
 		this.registering = false;

@@ -54,7 +54,7 @@ class NewResultForm extends React.Component {
 							style={ allStyles.input } 
 							onChangeText={(value) => this.setTitleValue(value)} 
 							value={this.state.title} 
-							placeholder='Result title (25 words max)' 
+							placeholder='Result title (150 chars max)' 
 							onSubmitEditing={(event) => {
 								this.refs.resultDescription.focus(); 
 							}}
@@ -68,7 +68,7 @@ class NewResultForm extends React.Component {
 							value={this.state.description} 
 							multiline={true}
 					    	numberOfLines={5}
-							placeholder='Result description (200 words max)'
+							placeholder='Result description (1000 chars max)'
 						/>
 	
 						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton ]}
