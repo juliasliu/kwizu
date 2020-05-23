@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import Modal from 'react-native-modal';
 
 import TabBarIcon from '../components/TabBarIcon';
@@ -50,7 +51,7 @@ class HomeStackScreen extends React.Component {
 							<TabBarIcon
 							onPress={this.toggleModal}
 							name="md-add"
-								style={ allStyles.headerRightIcon }
+								style={[ allStyles.headerIcon, {paddingRight: 25,} ] }
 								/>
 							)
 			      	}} />
@@ -122,7 +123,7 @@ function MatchStackScreen() {
 				<TabBarIcon
 				onPress={() => alert('This is a button!')}
 				name="md-map"
-					style={ allStyles.headerRightIcon }
+					style={[ allStyles.headerIcon, {paddingRight: 25,} ] }
 					/>
 				)
       }} />
@@ -134,7 +135,7 @@ function MatchStackScreen() {
     		<TabBarIcon
   				onPress={() => navigation.navigate("Chats")}
   				name="md-chatbubbles"
-  				style={ allStyles.headerRightIcon }
+  					style={[ allStyles.headerIcon, {paddingRight: 25,} ] }
   				/>  
     	  )
       }} />
@@ -160,7 +161,7 @@ function ProfileStackScreen({navigation}) {
     		<TabBarIcon
   				onPress={() => navigation.navigate("Chats")}
   				name="md-chatbubbles"
-  				style={ allStyles.headerRightIcon }
+  					style={[ allStyles.headerIcon, {paddingRight: 25,} ] }
   				/>  
     	  )
       }} />

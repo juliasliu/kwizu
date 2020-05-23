@@ -7,27 +7,30 @@ class Quizzes {
 	@observable isCreated = false;
 	@observable creating = false; 
 	@observable creatingError = null;
+	@observable savingSuccess = null;
 	
 	@action create = function(title, isPublic) {
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then
 		
 		return new Promise(function(resolve, reject) {
-			if(!title || title == '' || title.length > 15) {
+			if(!title || title == '' || title.length > 150) {
 				this.creating = false; 
 				this.creatingError = 'The Kwiz title was not entered or entered incorrectly (≤150 chars)'; 
+				this.savingSuccess = null;
 				reject(creatingError);
 			}
 			if(isPublic == undefined) {
 				this.creating = false; 
 				this.creatingError = 'Something went wrong with saving or publishing your Kwiz'; 
+				this.savingSuccess = null;
 				reject(creatingError);
 			}
 			let quiz = {
 					title: title,
 					public: isPublic,
 			}
+			this.isCreated = false;
 			this.creating = true;
-			this.creatingError = null;
 		
 			axios.post('http://localhost:3001/quizzes', {quiz}, {withCredentials: true})
 			.then((response) => {
@@ -52,14 +55,17 @@ class Quizzes {
 		this.id = quiz.id;
 		this.isCreated = true;
 		this.creating = false; 
+		this.creatingError = null;
+		this.savingSuccess = "Your Kwiz was saved successfully";
 	}
 	
 	handleErrors(errors) {
-		this.creatingError = errors
 		this.quiz = null; 
 		this.id = null;
 		this.isCreated = false;
 		this.creating = false; 
+		this.creatingError = errors
+		this.savingSuccess = null;
 	}
 }
 

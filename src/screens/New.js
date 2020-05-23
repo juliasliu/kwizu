@@ -12,6 +12,7 @@ import {
 	TouchableOpacity,
 } from 'react-native';
 
+import { StackActions } from '@react-navigation/native';
 import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -72,23 +73,20 @@ class New extends React.Component {
 	}
 	
 	onPressCreate = (isPublic) => {
-		// check to see if kwiz already exists: if so, then only save/update
+		// check to see if kwiz already exists: if so, then only save/update; do this later
 		this.props.quizzes.create(this.state.title, isPublic)
 		.then((res) => {
 			console.log("created!")
-			console.log(res);
 			if (isPublic) {
-				this.props.navigation.navigate("Publish and Share Kwiz")
+				this.props.navigation.dispatch(StackActions.pop(1));
+				this.props.navigation.navigate("Publish and Share Kwiz");
+			} else {
+				this.props.quizzes.savingSuccess = "Your Kwiz was saved successfully"; // hard-coding the success message
 			}
 		})
 		.catch((error) => {
 			console.log(error);
 			this.props.quizzes.creatingError = error // hard-coding the error
-			this.scrollview_ref.scrollTo({
-	            x: 0,
-	            y: 0,
-	            animated: true,
-	        });
 		})
 	}
 
@@ -267,8 +265,30 @@ class New extends React.Component {
 					
 						{
 							this.props.quizzes.creatingError &&
-							<View style={ allStyles.error }>
+							<View style={ allStyles.error }
+							onLayout={event => {
+						        const layout = event.nativeEvent.layout;
+						        this.scrollview_ref.scrollTo({
+						            x: 0,
+						            y: layout.y,
+						            animated: true,
+						        });
+						      	}}>
 								<Text>{this.props.quizzes.creatingError}</Text> 
+							</View>
+						} 
+						{
+							this.props.quizzes.savingSuccess &&
+							<View style={ allStyles.success }
+							onLayout={event => {
+						        const layout = event.nativeEvent.layout;
+						        this.scrollview_ref.scrollTo({
+						            x: 0,
+						            y: layout.y,
+						            animated: true,
+						        });
+						      	}}>
+								<Text>{this.props.quizzes.savingSuccess}</Text> 
 							</View>
 						} 
 						
@@ -309,7 +329,7 @@ class New extends React.Component {
 						
 					<View style={[ allStyles.section, allStyles.sectionClear ]}>
 						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
-			                onPress={() => this.onPressCreate(false).bind(this)}>
+			                onPress={() => this.onPressCreate(false)}>
 							<TabBarIcon name="md-eye" style={[ allStyles.buttonIcon ]}/>
 							<Text style={[ allStyles.fullWidthButtonText ]}>Save and preview</Text>
 						</TouchableOpacity>

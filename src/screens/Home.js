@@ -56,7 +56,24 @@ class HomeScreen extends React.Component {
 	}
 	
 	render() {
-		
+//		this.props.quizzes.create(this.state.title, isPublic)
+//		.then((res) => {
+//			console.log("created!")
+//			console.log(res);
+//			if (isPublic) {
+//				this.props.navigation.dispatch(StackActions.pop(1));
+//				this.props.navigation.navigate("Publish and Share Kwiz");
+//			}
+//		})
+//		.catch((error) => {
+//			console.log(error);
+//			this.props.quizzes.creatingError = error // hard-coding the error
+//			this.scrollview_ref.scrollTo({
+//	            x: 0,
+//	            y: 0,
+//	            animated: true,
+//	        });
+//		})
 		let quizzesArray = (type) => {
 			return this.state.quizzes[type].map(( item, key ) =>
 			{

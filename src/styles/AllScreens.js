@@ -77,9 +77,15 @@ const styles = StyleSheet.create({
 	    fontWeight: 'bold',
 	    marginVertical: 10,
 	  },
-  headerRightIcon: {
-	  paddingRight: 25,
+  headerIcon: {
 	  color: '#B2BECF',
+  },
+  success: {
+	  backgroundColor: '#B2DBBF', 
+	  borderRadius: 5, 
+	  alignItems: 'center', 
+	  marginBottom: 10,
+	  padding: 20,
   },
   error: {
 	  backgroundColor: '#fcc', 
