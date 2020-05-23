@@ -105,7 +105,7 @@ class NewQuestionForm extends React.Component {
 						returnKeyType='next' 
 						style={[ allStyles.input, allStyles.textarea ]} 
 						onChangeText={(value) => this.setQuestionValue(value)} 
-						value={this.state.question.title} 
+						value={this.state.title} 
 						multiline={true}
 				    	numberOfLines={3}
 						placeholder='Question (300 chars max)'

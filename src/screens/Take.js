@@ -32,116 +32,14 @@ import QuizThumbnail from '../components/QuizThumbnail'
 class Take extends React.Component {
 	state = {
 		quiz: {
-			title: 'Kwiz Title here',
-			questions: [ 
+			title: '',
+			questions: [
 				{
-					index: 0,
-					question: { title: 'How much wood could a wood chuck chuck if a wood chuck could chuck wood?' },
-					choices: [ 
-						{
-							index: 0,
-							content: 'Choice #1 whttevr asfkjas ies her',
-							weight: 1
-						},
-						{
-							index: 1,
-							content: 'Choice #2 whttevr asfkjas ies her',
-							weight: 2
-						},
-						{
-							index: 2,
-							content: 'Choice #3 whttevr asfkjas ies her',
-							weight: 3
-						},
-						],
+					title: '',
+					choices: [],
 				},
-				{
-					index: 1,
-					question: { title: 'How much wood could a wood chuck chuck if a wood chuck could chuck wood?' },
-					choices: [ 
-						{
-							index: 0,
-							content: 'Choice #1 whttevr asfkjas ies her',
-							weight: 1
-						},
-						{
-							index: 1,
-							content: 'Choice #2 whttevr asfkjas ies her',
-							weight: 2
-						},
-						{
-							index: 2,
-							content: 'Choice #3 whttevr asfkjas ies her',
-							weight: 3
-						},
-						],
-				},
-				{
-					index: 2,
-					question: { title: 'How much wood could a wood chuck chuck if a wood chuck could chuck wood?' },
-					choices: [ 
-						{
-							index: 0,
-							content: 'Choice #1 whttevr asfkjas ies her',
-							weight: 1
-						},
-						{
-							index: 1,
-							content: 'Choice #2 whttevr asfkjas ies her',
-							weight: 2
-						},
-						{
-							index: 2,
-							content: 'Choice #3 whttevr asfkjas ies her',
-							weight: 3
-						},
-						],
-				},
-				{
-					index: 3,
-					question: { title: 'How much wood could a wood chuck chuck if a wood chuck could chuck wood?' },
-					choices: [ 
-						{
-							index: 0,
-							content: 'Choice #1 whttevr asfkjas ies her',
-							weight: 1
-						},
-						{
-							index: 1,
-							content: 'Choice #2 whttevr asfkjas ies her',
-							weight: 2
-						},
-						{
-							index: 2,
-							content: 'Choice #3 whttevr asfkjas ies her',
-							weight: 3
-						},
-						],
-				},
-				],
-				results: [ 
-					{
-						index: 0,
-						title: 'First result! nice' ,
-						description: 'More description about how swagidilocious you are weeee alsdfjha aiik l :))) lorem ipsum goodeness we love latin amirite',
-						weight: 1,
-						image: '',
-					}, 
-					{
-						index: 1,
-						title: 'Youo are swagidilocious beep beep boop harry pot.' ,
-						description: 'good job u r a hooman but maybe not ???',
-						weight: 2,
-						image: '',
-					}, 
-					{
-						index: 2,
-						title: 'Last result! nice' ,
-						description: 'good job u r a hooman but actually just a doggo',
-						weight: 3,
-						image: '',
-					},
-					],
+			],
+			results: [],
 		},
 		answers: [
 			/*{
@@ -156,13 +54,14 @@ class Take extends React.Component {
 	
 	componentDidMount() {
 		const {quiz_id} = this.props.route.params;
+		console.log(quiz_id)
 		this.props.quizzes.show(quiz_id)
 		.then((res) => {
-			var quiz = this.state.quiz
-			quiz.title = res.title;
-			this.setState({quiz})
+			console.log("succeedded")
+			this.setState({quiz: res})
 		})
 		.catch((error) => {
+			console.log("o no")
 			console.log(error);
 		})
 	}
@@ -213,6 +112,7 @@ class Take extends React.Component {
 
 		let questionsArray = this.state.quiz.questions.map(( item, key ) =>
 		{
+			item.index = key;
 			return item != undefined ? (
 					<View 
 					onLayout={event => {
@@ -222,6 +122,7 @@ class Take extends React.Component {
 				      }}>
 						<TakeQuestion
 						question={item}
+						key={item.index}
 						answers={this.state.answers}
 						setSelectedChoiceValue={this.setSelectedChoiceValue.bind(this)}
 						/>	
@@ -282,7 +183,7 @@ class Take extends React.Component {
 								<View style={[allStyles.section]}>
 									<Text style={allStyles.sectionTitle}>Share your results!</Text>
 									<Text style={allStyles.sectionSubtitle}>Share the fun by sending your results to your friends or posting on social media.</Text>
-									<ShareForm />
+									<ShareForm quiz={ this.props.quizzes.quiz } />
 								</View>
 							</View>
 							)

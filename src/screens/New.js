@@ -30,11 +30,12 @@ import NewQuestionForm from '../components/NewQuestionForm'
 class New extends React.Component {
 	state = {
 			title: '',
+			public: false,
 			image: '',
 			questions: [ 
 				{
 					index: 0,
-					question: { title: '' },
+					title: '',
 					choices: [ 
 						{
 							index: 0,
@@ -74,19 +75,19 @@ class New extends React.Component {
 	
 	onPressCreate = (isPublic) => {
 		// check to see if kwiz already exists: if so, then only save/update; do this later
-		this.props.quizzes.create(this.state.title, isPublic)
+		this.state.public = isPublic;
+		this.props.quizzes.create(this.state)
 		.then(res => {
 			console.log("created!")
 			if (isPublic) {
 				this.props.navigation.dispatch(StackActions.pop(1));
 				this.props.navigation.navigate("Publish and Share Kwiz");
 			} else {
-				this.props.quizzes.savingSuccess = "Your Kwiz was saved successfully"; // hard-coding the success message
+//				this.props.quizzes.savingSuccess = "Your Kwiz was saved successfully"; // hard-coding the success message
 			}
 		})
 		.catch(error => {
-			console.log(error);
-			this.props.quizzes.creatingError = error // hard-coding the error
+			console.log("failed");
 		})
 	}
 
@@ -124,7 +125,7 @@ class New extends React.Component {
 	onPressAddQuestion() {
 		const newQuestion = {
 				index: this.state.questions.length,
-				question: { title: '' },
+				title: '',
 				choices: [ 
 					{
 						index: 0,

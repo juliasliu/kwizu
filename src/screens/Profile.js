@@ -18,10 +18,8 @@ import styles from '../styles/ProfileScreen';
 class Profile extends React.Component {
 	state = {
 			quizzes: [ 
-				[ /* daily */ ],
-				[ /* seasonal */ ],
-				[ /* personality */ ],
-				[ /* trivia */ ],
+				[ /* kwiz feed */ ],
+				[ /* my tests */ ],
 			],
 		}
 	

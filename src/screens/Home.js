@@ -38,7 +38,6 @@ class HomeScreen extends React.Component {
 	
 	render() {
 		
-		console.log("rendering")
 		let quizzesArray = (type) => {
 			return this.state.quizzes[type].map(( item, key ) =>
 			{

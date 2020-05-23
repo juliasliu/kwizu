@@ -36,6 +36,8 @@ class TakeQuestion extends React.Component {
 	render() {
 		this.state = this.props.question;
 
+		console.log(this.state)
+		
 		let choicesArray = this.state.choices.map(( item, key ) =>
 		{
 			// isChecked is true if there is an answer in this.props.answers with the same questionIndex and choiceWeight
@@ -67,7 +69,7 @@ class TakeQuestion extends React.Component {
 							<Text>{this.props.registeringError}</Text>
 						</View>
 					}
-					<Text style={styles.question}>{ this.state.question.title }</Text>
+					<Text style={styles.question}>{ this.state.title }</Text>
 					{
 						choicesArray
 					}

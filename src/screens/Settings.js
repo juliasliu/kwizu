@@ -14,28 +14,25 @@ import styles from '../styles/ProfileScreen';
 
 @inject('users') @observer
 class Settings extends React.Component {
-	static navigationOptions = { 
-		tabBarLabel: 'Profile', 
-		tabBarIcon: ({ tintColor }) => (
-				<Icon name="user" size={30} color={tintColor}/> 
-		),
-	};
+	state= { 
+			email: '', 
+			name: '',
+			username: '',
+			caption: '',
+			password: '',
+			passwordConfirmation: ''
+	}
+	
 	onPressLogout() {
 		this.props.users.logout();
 	}
-	state= { 
-			editEmail: '', 
-			editName: '',
-			editUsername: '',
-			editCaption: '',
-			editPassword: '',
-			editPasswordConfirmation: ''
-	}
 	onPressEdit() { 
-		this.props.onPress(this.state.editEmail, this.state.editName, this.state.editUsername, this.state.editPassword, this.state.editPasswordConfirmation);
+		this.props.onPress(this.state.email, this.state.name, this.state.username, this.state.password, this.state.passwordConfirmation);
 	}
 
 	render () {
+		this.state = this.props.users.user;
+		
 		return (
 				<View style={allStyles.container}>
 			      <ScrollView style={allStyles.container}>
@@ -47,80 +44,67 @@ class Settings extends React.Component {
 							</View>
 						}
 						<TextInput
-							autoCapitalize='none' 
-							autoCorrect={false} 
-							keyboardType='email-address' 
-							returnKeyType='next' 
+							ref='name' 
 							style={ allStyles.input } 
-							onChangeText={(editEmail) => this.setState({editEmail})} 
-							value={this.state.editEmail} 
-							placeholder='Email' 
-							onSubmitEditing={(event) => {
-								this.refs.editName.focus(); 
-							}}
-						/>
-						<TextInput
-							ref='editName' 
-							style={ allStyles.input } 
-							onChangeText={(editName) => this.setState({editName})} 
+							onChangeText={(name) => this.setState({name})} 
 							returnKeyType='next' 
-							value={this.state.editName} 
+							value={this.state.name} 
 							placeholder='Name' 
 							onSubmitEditing={(event) => {
-								this.refs.editUsername.focus();
+								this.refs.username.focus();
 							}}
 						/>
 						<TextInput
 							autoCapitalize='none'
 							autoCorrect={false}
-							ref='editUsername' 
+							ref='username' 
 							style={ allStyles.input } 
-							onChangeText={(editUsername) => this.setState({editUsername})} 
+							onChangeText={(username) => this.setState({username})} 
 							returnKeyType='next' 
-							value={this.state.editUsername} 
+							value={this.state.username} 
 							placeholder='Username' 
 							onSubmitEditing={(event) => {
-								this.refs.editPassword.focus();
+								this.refs.caption.focus();
 							}}
 						/>
 						<TextInput
 							autoCapitalize='none'
-							ref='editCaption' 
+							ref='caption' 
 							style={[ allStyles.input, allStyles.textarea ]} 
-							onChangeText={(editCaption) => this.setState({editCaption})} 
+							onChangeText={(caption) => this.setState({caption})} 
 							returnKeyType='next' 
-							value={this.state.editCaption} 
-							placeholder='Caption' 
+							value={this.state.caption} 
+							placeholder='Caption (150 chars max)' 
 								multiline={true}
 							onSubmitEditing={(event) => {
-								this.refs.editPassword.focus();
+								this.refs.password.focus();
 							}}
 						/>
 						<TextInput
-							ref='editPassword' 
+							ref='password' 
 							style={ allStyles.input } 
-							onChangeText={(editPassword) => this.setState({editPassword})} 
+							onChangeText={(password) => this.setState({password})} 
 							returnKeyType='next' 
-							value={this.state.editPassword} 
+							value={this.state.password} 
 							secureTextEntry={true} 
-							placeholder='Password'
+							placeholder='New Password (4 chars min)'
 							onSubmitEditing={(event) => {
-								this.refs.editPasswordConfirmation.focus();
+								this.refs.passwordConfirmation.focus();
 							}}
 						/>
 						<TextInput
-							ref='editPasswordConfirmation' 
+							ref='passwordConfirmation' 
 							style={ allStyles.input } 
-							onChangeText={(editPasswordConfirmation) => this.setState({editPasswordConfirmation})} 
-							value={this.state.editPasswordConfirmation} 
+							onChangeText={(passwordConfirmation) => this.setState({passwordConfirmation})} 
+							value={this.state.passwordConfirmation} 
 							secureTextEntry={true} 
-							placeholder='Password Confirmation'
+							placeholder='New Password Confirmation (4 chars min)'
 						/>
 							
 							{
 								this.props.busy ? 
 										<ActivityIndicator/> :
-								<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.greenButton ]} onPress={alert("")} title="Save Profile">
+								<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.greenButton ]} onPress={() => alert("")} title="Save Profile">
 									<Text style={ allStyles.whiteText }>Save Profile</Text>
 								</TouchableOpacity>
 							}

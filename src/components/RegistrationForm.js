@@ -77,7 +77,7 @@ class RegisterForm extends React.Component {
 					returnKeyType='next' 
 					value={this.state.registerPassword} 
 					secureTextEntry={true} 
-					placeholder='Password'
+					placeholder='Password (4 chars min)'
 					onSubmitEditing={(event) => {
 						this.refs.registerPasswordConfirmation.focus();
 					}}
@@ -88,7 +88,7 @@ class RegisterForm extends React.Component {
 					onChangeText={(registerPasswordConfirmation) => this.setState({registerPasswordConfirmation})} 
 					value={this.state.registerPasswordConfirmation} 
 					secureTextEntry={true} 
-					placeholder='Password Confirmation'
+					placeholder='Password Confirmation (4 chars min)'
 				/>
 				<View style={ allStyles.flexContainer }>
 					<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.redButton ]}

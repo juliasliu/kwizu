@@ -9,33 +9,32 @@ class Quizzes {
 	@observable creatingError = null;
 	@observable savingSuccess = null;
 	
-	@action create = function(title, isPublic) {
+	@action create = function(quiz) {
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then
 		
 		return new Promise(function(resolve, reject) {
-			if(!title || title == '' || title.length > 150) {
-				this.creating = false; 
-				this.creatingError = 'The Kwiz title was not entered or entered incorrectly (≤150 chars)'; 
-				this.savingSuccess = null;
-				reject(creatingError);
-			}
-			if(isPublic == undefined) {
-				this.creating = false; 
-				this.creatingError = 'Something went wrong with saving or publishing your Kwiz'; 
-				this.savingSuccess = null;
-				reject(creatingError);
-			}
-			let quiz = {
-					title: title,
-					public: isPublic,
-			}
+			/*
+			 * things to check for:
+			 * every field exists and is less than assigned chars long
+			 * every choice in each question is assigned to a different result weight
+			 */
+//			if(!title || title == '' || title.length > 150) {
+//				this.creating = false; 
+//				this.creatingError = 'The Kwiz title was entered incorrectly (≤150 chars)'; 
+//				this.savingSuccess = null;
+//				reject(creatingError);
+//			}
+			
 			this.isCreated = false;
 			this.creating = true;
-		
-			axios.post('http://localhost:3001/quizzes', {quiz}, {withCredentials: true})
+			
+			axios.post('http://localhost:3001/quizzes', {quiz: quiz, questions: quiz.questions, results: quiz.results}, {withCredentials: true})
 			.then(response => {
 				if (response.data.status === 'created') {
 					that.handleSuccess(response.data.quiz)
+					if (!quiz.public) {
+						that.savingSuccess = "Your Kwiz was saved successfully";
+					}
 					resolve(response.data.quiz);
 				} else {
 					that.handleErrors(response.data.errors)
@@ -44,6 +43,7 @@ class Quizzes {
 				}
 			})
 			.catch(error => {
+				that.handleErrors(error)
 				console.log('api errors:', error)
 				reject(error);
 			})
@@ -79,7 +79,7 @@ class Quizzes {
 		this.isCreated = true;
 		this.creating = false; 
 		this.creatingError = null;
-		this.savingSuccess = "Your Kwiz was saved successfully";
+		this.savingSuccess = null;
 	}
 	
 	handleErrors(errors) {
