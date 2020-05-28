@@ -11,12 +11,14 @@ import {
 	Link,
 	TouchableOpacity,
 	Dimensions,
+	RefreshControl,
 } from 'react-native';
 
 import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import CheckBox from 'react-native-check-box'
+import { StackActions } from '@react-navigation/native';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
@@ -43,22 +45,40 @@ class Take extends React.Component {
 		},
 		answers: [
 			/*{
-				questionIndex: 0,
+				questionId: 0,
 				choiceWeight: 0,
+				choiceId: 0,
 			}*/
 		],
-		isDone: false,
-		scrollIndices: [70,],	// starting scroll position is 50 given the title heading of the kwiz
+		quizzing: null,
+		resultOfQuiz : null,	// stores the result object
+//		ownQuiz: true,			// if the current user owns this quiz, can edit
+		isDone: false,			// if quizzing exists or done taking the quiz, isDone = true
+		hasTaken: false,		// if quizzing exists, hasTaken = true; if retake the quiz or quiz has been changed, hasTaken = false
+		scrollIndices: [70,],	// starting scroll position is 70 given the title heading of the kwiz
 		scrollHeights: [],
+	      refreshing: false,
 	}
+	
+	_onRefresh = () => {
+	    this.setState({refreshing: true});
+	    this.componentDidMount();
+	  }
 	
 	componentDidMount() {
 		const {quiz_id} = this.props.route.params;
-		console.log(quiz_id)
+		const {fromPublish} = this.props.route.params;
 		this.props.quizzes.show(quiz_id)
 		.then((res) => {
-			console.log("succeedded")
-			this.setState({quiz: res})
+			if ((!this.props.quizzes.quiz.public || !fromPublish) && this.props.quizzes.quiz.user_id == this.props.users.id) {
+				console.log("swittcheroo owner")
+				this.props.navigation.dispatch(StackActions.pop(1));
+				this.props.navigation.navigate("Publish and Share Kwiz");
+			      this.setState({refreshing: false});
+			} else {
+				console.log("succeedded")
+				this.setState({quiz: res.quiz, quizzing: res.quizzing, hasTaken: false}, this.loadQuizzing)
+			}
 		})
 		.catch((error) => {
 			console.log("o no")
@@ -66,39 +86,64 @@ class Take extends React.Component {
 		})
 	}
 	
-	scrollIndexHelper() {
-		for (var i = 1; i < this.state.quiz.questions.length + 1; i++) {
-			this.state.scrollIndices[i] = this.state.scrollIndices[i-1] + this.state.scrollHeights[i];
+	loadQuizzing() {
+		// helper function for loading all the quizzing choice_ids into this.state.answers
+		if (this.state.quizzing) {
+			
+			var answers = [...this.state.answers]
+			for (var i = 0; i < this.state.quizzing.choices.length; i++) {
+				var choice = this.state.quizzing.choices[i];
+				
+				// select this choice by adding a new answer to answers
+				if (answers.findIndex(elem => elem.questionId === choice.question_id) >= 0)
+					answers.splice(answers.findIndex(elem => elem.questionId === choice.question_id), 1);
+				
+				// select this choice by adding a new answer to answers
+				const newAnswer = { 
+						questionId: choice.question_id,
+						choiceWeight: choice.weight,
+						choiceId: choice.id, };
+				answers = [...answers, newAnswer]
+	
+			}
+			if (answers.length == this.state.quiz.questions.length) {
+				this.setState({hasTaken: true, answers: answers, refreshing: false}, this.updateIsDone)
+			} else {
+				this.setState({hasTaken: false, answers: answers, refreshing: false}, this.updateIsDone)
+			}
+		} else {
+		    this.setState({refreshing: false});
 		}
 	}
 	
-	setSelectedChoiceValue(questionIndex, choiceWeight) {
-		if (!this.state.isDone) {
-			// remove the choice that is currently selected for this question
-			var answers = [...this.state.answers]
-			answers.splice(answers.findIndex(elem => elem.questionIndex === questionIndex), 1);
-			
-			// select this choice by adding a new answer to answers
-			const newAnswer = { 
-					questionIndex: questionIndex,
-					choiceWeight: choiceWeight, };
-			answers = [...this.state.answers, newAnswer]
-			
-			this.setState({answers})
-			
+	scrollIndexHelper() {
+		// helper function for setting the position of where to scroll to for each question
+		var scrollIndices = [...this.state.scrollIndices]
+		for (var i = 1; i < this.state.quiz.questions.length + 1; i++) {
+			scrollIndices[i] = scrollIndices[i-1] + this.state.scrollHeights[i];
+		}
+		this.setState({scrollIndices})
+	}
+	
+	scrollToNext(questionId) {
+		if (this.state.isDone) {
+			var scrollIndex = this.state.scrollIndices[this.state.quiz.questions.length-1] + this.state.scrollHeights[this.state.quiz.questions.length-1]
+	        console.log("scroll to result " + scrollIndex)
+	        this.scrollview_ref.scrollTo({
+	            x: 0,
+	            y: scrollIndex,
+	            animated: true,
+	        });
+		} else if(questionId) {
 			// scroll to next incomplete question if not done
 			var nextIndex = this.state.quiz.questions.length;
-			for (var i = questionIndex; i < this.state.quiz.questions.length; i++) {
-				if (answers.findIndex(elem => elem.questionIndex === i) < 0) {
+			for (var i = questionId; i < this.state.quiz.questions.length; i++) {
+				if (this.state.answers.findIndex(elem => elem.questionId === i) < 0) {
 					nextIndex = i;
 					break;
 				}
 			}
 			if (nextIndex < this.state.quiz.questions.length) {
-				this.scrollIndexHelper();
-
-				console.log("nextIndex: " + nextIndex + ", scroll to: " + this.state.scrollIndices[nextIndex])
-				
 		        this.scrollview_ref.scrollTo({
 		            x: 0,
 		            y: this.state.scrollIndices[nextIndex],
@@ -108,21 +153,108 @@ class Take extends React.Component {
 		}
 	}
 	
-	render() {
+	updateIsDone(questionId) {
+		// helper function for checking if all answers are done
+		this.setState({ isDone: this.state.answers.length == this.state.quiz.questions.length }, () => this.isDoneAndScroll(questionId))
+	}
+	
+	isDoneAndScroll(questionId) {
+		if (this.state.isDone) {
+			this.scrollToNext();
+			this.finishedQuiz();
+		} else {
+			this.scrollToNext(questionId)
+		}
+	}
+	
+	setSelectedChoiceValue(questionId, choiceWeight, choiceId) {
+		if (!this.state.isDone) {
+			// remove the choice that is currently selected for this question
+			var answers = [...this.state.answers]
+			if (answers.findIndex(elem => elem.questionId === questionId) >= 0)
+				answers.splice(answers.findIndex(elem => elem.questionId === questionId), 1);
+			
+			// select this choice by adding a new answer to answers
+			const newAnswer = { 
+					questionId: questionId,
+					choiceWeight: choiceWeight,
+					choiceId: choiceId, };
+			answers = [...answers, newAnswer]
 
+			this.setState({answers}, () => {
+				this.updateIsDone(questionId)
+			})
+		}
+	}
+	
+	retakeQuiz() {
+		this.scrollview_ref.scrollTo({
+            x: 0,
+            y: 0,
+            animated: true,
+        });
+		this.setState({answers: [], hasTaken: false, isDone: false})
+	}
+	
+	finishedQuiz() {
+		/* calculate the result of the quiz
+		 * sum all the weights from each of the answer choices selected
+		 * average across total number of questions
+		 * round the average to the nearest integer weight
+		 * that weight is the weight of the corresponding result
+		 */
+
+		// if quizzing exists, get the result id
+		if (this.state.hasTaken) {
+			console.log("already taken")
+			var resultOfQuiz = this.state.quiz.results[this.state.quiz.results.findIndex(elem => elem.id === this.state.quizzing.result_id)];
+			this.setState({resultOfQuiz: resultOfQuiz})
+		}
+		// if not taken, calculate the result
+		else {
+			var sum = this.state.answers.reduce(function(a, b) {
+				return a + b.choiceWeight;
+			}, 0);
+			var roundedWeight = Math.round(sum / this.state.quiz.questions.length);
+			var resultOfQuiz = this.state.quiz.results[this.state.quiz.results.findIndex(elem => elem.weight === roundedWeight)];
+			this.setState({resultOfQuiz: resultOfQuiz})
+
+			console.log("retake or save")
+			// save the quiz results
+			var quizzing = {
+				user_id: this.props.users.user.id, 
+				quiz_id: this.state.quiz.id, 
+				result_id: resultOfQuiz.id, 
+				choice_ids: this.state.answers.map(a => a.choiceId)}
+			console.log(quizzing)
+			this.props.quizzes.save(quizzing)
+			.then((res) => {
+				console.log("saved!!!")
+				this.setState({quizzing: res, hasTaken: true})
+			})
+			.catch((error) => {
+				console.log("o noes")
+				console.log(error);
+			})
+		}
+	}
+	
+	render() {
+		
 		let questionsArray = this.state.quiz.questions.map(( item, key ) =>
 		{
-			item.index = key;
 			return item != undefined ? (
 					<View 
+					key={key}
 					onLayout={event => {
 				        const layout = event.nativeEvent.layout;
-				        this.state.scrollHeights[item.index] = layout.height;
-						console.log("question " + item.index + ": " + this.state.scrollHeights[item.index])
+				        this.state.scrollHeights[key] = layout.height;
+						this.scrollIndexHelper();
 				      }}>
 						<TakeQuestion
 						question={item}
-						key={item.index}
+						key={key}
+						index={key}
 						answers={this.state.answers}
 						setSelectedChoiceValue={this.setSelectedChoiceValue.bind(this)}
 						/>	
@@ -131,70 +263,65 @@ class Take extends React.Component {
 		});
 		
 		let resultSection = () => {
-			this.state.isDone = this.state.answers.length == this.state.quiz.questions.length;
-			/* calculate the result of the quiz
-			 * sum all the weights from each of the answer choices selected
-			 * average across total number of questions
-			 * round the average to the nearest integer weight
-			 * that weight is the weight of the corresponding result
-			 */
 			if (this.state.isDone) {
-				var sum = this.state.answers.reduce(function(a, b) {
-					return a + b.choiceWeight;
-				}, 0);
-				var roundedWeight = Math.round(sum / this.state.quiz.questions.length);
-				var resultOfQuiz = this.state.quiz.results[this.state.quiz.results.findIndex(elem => elem.weight === roundedWeight)];
 				
-				// initate new quizzing: todo later
+				return (
+						<View
+					      onLayout={event => {
+						        const layout = event.nativeEvent.layout;
+						        this.scrollIndexHelper();
+						        this.scrollToNext();
+						      }}>
+							{
+								this.state.resultOfQuiz ?
+									(
+										<TakeResult result={this.state.resultOfQuiz} />	
+									) : null
+							}
+							
+							<View style={[allStyles.section]}>
+								<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton, styles.shareButton, styles.topShareButton ]}
+					                onPress={this.retakeQuiz.bind(this)}>
+									<TabBarIcon name="md-happy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+									<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Retake the kwiz</Text>
+								</TouchableOpacity>
+								<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton, styles.shareButton, styles.bottomShareButton, { height: 60, } ]}
+							        onPress={() => this.props.navigation.navigate("Kwiz Results", {quiz_id: this.props.quizzes.quiz.id})}>
+									<TabBarIcon name="md-trophy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+									<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>See how your friends did!</Text>
+								</TouchableOpacity>
+							</View>
+	
+						      <View style={allStyles.section}>
+						    	<Text style={allStyles.sectionTitle}>Recommended</Text>
+						      	<Text style={allStyles.sectionSubtitle}>Take another one! We promise it's not an addiction. ;)</Text>
+						    	<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
+						  			
+						  		</ScrollView>
+						      </View>
+							
+							<View style={[allStyles.section]}>
+								<Text style={allStyles.sectionTitle}>Share your results!</Text>
+								<Text style={allStyles.sectionSubtitle}>Share the fun by sending your results to your friends or posting on social media.</Text>
+								<ShareForm quiz={ this.props.quizzes.quiz } />
+							</View>
+						</View>
+						)
 			}
 			
-			return this.state.isDone 
-					? (
-							<View>
-								<TakeResult 
-								result={resultOfQuiz} />
-								
-								<View style={[allStyles.section]}
-							      onLayout={event => {
-							        const layout = event.nativeEvent.layout;
-							        var scrollIndex = this.state.scrollIndices[this.state.quiz.questions.length-1] + this.state.scrollHeights[this.state.quiz.questions.length-1]
-							        this.scrollview_ref.scrollTo({
-							            x: 0,
-							            y: scrollIndex,
-							            animated: true,
-							        });
-								    console.log('scroll to result:', scrollIndex);
-							      }}>
-									<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton, { height: 60, } ]}
-								        onPress={() => this.props.navigation.navigate("Kwiz Results")}>
-										<TabBarIcon name="md-trophy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-										<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>See how your friends did!</Text>
-									</TouchableOpacity>
-								</View>
-		
-							      <View style={allStyles.section}>
-							    	<Text style={allStyles.sectionTitle}>Recommended</Text>
-							      	<Text style={allStyles.sectionSubtitle}>Take another one! We promise it's not an addiction. ;)</Text>
-							    	<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
-							  			
-							  		</ScrollView>
-							      </View>
-								
-								<View style={[allStyles.section]}>
-									<Text style={allStyles.sectionTitle}>Share your results!</Text>
-									<Text style={allStyles.sectionSubtitle}>Share the fun by sending your results to your friends or posting on social media.</Text>
-									<ShareForm quiz={ this.props.quizzes.quiz } />
-								</View>
-							</View>
-							)
-					: null
 		}
 		
 		return (
 				<ScrollView style={[allStyles.container, styles.quizFormContainer ]}
 				ref={ref => {
 				    this.scrollview_ref = ref;
-				  }}>
+				  }}
+	      		refreshControl={
+			              <RefreshControl
+			              refreshing={this.state.refreshing}
+			              onRefresh={this._onRefresh}
+			            />
+			          }>
 					
 					<Text style={ allStyles.heading }>{ this.state.quiz.title }</Text>
 					

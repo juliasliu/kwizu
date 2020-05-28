@@ -29,9 +29,14 @@ class Login extends React.Component {
 		return (
 				<KeyboardAwareScrollView style={{padding: 50, marginTop: 50}}>
 					<Text style={[ allStyles.title, { textAlign: 'center', marginTop: 50, marginBottom: 50 } ]}>Sign In</Text>
+					{
+						this.props.users.error &&
+						<View style={ allStyles.error }>
+							<Text>{this.props.users.error}</Text> 
+						</View>
+					} 
 					<LoginForm onPress={this.onLogin.bind(this)} 
-					busy={this.props.users.loggingIn} 
-					loggingError={this.props.users.loggingError} 
+					busy={this.props.users.busy}
 					navigation={this.props.navigation}></LoginForm>
 				</KeyboardAwareScrollView>
 		) 

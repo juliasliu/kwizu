@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import { observer, inject } from 'mobx-react'
@@ -19,7 +19,13 @@ class HomeScreen extends React.Component {
 			[ /* personality */ ],
 			[ /* trivia */ ],
 		],
+	      refreshing: false,
 	}
+	
+	_onRefresh = () => {
+	    this.setState({refreshing: true});
+	    this.componentDidMount();
+	  }
 	
 	componentDidMount() {
 		this.props.quizzes.index()
@@ -30,6 +36,7 @@ class HomeScreen extends React.Component {
 			quizzes[2] = res;
 			quizzes[3] = res;
 			this.setState({quizzes})
+		      this.setState({refreshing: false});
 		})
 		.catch((error) => {
 			console.log(error);
@@ -53,7 +60,13 @@ class HomeScreen extends React.Component {
 		
 		  return (
 		    <View style={allStyles.container}>
-		      <ScrollView style={allStyles.container}>
+		      <ScrollView style={allStyles.container}
+		      		refreshControl={
+		              <RefreshControl
+		              refreshing={this.state.refreshing}
+		              onRefresh={this._onRefresh}
+		            />
+		          }>
 		
 			      <View style={allStyles.section}>
 			      	<Text style={allStyles.sectionTitle}>Daily</Text>

@@ -3,64 +3,78 @@ import axios from 'axios'
 
 class Users {
 	@observable user = null;
-	@observable username = null;
+	@observable id = null;
 	@observable isLoggedIn = false;
-	@observable loggingIn = false; 
-	@observable loggingError = null;
-	@observable registering = false; 
-	@observable registeringError = null;
+	@observable busy = false; 
+	@observable error = null;
+	@observable success = null;
 	
 	@action login = function(email, password) { 
+		this.busy = true;
+		
 		let user = {
 				email: email,
 				password: password
 		}
-		this.loggingIn = true;
-		this.loggingError = null;
 		
 		axios.post('http://localhost:3001/login', {user}, {withCredentials: true})
 		.then(response => {
 			if (response.data.logged_in) {
+				this.handleSuccess()
 				this.handleLogin(response.data.user)
 				console.log()
 			} else {
+				this.handleErrors(response.data.errors)
 				this.handleLogout()
-				this.loggingError = response.data.errors
 			}
 		})
 		.catch(error => console.log('api errors:', error))
 	}
 	@action logout = function() {
-		axios.delete('http://localhost:3001/logout', {withCredentials: true})
-	    .then(response => {
-	    	this.handleLogout()
-	    })
-	    .catch(error => console.log(error))
+		this.busy = true;
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+		
+		return new Promise(function(resolve, reject) {
+
+			axios.delete('http://localhost:3001/logout', {withCredentials: true})
+			.then(response => {
+				that.handleSuccess()
+				that.handleLogout()
+				resolve(response)
+			})
+			.catch(error => {
+					that.handleErrors(error)
+					console.log('api errors:', error)
+					reject(error);
+				})
+		})
 	}
 	@action register = function(email, name, username, password, password_confirmation) {
+		this.busy = true;
+		
 		if(!email || email == '') {
-			this.registering = false; 
-			this.registeringError = 'Email was not entered'; 
+			this.busy = false; 
+			this.error = 'Email was not entered'; 
 			return;
 		}
 		if(!name || name == '') {
-			this.registering = false; 
-			this.registeringError = 'Name was not entered'; 
+			this.busy = false; 
+			this.error = 'Name was not entered'; 
 			return;
 		}
 		if(!username || username == '') {
-			this.registering = false; 
-			this.registeringError = 'Username was not entered'; 
+			this.busy = false; 
+			this.error = 'Username was not entered'; 
 			return;
 		}
 		if(!password || password == '') {
-			this.registering = false; 
-			this.registeringError = 'Password was not entered';
+			this.busy = false; 
+			this.error = 'Password was not entered';
 			return;
 		}
 		if(!password_confirmation || password_confirmation != password) {
-			this.registering = false; 
-			this.registeringError = 'Password did not match'; 
+			this.busy = false; 
+			this.error = 'Password did not match'; 
 			return;
 		}
 		let user = {
@@ -70,19 +84,22 @@ class Users {
 				password: password,
 				password_confirmation: password_confirmation
 		}
-		this.registering = true;
-		this.registeringError = null;
 		
 		axios.post('http://localhost:3001/users', {user}, {withCredentials: true})
 		.then(response => {
 			if (response.data.status === 'created') {
+				this.handleSuccess()
 				this.handleLogin(response.data.user)
 			} else {
+				this.handleErrors(response.data.errors)
 				this.handleLogout()
-				this.registeringError = response.data.errors
 			}
 		})
-		.catch(error => console.log('api errors:', error))
+		.catch(error => {
+					this.handleErrors(error)
+					console.log('api errors:', error)
+					reject(error);
+				})
 	}
 	
 	@action async loginStatus() {
@@ -92,28 +109,85 @@ class Users {
 				{withCredentials: true})
 				.then(response => {
 					if (response.data.logged_in) {
+						this.handleSuccess()
 						this.handleLogin(response.data.user)
 					} else {
+						this.handleErrors(response.data.errors)
 						this.handleLogout()
 					}
 				})
-				.catch(error => console.log('api errors:', error))
+				.catch(error => {
+					this.handleErrors(error)
+					console.log('api errors:', error)
+					reject(error);
+				})
+	}
+	
+	@action show = function(id) {
+		this.busy = true;
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+		
+		return new Promise(function(resolve, reject) {
+			axios.get('http://localhost:3001/users/' + id, {withCredentials: true})
+	        .then(response => {
+	        	that.handleSuccess();
+	            resolve(response.data.user);
+	        })
+	        .catch(error => {
+				that.handleErrors(error)
+				console.log('api errors:', error)
+				reject(error);
+			})
+		})
+	}
+	
+	@action update = function(user) {
+		this.busy = true;
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+		
+		if(user.caption.length > 150) {
+			this.busy = false; 
+			this.error = 'Caption is too long, must be ≤150 chars long'; 
+			return;
+		}
+		
+		return new Promise(function(resolve, reject) {
+			axios.put('http://localhost:3001/users/' + user.id, {user}, {withCredentials: true})
+	        .then(response => {
+	        	that.handleSuccess();
+	        	that.success = "Your profile was saved successfully";
+	            resolve(response.data.user);
+	        })
+	        .catch(error => {
+				that.handleErrors(error)
+				console.log('api errors:', error)
+				reject(error);
+			})
+		})
+	}
+	
+	handleSuccess() {
+		this.error = null;
+		this.success = null;
+		this.busy = false
+	}
+	
+	handleErrors(errors) {
+		this.error = errors
+		this.success = null;
+		this.busy = false
 	}
 	
 	handleLogin(user) {
 		this.user = user;
-		this.username = user.username;
+		this.id = user.id;
 		this.isLoggedIn = true;
-		this.loggingIn = false;
-		this.registering = false;
 	}
 	
 	handleLogout() {
 		this.user = null; 
-		this.username = null;
+		this.id = null;
 		this.isLoggedIn = false;
-		this.loggingIn = false;
-		this.registering = false;
 	}
 }
 

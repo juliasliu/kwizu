@@ -20,8 +20,8 @@ class TakeQuestion extends React.Component {
 	state = { 
 			
 	}
-	setSelectedChoiceValue(weight) {
-		this.props.setSelectedChoiceValue(this.state.index, weight);
+	setSelectedChoiceValue(weight, id) {
+		this.props.setSelectedChoiceValue(this.props.question.id, weight, id);
 	}
 	
 	getSelectedChoiceStyle(type, isChecked) {
@@ -34,20 +34,17 @@ class TakeQuestion extends React.Component {
 	}
 	
 	render() {
-		this.state = this.props.question;
-
-		console.log(this.state)
 		
-		let choicesArray = this.state.choices.map(( item, key ) =>
+		let choicesArray = this.props.question.choices.map(( item, key ) =>
 		{
-			// isChecked is true if there is an answer in this.props.answers with the same questionIndex and choiceWeight
-			let isChecked = this.props.answers.findIndex(elem => elem.questionIndex === this.state.index && elem.choiceWeight === item.weight) != -1;
+			// isChecked is true if there is an answer in this.props.answers with the same questionId and choiceWeight
+			let isChecked = this.props.answers.findIndex(elem => elem.questionId === this.props.question.id && elem.choiceWeight === item.weight) != -1;
 			return item != undefined ? (
-					<View style={[ styles.choiceContainer]} key = { item.index } >
+					<View style={[ styles.choiceContainer]} key = { key } >
 						<TouchableOpacity style={[ allStyles.button, styles.choice, this.getSelectedChoiceStyle("button", isChecked) ]}
-							onPress={() => this.setSelectedChoiceValue(item.weight)}>
+							onPress={() => this.setSelectedChoiceValue(item.weight, item.id)}>
 							<CheckBox
-								onClick={() => this.setSelectedChoiceValue(item.weight)}
+								onClick={() => this.setSelectedChoiceValue(item.weight, item.id)}
 								checkBoxColor= {this.getSelectedChoiceStyle("checkbox", isChecked)}
 								isChecked={isChecked}
 							/>
@@ -60,7 +57,7 @@ class TakeQuestion extends React.Component {
 		return (
 				<View style={[ styles.quizForm ]}>
 					<View style={[ styles.quizFormHeader, styles.questionHeader ]}>
-						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Question {this.state.index + 1}</Text>
+						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Question {this.props.index + 1}</Text>
 					</View>
 					<View style={[ allStyles.card ]}>
 					{
@@ -69,7 +66,7 @@ class TakeQuestion extends React.Component {
 							<Text>{this.props.registeringError}</Text>
 						</View>
 					}
-					<Text style={styles.question}>{ this.state.title }</Text>
+					<Text style={styles.question}>{ this.props.question.title }</Text>
 					{
 						choicesArray
 					}

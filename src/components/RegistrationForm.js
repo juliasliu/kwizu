@@ -27,12 +27,6 @@ class RegisterForm extends React.Component {
 	render() {
 		return (
 				<View>
-				{
-					this.props.registeringError &&
-					<View style={ allStyles.error }>
-						<Text>{this.props.registeringError}</Text>
-					</View>
-				}
 				<TextInput
 					ref='registerName' 
 					style={ allStyles.input } 
@@ -65,7 +59,7 @@ class RegisterForm extends React.Component {
 					onChangeText={(registerUsername) => this.setState({registerUsername})} 
 					returnKeyType='next' 
 					value={this.state.registerUsername} 
-					placeholder='Username' 
+					placeholder='Username (4 chars min)' 
 					onSubmitEditing={(event) => {
 						this.refs.registerPassword.focus();
 					}}
@@ -77,7 +71,7 @@ class RegisterForm extends React.Component {
 					returnKeyType='next' 
 					value={this.state.registerPassword} 
 					secureTextEntry={true} 
-					placeholder='Password (4 chars min)'
+					placeholder='Password'
 					onSubmitEditing={(event) => {
 						this.refs.registerPasswordConfirmation.focus();
 					}}
@@ -88,7 +82,7 @@ class RegisterForm extends React.Component {
 					onChangeText={(registerPasswordConfirmation) => this.setState({registerPasswordConfirmation})} 
 					value={this.state.registerPasswordConfirmation} 
 					secureTextEntry={true} 
-					placeholder='Password Confirmation (4 chars min)'
+					placeholder='Password Confirmation'
 				/>
 				<View style={ allStyles.flexContainer }>
 					<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.redButton ]}

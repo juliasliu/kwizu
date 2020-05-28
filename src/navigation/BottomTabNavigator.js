@@ -61,18 +61,13 @@ class HomeStackScreen extends React.Component {
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',
 			      	}} />
-			      <HomeStack.Screen name="New Personality Kwiz" component={New} type={"Personality"} options={{
-			    	  headerTitle: 'New Personality Kwiz',
-			    	  headerTitleStyle: { color: '#515d6e' },
-			    	  headerTintColor: '#B2BECF',
-			      	}} />
-			      <HomeStack.Screen name="New Trivia Kwiz" component={New} type={"Trivia"} options={{
-			    	  headerTitle: 'New Trivia Kwiz',
+			      <HomeStack.Screen name="New Kwiz" component={New} options={{
+			    	  headerTitle: 'New Kwiz',
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',
 			      	}} />
 			      <HomeStack.Screen name="Publish and Share Kwiz" component={Publish} options={{
-			    	  headerTitle: 'New Personality Kwiz',
+			    	  headerTitle: 'Published Kwiz',
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',
 			      	}} />
@@ -81,6 +76,11 @@ class HomeStackScreen extends React.Component {
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',
 			      	}} />
+			      <HomeStack.Screen name="Profile" component={Profile} options={{
+			    	  headerTitle: 'Profile', 
+			    	  headerTitleStyle: { color: '#515d6e' },
+			    	  headerTintColor: '#B2BECF',
+			      }} />
 			      </HomeStack.Navigator>
 			      
 			      <Modal isVisible={this.state.isModalVisible} 
@@ -92,11 +92,11 @@ class HomeStackScreen extends React.Component {
 			      style={[ allStyles.modal ]}>
 				      <View style={[ allStyles.card, allStyles.modalView, allStyles.modalViewDark ]}>
 				        <Text style={ allStyles.modalTitle }>Create a new Kwiz</Text>
-				        <TouchableOpacity onPress={() => {this.toggleModal(); this.props.navigation.navigate('New Personality Kwiz', {type: "Personality"}); }} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
+				        <TouchableOpacity onPress={() => {this.toggleModal(); this.props.navigation.navigate('New Kwiz', {type: "Personality"}); }} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
 				        	<TabBarIcon name="md-paw" style={[ allStyles.buttonIcon ]}/>
 				        	<Text>Personality</Text>
 				        </TouchableOpacity>
-				        <TouchableOpacity onPress={() => { this.toggleModal(); this.props.navigation.navigate('New Trivia Kwiz', {type: "Trivia"}); }} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
+				        <TouchableOpacity onPress={() => { this.toggleModal(); this.props.navigation.navigate('New Kwiz', {type: "Trivia"}); }} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
 					        <TabBarIcon name="md-trophy" style={[ allStyles.buttonIcon ]}/>
 				        	<Text>Trivia</Text>
 				        </TouchableOpacity>
@@ -131,13 +131,6 @@ function MatchStackScreen() {
     	  headerTitle: 'Profile', 
     	  headerTitleStyle: { color: '#515d6e' },
     	  headerTintColor: '#B2BECF',
-    	  headerRight: () => (
-    		<TabBarIcon
-  				onPress={() => navigation.navigate("Chats")}
-  				name="md-chatbubbles"
-  					style={[ allStyles.headerIcon, {paddingRight: 25,} ] }
-  				/>  
-    	  )
       }} />
       <MatchStack.Screen name="Friends" component={Friends} options={{
     	  headerTitle: 'Friends', 

@@ -3,7 +3,8 @@ import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import notifications from '../notifications'
 
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button, TextInput } from 'react-native';
+import { Image, Platform, StyleSheet, Text,
+	ActivityIndicator, TouchableOpacity, View, Button, TextInput } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 
@@ -15,40 +16,93 @@ import styles from '../styles/ProfileScreen';
 @inject('users') @observer
 class Settings extends React.Component {
 	state= { 
-			email: '', 
-			name: '',
-			username: '',
-			caption: '',
-			password: '',
-			passwordConfirmation: ''
+			user: {},
+			refreshing: true,
+	}
+	
+	componentDidMount() {
+		if (this.props.users.user) this.setState({user: this.props.users.user, refreshing: false});
 	}
 	
 	onPressLogout() {
-		this.props.users.logout();
+		this.props.users.logout()
+		.then((res) => {
+			console.log("logged out")
+		});
 	}
-	onPressEdit() { 
-		this.props.onPress(this.state.email, this.state.name, this.state.username, this.state.password, this.state.passwordConfirmation);
+	onPressEdit() {
+		console.log(this.state.user)
+		this.props.users.update(this.state.user)
+		.then(res => {
+			console.log(res)
+			console.log("saved!")
+			this.setState({user: this.props.users.user});
+		})
+		.catch(error => {
+			console.log("failed");
+			console.log(error);
+		})
+	}
+	
+	setProfileName(name) {
+		var user = this.state.user;
+		user.name = name;
+		this.setState({user})
+	}
+	setProfileUsername(username) {
+		var user = this.state.user;
+		user.username = username;
+		this.setState({user})
+	}
+	setProfileCaption(caption) {
+		var user = this.state.user;
+		user.caption = caption;
+		this.setState({user})
 	}
 
 	render () {
-		this.state = this.props.users.user;
 		
-		return (
+		return (!this.state.refreshing) ? (
 				<View style={allStyles.container}>
-			      <ScrollView style={allStyles.container}>
+			      <ScrollView style={allStyles.container}
+					ref={ref => {
+					    this.scrollview_ref = ref;
+					  }}>
 					<View>	
 						{
-							this.props.editingError &&
-							<View style={ allStyles.error }>
-								<Text>{this.props.editingError}</Text>
+							this.props.users.error &&
+							<View style={ allStyles.error }
+							onLayout={event => {
+						        const layout = event.nativeEvent.layout;
+						        this.scrollview_ref.scrollTo({
+						            x: 0,
+						            y: layout.y,
+						            animated: true,
+						        });
+						      	}}>
+								<Text>{this.props.users.error}</Text> 
+							</View>
+						} 
+						{
+							this.props.users.success &&
+							<View style={ allStyles.success }
+							onLayout={event => {
+						        const layout = event.nativeEvent.layout;
+						        this.scrollview_ref.scrollTo({
+						            x: 0,
+						            y: layout.y,
+						            animated: true,
+						        });
+						      	}}>
+								<Text>{this.props.users.success}</Text> 
 							</View>
 						}
 						<TextInput
 							ref='name' 
 							style={ allStyles.input } 
-							onChangeText={(name) => this.setState({name})} 
+							onChangeText={(name) => this.setProfileName(name)} 
 							returnKeyType='next' 
-							value={this.state.name} 
+							value={this.state.user.name} 
 							placeholder='Name' 
 							onSubmitEditing={(event) => {
 								this.refs.username.focus();
@@ -59,9 +113,9 @@ class Settings extends React.Component {
 							autoCorrect={false}
 							ref='username' 
 							style={ allStyles.input } 
-							onChangeText={(username) => this.setState({username})} 
+							onChangeText={(username) => this.setProfileUsername(username)} 
 							returnKeyType='next' 
-							value={this.state.username} 
+							value={this.state.user.username} 
 							placeholder='Username' 
 							onSubmitEditing={(event) => {
 								this.refs.caption.focus();
@@ -71,50 +125,31 @@ class Settings extends React.Component {
 							autoCapitalize='none'
 							ref='caption' 
 							style={[ allStyles.input, allStyles.textarea ]} 
-							onChangeText={(caption) => this.setState({caption})} 
+							onChangeText={(caption) => this.setProfileCaption(caption)} 
 							returnKeyType='next' 
-							value={this.state.caption} 
+							value={this.state.user.caption} 
 							placeholder='Caption (150 chars max)' 
 								multiline={true}
-							onSubmitEditing={(event) => {
-								this.refs.password.focus();
-							}}
-						/>
-						<TextInput
-							ref='password' 
-							style={ allStyles.input } 
-							onChangeText={(password) => this.setState({password})} 
-							returnKeyType='next' 
-							value={this.state.password} 
-							secureTextEntry={true} 
-							placeholder='New Password (4 chars min)'
-							onSubmitEditing={(event) => {
-								this.refs.passwordConfirmation.focus();
-							}}
-						/>
-						<TextInput
-							ref='passwordConfirmation' 
-							style={ allStyles.input } 
-							onChangeText={(passwordConfirmation) => this.setState({passwordConfirmation})} 
-							value={this.state.passwordConfirmation} 
-							secureTextEntry={true} 
-							placeholder='New Password Confirmation (4 chars min)'
 						/>
 							
 							{
-								this.props.busy ? 
+								this.props.users.busy ? 
 										<ActivityIndicator/> :
-								<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.greenButton ]} onPress={() => alert("")} title="Save Profile">
+								<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.greenButton ]} onPress={this.onPressEdit.bind(this)} title="Save Profile">
 									<Text style={ allStyles.whiteText }>Save Profile</Text>
 								</TouchableOpacity>
 							}
-							<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.redButton ]} onPress={this.onPressLogout.bind(this)} title="Log Out">
-								<Text style={ allStyles.whiteText }>Log Out</Text>
-							</TouchableOpacity>
+							{
+								this.props.users.busy ? 
+								<ActivityIndicator/> :
+									<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.redButton ]} onPress={this.onPressLogout.bind(this)} title="Log Out">
+									<Text style={ allStyles.whiteText }>Log Out</Text>
+								</TouchableOpacity>
+							}
 					</View>
 					</ScrollView>
 				</View>
-		)
+		) : null
 	}
 }
 export default Settings;

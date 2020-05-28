@@ -23,12 +23,6 @@ class LoginForm extends React.Component {
 	render() {
 		return (
 				<View>
-				{
-					this.props.loggingError &&
-					<View style={ allStyles.error }>
-						<Text>{this.props.loggingError}</Text> 
-					</View>
-				} 
 				<TextInput
 					autoCapitalize='none'
 					autoCorrect={false}

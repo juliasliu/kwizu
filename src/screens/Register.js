@@ -30,6 +30,7 @@ class Register extends React.Component {
 		return (
 				<KeyboardAwareScrollView style={{padding: 50, marginTop: 50}}>
 					<Text style={[ allStyles.title, { textAlign: 'center', marginTop: 50, marginBottom: 50 } ]}>Sign Up</Text>
+					
 					<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton, styles.shareButton ]}
 		                onPress={() => alert("")}>
 						<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
@@ -37,10 +38,15 @@ class Register extends React.Component {
 					</TouchableOpacity>
 
 					<Text style={{ textAlign: 'center', fontSize: 16, marginTop: 50, marginBottom: 25 }}>Or, if you have an email:</Text>
+					{
+						this.props.users.error &&
+						<View style={ allStyles.error }>
+							<Text>{this.props.users.error}</Text> 
+						</View>
+					}
 					
 					<RegistrationForm onPress={this.onPressRegister.bind(this)} 
-					busy={this.props.users.registering} 
-					registeringError={this.props.users.registeringError} 
+					busy={this.props.users.busy} 
 					navigation={this.props.navigation}></RegistrationForm>
 				</KeyboardAwareScrollView>
 		) 

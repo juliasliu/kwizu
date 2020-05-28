@@ -10,6 +10,7 @@ import {
 	StyleSheet,
 	Link,
 	TouchableOpacity,
+	RefreshControl,
 } from 'react-native';
 
 import { StackActions } from '@react-navigation/native';
@@ -54,6 +55,8 @@ class New extends React.Component {
 						image: '',
 					},
 					],
+			isEditing: false,
+		      refreshing: false,
 	}
 	
 	/* destructive method for reassigning indices for an array
@@ -65,7 +68,7 @@ class New extends React.Component {
 		while (i < array.length) {
 			if (array[i].index >= indexDeleted) {
 				array[i].index--;
-				if(array[i].weight) {
+				if(array[i].title && array[i].weight) {
 					array[i].weight--;
 				}
 			}
@@ -73,22 +76,79 @@ class New extends React.Component {
 		}
 	}
 	
+	_onRefresh = () => {
+	    this.setState({refreshing: true});
+	    this.componentDidMount();
+	  }
+	
+	componentDidMount() {
+		// check if quiz already exists and is being edited, if so then update state, otherwise do nothing
+		const {quiz_id} = this.props.route.params;
+		if (quiz_id) {
+			this.props.quizzes.show(quiz_id)
+			.then((res) => {
+				console.log("got the quiz")
+				this.setState({id: res.quiz.id, title: res.quiz.title, public: res.quiz.public, isEditing: true}, this.loadQuiz)
+			      this.setState({refreshing: false});
+			})
+			.catch((error) => {
+				console.log("o no")
+				console.log(error);
+			})
+		}
+	}
+	
+	loadQuiz() {
+		// helper function for loading quiz into this.state.questions and this.state.results
+		var questions = [];
+		for (var i = 0; i < this.props.quizzes.quiz.questions.length; i++) {
+			var question = this.props.quizzes.quiz.questions[i];
+			question.index = i;
+			for (var j = 0; j < question.choices.length; j++) {
+				question.choices[j].index = j;
+			}
+			questions.push(question)
+		}
+		this.setState({questions: questions})
+		
+		var results = [];
+		for (var i = 0; i < this.props.quizzes.quiz.results.length; i++) {
+			var result = this.props.quizzes.quiz.results[i];
+			result.index = i;
+			results.push(result)
+		}
+		this.setState({results: results})
+	}
+	
 	onPressCreate = (isPublic) => {
 		// check to see if kwiz already exists: if so, then only save/update; do this later
-		this.state.public = isPublic;
-		this.props.quizzes.create(this.state)
-		.then(res => {
-			console.log("created!")
-			if (isPublic) {
+		if (this.state.isEditing) {
+			console.log("start update")
+			this.props.quizzes.update(this.state)
+			.then(res => {
+				console.log("updated!")
 				this.props.navigation.dispatch(StackActions.pop(1));
 				this.props.navigation.navigate("Publish and Share Kwiz");
-			} else {
-//				this.props.quizzes.savingSuccess = "Your Kwiz was saved successfully"; // hard-coding the success message
-			}
-		})
-		.catch(error => {
-			console.log("failed");
-		})
+			})
+			.catch(error => {
+				console.log("failed");
+				console.log(error);
+			})
+		} else {
+			this.state.public = isPublic;
+			this.props.quizzes.create(this.state)
+			.then(res => {
+				console.log("created!")
+				if (isPublic) {
+					this.props.navigation.dispatch(StackActions.pop(1));
+					this.props.navigation.navigate("Publish and Share Kwiz");
+				}
+			})
+			.catch(error => {
+				console.log("failed");
+				console.log(error);
+			})
+		}
 	}
 
 	onPressAddResult() {
@@ -126,7 +186,7 @@ class New extends React.Component {
 		const newQuestion = {
 				index: this.state.questions.length,
 				title: '',
-				choices: [ 
+				choices: [
 					{
 						index: 0,
 						content: '',
@@ -135,8 +195,17 @@ class New extends React.Component {
 					], 
 				};
 		var questions = [...this.state.questions, newQuestion]
-	    this.setState({questions});
+	    this.setState({questions}, () => this.onPressAddQuestionChoices(newQuestion.index));
 	}
+	
+	onPressAddQuestionChoices(questionIndex) {
+		console.log("hi! question " + questionIndex)
+		// for however many results there are, add however many choices
+		for (var i = 1; i < this.state.results.length; i++) {
+			this.onPressAddChoice(questionIndex);
+		}
+	}
+	
 	onPressDeleteQuestion(questionIndex) {
 		if (this.state.questions.length != 1) {
 			var newQuestionsArray = [...this.state.questions]
@@ -200,17 +269,21 @@ class New extends React.Component {
 	}
 	
 	render() {
-		console.log("--------------------")
-		console.log("Results: ")
-		console.log(this.state.results)
-		console.log("Questions: ")
-		console.log(this.state.questions)
+//		console.log("--------------------")
+//		console.log("Quiz " + this.state.id)
+//		console.log("Results: ")
+//		console.log(this.state.results)
+//		console.log("Questions: ")
+//		console.log(this.state.questions)
+		
+		const {type} = this.props.route.params;
 		
 		let resultsArray = this.state.results.map(( item, key ) =>
 		{
 			return item != undefined ? (
 					<NewResultForm 
 					result={item}
+					key={item.index}
 					onPressAdd={this.onPressAddResult.bind(this)}
 					onPressDelete={this.onPressDeleteResult.bind(this)}
 					setTitleValue={this.setResultTitleValue.bind(this)}
@@ -224,6 +297,7 @@ class New extends React.Component {
 					<NewQuestionForm 
 					results={this.state.results}
 					question={item}
+					key={item.index}
 					onPressAdd={this.onPressAddQuestion.bind(this)}
 					onPressDelete={this.onPressDeleteQuestion.bind(this)}
 					onPressAddChoice={this.onPressAddChoice.bind(this)}
@@ -235,7 +309,6 @@ class New extends React.Component {
 		});
 		
 		let resultSection = () => {
-			const {type} = this.props.route.params;
 			return type == 'Personality' 
 					? (
 							<View style={[ allStyles.section, allStyles.sectionClear ]}>
@@ -259,13 +332,25 @@ class New extends React.Component {
 				<KeyboardAwareScrollView style={[allStyles.container, styles.quizFormContainer ]}
 				innerRef={ref => {
 				    this.scrollview_ref = ref;
-				  }}>
+				  }}
+	      		refreshControl={
+			              <RefreshControl
+			              refreshing={this.state.refreshing}
+			              onRefresh={this._onRefresh}
+			            />
+			          }>
 					
 					<View style={[ allStyles.section, allStyles.sectionClear ]}>
-						<Text style={allStyles.sectionTitle}>Kwiz Description</Text>
+						{
+							(this.state.isEditing) ? (
+									<Text style={allStyles.sectionTitle}>Edit {type} Kwiz</Text>	
+							) : (
+									<Text style={allStyles.sectionTitle}>New {type} Kwiz</Text>		
+							)
+						}	
 					
 						{
-							this.props.quizzes.creatingError &&
+							this.props.quizzes.error &&
 							<View style={ allStyles.error }
 							onLayout={event => {
 						        const layout = event.nativeEvent.layout;
@@ -275,11 +360,11 @@ class New extends React.Component {
 						            animated: true,
 						        });
 						      	}}>
-								<Text>{this.props.quizzes.creatingError}</Text> 
+								<Text>{this.props.quizzes.error}</Text> 
 							</View>
 						} 
 						{
-							this.props.quizzes.savingSuccess &&
+							this.props.quizzes.success &&
 							<View style={ allStyles.success }
 							onLayout={event => {
 						        const layout = event.nativeEvent.layout;
@@ -289,7 +374,7 @@ class New extends React.Component {
 						            animated: true,
 						        });
 						      	}}>
-								<Text>{this.props.quizzes.savingSuccess}</Text> 
+								<Text>{this.props.quizzes.success}</Text> 
 							</View>
 						} 
 						
@@ -328,19 +413,44 @@ class New extends React.Component {
 						</TouchableOpacity>
 					</View>
 						
-					<View style={[ allStyles.section, allStyles.sectionClear ]}>
-						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
-			                onPress={() => this.onPressCreate(false)}>
-							<TabBarIcon name="md-eye" style={[ allStyles.buttonIcon ]}/>
-							<Text style={[ allStyles.fullWidthButtonText ]}>Save and preview</Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
-			                onPress={() => this.onPressCreate(true)}>
-							<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Publish and share</Text>
-						</TouchableOpacity>
-						<Text style={[ allStyles.sectionSubtitle, styles.quizSaveText ]}>You can save a draft if you are not finished editing your kwiz. You can publish later when you're ready.</Text>
-					</View>
+					{
+						(this.state.isEditing) ? (
+								<View style={[ allStyles.section, allStyles.sectionClear ]}>
+								{
+									this.props.quizzes.busy ? 
+									<ActivityIndicator/> :
+									<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
+						                onPress={() => this.onPressCreate(true)}>
+										<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+										<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Update your kwiz</Text>
+									</TouchableOpacity>
+								}
+									<Text style={[ allStyles.sectionSubtitle, styles.quizSaveText ]}>The changes to your kwiz will automatically be public once you update it. Removing results, choices, or questions will result in users who took the kwiz to lose their saved responses.</Text>
+								</View>
+								) : (
+										<View style={[ allStyles.section, allStyles.sectionClear ]}>
+										{
+											this.props.quizzes.busy ? 
+											<ActivityIndicator/> :
+												<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
+								                onPress={() => this.onPressCreate(false)}>
+												<TabBarIcon name="md-eye" style={[ allStyles.buttonIcon ]}/>
+												<Text style={[ allStyles.fullWidthButtonText ]}>Save and preview</Text>
+											</TouchableOpacity>
+										}
+										{
+											this.props.quizzes.busy ? 
+											<ActivityIndicator/> :
+											<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
+								                onPress={() => this.onPressCreate(true)}>
+												<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+												<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Publish and share</Text>
+											</TouchableOpacity>
+										}
+											<Text style={[ allStyles.sectionSubtitle, styles.quizSaveText ]}>You can save a draft if you are not finished editing your kwiz. You can publish later when you're ready.</Text>
+										</View>
+								)
+					}
 				</KeyboardAwareScrollView>
 		) 
 	}

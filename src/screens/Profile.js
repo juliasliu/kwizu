@@ -3,9 +3,10 @@ import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import notifications from '../notifications'
 
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
+import TabBarIcon from '../components/TabBarIcon';
 
 import { MonoText } from '../components/StyledText';
 import ProfileCard from '../components/ProfileCard';
@@ -17,25 +18,55 @@ import styles from '../styles/ProfileScreen';
 @inject('users') @inject('quizzes') @observer
 class Profile extends React.Component {
 	state = {
+			user: {},
 			quizzes: [ 
 				[ /* kwiz feed */ ],
 				[ /* my tests */ ],
 			],
+			refreshing: true,
+			isOwnProfile: true,			// true if viewing own profile in stack, false if viewing others
 		}
 	
+	_onRefresh = () => {
+	    this.setState({refreshing: true});
+	    this.componentDidMount();
+	  }
+	
 	componentDidMount() {
-		this.props.quizzes.index()
+		var user_id;
+		if (!this.props.route.params) user_id = this.props.users.id;
+		else user_id = this.props.route.params.user_id;
+		
+		this.props.users.show(user_id)
 		.then((res) => {
+			console.log("found user!!")
+			console.log(res)
 			var quizzes = [...this.state.quizzes]
-			quizzes[0] = res;
-			quizzes[1] = res;
-			quizzes[2] = res;
-			quizzes[3] = res;
-			this.setState({quizzes})
+			quizzes[0] = res.taken_quizzes;
+			quizzes[1] = res.quizzes;
+			this.setState({quizzes: quizzes, user: res}, this.loadUser)
+			this.setState({refreshing: false});
 		})
 		.catch((error) => {
+			console.log("o no")
 			console.log(error);
 		})
+
+	}
+	
+	loadUser() {
+		// check if profile user is same as logged in user
+		if (this.state.user.id == this.props.users.user.id) {
+			this.setState({isOwnProfile: true})
+		} else {
+			// only show public quizzes if not same user
+			this.setState({isOwnProfile: false})
+			var quizzes = [...this.state.quizzes]
+			quizzes[1] = quizzes[1].filter(function(el) {
+				return el.public;
+			});
+			this.setState({quizzes})
+		}
 	}
 	
 	render () {
@@ -44,39 +75,80 @@ class Profile extends React.Component {
 			{
 				return item != undefined ? (
 						<QuizThumbnail 
-								quiz={item}
-								key={key}
-								type={"preview"}
-								navigation={this.props.navigation}/>
-					) : null
-			});
+						quiz={item}
+						key={key}
+						type={"preview"}
+						navigation={this.props.navigation}/>
+				) : null
+			})
 		}
 		
-		return (
+		return (!this.state.refreshing) ? (
 				<View style={allStyles.container}>
-			      <ScrollView style={allStyles.container}>
-						<ProfileCard user={this.props.users.user} navigation={this.props.navigation} />
+			      <ScrollView style={allStyles.container}
+		      		refreshControl={
+			              <RefreshControl
+			              refreshing={this.state.refreshing}
+			              onRefresh={this._onRefresh}
+			            />
+			          }>
+						<ProfileCard user={this.state.user} navigation={this.props.navigation} isOwnProfile={this.state.isOwnProfile} />
 						<View style={allStyles.section}>
 							<Text style={[ allStyles.sectionTitle, {marginTop: 20} ]}>Kwiz Feed</Text>
-					      	<Text style={allStyles.sectionSubtitle}>{this.props.users.user.name} has taken these kwizzes. Take them to find out if you got the same results!</Text>
-					      	<ScrollView contentContainerStyle={[ allStyles.quizThumbnailContainer ]} horizontal= {true} decelerationRate={0} snapToInterval={250} snapToAlignment={"center"}>
+					      	{ this.state.isOwnProfile ?
+					      		<Text style={allStyles.sectionSubtitle}>The kwizzes you have taken will show up here. See if your friends also got the same results!</Text> 
+					      		: <Text style={allStyles.sectionSubtitle}>{this.state.user.name} has taken these kwizzes. Take them to find out if you got the same results!</Text> }
+					      	
 					      	{
-				      			quizzesArray(0)
-				      		}
-							</ScrollView>
+					      		(this.state.quizzes[0].length > 0) ? (
+					      				<ScrollView contentContainerStyle={[ allStyles.quizThumbnailContainer ]} horizontal= {true} decelerationRate={0} snapToInterval={250} snapToAlignment={"center"}>
+					      				{
+					      					quizzesArray(0)
+					      				}
+					      				</ScrollView>
+					      		) : (
+					      				<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.greenButton ]} onPress={() => this.props.navigation.navigate("Home")}>
+										<TabBarIcon name="md-happy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+					      				<Text style={ allStyles.whiteText }>Take a Kwiz</Text>
+					      				</TouchableOpacity>
+					      		)
+					      	}
+					      	
 					   </View>
 					   <View style={allStyles.section}>
-						      	<Text style={allStyles.sectionTitle}>My Tests</Text>
-						      	<Text style={allStyles.sectionSubtitle}>All your homemade kwizzes show up here. Edit them, share them, or even create a new one in Home!</Text>
-						    	<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={250} snapToAlignment={"center"}>
-						    	{
-					      			quizzesArray(1)
-					      		}
-								</ScrollView>
+					   		{ this.state.isOwnProfile ?      	
+					   				(
+									   		<View>
+						   						<Text style={allStyles.sectionTitle}>Your Kwizzes</Text>
+						   						<Text style={allStyles.sectionSubtitle}>All your homemade kwizzes show up here. Edit them, share them, or even create a new one in Home!</Text>
+										    </View>
+					   					)
+						      		: (
+									   		<View>
+						   						<Text style={allStyles.sectionTitle}>{this.state.user.name}'s Kwizzes</Text>
+							      				<Text style={allStyles.sectionSubtitle}>Check out the kwizzes {this.state.user.name} has created! Share the results that you got with your friends!</Text>
+										    </View>
+						      				)
+						      		}
+						      	{
+						      		(this.state.quizzes[1].length > 0) ? (
+						      				<ScrollView contentContainerStyle={[ allStyles.quizThumbnailContainer ]} horizontal= {true} decelerationRate={0} snapToInterval={250} snapToAlignment={"center"}>
+						      				{
+						      					quizzesArray(1)
+						      				}
+						      				</ScrollView>
+						      		) : (
+						      				<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.greenButton ]} onPress={() => this.props.navigation.navigate("Home")}>
+											<TabBarIcon name="md-create" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+						      				<Text style={ allStyles.whiteText }>Create a Kwiz</Text>
+						      				</TouchableOpacity>
+						      		)
+						      	}
+						      	
 						      </View>
 					</ScrollView>
 				</View>
-		)
+		) : null
 	}
 }
 export default Profile;

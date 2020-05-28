@@ -39,10 +39,15 @@ const styles = StyleSheet.create({
 	fontWeight: 'bold',
 	fontSize: 16,
 	marginVertical: 10,
+	textAlign: 'center',
   },
   modalViewDark: {
 	  backgroundColor: "#515d6e",
 		shadowColor: "#2F3542",
+  },
+  modalViewDanger: {
+	  backgroundColor: '#E94E4E',
+	  shadowColor: "#BA3E3E",
   },
   section: {
       alignSelf: 'stretch',
@@ -315,6 +320,14 @@ const styles = StyleSheet.create({
 		  borderBottomLeftRadius: 20,
 		  borderBottomRightRadius: 20,
 	  },
+	  leaderboardResult: {
+		  marginBottom: 20,
+	  },
+	  leaderboardResultNone: {
+		  fontSize: 16,
+		  color: '#515d6e',
+		  textAlign: 'center',
+	  }
 });
 
 export default styles;
