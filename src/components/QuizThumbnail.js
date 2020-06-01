@@ -30,7 +30,7 @@ class QuizThumbnail extends React.Component {
 		
 		return (
 			      <TouchableOpacity style={[ allStyles.card, styles.quizCard, this.getCardStyle(this.props.type) ]} 
-			      	onPress={() => this.props.navigation.navigate("Take Kwiz", {quiz_id: this.state.id})}>
+			      	onPress={() => this.props.navigation.push("Take Kwiz", {quiz_id: this.state.id})}>
 				      <View style={[styles.quizImageContainer]}>
 						<Image style={[styles.quizImage]} source={{uri: 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg' }}/>
 				        <View style={[styles.quizImageOverlay]} />

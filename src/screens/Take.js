@@ -70,11 +70,21 @@ class Take extends React.Component {
 		const {fromPublish} = this.props.route.params;
 		this.props.quizzes.show(quiz_id)
 		.then((res) => {
-			if ((!this.props.quizzes.quiz.public || !fromPublish) && this.props.quizzes.quiz.user_id == this.props.users.id) {
-				console.log("swittcheroo owner")
-				this.props.navigation.dispatch(StackActions.pop(1));
-				this.props.navigation.navigate("Publish and Share Kwiz");
-			      this.setState({refreshing: false});
+			if (this.props.quizzes.quiz.user_id == this.props.users.id) {
+				if (!this.props.quizzes.quiz.public) {
+					console.log("swittcheroo edit mode")
+					this.props.navigation.dispatch(StackActions.pop(1));
+					this.props.navigation.push("New Kwiz", {type: "Personality", quiz_id: this.props.quizzes.quiz.id})
+				      this.setState({refreshing: false});
+				} else if (!fromPublish) {
+					console.log("swittcheroo owner")
+					this.props.navigation.dispatch(StackActions.pop(1));
+					this.props.navigation.push("Publish and Share Kwiz");
+				      this.setState({refreshing: false});
+				} else {
+					console.log("succeedded")
+					this.setState({quiz: res.quiz, quizzing: res.quizzing, hasTaken: false}, this.loadQuizzing)
+				}
 			} else {
 				console.log("succeedded")
 				this.setState({quiz: res.quiz, quizzing: res.quizzing, hasTaken: false}, this.loadQuizzing)
@@ -285,8 +295,8 @@ class Take extends React.Component {
 									<TabBarIcon name="md-happy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 									<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Retake the kwiz</Text>
 								</TouchableOpacity>
-								<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton, styles.shareButton, styles.bottomShareButton, { height: 60, } ]}
-							        onPress={() => this.props.navigation.navigate("Kwiz Results", {quiz_id: this.props.quizzes.quiz.id})}>
+								<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton, styles.shareButton, styles.bottomShareButton ]}
+							        onPress={() => this.props.navigation.push("Kwiz Results", {quiz_id: this.state.quiz.id})}>
 									<TabBarIcon name="md-trophy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 									<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>See how your friends did!</Text>
 								</TouchableOpacity>
@@ -303,7 +313,7 @@ class Take extends React.Component {
 							<View style={[allStyles.section]}>
 								<Text style={allStyles.sectionTitle}>Share your results!</Text>
 								<Text style={allStyles.sectionSubtitle}>Share the fun by sending your results to your friends or posting on social media.</Text>
-								<ShareForm quiz={ this.props.quizzes.quiz } />
+								<ShareForm quiz={ this.state.quiz } />
 							</View>
 						</View>
 						)

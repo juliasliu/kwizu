@@ -129,6 +129,10 @@ const styles = StyleSheet.create({
 	  flexDirection: 'row',
 	  justifyContent: 'space-between',
   },
+  shareFormHeader: {
+	  marginLeft: '5%',
+	  marginRight: 'auto',
+  },
   shareLink: {
 	  padding: 20,
 	  fontSize: 16,
@@ -137,6 +141,7 @@ const styles = StyleSheet.create({
 	  borderRadius: 0,
 	  borderWidth: 0,
 	  marginVertical: 0,
+	  height: 50,
   },
   topShareButton: {
 	  borderTopLeftRadius: 20,

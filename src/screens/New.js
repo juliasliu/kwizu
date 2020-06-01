@@ -56,6 +56,7 @@ class New extends React.Component {
 					},
 					],
 			isEditing: false,
+			type: '',					// Personality, Trivia
 		      refreshing: false,
 	}
 	
@@ -82,6 +83,8 @@ class New extends React.Component {
 	  }
 	
 	componentDidMount() {
+		const {type} = this.props.route.params;
+		this.setState({type})
 		// check if quiz already exists and is being edited, if so then update state, otherwise do nothing
 		const {quiz_id} = this.props.route.params;
 		if (quiz_id) {
@@ -122,26 +125,26 @@ class New extends React.Component {
 	
 	onPressCreate = (isPublic) => {
 		// check to see if kwiz already exists: if so, then only save/update; do this later
+		this.state.public = isPublic;
 		if (this.state.isEditing) {
 			console.log("start update")
 			this.props.quizzes.update(this.state)
 			.then(res => {
 				console.log("updated!")
 				this.props.navigation.dispatch(StackActions.pop(1));
-				this.props.navigation.navigate("Publish and Share Kwiz");
+				this.props.navigation.push("Publish and Share Kwiz");
 			})
 			.catch(error => {
 				console.log("failed");
 				console.log(error);
 			})
 		} else {
-			this.state.public = isPublic;
 			this.props.quizzes.create(this.state)
 			.then(res => {
 				console.log("created!")
 				if (isPublic) {
 					this.props.navigation.dispatch(StackActions.pop(1));
-					this.props.navigation.navigate("Publish and Share Kwiz");
+					this.props.navigation.push("Publish and Share Kwiz");
 				}
 			})
 			.catch(error => {
@@ -276,7 +279,6 @@ class New extends React.Component {
 //		console.log("Questions: ")
 //		console.log(this.state.questions)
 		
-		const {type} = this.props.route.params;
 		
 		let resultsArray = this.state.results.map(( item, key ) =>
 		{
@@ -298,6 +300,7 @@ class New extends React.Component {
 					results={this.state.results}
 					question={item}
 					key={item.index}
+					type={this.state.type}
 					onPressAdd={this.onPressAddQuestion.bind(this)}
 					onPressDelete={this.onPressDeleteQuestion.bind(this)}
 					onPressAddChoice={this.onPressAddChoice.bind(this)}
@@ -309,7 +312,7 @@ class New extends React.Component {
 		});
 		
 		let resultSection = () => {
-			return type == 'Personality' 
+			return this.state.type == 'Personality' 
 					? (
 							<View style={[ allStyles.section, allStyles.sectionClear ]}>
 								<Text style={allStyles.sectionTitle}>Kwiz Results</Text>
@@ -343,9 +346,9 @@ class New extends React.Component {
 					<View style={[ allStyles.section, allStyles.sectionClear ]}>
 						{
 							(this.state.isEditing) ? (
-									<Text style={allStyles.sectionTitle}>Edit {type} Kwiz</Text>	
+									<Text style={allStyles.sectionTitle}>Edit {this.state.type} Kwiz</Text>	
 							) : (
-									<Text style={allStyles.sectionTitle}>New {type} Kwiz</Text>		
+									<Text style={allStyles.sectionTitle}>New {this.state.type} Kwiz</Text>		
 							)
 						}	
 					
@@ -417,15 +420,44 @@ class New extends React.Component {
 						(this.state.isEditing) ? (
 								<View style={[ allStyles.section, allStyles.sectionClear ]}>
 								{
-									this.props.quizzes.busy ? 
-									<ActivityIndicator/> :
-									<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
-						                onPress={() => this.onPressCreate(true)}>
-										<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-										<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Update your kwiz</Text>
-									</TouchableOpacity>
+									this.state.public ? 
+											(
+													<View>
+													{
+														this.props.quizzes.busy ? 
+														<ActivityIndicator/> :
+														<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
+											                onPress={() => this.onPressCreate(true)}>
+															<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+															<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Update your kwiz</Text>
+														</TouchableOpacity>
+													}
+													<Text style={[ allStyles.sectionSubtitle, styles.quizSaveText ]}>The changes to your kwiz will automatically be public once you update it. Removing results, choices, or questions will result in users who took the kwiz to lose their saved responses.</Text>
+													</View>
+											) : (
+													<View>
+													{
+														this.props.quizzes.busy ? 
+														<ActivityIndicator/> :
+															<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
+											                onPress={() => this.onPressCreate(false)}>
+															<TabBarIcon name="md-create" style={[ allStyles.buttonIcon ]}/>
+															<Text style={[ allStyles.fullWidthButtonText ]}>Save your kwiz</Text>
+														</TouchableOpacity>
+													}
+													{
+														this.props.quizzes.busy ? 
+														<ActivityIndicator/> :
+														<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
+											                onPress={() => this.onPressCreate(true)}>
+															<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+															<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Publish and share</Text>
+														</TouchableOpacity>
+													}
+													<Text style={[ allStyles.sectionSubtitle, styles.quizSaveText ]}>You can save a draft if you are not finished editing your kwiz. You can publish later when you're ready.</Text>
+													</View>
+											)
 								}
-									<Text style={[ allStyles.sectionSubtitle, styles.quizSaveText ]}>The changes to your kwiz will automatically be public once you update it. Removing results, choices, or questions will result in users who took the kwiz to lose their saved responses.</Text>
 								</View>
 								) : (
 										<View style={[ allStyles.section, allStyles.sectionClear ]}>
@@ -434,8 +466,8 @@ class New extends React.Component {
 											<ActivityIndicator/> :
 												<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
 								                onPress={() => this.onPressCreate(false)}>
-												<TabBarIcon name="md-eye" style={[ allStyles.buttonIcon ]}/>
-												<Text style={[ allStyles.fullWidthButtonText ]}>Save and preview</Text>
+												<TabBarIcon name="md-create" style={[ allStyles.buttonIcon ]}/>
+												<Text style={[ allStyles.fullWidthButtonText ]}>Save a draft</Text>
 											</TouchableOpacity>
 										}
 										{

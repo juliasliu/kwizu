@@ -56,12 +56,12 @@ class Publish extends React.Component {
 							
 						<View style={[ allStyles.section, allStyles.sectionClear ]}>
 							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton, styles.shareButton, styles.topShareButton ]}
-				                onPress={() => this.props.navigation.navigate("Take Kwiz", {quiz_id: this.props.quizzes.quiz.id, fromPublish: true})}>
+				                onPress={() => this.props.navigation.push("Take Kwiz", {quiz_id: this.props.quizzes.quiz.id, fromPublish: true})}>
 								<TabBarIcon name="md-happy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 								<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Take your own kwiz</Text>
 							</TouchableOpacity>
-							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton, styles.shareButton, styles.bottomShareButton, { height: 60, } ]}
-						        onPress={() => this.props.navigation.navigate("Kwiz Results", {quiz_id: this.props.quizzes.quiz.id})}>
+							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton, styles.shareButton, styles.bottomShareButton ]}
+						        onPress={() => this.props.navigation.push("Kwiz Results", {quiz_id: this.props.quizzes.quiz.id})}>
 								<TabBarIcon name="md-trophy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 								<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>See results of your kwiz!</Text>
 							</TouchableOpacity>
@@ -71,7 +71,7 @@ class Publish extends React.Component {
 						
 						<View style={[ allStyles.section, allStyles.sectionClear ]}>
 							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
-				                onPress={() => this.props.navigation.navigate("New Kwiz", {type: "Personality", quiz_id: this.props.quizzes.quiz.id})}>
+				                onPress={() => this.props.navigation.push("New Kwiz", {type: "Personality", quiz_id: this.props.quizzes.quiz.id})}>
 								<TabBarIcon name="md-create" style={[ allStyles.buttonIcon ]}/>
 								<Text style={[ allStyles.fullWidthButtonText ]}>Edit your kwiz</Text>
 							</TouchableOpacity>

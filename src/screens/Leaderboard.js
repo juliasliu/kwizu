@@ -45,9 +45,6 @@ class Leaderboard extends React.Component {
 		this.props.quizzes.leader(quiz_id)
 		.then((res) => {
 			console.log("gotem")
-			console.log(res.results)
-			console.log(res.users)
-			console.log(res.quizzings)
 			this.setState({results: res.results, users: res.users, quizzings: res.quizzings}, this.loadUsersForResult)
 		      this.setState({refreshing: false});
 		})
@@ -83,7 +80,6 @@ class Leaderboard extends React.Component {
 	render() {
 		
 		let usersArrayForResult = (result_id) => {
-			console.log(this.state.usersForResult[result_id])
 			if (this.state.usersForResult[result_id] == undefined || this.state.usersForResult[result_id].length == 0) {
 				return (
 						<View style={[allStyles.card, allStyles.profileThumbnailCard, allStyles.bottomProfileThumbnailCard ]}>
@@ -97,8 +93,7 @@ class Leaderboard extends React.Component {
 							<ProfileThumbnail navigation={this.props.navigation} 
 							user={item} 
 							key={key}
-							isOwnProfile={this.props.users.user.id == item.id}
-							style={(key === this.state.usersForResult[result_id].length - 1) ? allStyles.bottomProfileThumbnailCard : (key === 0 ? allStyles.topProfileThumbnailCard : null )} />
+							style={(key === this.state.usersForResult[result_id].length - 1) ? allStyles.bottomProfileThumbnailCard : (key === 0 ? allStyles.profileThumbnailCard : null )} />
 					) : null
 				})) : null
 			}

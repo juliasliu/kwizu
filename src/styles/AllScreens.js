@@ -69,6 +69,12 @@ const styles = StyleSheet.create({
       marginBottom: 10,
       color: '#8393a8',
   },
+  sectionMessage: {
+	  textAlign: 'center',
+	  paddingVertical: 20,
+      fontWeight: 'bold',
+	  color: '#8393a8',
+  },
   link: {
 	color: 'blue',  
   },
@@ -224,7 +230,7 @@ const styles = StyleSheet.create({
 		  borderColor: '#0078FF',
 	  },
 	  snapchatButton: {
-		  backgroundColor: '#e3e024',
+		  backgroundColor: '#d6d427',
 		  shadowColor: "#ccc90c",
 		  borderColor: '#ccc90c',
 	  },

@@ -25,6 +25,9 @@ class Profile extends React.Component {
 			],
 			refreshing: true,
 			isOwnProfile: true,			// true if viewing own profile in stack, false if viewing others
+			sentRequest: false,
+			receivedRequest: false,
+			isFriends: false,
 		}
 	
 	_onRefresh = () => {
@@ -45,7 +48,6 @@ class Profile extends React.Component {
 			quizzes[0] = res.taken_quizzes;
 			quizzes[1] = res.quizzes;
 			this.setState({quizzes: quizzes, user: res}, this.loadUser)
-			this.setState({refreshing: false});
 		})
 		.catch((error) => {
 			console.log("o no")
@@ -58,6 +60,7 @@ class Profile extends React.Component {
 		// check if profile user is same as logged in user
 		if (this.state.user.id == this.props.users.user.id) {
 			this.setState({isOwnProfile: true})
+			this.setState({refreshing: false});
 		} else {
 			// only show public quizzes if not same user
 			this.setState({isOwnProfile: false})
@@ -66,7 +69,16 @@ class Profile extends React.Component {
 				return el.public;
 			});
 			this.setState({quizzes})
+			
+			let otherUserId = this.state.user.id;
+			this.setState({
+				isFriends: this.props.users.user.friends.filter(function(e) { return e.id === otherUserId; }).length > 0,
+				sentRequest: this.props.users.user.friends_requested.filter(function(e) { return e.id === otherUserId; }).length > 0,
+				receivedRequest: this.props.users.user.friends_received.filter(function(e) { return e.id === otherUserId; }).length > 0,
+			});
+			this.setState({refreshing: false});
 		}
+		
 	}
 	
 	render () {
@@ -92,7 +104,13 @@ class Profile extends React.Component {
 			              onRefresh={this._onRefresh}
 			            />
 			          }>
-						<ProfileCard user={this.state.user} navigation={this.props.navigation} isOwnProfile={this.state.isOwnProfile} />
+						<ProfileCard user={this.state.user}
+									navigation={this.props.navigation}
+									isOwnProfile={this.state.isOwnProfile}
+									sentRequest={this.state.sentRequest}
+									receivedRequest={this.state.receivedRequest}
+									isFriends={this.state.isFriends}
+						/>
 						<View style={allStyles.section}>
 							<Text style={[ allStyles.sectionTitle, {marginTop: 20} ]}>Kwiz Feed</Text>
 					      	{ this.state.isOwnProfile ?
@@ -107,10 +125,16 @@ class Profile extends React.Component {
 					      				}
 					      				</ScrollView>
 					      		) : (
-					      				<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.greenButton ]} onPress={() => this.props.navigation.navigate("Home")}>
-										<TabBarIcon name="md-happy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-					      				<Text style={ allStyles.whiteText }>Take a Kwiz</Text>
-					      				</TouchableOpacity>
+					      				this.state.isOwnProfile ? (
+					      						<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.greenButton ]} onPress={() => this.props.navigation.navigate("Home")}>
+												<TabBarIcon name="md-happy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+							      				<Text style={ allStyles.whiteText }>Take a Kwiz</Text>
+							      				</TouchableOpacity>
+					      				) : (
+					      						<View>
+						      						<Text style={[ allStyles.sectionMessage ]}>{this.state.user.name} has not taken any kwizzes yet.</Text>
+						      					</View>	
+					      					)
 					      		)
 					      	}
 					      	
@@ -138,10 +162,17 @@ class Profile extends React.Component {
 						      				}
 						      				</ScrollView>
 						      		) : (
-						      				<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.greenButton ]} onPress={() => this.props.navigation.navigate("Home")}>
-											<TabBarIcon name="md-create" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-						      				<Text style={ allStyles.whiteText }>Create a Kwiz</Text>
-						      				</TouchableOpacity>
+						      				this.state.isOwnProfile ? (
+						      						<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.greenButton ]} onPress={() => this.props.navigation.navigate("Home")}>
+													<TabBarIcon name="md-create" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+								      				<Text style={ allStyles.whiteText }>Create a Kwiz</Text>
+								      				</TouchableOpacity>
+						      				) : (
+						      					<View>
+						      						<Text style={[ allStyles.sectionMessage ]}>{this.state.user.name} has not created any kwizzes yet.</Text>
+						      					</View>
+						      				)
+						      				
 						      		)
 						      	}
 						      	

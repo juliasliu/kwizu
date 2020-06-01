@@ -8,6 +8,8 @@ import {
 	ActivityIndicator,
 	TouchableOpacity,
 	  Dimensions,
+	  Clipboard,
+	  Share,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Icon5 from 'react-native-vector-icons/FontAwesome5'
@@ -19,60 +21,69 @@ import styles from '../styles/HomeScreen';
 
 class ShareForm extends React.Component {
 		
+	state = {
+			copyMessage: "Copy",
+	}
+	
 	render() {
-		let url = "https://kwizu.app/quizzes/"
-		
-		return (
+		let url = "https://kwizu.app/quizzes/";
+
+			writeToClipboard = async () => {
+				await Clipboard.setString(url + this.props.quiz.id);
+				this.setState({copyMessage: "Copied"});
+			};
+
+			let shareToMedia = async () => {
+				const result = await Share.share({
+					title: 'Kwizu: Reimagining quizzes with you',
+					message: 'Hey! I just took or created a Kwiz, check it out!',
+					url: url + this.props.quiz.id,
+				}, {
+					// Android only:
+					dialogTitle: 'Share BAM goodness',
+					// iOS only:
+					excludedActivityTypes: [
+//						'com.apple.UIKit.activity.PostToTwitter'
+						]
+				})
+
+				if (result.action === Share.sharedAction) {
+					if (result.activityType) {
+						// shared with activity type of result.activityType
+						console.log(result.activityType)
+					} else {
+						// shared
+						console.log("wot")
+					}
+					// boost profile level points
+				} else if (result.action === Share.dismissedAction) {
+					// dismissed
+				}
+			}
+
+			return (
 			<View>
 				<View style={[ allStyles.section, allStyles.sectionClear ]}>
-					<View style={[ styles.quizFormHeader, styles.questionHeader ]}>
+					<View style={[ styles.quizFormHeader, styles.shareFormHeader ]}>
 						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Share the link</Text>
 					</View>
-					<View style={[ allStyles.card, styles.shareLinkCard ]}>
+					<View style={[ allStyles.card, styles.shareLinkCard, styles.shareButton, styles.topShareButton, { height: 'auto' } ]}>
 						<Text style={styles.shareLink}>{url}{this.props.quiz.id}</Text>
 						<TouchableOpacity style={[ allStyles.button, allStyles.whiteButton ]}
-			                onPress={() => alert("")}>
+			                onPress={writeToClipboard}>
 							<TabBarIcon name="md-copy" style={[ allStyles.buttonIcon ]}/>
-							<Text>Copy</Text>
+							<Text>{this.state.copyMessage}</Text>
 						</TouchableOpacity>
 					</View>
-				</View>
-					
-				<View style={[ allStyles.section, allStyles.sectionClear ]}>
-					<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton, styles.shareButton, styles.topShareButton ]}
+					<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton, styles.shareButton ]}
 		                onPress={() => alert("")}>
 						<TabBarIcon name="md-chatbubbles" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-						<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Send to friends via chat</Text>
+						<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Send to friends in chat</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton, styles.shareButton ]}
-		                onPress={() => alert("")}>
-						<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-						<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Share on Facebook</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.messengerButton, styles.shareButton ]}
-		                onPress={() => alert("")}>
-						<Icon5 name="facebook-messenger" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-						<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Send via Messenger</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.snapchatButton, styles.shareButton ]}
-		                onPress={() => alert("")}>
-						<Icon5 name="snapchat-ghost" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-						<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Share on Snapchat</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whatsappButton, styles.shareButton ]}
-			            onPress={() => alert("")}>
-						<Icon name="whatsapp" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-						<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Share on WhatsApp</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.instagramButton, styles.shareButton ]}
-				        onPress={() => alert("")}>
-						<Icon name="instagram" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-						<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Share on Instagram</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.twitterButton, styles.shareButton, styles.bottomShareButton ]}
-				        onPress={() => alert("")}>
-						<Icon name="twitter" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-						<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Share on Twitter</Text>
+					<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton, styles.shareButton, styles.bottomShareButton ]}
+		                onPress={shareToMedia}>
+						<TabBarIcon name="md-share" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+						<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Share on social media</Text>
 					</TouchableOpacity>
 				</View>
 			</View>

@@ -6,6 +6,7 @@ import notifications from '../notifications'
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
+import { TabView, SceneMap } from 'react-native-tab-view';
 
 import { MonoText } from '../components/StyledText';
 import ProfileThumbnail from '../components/ProfileThumbnail';
@@ -14,9 +15,10 @@ import allStyles from '../styles/AllScreens';
 import styles from '../styles/ProfileScreen';
 
 @inject('users') @observer
-class Friends extends React.Component {
+class Requests extends React.Component {
 	state = {
-			friends: [],
+			friends_requested: [],
+			friends_received: [],
 			refreshing: false,
 	}
 	
@@ -31,7 +33,7 @@ class Friends extends React.Component {
 		this.props.users.show(user_id)
 		.then((res) => {
 			console.log("gotem")
-			this.setState({friends: res.friends, refreshing: false});
+			this.setState({friends_requested: res.friends_requested, friends_received: res.friends_received, refreshing: false});
 		})
 		.catch((error) => {
 			console.log("and i oop")
@@ -41,13 +43,16 @@ class Friends extends React.Component {
 	
 	render () {
 		
-		let friendsArray = this.state.friends.map(( item, key ) => 
+		console.log("hello")
+		console.log(this.state.friends_received)
+		console.log("bye")
+		let friendsArray = this.state.friends_received.map(( item, key ) => 
 		{
 			return item != undefined ? (
 					<ProfileThumbnail navigation={this.props.navigation} 
 					user={item} 
 					key={key}
-					style={[ (key === this.state.friends.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
+					style={[ (key === this.state.friends_received.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
 							 (key === 0) ? allStyles.topProfileThumbnailCard : null,
 						]} />
 			) : null
@@ -62,17 +67,12 @@ class Friends extends React.Component {
 			              onRefresh={this._onRefresh}
 			            />
 			          }>
-				      <TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton ]}
-		                onPress={() => alert("")}>
-						<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-						<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Add from Facebook</Text>
-					</TouchableOpacity>
 			      	<View style={styles.friendsList}>
 						{
-							this.state.friends.length > 0 ? friendsArray :
+							this.state.friends_received.length > 0 ? friendsArray :
 								(
 										<View style={[ allStyles.section ]}>
-											<Text style={[ allStyles.sectionMessage ]}>No friends yet! Find people by taking more kwizzes or import your friends from Facebook!</Text>
+											<Text style={[ allStyles.sectionMessage ]}>No friend requests! You're all caught up.</Text>
 										</View>
 								)
 						}
@@ -82,4 +82,4 @@ class Friends extends React.Component {
 		)
 	}
 }
-export default Friends;
+export default Requests;

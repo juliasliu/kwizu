@@ -22,6 +22,7 @@ import Match from '../screens/Match';
 
 import Profile from '../screens/Profile' 
 import Friends from '../screens/Friends' 
+import Requests from '../screens/Requests' 
 import Chats from '../screens/Chats' 
 import Chat from '../screens/Chat' 
 import Settings from '../screens/Settings' 
@@ -96,7 +97,7 @@ class HomeStackScreen extends React.Component {
 				        	<TabBarIcon name="md-paw" style={[ allStyles.buttonIcon ]}/>
 				        	<Text>Personality</Text>
 				        </TouchableOpacity>
-				        <TouchableOpacity onPress={() => { this.toggleModal(); this.props.navigation.navigate('New Kwiz', {type: "Trivia"}); }} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
+				        <TouchableOpacity onPress={() => alert("Coming soon!") } style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
 					        <TabBarIcon name="md-trophy" style={[ allStyles.buttonIcon ]}/>
 				        	<Text>Trivia</Text>
 				        </TouchableOpacity>
@@ -163,6 +164,11 @@ function ProfileStackScreen({navigation}) {
 		  headerTitleStyle: { color: '#515d6e' },
 		  headerTintColor: '#B2BECF',
       }}/>
+      <ProfileStack.Screen name="Requests" component={Requests} options={{
+    	  headerTitle: 'Requests', 
+		  headerTitleStyle: { color: '#515d6e' },
+		  headerTintColor: '#B2BECF',
+      }}/>
       <ProfileStack.Screen name="Chats" component={Chats} options={{
     	  headerTitle: 'Chats', 
 		  headerTitleStyle: { color: '#515d6e' },
@@ -180,6 +186,11 @@ function ProfileStackScreen({navigation}) {
       }} />
 			      <ProfileStack.Screen name="Take Kwiz" component={Take} options={{
 			    	  headerTitle: 'Take Kwiz',
+			    	  headerTitleStyle: { color: '#515d6e' },
+			    	  headerTintColor: '#B2BECF',
+			      	}} />
+			      <ProfileStack.Screen name="Publish and Share Kwiz" component={Publish} options={{
+			    	  headerTitle: 'Published Kwiz',
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',
 			      	}} />

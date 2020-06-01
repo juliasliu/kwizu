@@ -9,6 +9,7 @@ import {
 	TouchableOpacity,
 	  Dimensions,
 } from 'react-native';
+import { observer, inject } from 'mobx-react' 
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
 import * as WebBrowser from 'expo-web-browser';
 import TabBarIcon from '../components/TabBarIcon';
@@ -16,14 +17,110 @@ import TabBarIcon from '../components/TabBarIcon';
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/ProfileScreen';
 
+@inject('users') @observer
 class ProfileThumbnail extends React.Component {
+	
+	state = {
+			isOwnProfile: false,
+			sentRequest: false,
+			receivedRequest: false,
+			isFriends: false,
+	}
+	
+	componentDidMount() {
+		let otherUserId = this.props.user.id;
+		this.setState({ 
+			isOwnProfile: this.props.users.id == otherUserId,
+			isFriends: this.props.users.user.friends.filter(function(e) { return e.id === otherUserId; }).length > 0,
+			sentRequest: this.props.users.user.friends_requested.filter(function(e) { return e.id === otherUserId; }).length > 0,
+			receivedRequest: this.props.users.user.friends_received.filter(function(e) { return e.id === otherUserId; }).length > 0,
+		});
+	}
 	
 	imgPlaceholder = 'https://imgix.bustle.com/uploads/image/2018/5/9/fa2d3d8d-9b6c-4df4-af95-f4fa760e3c5c-2t4a9501.JPG?w=970&h=546&fit=crop&crop=faces&auto=format%2Ccompress&cs=srgb&q=70'	
 	
+	sendRequest() {
+		this.props.users.sendRequest(this.props.user.id)
+		.then(res => {
+			console.log("sent request!")
+			this.setState({ sentRequest: true });
+		})
+		.catch(error => {
+			console.log("failed");
+			console.log(error);
+		})
+	}
+	
+	undoRequest() {
+		this.props.users.undoRequest(this.props.user.id)
+		.then(res => {
+			console.log("undo request!")
+			this.setState({ sentRequest: false });
+		})
+		.catch(error => {
+			console.log("failed");
+			console.log(error);
+		})
+	}
+	
+	acceptRequest() {
+		this.props.users.acceptRequest(this.props.user.id)
+		.then(res => {
+			console.log("accepted request!")
+			this.setState({ isFriends: true });
+		})
+		.catch(error => {
+			console.log("failed");
+			console.log(error);
+		})
+	}
+		
 	render() {
 		
 		let navigateToProfile = () => {
-			if (!this.props.isOwnProfile) this.props.navigation.navigate("Profile", {user_id: this.props.user.id})
+			if (!this.state.isOwnProfile) this.props.navigation.push("Profile", {user_id: this.props.user.id})
+		}
+		
+		let friendButton = () => {
+				if (this.state.isOwnProfile) {
+					return (
+							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}>
+							<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon ]}/>
+							<Text>Myself</Text>
+							</TouchableOpacity>	
+					)
+				} else if (this.state.isFriends) {
+					return (
+							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}>
+							<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon ]}/>
+							<Text>Friends</Text>
+							</TouchableOpacity>				
+					)
+				} else if (this.state.sentRequest) {
+					return (
+							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.redButton ]}
+							onPress={this.undoRequest.bind(this)}>
+							<TabBarIcon name="md-close" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+							<Text style={ allStyles.whiteText }>Undo request</Text>
+							</TouchableOpacity>				
+					)
+				} else if (this.state.receivedRequest) {
+					return (
+							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.greenButton ]}
+							onPress={this.acceptRequest.bind(this)}>
+							<TabBarIcon name="md-add" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+							<Text style={ allStyles.whiteText }>Accept request</Text>
+							</TouchableOpacity>				
+					)
+				} else {
+					return (
+							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton ]}
+							onPress={this.sendRequest.bind(this)}>
+							<TabBarIcon name="md-add" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+							<Text style={ allStyles.whiteText }>Add friend</Text>
+							</TouchableOpacity>				
+					)
+				}
 		}
 		
 		return (
@@ -42,20 +139,7 @@ class ProfileThumbnail extends React.Component {
 								<Text style={[ styles.profileName, styles.profileThumbnailName ]}>{ this.props.user.name }</Text>
 							</TouchableOpacity>
 							{
-								this.props.isOwnProfile ? 
-										(
-											<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}>
-												<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon ]}/>
-												<Text>Myself</Text>
-											</TouchableOpacity>	
-												)
-												: (
-													<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton ]}
-									                	onPress={() => alert('add friend!')}>
-														<TabBarIcon name="md-add" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-														<Text style={ allStyles.whiteText }>Add friend</Text>
-													</TouchableOpacity>				
-												)
+								friendButton()
 							}
 							
 						</View>

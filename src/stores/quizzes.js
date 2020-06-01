@@ -49,10 +49,13 @@ class Quizzes {
 	
 	@action index = function() {
 		this.busy = true;
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+		
 		return new Promise(function(resolve, reject) {
 			axios.get('http://localhost:3001/quizzes', {withCredentials: true})
 	        .then(response => {
-	            resolve(response.data.quizzes);
+	            that.handleSuccess()
+	        	resolve(response.data.quizzes);
 	        })
 	        .catch(error => reject(error))
 		})
@@ -79,6 +82,7 @@ class Quizzes {
 		return new Promise(function(resolve, reject) {
 			axios.get('http://localhost:3001/quizzes/' + id + '/leader', {withCredentials: true})
 	        .then(response => {
+	            that.handleSuccess(response.data.quiz)
 				resolve({results: response.data.quiz.results, users: response.data.users, quizzings: response.data.quizzings });
 	        })
 	        .catch(error => reject(error))
@@ -92,6 +96,7 @@ class Quizzes {
 		return new Promise(function(resolve, reject) {
 			axios.post('http://localhost:3001/quizzes/save', {quizzing: quizzing, result_id: quizzing.result_id, choice_ids: quizzing.choice_ids}, {withCredentials: true})
 	        .then(response => {
+	            that.handleSuccess()
 	            resolve(response.data.quizzing);
 	        })
 	        .catch(error => reject(error))

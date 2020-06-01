@@ -131,6 +131,10 @@ class Users {
 			axios.get('http://localhost:3001/users/' + id, {withCredentials: true})
 	        .then(response => {
 	        	that.handleSuccess();
+	        	// if same as logged in user
+	        	if (response.data.user == that.id) {
+					this.handleLogin(response.data.user)
+	        	}
 	            resolve(response.data.user);
 	        })
 	        .catch(error => {
@@ -156,6 +160,60 @@ class Users {
 	        .then(response => {
 	        	that.handleSuccess();
 	        	that.success = "Your profile was saved successfully";
+	            resolve(response.data.user);
+	        })
+	        .catch(error => {
+				that.handleErrors(error)
+				console.log('api errors:', error)
+				reject(error);
+			})
+		})
+	}
+	
+	@action sendRequest = function(id) {
+		this.busy = true;
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+		
+		return new Promise(function(resolve, reject) {
+			axios.put('http://localhost:3001/users/' + id + '/send_request', {withCredentials: true})
+	        .then(response => {
+	        	that.handleSuccess();
+	            resolve(response.data.user);
+	        })
+	        .catch(error => {
+				that.handleErrors(error)
+				console.log('api errors:', error)
+				reject(error);
+			})
+		})
+	}
+	
+	@action undoRequest = function(id) {
+		this.busy = true;
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+		
+		return new Promise(function(resolve, reject) {
+			axios.delete('http://localhost:3001/users/' + id + '/undo_request', {withCredentials: true})
+	        .then(response => {
+	        	that.handleSuccess();
+	            resolve(response.data.user);
+	        })
+	        .catch(error => {
+				that.handleErrors(error)
+				console.log('api errors:', error)
+				reject(error);
+			})
+		})
+	}
+	
+	@action acceptRequest = function(id) {
+		this.busy = true;
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+		
+		return new Promise(function(resolve, reject) {
+			axios.put('http://localhost:3001/users/' + id + '/accept_request', {withCredentials: true})
+	        .then(response => {
+	        	that.handleSuccess();
 	            resolve(response.data.user);
 	        })
 	        .catch(error => {
