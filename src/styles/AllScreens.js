@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
 	  padding: 0,
   },
   quizResultImage: {
-	  height: 150,
+	  aspectRatio: 250/150,
 		resizeMode: 'cover',
 		borderRadius: 20,
   },

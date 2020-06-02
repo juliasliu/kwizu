@@ -18,6 +18,7 @@ import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import CheckBox from 'react-native-check-box'
+import ImagePicker from 'react-native-image-picker';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
@@ -32,7 +33,8 @@ class New extends React.Component {
 	state = {
 			title: '',
 			public: false,
-			image: '',
+			image: null,
+			image_url: null,
 			questions: [ 
 				{
 					index: 0,
@@ -52,12 +54,14 @@ class New extends React.Component {
 						title: '' ,
 						description: '',
 						weight: 1,
-						image: '',
+						image: null,
+						image_url: null,
 					},
 					],
 			isEditing: false,
 			type: '',					// Personality, Trivia
 		      refreshing: false,
+				busy: false,
 	}
 	
 	/* destructive method for reassigning indices for an array
@@ -91,7 +95,7 @@ class New extends React.Component {
 			this.props.quizzes.show(quiz_id)
 			.then((res) => {
 				console.log("got the quiz")
-				this.setState({id: res.quiz.id, title: res.quiz.title, public: res.quiz.public, isEditing: true}, this.loadQuiz)
+				this.setState({id: res.quiz.id, title: res.quiz.title, public: res.quiz.public, image_url: res.quiz.image_url, isEditing: true}, this.loadQuiz)
 			      this.setState({refreshing: false});
 			})
 			.catch((error) => {
@@ -160,7 +164,8 @@ class New extends React.Component {
 				title: '' ,
 				description: '',
 				weight: this.state.results.length+1,
-				image: '', };
+				image: null,
+				image_url: null,};
 		var results = [...this.state.results, newResult]
 	    this.setState({results});
 	}
@@ -271,6 +276,99 @@ class New extends React.Component {
 		this.setState({questions})
 	}
 	
+	getPhotoFromGallery = (type, resultIndex) => {
+		this.setState({ busy: true })
+		
+		// More info on all the options is below in the API Reference... just some common use cases shown here
+		const options = {
+				title: 'Select Profile Picture',
+//				customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
+				storageOptions: {
+					skipBackup: true,
+					path: 'images',
+				},
+		};
+		
+		ImagePicker.launchImageLibrary(options, (response)  => {
+			if (response.didCancel) {
+				console.log('User cancelled image picker');
+				this.setState({ busy: false });
+			}
+			else if (response.error) {
+				console.log('ImagePicker Error: ', response.error);
+				this.setState({ busy: false });
+			}
+			else {
+				if (type == "quiz") {
+					var image = response;
+					if (!response.fileName) {
+						image.fileName = "quiz_image";
+					}
+					this.setState({image: image, busy: false});
+				} else if (type == "result") {
+					var results = [...this.state.results];
+					var result = results[results.findIndex(elem => elem.index === resultIndex)];
+					result.image = response;
+					if (!response.fileName) {
+						result.image.fileName = "result_image_" + resultIndex;
+					}
+					this.setState({results: results, busy: false});
+				}
+				
+			}
+		});
+	};
+	
+	showPickedImage(type, resultIndex) {
+		let image = null;
+		let image_url = null;
+		if (type == "quiz") {
+			image = this.state.image;
+			image_url = this.state.image_url;
+		} else if (type == "result") {
+			image = this.state.results[this.state.results.findIndex(elem => elem.index === resultIndex)].image;
+			image_url = this.state.results[this.state.results.findIndex(elem => elem.index === resultIndex)].image_url;
+		}
+		if(image && image.uri != null && image.uri != undefined) {
+			return (
+					<Image
+					source={{ uri: image.uri }}
+					style={ styles.imagePreview }
+					/>
+			);
+		} else if (image_url != null && image_url != undefined) {
+			return (
+					<Image
+					source={{ uri: image_url }}
+					style={ styles.imagePreview }
+					/>
+			);
+		} else {
+			return null;
+		}
+	}
+	
+	getPickedImage(type, resultIndex) {
+		if (type == "quiz") {
+			return this.state.image || this.state.image_url;
+		} else if (type == "result") {
+			return this.state.results[this.state.results.findIndex(elem => elem.index === resultIndex)].image
+			|| this.state.results[this.state.results.findIndex(elem => elem.index === resultIndex)].image_url;
+		}
+	}
+	
+	deletePhoto(type, resultIndex) {
+		if (type == "quiz") {
+			this.setState({image: null, image_url: null, busy: false});
+		} else if (type == "result") {
+			var results = [...this.state.results];
+			var result = results[results.findIndex(elem => elem.index === resultIndex)];
+			result.image = null;
+			result.image_url = null;
+			this.setState({results: results, busy: false});
+		}
+	}
+	
 	render() {
 //		console.log("--------------------")
 //		console.log("Quiz " + this.state.id)
@@ -288,6 +386,11 @@ class New extends React.Component {
 					key={item.index}
 					onPressAdd={this.onPressAddResult.bind(this)}
 					onPressDelete={this.onPressDeleteResult.bind(this)}
+					getPhotoFromGallery={this.getPhotoFromGallery.bind(this)}
+					showPickedImage={this.showPickedImage.bind(this)}
+					getPickedImage={this.getPickedImage.bind(this)}
+					deletePhoto={this.deletePhoto.bind(this)}
+					busy={this.state.busy}
 					setTitleValue={this.setResultTitleValue.bind(this)}
 					setDescriptionValue={this.setResultDescriptionValue.bind(this)}></NewResultForm>
 					) : null
@@ -324,7 +427,7 @@ class New extends React.Component {
 								<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.greenButton ]}
 					                onPress={this.onPressAddResult.bind(this)}>
 									<TabBarIcon name="md-add" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-									<Text style={ allStyles.whiteText }>New result</Text>
+									<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>New result</Text>
 								</TouchableOpacity>
 							</View>
 							)
@@ -389,11 +492,34 @@ class New extends React.Component {
 							placeholder='Title (150 chars max)'
 						/>
 					
-						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton ]}
-			                onPress={() => alert("")}>
-							<TabBarIcon name="md-image" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Add Thumbnail</Text>
-						</TouchableOpacity>
+							{this.showPickedImage("quiz")}
+
+				          	{
+				          		this.state.busy ? 
+									<ActivityIndicator/> :
+										(
+											this.getPickedImage("quiz") ? (
+												<View style={[ styles.imageButtonContainer ]}>
+													<TouchableOpacity style={[ styles.imageButtonEdit, allStyles.button, allStyles.grayButton ]}
+										                onPress={() => this.getPhotoFromGallery("quiz")}>
+														<TabBarIcon name="md-image" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+														<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Edit Thumbnail</Text>
+													</TouchableOpacity>
+													<TouchableOpacity style={[ styles.imageButtonDelete, allStyles.button, allStyles.redButton ]}
+										                onPress={() => this.deletePhoto("quiz")}>
+														<TabBarIcon name="md-trash" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+														<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Delete</Text>
+													</TouchableOpacity>
+												</View>
+											) : (
+												<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton ]}
+									                onPress={() => this.getPhotoFromGallery("quiz")}>
+													<TabBarIcon name="md-image" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+													<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Add Thumbnail</Text>
+												</TouchableOpacity>
+											)
+										)
+				          	}
 						
 					</View>
 
@@ -412,7 +538,7 @@ class New extends React.Component {
 						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.greenButton ]}
 			                onPress={this.onPressAddQuestion.bind(this)}>
 							<TabBarIcon name="md-add" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-							<Text style={ allStyles.whiteText }>New question</Text>
+							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>New question</Text>
 						</TouchableOpacity>
 					</View>
 						

@@ -17,6 +17,21 @@ import styles from '../styles/HomeScreen';
 
 class TakeResult extends React.Component {
 		
+	showPickedImage() {
+		const { image_url } = this.props.result;
+
+		if (image_url != null && image_url != undefined) {
+			return (
+					<Image source={{ uri: image_url }} style={[allStyles.quizResultImage]} />
+			);
+		} else {
+			let imgPlaceholder = 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg';
+			return (
+					<Image source={{ uri: imgPlaceholder }} style={[allStyles.quizResultImage]} />
+			);
+		}
+	}
+	
 	render() {
 		
 		this.state = this.props.result;
@@ -26,7 +41,9 @@ class TakeResult extends React.Component {
 				<View style={[ allStyles.card, allStyles.quizResult, styles.takeResult ]}>
 						<View style={[ allStyles.quizResultContainer, styles.takeResultContainer ]}>
 							<View style={[ allStyles.card, allStyles.quizResultImageContainer ]}>
-								<Image style={[allStyles.quizResultImage]} source={{uri: 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg' }}/>
+								{
+									this.showPickedImage()
+								}
 							</View>
 							<Text style={ allStyles.quizResultTitle }>{ this.state.title }</Text>
 							<Text style={ allStyles.quizResultDescription }>{ this.state.description }</Text>

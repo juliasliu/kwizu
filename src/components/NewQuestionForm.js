@@ -17,33 +17,6 @@ import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
 
 class NewQuestionForm extends React.Component {
-	state = {
-		
-	}
-	
-	onPressAddQuestion() { 
-		this.props.onPressAdd();
-	}
-	onPressDeleteQuestion() { 
-		this.props.onPressDelete(this.state.index);
-	}
-
-	onPressAddChoice() {
-		this.props.onPressAddChoice(this.state.index);
-	}
-	onPressDeleteChoice = (index) => {
-		this.props.onPressDeleteChoice(this.state.index, index);
-	}
-	
-	setQuestionValue = (value) => {
-		this.props.setQuestionValue(this.state.index, value);
-	}
-	setSelectedResultValue = (index, value) => {
-		this.props.setSelectedResultValue(this.state.index, index, value);
-	}
-	setChoiceValue = (index, value) => {
-		this.props.setChoiceValue(this.state.index, index, value);
-	}
 	
 	render() {
 		this.state = this.props.question
@@ -66,7 +39,7 @@ class NewQuestionForm extends React.Component {
 					        data={data}
 							value={this.state.choices[actualArrayIndex].weight}
 							fontSize={14}
-							onChangeText={(value,index,data) => this.setSelectedResultValue(item.index, value)} 
+							onChangeText={(value,index,data) => this.props.setSelectedResultValue(this.state.index, item.index, value)} 
 							containerStyle={[ allStyles.input, allStyles.dropdown, styles.choiceInputSelect ]}
 							inputContainerStyle={[allStyles.dropdownInput]}
 							pickerStyle={[allStyles.card, allStyles.dropdownPicker]}
@@ -76,12 +49,12 @@ class NewQuestionForm extends React.Component {
 							ref='choice' 
 							returnKeyType='next' 
 							style={[ allStyles.input, styles.choiceInputField ]} 
-							onChangeText={(value) => this.setChoiceValue(item.index, value)}
+							onChangeText={(value) => this.props.setChoiceValue(this.state.index, item.index, value)}
 							value={this.state.choices[actualArrayIndex].content} 
 							placeholder='Choice (150 chars max)'
 						/>
 						<TouchableOpacity style={[ allStyles.button, allStyles.grayButton, styles.choiceInputDelete ]}
-			                onPress={() => this.onPressDeleteChoice(item.index)}>
+			                onPress={() => this.props.onPressDeleteChoice(this.state.index, item.index)}>
 							<TabBarIcon name="md-trash" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 						</TouchableOpacity>
 					</View>
@@ -104,7 +77,7 @@ class NewQuestionForm extends React.Component {
 					<TextInput
 						returnKeyType='next' 
 						style={[ allStyles.input, allStyles.textarea ]} 
-						onChangeText={(value) => this.setQuestionValue(value)} 
+						onChangeText={(value) => this.props.setQuestionValue(this.state.index, value)} 
 						value={this.state.title} 
 						multiline={true}
 				    	numberOfLines={3}
@@ -116,17 +89,17 @@ class NewQuestionForm extends React.Component {
 					}
 					
 					<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton ]}
-	                	onPress={this.onPressAddChoice.bind(this)}>
+	                	onPress={() => this.props.onPressAddChoice(this.state.index)}>
 						<TabBarIcon name="md-add" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-						<Text style={ allStyles.whiteText }>Add choice</Text>
+						<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Add choice</Text>
 					</TouchableOpacity>
 				</View>
 				
 				<View style={ styles.quizFormAdd }>
 					<TouchableOpacity style={[ allStyles.button, allStyles.redButton, styles.quizFormAddButton ]}
-		                onPress={this.onPressDeleteQuestion.bind(this)}>
+		                onPress={() => this.props.onPressDelete(this.state.index)}>
 						<TabBarIcon name="md-trash" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-						<Text style={ allStyles.whiteText }>Delete question</Text>
+						<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Delete question</Text>
 					</TouchableOpacity>
 				</View>
 			</View>

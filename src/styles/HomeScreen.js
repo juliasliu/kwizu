@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, StatusBar } from 'react-native';
+import { Platform, StyleSheet, StatusBar, Dimensions } from 'react-native';
 
 const styles = StyleSheet.create({
   quizCard: {
@@ -10,12 +10,12 @@ const styles = StyleSheet.create({
 	    alignItems: 'flex-end',
   },
   quizPreview: {
-	width: 250,
 	height: 150,
+	aspectRatio: 250/150,
   },
   quizThumbnail: {
-	width: 150,
 	height: 150,
+	  aspectRatio: 150/150,
   },
   quizImageContainer: {
 	  flex: 1,
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
   quizFormNumber: {
 	  textAlign: 'center',
 	  fontWeight: 'bold',
+	  fontSize: 16,
   },
   quizFormAdd: {
 	  width: 'auto',
@@ -90,7 +91,26 @@ const styles = StyleSheet.create({
 	  marginVertical: 0,
 	  borderTopLeftRadius: 0,
 	  borderTopRightRadius: 0,
+	  paddingHorizontal: 20,
   }, 
+  imageButtonContainer: {
+	  display: 'flex',
+		flexDirection: 'row',
+		  alignItems: 'center',
+		width: '100%',
+  },
+  imageButtonEdit: {
+	  width: '66.666%',
+	  marginVertical: 0,
+	  borderTopRightRadius: 0,
+	  borderBottomRightRadius: 0,
+  },
+  imageButtonDelete: {
+	  width: '33.333%',
+	  marginVertical: 0,
+	  borderTopLeftRadius: 0,
+	  borderBottomLeftRadius: 0,
+  },
   choiceContainer: {
 	  marginVertical: 10,
   },
@@ -123,6 +143,12 @@ const styles = StyleSheet.create({
   quizSaveText: {
 	  textAlign: 'center', 
 	  marginTop: 10,
+  },
+  imagePreview: {
+	  marginVertical: 10,
+	  width: '100%',
+	  aspectRatio: 250/150,
+		borderRadius: 20,
   },
   shareLinkCard: {
 	  display: 'flex',
