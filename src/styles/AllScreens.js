@@ -49,6 +49,23 @@ const styles = StyleSheet.create({
 	  backgroundColor: '#E94E4E',
 	  shadowColor: "#BA3E3E",
   },
+  tabBar: {
+	  backgroundColor: '#515d6e',
+  },
+  tabBarContainer: {
+	  display: 'flex',
+	  flexDirection: 'row',
+	  alignItems: 'center',
+  },
+  tabIndicator: {
+	  backgroundColor: '#fff',
+  },
+  tabBarIcon: {
+	 paddingRight: 10,
+  },
+  tabBarLabel: {
+	  fontSize: 16,
+  },
   section: {
       alignSelf: 'stretch',
       justifyContent: 'center',
@@ -264,6 +281,7 @@ const styles = StyleSheet.create({
 	  width: '100%',  
   },
   quizThumbnailContainer: {
+	  display: 'flex',
 	  flexDirection: 'row',
 	  alignItems: 'center',
 	  paddingVertical: 10,

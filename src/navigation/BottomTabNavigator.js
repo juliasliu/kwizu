@@ -13,6 +13,7 @@ import Modal from 'react-native-modal';
 import TabBarIcon from '../components/TabBarIcon';
 
 import Home from '../screens/Home';
+import Search from '../screens/Search';
 import Take from '../screens/Take';
 import New from '../screens/New';
 import Publish from '../screens/Publish';
@@ -48,6 +49,13 @@ class HomeStackScreen extends React.Component {
 			    	  headerTitle: 'Kwizu', 
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',
+			    	  headerLeft: () => (
+								<TabBarIcon
+								onPress={() => this.props.navigation.navigate("Search")}
+								name="md-search"
+									style={[ allStyles.headerIcon, {paddingLeft: 25,} ] }
+									/>
+								),
 			    	  headerRight: () => (
 							<TabBarIcon
 							onPress={this.toggleModal}
@@ -56,7 +64,11 @@ class HomeStackScreen extends React.Component {
 								/>
 							)
 			      	}} />
-
+			      <HomeStack.Screen name="Search" component={Search} options={{
+			    	  headerTitle: 'Search', 
+			    	  headerTitleStyle: { color: '#515d6e' },
+			    	  headerTintColor: '#B2BECF',
+			      }} />
 			      <HomeStack.Screen name="Take Kwiz" component={Take} options={{
 			    	  headerTitle: 'Take Kwiz',
 			    	  headerTitleStyle: { color: '#515d6e' },
@@ -186,6 +198,11 @@ function ProfileStackScreen({navigation}) {
       }} />
 			      <ProfileStack.Screen name="Take Kwiz" component={Take} options={{
 			    	  headerTitle: 'Take Kwiz',
+			    	  headerTitleStyle: { color: '#515d6e' },
+			    	  headerTintColor: '#B2BECF',
+			      	}} />
+			      <ProfileStack.Screen name="New Kwiz" component={New} options={{
+			    	  headerTitle: 'New Kwiz',
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',
 			      	}} />

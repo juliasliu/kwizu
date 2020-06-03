@@ -123,6 +123,20 @@ class Users {
 				})
 	}
 	
+	@action search = function(keyword) {
+		this.busy = true;
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+		
+		return new Promise(function(resolve, reject) {
+			axios.get('http://localhost:3001/users/search/' + keyword, {withCredentials: true})
+	        .then(response => {
+	            that.handleSuccess()
+				resolve(response.data.users);
+	        })
+	        .catch(error => reject(error))
+		})
+	}
+	
 	@action show = function(id) {
 		this.busy = true;
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then

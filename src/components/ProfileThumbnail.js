@@ -38,13 +38,13 @@ class ProfileThumbnail extends React.Component {
 	}
 	
 	showPickedImage() {
-		const { avatar } = this.props.user;
-		console.log(avatar)
+		const { avatar_url } = this.props.user;
+		console.log(avatar_url)
 
-		if (avatar != null && avatar != undefined) {
+		if (avatar_url != null && avatar_url != undefined) {
 			return (
 					<Image
-					source={{ uri: avatar }}
+					source={{ uri: avatar_url }}
 					style={[ styles.profilePicture, styles.profileThumbnailPicture ] }
 					/>
 			);

@@ -135,8 +135,10 @@ class New extends React.Component {
 			this.props.quizzes.update(this.state)
 			.then(res => {
 				console.log("updated!")
-				this.props.navigation.dispatch(StackActions.pop(1));
-				this.props.navigation.push("Publish and Share Kwiz");
+				if (isPublic) {
+					this.props.navigation.dispatch(StackActions.pop(1));
+					this.props.navigation.push("Publish and Share Kwiz");
+				}
 			})
 			.catch(error => {
 				console.log("failed");

@@ -89,7 +89,7 @@ class Profile extends React.Component {
 						<QuizThumbnail 
 						quiz={item}
 						key={key}
-						type={"preview"}
+						type={ "thumbnail" }
 						navigation={this.props.navigation}/>
 				) : null
 			})

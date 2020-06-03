@@ -10,11 +10,13 @@ const styles = StyleSheet.create({
 	    alignItems: 'flex-end',
   },
   quizPreview: {
-	height: 150,
+	  maxWidth: (Dimensions.get('window').width - 80) * 3 / 4,
+	  minHeight: 150,
 	aspectRatio: 250/150,
   },
   quizThumbnail: {
-	height: 150,
+	  maxWidth: (Dimensions.get('window').width - 80) / 2,
+	  minHeight: 150,
 	  aspectRatio: 150/150,
   },
   quizImageContainer: {
@@ -40,6 +42,7 @@ const styles = StyleSheet.create({
   },
   quizThumbnailTitle: {
     padding: 10,
+    fontSize: 16,
 	  fontWeight: 'bold',
 	  color: '#fff',
   },
@@ -203,6 +206,29 @@ const styles = StyleSheet.create({
   choiceText: {
 	  width: '90%',
 	  paddingLeft: '10%',
+  },
+  searchInputContainer: {
+	  paddingHorizontal: 20,
+	  paddingTop: 10,
+	  backgroundColor: "#515d6e",
+  },
+  searchInput: {
+	  display: 'flex',
+	  flexDirection: 'row',
+	  alignItems: 'center',
+	  shadowColor: 'transparent',
+  },
+  searchIcon: {
+	  color: '#8393a8',
+	  paddingHorizontal: 10,
+  },
+  searchInputText: {
+	  fontSize: 16,
+  },
+  searchQuizContainer: {
+	  display: 'flex',
+	  flexDirection: 'row',
+	  flexWrap: 'wrap',
   },
 });
 

@@ -71,7 +71,7 @@ class Friends extends React.Component {
 						{
 							this.state.friends.length > 0 ? friendsArray :
 								(
-										<View style={[ allStyles.section ]}>
+										<View style={[ allStyles.section, allStyles.sectionClear ]}>
 											<Text style={[ allStyles.sectionMessage ]}>No friends yet! Find people by taking more kwizzes or import your friends from Facebook!</Text>
 										</View>
 								)
