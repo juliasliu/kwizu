@@ -17,6 +17,7 @@ import styles from '../styles/ProfileScreen';
 class Friends extends React.Component {
 	state = {
 			friends: [],
+			isOwnProfile: false,
 			refreshing: false,
 	}
 	
@@ -28,6 +29,9 @@ class Friends extends React.Component {
 	componentDidMount() {
 		// get quiz and quizzing for this user: todo later
 		const {user_id} = this.props.route.params;
+		if (user_id == this.props.users.user.id) {
+			this.setState({isOwnProfile: true})
+		}
 		this.props.users.show(user_id)
 		.then((res) => {
 			console.log("gotem")
@@ -71,9 +75,15 @@ class Friends extends React.Component {
 						{
 							this.state.friends.length > 0 ? friendsArray :
 								(
-										<View style={[ allStyles.section, allStyles.sectionClear ]}>
-											<Text style={[ allStyles.sectionMessage ]}>No friends yet! Find people by taking more kwizzes or import your friends from Facebook!</Text>
-										</View>
+										this.state.isOwnProfile ? (
+													<View style={[ allStyles.section, allStyles.sectionClear ]}>
+														<Text style={[ allStyles.sectionMessage ]}>No friends yet! Find people by taking more kwizzes or import your friends from Facebook!</Text>
+													</View>
+												) : (
+													<View style={[ allStyles.section, allStyles.sectionClear ]}>
+														<Text style={[ allStyles.sectionMessage ]}>This user has no friends yet. Be their first friend!</Text>
+													</View>	
+												)
 								)
 						}
 					</View>

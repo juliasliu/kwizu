@@ -9,7 +9,7 @@ import {
 	TouchableOpacity,
 	  Dimensions,
 } from 'react-native';
-import { observer, inject } from 'mobx-react' 
+import { observer, inject } from 'mobx-react';
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
 import TabBarIcon from '../components/TabBarIcon';
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -17,16 +17,29 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/ProfileScreen';
 
+@inject('users') @observer
 class ProfileCard extends React.Component {
 
 	  state = {
 			    progress: 60,
 			    progressWithOnComplete: 0,
 			    progressCustomized: 0,
+			    isOwnProfile: false,
+				sentRequest: false,
+				receivedRequest: false,
+				isFriends: false,
 		}
 	  
-	imgPlaceholder = 'https://imgix.bustle.com/uploads/image/2018/5/9/fa2d3d8d-9b6c-4df4-af95-f4fa760e3c5c-2t4a9501.JPG?w=970&h=546&fit=crop&crop=faces&auto=format%2Ccompress&cs=srgb&q=70'
-		
+	  componentDidMount() {
+			let otherUserId = this.props.user.id;
+			this.setState({ 
+				isOwnProfile: this.props.users.id == otherUserId,
+				isFriends: this.props.users.user.friends.filter(function(e) { return e.id === otherUserId; }).length > 0,
+				sentRequest: this.props.users.user.friends_requested.filter(function(e) { return e.id === otherUserId; }).length > 0,
+				receivedRequest: this.props.users.user.friends_received.filter(function(e) { return e.id === otherUserId; }).length > 0,
+			});
+		}
+	  
 	sendRequest() {
 		this.props.users.sendRequest(this.props.user.id)
 		.then(res => {
@@ -94,21 +107,21 @@ class ProfileCard extends React.Component {
 		  };
 		  
 		  let friendButton = () => {
-				if (this.props.isOwnProfile) {
+				if (this.state.OwnProfile) {
 					return (
 							<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.whiteButton ]}>
 							<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon ]}/>
 							<Text>Myself</Text>
 							</TouchableOpacity>	
 					)
-				} else if (this.props.isFriends) {
+				} else if (this.state.isFriends) {
 					return (
 							<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.whiteButton ]}>
 							<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon ]}/>
 							<Text>Friends</Text>
 							</TouchableOpacity>				
 					)
-				} else if (this.props.sentRequest) {
+				} else if (this.state.sentRequest) {
 					return (
 							<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.redButton ]}
 							onPress={this.undoRequest.bind(this)}>
@@ -116,7 +129,7 @@ class ProfileCard extends React.Component {
 							<Text style={ allStyles.whiteText }>Undo request</Text>
 							</TouchableOpacity>				
 					)
-				} else if (this.props.receivedRequest) {
+				} else if (this.state.receivedRequest) {
 					return (
 							<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.greenButton ]}
 							onPress={this.acceptRequest.bind(this)}>
@@ -136,7 +149,7 @@ class ProfileCard extends React.Component {
 		}
 
 		  let profileSocialBar = () => {
-				if (this.props.isOwnProfile) {
+				if (this.state.isOwnProfile) {
 					return (
 						<View style={ styles.profileSocialBar }>
 							<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.grayButton ]}
@@ -186,7 +199,7 @@ class ProfileCard extends React.Component {
 						          />
 							</View>
 						</View>
-						{ this.props.isOwnProfile ? 
+						{ this.state.isOwnProfile ? 
 							<TouchableOpacity onPress={() => this.props.navigation.push('Settings')}>
 								<TabBarIcon name="md-settings" style={styles.settingsButton}/>
 							</TouchableOpacity> : null }

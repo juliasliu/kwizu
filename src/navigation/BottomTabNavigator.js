@@ -94,6 +94,11 @@ class HomeStackScreen extends React.Component {
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',
 			      }} />
+			      <HomeStack.Screen name="Friends" component={Friends} options={{
+			    	  headerTitle: 'Friends', 
+					  headerTitleStyle: { color: '#515d6e' },
+					  headerTintColor: '#B2BECF',
+			      }}/>
 			      </HomeStack.Navigator>
 			      
 			      <Modal isVisible={this.state.isModalVisible} 

@@ -105,11 +105,7 @@ class Profile extends React.Component {
 			            />
 			          }>
 						<ProfileCard user={this.state.user}
-									navigation={this.props.navigation}
-									isOwnProfile={this.state.isOwnProfile}
-									sentRequest={this.state.sentRequest}
-									receivedRequest={this.state.receivedRequest}
-									isFriends={this.state.isFriends}
+							navigation={this.props.navigation}
 						/>
 						<View style={allStyles.section}>
 							<Text style={[ allStyles.sectionTitle, {marginTop: 20} ]}>Kwiz Feed</Text>

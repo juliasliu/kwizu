@@ -146,8 +146,8 @@ class Users {
 	        .then(response => {
 	        	that.handleSuccess();
 	        	// if same as logged in user
-	        	if (response.data.user == that.id) {
-					this.handleLogin(response.data.user)
+	        	if (response.data.user.id == that.id) {
+					that.handleLogin(response.data.user)
 	        	}
 	            resolve(response.data.user);
 	        })

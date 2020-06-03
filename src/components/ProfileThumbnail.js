@@ -39,7 +39,6 @@ class ProfileThumbnail extends React.Component {
 	
 	showPickedImage() {
 		const { avatar_url } = this.props.user;
-		console.log(avatar_url)
 
 		if (avatar_url != null && avatar_url != undefined) {
 			return (
