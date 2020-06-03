@@ -4,6 +4,7 @@ const styles = StyleSheet.create({
   quizCard: {
 		backgroundColor: '#fff',
 	    marginRight: 20,
+	    marginBottom: 20,
 	    padding: 0,
 	    display: 'flex',
 	    flexDirection: 'row',
@@ -11,11 +12,13 @@ const styles = StyleSheet.create({
   },
   quizPreview: {
 	  maxWidth: (Dimensions.get('window').width - 80) * 3 / 4,
+	  width: (Dimensions.get('window').width - 80) * 3 / 4,
 	  minHeight: 150,
 	aspectRatio: 250/150,
   },
   quizThumbnail: {
 	  maxWidth: (Dimensions.get('window').width - 80) / 2,
+	  width: (Dimensions.get('window').width - 80) / 2,
 	  minHeight: 150,
 	  aspectRatio: 150/150,
   },

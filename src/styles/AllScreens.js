@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
 	  display: 'flex',
 	  flexDirection: 'row',
 	  alignItems: 'center',
-	  paddingVertical: 10,
+	  paddingTop: 10,
   },
   quizResult: {
 	  alignItems: 'center',
