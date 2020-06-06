@@ -103,6 +103,38 @@ class Quizzes {
 		})
 	}
 	
+	@action recommend = function(id) {
+		this.busy = true;
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+		
+		return new Promise(function(resolve, reject) {
+			axios.get('http://localhost:3001/quizzes/' + id + '/recommend', {withCredentials: true})
+	        .then(response => {
+	            that.handleSuccess();
+	            /* use this quiz and current user to find 5 total recommended quizzes
+				 * 1. popularity (highest number of taken_users): pick 5
+				 * 2. predictive (based on current quiz topic, TBD): pick 5
+				 * 3. collaborative (quizzes taken by friends): pick 5
+				 * merge by deleting overlaps among the 3 categories
+				 */
+	            let quizzes = [];
+	            quizzes = quizzes.concat(response.data.popularity);
+	            quizzes = quizzes.concat(response.data.predictive);
+	            quizzes = quizzes.concat(response.data.collaborative);
+	            
+	            // delete duplicates
+	            quizzes = quizzes.filter(function(item, pos) {
+	                return quizzes.findIndex(elem => elem.id === item.id) == pos;
+	            })
+	            
+	            quizzes = quizzes.slice(0, 5);
+
+				resolve(quizzes);
+	        })
+	        .catch(error => reject(error))
+		})
+	}
+	
 	@action save = function(quizzing) {
 		this.busy = true;
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then

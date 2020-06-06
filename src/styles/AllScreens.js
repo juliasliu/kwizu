@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 	  flex: 0,
 	  borderRadius: 20,
 	  alignItems: 'center',
-	  shadowColor: "#ccc",
+	  shadowColor: "#e1e7ed",
 	  shadowOffset: {
 		  width: 0,
 		  height: 5,
@@ -334,7 +334,7 @@ const styles = StyleSheet.create({
 //		marginBottom: 20,  
 		  borderRadius: 0,
 		  borderWidth: 1,
-		  borderColor: "#e6e6e6",
+		  borderColor: "#e1e7ed",
 	  },
 	  topProfileThumbnailCard: {
 		  borderTopLeftRadius: 20,

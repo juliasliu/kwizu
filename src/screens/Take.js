@@ -52,12 +52,12 @@ class Take extends React.Component {
 		],
 		quizzing: null,
 		resultOfQuiz : null,	// stores the result object
-//		ownQuiz: true,			// if the current user owns this quiz, can edit
 		isDone: false,			// if quizzing exists or done taking the quiz, isDone = true
 		hasTaken: false,		// if quizzing exists, hasTaken = true; if retake the quiz or quiz has been changed, hasTaken = false
 		scrollIndices: [70,],	// starting scroll position is 70 given the title heading of the kwiz
 		scrollHeights: [],
-	      refreshing: false,
+	    refreshing: false,
+	    recommended: [],		// list of recommended quizzes based on this quiz
 	}
 	
 	_onRefresh = () => {
@@ -124,6 +124,9 @@ class Take extends React.Component {
 		} else {
 		    this.setState({refreshing: false});
 		}
+		
+		// load the recommended quizzes right now, but don't show them until results section is shown
+		this.recommendQuiz();
 	}
 	
 	scrollIndexHelper() {
@@ -249,6 +252,18 @@ class Take extends React.Component {
 		}
 	}
 	
+	recommendQuiz() {
+		this.props.quizzes.recommend(this.state.quiz.id)
+		.then((res) => {
+			console.log("calculatek")
+			this.setState({recommended: res})
+		})
+		.catch((error) => {
+			console.log("o noes")
+			console.log(error);
+		})
+	}
+	
 	render() {
 		
 		let questionsArray = this.state.quiz.questions.map(( item, key ) =>
@@ -306,13 +321,15 @@ class Take extends React.Component {
 						    	<Text style={allStyles.sectionTitle}>Recommended</Text>
 						      	<Text style={allStyles.sectionSubtitle}>Take another one! We promise it's not an addiction. ;)</Text>
 						    	<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
-						  			
+						  			{
+						  				recommendedQuizzes
+						  			}
 						  		</ScrollView>
 						      </View>
 							
 							<View style={[allStyles.section]}>
 								<Text style={allStyles.sectionTitle}>Share your results!</Text>
-								<Text style={allStyles.sectionSubtitle}>Share the fun by sending your results to your friends or posting on social media.</Text>
+								<Text style={allStyles.sectionSubtitle}>Share the fun by sending the Kwiz to your friends or posting on social media.</Text>
 								<ShareForm quiz={ this.state.quiz } />
 							</View>
 						</View>
@@ -320,6 +337,17 @@ class Take extends React.Component {
 			}
 			
 		}
+		
+		let recommendedQuizzes = this.state.recommended.map(( item, key ) =>
+		{
+			return item != undefined ? (
+					<QuizThumbnail 
+							quiz={item}
+							key={key}
+							type={"thumbnail"}
+							navigation={this.props.navigation}/>
+				) : null
+		});
 		
 		return (
 				<ScrollView style={[allStyles.container, styles.quizFormContainer ]}
