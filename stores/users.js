@@ -105,6 +105,7 @@ class Users {
 	
 	@action async loginStatus() {
 		this.isLoggedIn = false; 
+		console.log("check log in")
 		
 		axios.get(API_ROOT + '/logged_in', 
 				{withCredentials: true})
@@ -130,6 +131,20 @@ class Users {
 		
 		return new Promise(function(resolve, reject) {
 			axios.get(API_ROOT + '/users/search/' + keyword, {withCredentials: true})
+	        .then(response => {
+	            that.handleSuccess()
+				resolve(response.data.users);
+	        })
+	        .catch(error => reject(error))
+		})
+	}
+	
+	@action search_friends = function(keyword) {
+		this.busy = true;
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+		
+		return new Promise(function(resolve, reject) {
+			axios.get(API_ROOT + '/users/search_friends/' + keyword, {withCredentials: true})
 	        .then(response => {
 	            that.handleSuccess()
 				resolve(response.data.users);

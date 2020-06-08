@@ -45,7 +45,7 @@ class Chats extends React.Component {
 			this.setState({refreshing: false});
 			return;
 		}
-		this.props.users.search(this.state.searchKeyword)
+		this.props.users.search_friends(this.state.searchKeyword)
 		.then((res) => {
 			var results = res;
 			var friendResults = []

@@ -102,6 +102,8 @@ class New extends React.Component {
 				console.log("o no")
 				console.log(error);
 			})
+		} else {
+			this.setState({refreshing: false});
 		}
 	}
 	

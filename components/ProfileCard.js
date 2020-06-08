@@ -155,7 +155,7 @@ class ProfileCard extends React.Component {
 							<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.grayButton ]}
 							 	onPress={() => this.props.navigation.push('Friends', {user_id: this.props.user.id})}>
 								<Icon name="user" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={ allStyles.whiteText }>{this.props.users.user.friends.length} friends</Text>
+								<Text style={ allStyles.whiteText }>{this.props.user.friends.length} friends</Text>
 							</TouchableOpacity>
 							<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.blackButton ]}
 			                	onPress={() => this.props.navigation.push('Requests', {user_id: this.props.user.id})}>
