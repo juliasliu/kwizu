@@ -23,10 +23,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.julialiu.Kwizu"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "android": {
+      "package": "com.julialiu.Kwizu"
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
   }
 }
