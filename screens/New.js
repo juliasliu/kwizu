@@ -131,13 +131,17 @@ class New extends React.Component {
 	
 	onPressCreate = (isPublic) => {
 		// check to see if kwiz already exists: if so, then only save/update; do this later
-		this.state.public = isPublic;
+		this.setState({public : isPublic}, this.createQuiz);
+	}
+	
+	createQuiz() {
 		if (this.state.isEditing) {
 			console.log("start update")
 			this.props.quizzes.update(this.state)
 			.then(res => {
 				console.log("updated!")
-				if (isPublic) {
+				if (this.state.public) {
+					console.log("go public!")
 					this.props.navigation.dispatch(StackActions.pop(1));
 					this.props.navigation.push("Publish and Share Kwiz");
 				}
@@ -150,7 +154,7 @@ class New extends React.Component {
 			this.props.quizzes.create(this.state)
 			.then(res => {
 				console.log("created!")
-				if (isPublic) {
+				if (this.state.public) {
 					this.props.navigation.dispatch(StackActions.pop(1));
 					this.props.navigation.push("Publish and Share Kwiz");
 				}
