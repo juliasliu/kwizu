@@ -1,4 +1,5 @@
 import { Platform, StyleSheet, StatusBar } from 'react-native';
+import * as Colors from '../constants/Colors.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -107,6 +108,7 @@ const styles = StyleSheet.create({
 	  },
   headerIcon: {
 	  color: '#B2BECF',
+	  paddingHorizontal: 25,
   },
   success: {
 	  backgroundColor: '#B2DBBF', 
@@ -331,7 +333,6 @@ const styles = StyleSheet.create({
 	  color: '#fff',
   },
   profileThumbnailCard: {
-//		marginBottom: 20,  
 		  borderRadius: 0,
 		  borderWidth: 1,
 		  borderColor: "#e1e7ed",

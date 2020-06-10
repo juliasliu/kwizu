@@ -1,4 +1,5 @@
 import { Platform, StyleSheet, StatusBar, Dimensions } from 'react-native';
+import * as Colors from '../constants/Colors.js';
 
 const styles = StyleSheet.create({
   quizCard: {

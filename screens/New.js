@@ -60,8 +60,8 @@ class New extends React.Component {
 					],
 			isEditing: false,
 			type: '',					// Personality, Trivia
-		      refreshing: false,
-				busy: false,
+		    refreshing: false,
+			busy: false,
 	}
 	
 	/* destructive method for reassigning indices for an array
