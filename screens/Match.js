@@ -3,7 +3,6 @@ import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 
-import { MonoText } from '../components/StyledText';
 import ProfileCard from '../components/ProfileCard';
 
 import allStyles from '../styles/AllScreens';

@@ -7,7 +7,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
-import { MonoText } from '../components/StyledText';
 import ProfileThumbnail from '../components/ProfileThumbnail';
 
 import allStyles from '../styles/AllScreens';

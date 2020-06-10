@@ -6,7 +6,6 @@ import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button, Refr
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 
-import { MonoText } from '../components/StyledText';
 import ProfileThumbnail from '../components/ProfileThumbnail';
 
 import allStyles from '../styles/AllScreens';

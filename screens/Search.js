@@ -6,7 +6,6 @@ import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
-import { MonoText } from '../components/StyledText';
 import QuizThumbnail from '../components/QuizThumbnail';
 import ProfileThumbnail from '../components/ProfileThumbnail';
 

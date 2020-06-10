@@ -15,10 +15,10 @@ import TabBarIcon from '../components/TabBarIcon';
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
 
-class TakeResult extends React.Component {
+export default function TakeResult(props) {
 		
-	showPickedImage() {
-		const { image_url } = this.props.result;
+	showPickedImage = () => {
+		const { image_url } = props.result;
 
 		if (image_url != null && image_url != undefined) {
 			return (
@@ -32,10 +32,6 @@ class TakeResult extends React.Component {
 		}
 	}
 	
-	render() {
-		
-		this.state = this.props.result;
-		
 		return (
 			<View style={{ marginTop: 20, }}>
 				<View style={[ allStyles.card, allStyles.quizResult, styles.takeResult ]}>
@@ -45,13 +41,10 @@ class TakeResult extends React.Component {
 									this.showPickedImage()
 								}
 							</View>
-							<Text style={ allStyles.quizResultTitle }>{ this.state.title }</Text>
-							<Text style={ allStyles.quizResultDescription }>{ this.state.description }</Text>
+							<Text style={ allStyles.quizResultTitle }>{ props.result.title }</Text>
+							<Text style={ allStyles.quizResultDescription }>{ props.result.description }</Text>
 						</View>
 				</View>
 			</View>
 		)
-	} 
 }
-
-export default TakeResult;

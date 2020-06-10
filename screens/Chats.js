@@ -7,7 +7,6 @@ import { Image, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, B
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 
-import { MonoText } from '../components/StyledText';
 import ChatThumbnail from '../components/ChatThumbnail';
 
 import allStyles from '../styles/AllScreens';

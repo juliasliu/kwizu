@@ -16,15 +16,13 @@ import TabBarIcon from '../components/TabBarIcon';
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
 
-class TakeQuestion extends React.Component {
-	state = { 
-			
-	}
-	setSelectedChoiceValue(weight, id) {
-		this.props.setSelectedChoiceValue(this.props.question.id, weight, id);
+export default function TakeQuestion(props) {
+	
+	setSelectedChoiceValue = (weight, id) => {
+		props.setSelectedChoiceValue(props.question.id, weight, id);
 	}
 	
-	getSelectedChoiceStyle(type, isChecked) {
+	getSelectedChoiceStyle = (type, isChecked) => {
 		if (type == "button")
 			return isChecked ? allStyles.greenButton : null
 		if (type == "checkbox")
@@ -33,12 +31,10 @@ class TakeQuestion extends React.Component {
 			return isChecked ? allStyles.whiteText : null
 	}
 	
-	render() {
-		
-		let choicesArray = this.props.question.choices.map(( item, key ) =>
+		let choicesArray = props.question.choices.map(( item, key ) =>
 		{
-			// isChecked is true if there is an answer in this.props.answers with the same questionId and choiceWeight
-			let isChecked = this.props.answers.findIndex(elem => elem.questionId === this.props.question.id && elem.choiceWeight === item.weight) != -1;
+			// isChecked is true if there is an answer in props.answers with the same questionId and choiceWeight
+			let isChecked = props.answers.findIndex(elem => elem.questionId === props.question.id && elem.choiceWeight === item.weight) != -1;
 			return item != undefined ? (
 					<View style={[ styles.choiceContainer]} key = { key } >
 						<TouchableOpacity style={[ allStyles.button, styles.choice, this.getSelectedChoiceStyle("button", isChecked) ]}
@@ -57,23 +53,20 @@ class TakeQuestion extends React.Component {
 		return (
 				<View style={[ styles.quizForm ]}>
 					<View style={[ styles.quizFormHeader, styles.questionHeader ]}>
-						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Question {this.props.index + 1}</Text>
+						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Question {props.index + 1}</Text>
 					</View>
 					<View style={[ allStyles.card ]}>
 					{
-						this.props.registeringError &&
+						props.registeringError &&
 						<View style={ allStyles.error }>
-							<Text>{this.props.registeringError}</Text>
+							<Text>{props.registeringError}</Text>
 						</View>
 					}
-					<Text style={styles.question}>{ this.props.question.title }</Text>
+					<Text style={styles.question}>{ props.question.title }</Text>
 					{
 						choicesArray
 					}
 				</View>
 			</View>
 		)
-	}
 }
-
-export default TakeQuestion;

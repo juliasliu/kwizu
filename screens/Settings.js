@@ -8,7 +8,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 import ImagePicker from 'react-native-image-picker';
 
-import { MonoText } from '../components/StyledText';
 import TabBarIcon from '../components/TabBarIcon';
 
 import allStyles from '../styles/AllScreens';

@@ -7,7 +7,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-import { MonoText } from '../components/StyledText';
 import ChatMessage from '../components/ChatMessage';
 
 import allStyles from '../styles/AllScreens';
