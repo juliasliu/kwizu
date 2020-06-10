@@ -22,7 +22,6 @@ import allStyles from '../styles/AllScreens';
 import styles from '../styles/WelcomeScreen';
 
 @inject('users') @observer
-//function Welcome({ navigation }) {
 class Welcome extends React.Component {
 	render() {
 		return (

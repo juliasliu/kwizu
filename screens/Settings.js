@@ -56,6 +56,11 @@ class Settings extends React.Component {
 		user.username = username;
 		this.setState({user})
 	}
+	setProfileEmail(email) {
+		var user = this.state.user;
+		user.email = email;
+		this.setState({user})
+	}
 	setProfileCaption(caption) {
 		var user = this.state.user;
 		user.caption = caption;
@@ -162,7 +167,7 @@ class Settings extends React.Component {
 								<Text>{this.props.users.success}</Text>
 							</View>
 						}
-						<View>
+						<View style={[styles.profilePictureEditContainer]}>
 				          	{this.showPickedImage()}
 
 				          	{
@@ -197,6 +202,19 @@ class Settings extends React.Component {
 							returnKeyType='next'
 							value={this.state.user.username}
 							placeholder='Username'
+							onSubmitEditing={(event) => {
+								this.refs.email.focus();
+							}}
+						/>
+						<TextInput
+							autoCapitalize='none'
+							autoCorrect={false}
+							ref='email'
+							style={ allStyles.input }
+							onChangeText={(email) => this.setProfileEmail(email)}
+							returnKeyType='next'
+							value={this.state.user.email}
+							placeholder='Email'
 							onSubmitEditing={(event) => {
 								this.refs.caption.focus();
 							}}
