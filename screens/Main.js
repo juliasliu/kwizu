@@ -12,7 +12,6 @@ import Profile from '../screens/Profile'
 import Search from '../screens/Search'
 
 import BottomTabNavigator from '../navigation/BottomTabNavigator';
-import LinkingConfiguration from '../navigation/LinkingConfiguration';
 
 const Stack = createStackNavigator();
 
