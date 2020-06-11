@@ -92,19 +92,22 @@ class New extends React.Component {
 		// check if quiz already exists and is being edited, if so then update state, otherwise do nothing
 		const {quiz_id} = this.props.route.params;
 		if (quiz_id) {
-			this.props.quizzes.show(quiz_id)
-			.then((res) => {
-				console.log("got the quiz")
-				this.setState({id: res.quiz.id, title: res.quiz.title, public: res.quiz.public, image_url: res.quiz.image_url, isEditing: true}, this.loadQuiz)
-			      this.setState({refreshing: false});
-			})
-			.catch((error) => {
-				console.log("o no")
-				console.log(error);
-			})
+			this.getQuiz(quiz_id)
 		} else {
 			this.setState({refreshing: false});
 		}
+	}
+	
+	getQuiz(quiz_id) {
+		this.props.quizzes.show(quiz_id)
+		.then((res) => {
+			console.log("got the quiz")
+			this.setState({id: res.quiz.id, title: res.quiz.title, public: res.quiz.public, image_url: res.quiz.image_url, isEditing: true}, this.loadQuiz)
+		})
+		.catch((error) => {
+			console.log("o no")
+			console.log(error);
+		})
 	}
 	
 	loadQuiz() {
@@ -127,6 +130,7 @@ class New extends React.Component {
 			results.push(result)
 		}
 		this.setState({results: results})
+		this.setState({refreshing: false});
 	}
 	
 	onPressCreate = (isPublic) => {
@@ -161,7 +165,8 @@ class New extends React.Component {
 					this.props.navigation.dispatch(StackActions.pop(1));
 					this.props.navigation.push("Publish and Share Kwiz");
 				} else {
-					this.setState({isEditing: true})
+					this.setState({refreshing: true})
+					this.setState({id: res.id, title: res.title, public: res.public, image_url: res.image_url, isEditing: true}, this.loadQuiz)
 				}
 			})
 			.catch(error => {

@@ -51,48 +51,54 @@ class ProfileCard extends React.Component {
 		  this.setState({level: level, progress: points/parseFloat(maxPoints) * 100})
 	  }
 	  
-	sendRequest() {
-		this.props.users.sendRequest(this.props.user.id)
-		.then(res => {
-			console.log("sent request!")
-			this.setState({ sentRequest: true });
-		})
-		.catch(error => {
-			console.log("failed");
-			console.log(error);
-		})
-	}
-	
-	undoRequest() {
-		this.props.users.undoRequest(this.props.user.id)
-		.then(res => {
-			console.log("undo request!")
-			this.setState({ sentRequest: false });
-		})
-		.catch(error => {
-			console.log("failed");
-			console.log(error);
-		})
-	}
+	  sendRequest() {
+			this.setState({busy: true}, () => 
+				this.props.users.sendRequest(this.props.user.id)
+				.then(res => {
+					console.log("sent request!")
+					this.setState({ sentRequest: true, busy: false });
+				})
+				.catch(error => {
+					console.log("failed");
+					console.log(error);
+				})
+			)
+		}
+		
+		undoRequest() {
+			this.setState({busy: true}, () => 
+				this.props.users.undoRequest(this.props.user.id)
+				.then(res => {
+					console.log("undo request!")
+					this.setState({ sentRequest: false, busy: false });
+				})
+				.catch(error => {
+					console.log("failed");
+					console.log(error);
+				})
+			)
+		}
 	
 	acceptRequest() {
-		this.props.users.acceptRequest(this.props.user.id)
-		.then(res => {
-			console.log("accepted request!")
-			this.setState({ isFriends: true });
-			this.props.users.addPoints(5)
+		this.setState({busy: true}, () => 
+			this.props.users.acceptRequest(this.props.user.id)
 			.then(res => {
-				console.log("yay points!" + res)
+				console.log("accepted request!")
+				this.setState({ isFriends: true, busy: false });
+				this.props.users.addPoints(5)
+				.then(res => {
+					console.log("yay points!" + res)
+				})
+				.catch(error => {
+					console.log("failed");
+					console.log(error);
+				});
 			})
 			.catch(error => {
 				console.log("failed");
 				console.log(error);
-			});
-		})
-		.catch(error => {
-			console.log("failed");
-			console.log(error);
-		})
+			})
+		)
 	}
 	
 	showPickedImage() {
@@ -192,7 +198,7 @@ class ProfileCard extends React.Component {
 								<Text style={ allStyles.whiteText }>{this.props.user.friends.length} friends</Text>
 							</TouchableOpacity>
 							{
-								friendButton()
+								this.state.busy ? <ActivityIndicator /> : friendButton()
 							}
 						</View>
 					)

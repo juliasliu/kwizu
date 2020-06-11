@@ -25,6 +25,7 @@ class ProfileThumbnail extends React.Component {
 			sentRequest: false,
 			receivedRequest: false,
 			isFriends: false,
+			busy: false,
 	}
 	
 	componentDidMount() {
@@ -59,39 +60,53 @@ class ProfileThumbnail extends React.Component {
 	}
 	
 	sendRequest() {
-		this.props.users.sendRequest(this.props.user.id)
-		.then(res => {
-			console.log("sent request!")
-			this.setState({ sentRequest: true });
-		})
-		.catch(error => {
-			console.log("failed");
-			console.log(error);
-		})
+		this.setState({busy: true}, () => 
+			this.props.users.sendRequest(this.props.user.id)
+			.then(res => {
+				console.log("sent request!")
+				this.setState({ sentRequest: true, busy: false });
+			})
+			.catch(error => {
+				console.log("failed");
+				console.log(error);
+			})
+		)
 	}
 	
 	undoRequest() {
-		this.props.users.undoRequest(this.props.user.id)
-		.then(res => {
-			console.log("undo request!")
-			this.setState({ sentRequest: false });
-		})
-		.catch(error => {
-			console.log("failed");
-			console.log(error);
-		})
+		this.setState({busy: true}, () => 
+			this.props.users.undoRequest(this.props.user.id)
+			.then(res => {
+				console.log("undo request!")
+				this.setState({ sentRequest: false, busy: false });
+			})
+			.catch(error => {
+				console.log("failed");
+				console.log(error);
+			})
+		)
 	}
 	
 	acceptRequest() {
-		this.props.users.acceptRequest(this.props.user.id)
-		.then(res => {
-			console.log("accepted request!")
-			this.setState({ isFriends: true });
-		})
-		.catch(error => {
-			console.log("failed");
-			console.log(error);
-		})
+		this.setState({busy: true}, () => 
+			this.props.users.acceptRequest(this.props.user.id)
+			.then(res => {
+				console.log("accepted request!")
+				this.setState({ isFriends: true, busy: false });
+				this.props.users.addPoints(5)
+				.then(res => {
+					console.log("yay points!" + res)
+				})
+				.catch(error => {
+					console.log("failed");
+					console.log(error);
+				});
+			})
+			.catch(error => {
+				console.log("failed");
+				console.log(error);
+			})
+		)
 	}
 		
 	render() {
@@ -155,7 +170,7 @@ class ProfileThumbnail extends React.Component {
 								<Text style={[ styles.profileName, styles.profileThumbnailName ]}>{ this.props.user.name }</Text>
 							</TouchableOpacity>
 							{
-								friendButton()
+								this.state.busy ? <ActivityIndicator /> : friendButton()
 							}
 							
 						</View>
