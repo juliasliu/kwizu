@@ -98,7 +98,7 @@ class Quizzes {
 			axios.get(API_ROOT + '/quizzes/' + id + '/leader', {withCredentials: true})
 	        .then(response => {
 	            that.handleSuccess(response.data.quiz)
-				resolve({results: response.data.quiz.results, users: response.data.users, quizzings: response.data.quizzings });
+				resolve({quiz: response.data.quiz, users: response.data.users, quizzings: response.data.quizzings });
 	        })
 	        .catch(error => reject(error))
 		})

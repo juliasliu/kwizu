@@ -16,10 +16,10 @@ import TabBarIcon from '../components/TabBarIcon';
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
 
-export default function TakeQuestion(props) {
+export default class TakeQuestion extends React.Component {
 	
 	setSelectedChoiceValue = (weight, id) => {
-		props.setSelectedChoiceValue(props.question.id, weight, id);
+		this.props.setSelectedChoiceValue(this.props.question.id, weight, id);
 	}
 	
 	getSelectedChoiceStyle = (type, isChecked) => {
@@ -31,10 +31,11 @@ export default function TakeQuestion(props) {
 			return isChecked ? allStyles.whiteText : null
 	}
 	
-		let choicesArray = props.question.choices.map(( item, key ) =>
+	render() {
+		let choicesArray = this.props.question.choices.map(( item, key ) =>
 		{
-			// isChecked is true if there is an answer in props.answers with the same questionId and choiceWeight
-			let isChecked = props.answers.findIndex(elem => elem.questionId === props.question.id && elem.choiceWeight === item.weight) != -1;
+			// isChecked is true if there is an answer in this.props.answers with the same questionId and choiceWeight
+			let isChecked = this.props.answers.findIndex(elem => elem.questionId === this.props.question.id && elem.choiceWeight === item.weight) != -1;
 			return item != undefined ? (
 					<View style={[ styles.choiceContainer]} key = { key } >
 						<TouchableOpacity style={[ allStyles.button, styles.choice, this.getSelectedChoiceStyle("button", isChecked) ]}
@@ -53,20 +54,21 @@ export default function TakeQuestion(props) {
 		return (
 				<View style={[ styles.quizForm ]}>
 					<View style={[ styles.quizFormHeader, styles.questionHeader ]}>
-						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Question {props.index + 1}</Text>
+						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Question {this.props.index + 1}</Text>
 					</View>
 					<View style={[ allStyles.card ]}>
 					{
-						props.registeringError &&
+						this.props.registeringError &&
 						<View style={ allStyles.error }>
-							<Text>{props.registeringError}</Text>
+							<Text>{this.props.registeringError}</Text>
 						</View>
 					}
-					<Text style={styles.question}>{ props.question.title }</Text>
+					<Text style={styles.question}>{ this.props.question.title }</Text>
 					{
 						choicesArray
 					}
 				</View>
 			</View>
 		)
+	}
 }

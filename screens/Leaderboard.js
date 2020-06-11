@@ -30,6 +30,7 @@ class Leaderboard extends React.Component {
 			results: [],
 			users: [],
 			quizzings: [],
+			isOwner: false,			// if the logged in user own this quiz, see all users not just friends
 			usersForResult: {},		// dictionary { result_id: users }
 			refreshing: false,
 	}
@@ -44,8 +45,8 @@ class Leaderboard extends React.Component {
 		this.props.quizzes.leader(quiz_id)
 		.then((res) => {
 			console.log("gotem")
-			this.setState({results: res.results, users: res.users, quizzings: res.quizzings}, this.loadUsersForResult)
-		      this.setState({refreshing: false});
+			this.setState({results: res.quiz.results, users: res.users, quizzings: res.quizzings, isOwner: res.quiz.user_id == this.props.users.id}, this.loadUsersForResult)
+		    this.setState({refreshing: false});
 		})
 		.catch((error) => {
 			console.log("and i oop")
@@ -54,6 +55,7 @@ class Leaderboard extends React.Component {
 	}
 	
 	loadUsersForResult() {
+		console.log(this.state.isOwner)
 		for (var i = 0; i < this.state.results.length; i++) {
 			var result_id = this.state.results[i].id;
 			
@@ -70,7 +72,17 @@ class Leaderboard extends React.Component {
 			}, [])
 			
 			var usersForResult = this.state.usersForResult;
-			usersForResult[result_id] = usersForQuizzings
+			
+			// filter out users who are not friends if isOwner is false
+			if (!this.state.isOwner) {
+				let that = this;
+				usersForResult[result_id] = usersForQuizzings.filter(function (el) {
+					return that.props.users.user.friends.filter(function(e) { return e.id === el.id; }).length > 0;
+				})
+			} else {
+				usersForResult[result_id] = usersForQuizzings
+			}
+			
 			this.setState({usersForResult});
 			console.log(usersForResult)
 		}
@@ -80,9 +92,16 @@ class Leaderboard extends React.Component {
 		
 		let usersArrayForResult = (result_id) => {
 			if (this.state.usersForResult[result_id] == undefined || this.state.usersForResult[result_id].length == 0) {
+				if (this.state.isOwner) {
+					return (
+							<View style={[allStyles.card, allStyles.profileThumbnailCard, allStyles.bottomProfileThumbnailCard ]}>
+								<Text style={[allStyles.leaderboardResultNone]}>No users got this result.</Text>
+							</View>
+							)
+				}
 				return (
 						<View style={[allStyles.card, allStyles.profileThumbnailCard, allStyles.bottomProfileThumbnailCard ]}>
-							<Text style={[allStyles.leaderboardResultNone]}>No users got this result.</Text>
+							<Text style={[allStyles.leaderboardResultNone]}>None of your friends got this result.</Text>
 						</View>
 						)
 			} else {
