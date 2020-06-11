@@ -130,18 +130,20 @@ class New extends React.Component {
 	}
 	
 	onPressCreate = (isPublic) => {
-		// check to see if kwiz already exists: if so, then only save/update; do this later
-		this.setState({public : isPublic}, this.createQuiz);
+		let oldPublic = this.state.public;
+		this.setState({public : isPublic}, () => this.createQuiz(oldPublic));
 	}
 	
-	createQuiz() {
+	createQuiz(oldPublic) {
 		if (this.state.isEditing) {
-			console.log("start update")
 			this.props.quizzes.update(this.state)
 			.then(res => {
 				console.log("updated!")
 				if (this.state.public) {
 					console.log("go public!")
+					if (!oldPublic) {
+						this.addPoints();
+					}
 					this.props.navigation.dispatch(StackActions.pop(1));
 					this.props.navigation.push("Publish and Share Kwiz");
 				}
@@ -155,8 +157,11 @@ class New extends React.Component {
 			.then(res => {
 				console.log("created!")
 				if (this.state.public) {
+					this.addPoints();
 					this.props.navigation.dispatch(StackActions.pop(1));
 					this.props.navigation.push("Publish and Share Kwiz");
+				} else {
+					this.setState({isEditing: true})
 				}
 			})
 			.catch(error => {
@@ -164,6 +169,17 @@ class New extends React.Component {
 				console.log(error);
 			})
 		}
+	}
+	
+	addPoints() {
+		this.props.users.addPoints(10)
+		.then(res => {
+			console.log("yay points!" + res)
+		})
+		.catch(error => {
+			console.log("failed");
+			console.log(error);
+		});
 	}
 
 	onPressAddResult() {

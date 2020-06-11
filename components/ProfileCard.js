@@ -21,9 +21,8 @@ import styles from '../styles/ProfileScreen';
 class ProfileCard extends React.Component {
 
 	  state = {
-			    progress: 60,
-			    progressWithOnComplete: 0,
-			    progressCustomized: 0,
+			    progress: 10,
+			    level: 1,
 			    isOwnProfile: false,
 				sentRequest: false,
 				receivedRequest: false,
@@ -31,14 +30,26 @@ class ProfileCard extends React.Component {
 		}
 	  
 	  componentDidMount() {
-			let otherUserId = this.props.user.id;
-			this.setState({ 
-				isOwnProfile: this.props.users.id == otherUserId,
-				isFriends: this.props.users.user.friends.filter(function(e) { return e.id === otherUserId; }).length > 0,
-				sentRequest: this.props.users.user.friends_requested.filter(function(e) { return e.id === otherUserId; }).length > 0,
-				receivedRequest: this.props.users.user.friends_received.filter(function(e) { return e.id === otherUserId; }).length > 0,
-			});
-		}
+		  let otherUserId = this.props.user.id;
+		  this.setState({ 
+			  isOwnProfile: this.props.users.id == otherUserId,
+			  isFriends: this.props.users.user.friends.filter(function(e) { return e.id === otherUserId; }).length > 0,
+			  sentRequest: this.props.users.user.friends_requested.filter(function(e) { return e.id === otherUserId; }).length > 0,
+			  receivedRequest: this.props.users.user.friends_received.filter(function(e) { return e.id === otherUserId; }).length > 0,
+		  });
+
+		  // calculate progress bar and level
+		  // formula for max points MP given level L: MP = L*10 + 2^L
+		  let points = this.props.user.points;
+		  let level = 1;
+		  let maxPoints = level * 10 + Math.pow(2, level);
+		  while(points/parseFloat(maxPoints) > 1) {
+			  points -= maxPoints;
+			  level++;
+			  maxPoints = level * 10 + Math.pow(2, level);
+		  }
+		  this.setState({level: level, progress: points/parseFloat(maxPoints) * 100})
+	  }
 	  
 	sendRequest() {
 		this.props.users.sendRequest(this.props.user.id)
@@ -69,6 +80,14 @@ class ProfileCard extends React.Component {
 		.then(res => {
 			console.log("accepted request!")
 			this.setState({ isFriends: true });
+			this.props.users.addPoints(5)
+			.then(res => {
+				console.log("yay points!" + res)
+			})
+			.catch(error => {
+				console.log("failed");
+				console.log(error);
+			});
 		})
 		.catch(error => {
 			console.log("failed");
@@ -99,9 +118,9 @@ class ProfileCard extends React.Component {
 		
 	render() {
 
-		  const barWidth = Dimensions.get('screen').width/2 - 30;
+		  const barWidth = Dimensions.get('screen').width/2 - 40;
 		  const progressCustomStyles = {
-				  backgroundColor: '#4d70bd', 
+				  backgroundColor: '#77a0a9', 
 				  borderRadius: 50,
 				  borderColor: '#fff',
 		  };
@@ -190,7 +209,7 @@ class ProfileCard extends React.Component {
 							<Text style={ styles.profileName }>{this.props.user.name}</Text>
 							<Text style={ styles.profileUsername }>@{this.props.user.username}</Text>
 							<Text style={ styles.profileCaption }>{this.props.user.caption}</Text>
-							<Text style={ styles.profileLevel }>Level 12</Text>
+							<Text style={ styles.profileLevel }>Level {this.state.level}</Text>
 							<View style={ styles.profileLevelBar }>
 								<ProgressBarAnimated
 					            	{...progressCustomStyles}

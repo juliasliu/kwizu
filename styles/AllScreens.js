@@ -378,6 +378,37 @@ const styles = StyleSheet.create({
 		  fontSize: 16,
 		  width: '80%',
 	  },
+	  showPointsOverlayContainer: {
+		  position: 'absolute',
+		  left: 0,
+		  right: 0,
+		  top: 0,
+		  bottom: 0,
+		  height: '100%',
+		  width: '100%',
+		  display: 'flex',
+		  flexDirection: 'column',
+		  alignItems: 'center',
+		  justifyContent: 'center',
+			zIndex: 100,
+	  },
+	  showPointsContainer: {
+			alignItems: 'center',
+			backgroundColor: "#fff",
+			borderRadius: 100,
+			width: '50%',
+			aspectRatio: 1,
+			padding: 20,
+	  },
+	  showPointsIcon: {
+		  height: 100,
+		  width: 100,
+	  },
+	  showPointsCaption: {
+		  fontSize: 24,
+		  fontWeight: 'bold',
+		  color: "#515d6e",
+	  },
 });
 
 export default styles;

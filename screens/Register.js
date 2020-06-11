@@ -21,11 +21,28 @@ import styles from '../styles/WelcomeScreen';
 import RegistrationForm from '../components/RegistrationForm'
 
 @inject('users') @observer
-//function Welcome({ navigation }) {
-class Register extends React.Component {
+
+export default class Register extends React.Component {
+	
 	onPressRegister(email, name, username, password, password_confirmation) { 
-		this.props.users.register(email, name, username, password, password_confirmation);
+		this.props.users.register(email, name, username, password, password_confirmation)
+		.then(res => {
+			console.log("registered!")
+			this.props.users.addPoints(10)
+			.then(res => {
+				console.log("yay points!" + res)
+			})
+			.catch(error => {
+				console.log("failed");
+				console.log(error);
+			});
+		})
+		.catch(error => {
+			console.log("failed");
+			console.log(error);
+		});
 	}
+	
 	render() {
 		return (
 				<ScrollView>
@@ -54,5 +71,3 @@ class Register extends React.Component {
 		) 
 	}
 }
-
-export default Register;

@@ -66,7 +66,7 @@ class HomeScreen extends React.Component {
 		              onRefresh={this._onRefresh}
 		            />
 		          }>
-		
+		      	
 			      <View style={allStyles.section}>
 			      	<Text style={allStyles.sectionTitle}>Daily</Text>
 			      	<Text style={allStyles.sectionSubtitle}>These kwizzes are updated every 24 hours. Come back every day and check them out!</Text>

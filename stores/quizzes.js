@@ -144,7 +144,7 @@ class Quizzes {
 			axios.post(API_ROOT + '/quizzes/save', {quizzing: quizzing, result_id: quizzing.result_id, choice_ids: quizzing.choice_ids}, {withCredentials: true})
 	        .then(response => {
 	            that.handleSuccess()
-	            resolve(response.data.quizzing);
+	            resolve(response.data);
 	        })
 	        .catch(error => reject(error))
 		})

@@ -34,13 +34,9 @@ export default function NewResultForm(props) {
 							style={ allStyles.input } 
 							onChangeText={(value) => props.setTitleValue(props.result.index, value)} 
 							value={props.result.title} 
-							placeholder='Result title (150 chars max)' 
-							onSubmitEditing={(event) => {
-								this.refs.resultDescription.focus(); 
-							}}
+							placeholder='Result title (150 chars max)'
 						/>
-						<TextInput
-							ref='resultDescription' 
+						<TextInput 
 							returnKeyType='next' 
 							style={[ allStyles.input, allStyles.textarea ]} 
 							onChangeText={(value) => props.setDescriptionValue(props.result.index, value)} 

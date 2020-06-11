@@ -22,11 +22,14 @@ export default class Main extends React.Component {
 	constructor() {
 		super();
 	}
+	
 	componentDidMount() {
 		this.props.users.loginStatus()
 	}
 	
 	render() {
+		
+		
 		if(this.props.users.isLoggedIn){
 			return (
 					<NavigationContainer>

@@ -49,7 +49,7 @@ class Publish extends React.Component {
 		return this.props.quizzes.quiz ? (
 				<View style={{flex: 1}}>
 					<KeyboardAwareScrollView style={[allStyles.container, styles.quizFormContainer ]}>
-						
+					
 						<View style={[ allStyles.section, allStyles.sectionClear ]}>
 							<Text style={[ allStyles.heading, { textAlign: 'center' } ]}>Your Kwiz is ready!</Text>
 						</View>

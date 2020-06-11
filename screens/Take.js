@@ -243,7 +243,17 @@ class Take extends React.Component {
 			this.props.quizzes.save(quizzing)
 			.then((res) => {
 				console.log("saved!!!")
-				this.setState({quizzing: res, hasTaken: true})
+				this.setState({quizzing: res.quizzing, hasTaken: true})
+				if (res.newQuiz) {
+					this.props.users.addPoints(1)
+					.then(res => {
+						console.log("yay points!" + res)
+					})
+					.catch(error => {
+						console.log("failed");
+						console.log(error);
+					});
+				}
 			})
 			.catch((error) => {
 				console.log("o noes")

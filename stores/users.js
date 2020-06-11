@@ -36,7 +36,6 @@ class Users {
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then
 		
 		return new Promise(function(resolve, reject) {
-
 			axios.delete(API_ROOT + '/logout', {withCredentials: true})
 			.then(response => {
 				that.handleSuccess()
@@ -52,7 +51,8 @@ class Users {
 	}
 	@action register = function(email, name, username, password, password_confirmation) {
 		this.busy = true;
-		
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+
 		if(!email || email == '') {
 			this.busy = false; 
 			this.error = 'Email was not entered'; 
@@ -86,21 +86,25 @@ class Users {
 				password_confirmation: password_confirmation
 		}
 		
-		axios.post(API_ROOT + '/users', {user}, {withCredentials: true})
-		.then(response => {
-			if (response.data.status === 'created') {
-				this.handleSuccess()
-				this.handleLogin(response.data.user)
-			} else {
-				this.handleErrors(response.data.errors)
-				this.handleLogout()
-			}
+		return new Promise(function(resolve, reject) {
+			axios.post(API_ROOT + '/users', {user}, {withCredentials: true})
+			.then(response => {
+				if (response.data.status === 'created') {
+					that.handleSuccess()
+					that.handleLogin(response.data.user)
+					resolve(response.data.user)
+				} else {
+					that.handleErrors(response.data.errors)
+					that.handleLogout()
+					reject(response.data.errors)
+				}
+			})
+			.catch(error => {
+				that.handleErrors(error)
+				console.log('api errors:', error)
+				reject(error);
+			})
 		})
-		.catch(error => {
-					this.handleErrors(error)
-					console.log('api errors:', error)
-					reject(error);
-				})
 	}
 	
 	@action async loginStatus() {
@@ -245,6 +249,26 @@ class Users {
 	        .then(response => {
 	        	that.handleSuccess();
 	            resolve(response.data.user);
+	        })
+	        .catch(error => {
+				that.handleErrors(error)
+				console.log('api errors:', error)
+				reject(error);
+			})
+		})
+	}
+	
+	@action addPoints = function(points, id) {
+		this.busy = true;
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+		
+		if (!id) id = that.id;
+		
+		return new Promise(function(resolve, reject) {
+			axios.put(API_ROOT + '/users/' + id + '/points', {points}, {withCredentials: true})
+	        .then(response => {
+	        	that.handleSuccess();
+	            resolve(response.data.points);
 	        })
 	        .catch(error => {
 				that.handleErrors(error)

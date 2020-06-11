@@ -31,7 +31,6 @@ class Requests extends React.Component {
 	  }
 
 	componentDidMount() {
-		// get quiz and quizzing for this user: todo later
 		const {user_id} = this.props.route.params;
 		this.props.users.show(user_id)
 		.then((res) => {
@@ -144,18 +143,20 @@ class Requests extends React.Component {
 		);
 
 		return (
-				<TabView
-			      navigationState={{ index: this.state.index, routes: this.state.routes }}
-			      renderScene={
-						SceneMap({
-							first: FirstRoute,
-							second: SecondRoute,
-						})
-					}
-			      onIndexChange={this.setIndex.bind(this)}
-			      initialLayout={{ width: Dimensions.get('window').width }}
-					renderTabBar={renderTabBar}
-			    />
+				<View style={{flex: 1}}>
+					<TabView
+				      navigationState={{ index: this.state.index, routes: this.state.routes }}
+				      renderScene={
+							SceneMap({
+								first: FirstRoute,
+								second: SecondRoute,
+							})
+						}
+				      onIndexChange={this.setIndex.bind(this)}
+				      initialLayout={{ width: Dimensions.get('window').width }}
+						renderTabBar={renderTabBar}
+				    />
+				</View>
 		)
 	}
 }
