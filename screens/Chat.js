@@ -85,13 +85,13 @@ class Chats extends React.Component {
 
 		let messageArray = this.state.messages.map(( item, key ) =>
 		{
-			return item != undefined ? (
+			return item != undefined && (
 					<ChatMessage
 					message={item}
 					user={item.user}
 					logged_in_user_id={this.props.users.id}
 					key={key} />
-			) : null
+			)
 		})
 
 		return (

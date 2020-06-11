@@ -39,9 +39,9 @@ class Settings extends React.Component {
 			console.log("saved!")
 			this.setState({user: this.props.users.user});
 		})
-		.catch(error => {
+		.catch(errors => {
 			console.log("failed");
-			console.log(error);
+			console.log(errors);
 		})
 	}
 
@@ -84,8 +84,8 @@ class Settings extends React.Component {
 				console.log('User cancelled image picker');
 				this.setState({ busy: false });
 			}
-			else if (response.error) {
-				console.log('ImagePicker Error: ', response.error);
+			else if (response.errors) {
+				console.log('ImagePicker Error: ', response.errors);
 				this.setState({ busy: false });
 			}
 			else {
@@ -131,7 +131,7 @@ class Settings extends React.Component {
 
 	render () {
 
-		return (!this.state.refreshing) ? (
+		return (!this.state.refreshing) && (
 				<View style={allStyles.container}>
 			      <ScrollView style={allStyles.container}
 					ref={ref => {
@@ -139,8 +139,8 @@ class Settings extends React.Component {
 					  }}>
 					<View>
 						{
-							this.props.users.error &&
-							<View style={ allStyles.error }
+							this.props.users.errors &&
+							<View style={ allStyles.errors }
 							onLayout={event => {
 						        const layout = event.nativeEvent.layout;
 						        this.scrollview_ref.scrollTo({
@@ -149,7 +149,12 @@ class Settings extends React.Component {
 						            animated: true,
 						        });
 						      	}}>
-								<Text>{this.props.users.error}</Text>
+								{
+									this.props.users.errors.map(( item, key ) =>
+									{
+										return <Text key={key} style={ allStyles.errorText }>• {item}</Text> 
+									})
+								}
 							</View>
 						}
 						{
@@ -246,7 +251,7 @@ class Settings extends React.Component {
 					</View>
 					</ScrollView>
 				</View>
-		) : null
+		)
 	}
 }
 export default Settings;

@@ -104,9 +104,9 @@ class New extends React.Component {
 			console.log("got the quiz")
 			this.setState({id: res.quiz.id, title: res.quiz.title, public: res.quiz.public, image_url: res.quiz.image_url, isEditing: true}, this.loadQuiz)
 		})
-		.catch((error) => {
+		.catch((errors) => {
 			console.log("o no")
-			console.log(error);
+			console.log(errors);
 		})
 	}
 	
@@ -152,9 +152,9 @@ class New extends React.Component {
 					this.props.navigation.push("Publish and Share Kwiz");
 				}
 			})
-			.catch(error => {
+			.catch(errors => {
 				console.log("failed");
-				console.log(error);
+				console.log(errors);
 			})
 		} else {
 			this.props.quizzes.create(this.state)
@@ -169,9 +169,9 @@ class New extends React.Component {
 					this.setState({id: res.id, title: res.title, public: res.public, image_url: res.image_url, isEditing: true}, this.loadQuiz)
 				}
 			})
-			.catch(error => {
+			.catch(errors => {
 				console.log("failed");
-				console.log(error);
+				console.log(errors);
 			})
 		}
 	}
@@ -181,9 +181,9 @@ class New extends React.Component {
 		.then(res => {
 			console.log("yay points!" + res)
 		})
-		.catch(error => {
+		.catch(errors => {
 			console.log("failed");
-			console.log(error);
+			console.log(errors);
 		});
 	}
 
@@ -409,7 +409,7 @@ class New extends React.Component {
 		
 		let resultsArray = this.state.results.map(( item, key ) =>
 		{
-			return item != undefined ? (
+			return item != undefined && (
 					<NewResultForm 
 					result={item}
 					key={item.index}
@@ -422,12 +422,12 @@ class New extends React.Component {
 					busy={this.state.busy}
 					setTitleValue={this.setResultTitleValue.bind(this)}
 					setDescriptionValue={this.setResultDescriptionValue.bind(this)}></NewResultForm>
-					) : null
+					)
 		});
 		
 		let questionsArray = this.state.questions.map(( item, key ) =>
 		{
-			return item != undefined ? (
+			return item != undefined && (
 					<NewQuestionForm 
 					results={this.state.results}
 					question={item}
@@ -440,12 +440,12 @@ class New extends React.Component {
 					setQuestionValue={this.setQuestionValue.bind(this)}
 					setSelectedResultValue={this.setSelectedResultValue.bind(this)}
 					setChoiceValue={this.setChoiceValue.bind(this)}></NewQuestionForm>
-					) : null
+					)
 		});
 		
 		let resultSection = () => {
 			return this.state.type == 'Personality' 
-					? (
+					&& (
 							<View style={[ allStyles.section, allStyles.sectionClear ]}>
 								<Text style={allStyles.sectionTitle}>Kwiz Results</Text>
 								<Text style={allStyles.sectionSubtitle}>Each result corresponds to one type of response. The result will appear at the end of the kwiz.</Text>
@@ -460,7 +460,6 @@ class New extends React.Component {
 								</TouchableOpacity>
 							</View>
 							)
-					: null
 		}
 		
 		return (
@@ -485,8 +484,8 @@ class New extends React.Component {
 						}	
 					
 						{
-							this.props.quizzes.error &&
-							<View style={ allStyles.error }
+							this.props.quizzes.errors &&
+							<View style={ allStyles.errors }
 							onLayout={event => {
 						        const layout = event.nativeEvent.layout;
 						        this.scrollview_ref.scrollTo({
@@ -495,7 +494,12 @@ class New extends React.Component {
 						            animated: true,
 						        });
 						      	}}>
-								<Text>{this.props.quizzes.error}</Text> 
+								{
+									this.props.users.errors.map(( item, key ) =>
+									{
+										return <Text key={key} style={ allStyles.errorText }>• {item}</Text> 
+									})
+								}
 							</View>
 						} 
 						{

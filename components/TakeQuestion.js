@@ -24,11 +24,11 @@ export default class TakeQuestion extends React.Component {
 	
 	getSelectedChoiceStyle = (type, isChecked) => {
 		if (type == "button")
-			return isChecked ? allStyles.greenButton : null
+			return isChecked && allStyles.greenButton
 		if (type == "checkbox")
 			return isChecked ? '#fff' : "#a0acba"
 		if (type == "text")
-			return isChecked ? allStyles.whiteText : null
+			return isChecked && allStyles.whiteText
 	}
 	
 	render() {
@@ -36,7 +36,7 @@ export default class TakeQuestion extends React.Component {
 		{
 			// isChecked is true if there is an answer in this.props.answers with the same questionId and choiceWeight
 			let isChecked = this.props.answers.findIndex(elem => elem.questionId === this.props.question.id && elem.choiceWeight === item.weight) != -1;
-			return item != undefined ? (
+			return item != undefined && (
 					<View style={[ styles.choiceContainer]} key = { key } >
 						<TouchableOpacity style={[ allStyles.button, styles.choice, this.getSelectedChoiceStyle("button", isChecked) ]}
 							onPress={() => this.setSelectedChoiceValue(item.weight, item.id)}>
@@ -48,7 +48,7 @@ export default class TakeQuestion extends React.Component {
 							<Text style={[ styles.choiceText, this.getSelectedChoiceStyle("text", isChecked) ]}>{item.content}</Text>
 						</TouchableOpacity>
 					</View>
-					) : null
+					)
 		});
 		
 		return (
@@ -57,12 +57,7 @@ export default class TakeQuestion extends React.Component {
 						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Question {this.props.index + 1}</Text>
 					</View>
 					<View style={[ allStyles.card ]}>
-					{
-						this.props.registeringError &&
-						<View style={ allStyles.error }>
-							<Text>{this.props.registeringError}</Text>
-						</View>
-					}
+					
 					<Text style={styles.question}>{ this.props.question.title }</Text>
 					{
 						choicesArray

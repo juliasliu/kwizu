@@ -46,7 +46,7 @@ class Publish extends React.Component {
 	}
 	
 	render() {
-		return this.props.quizzes.quiz ? (
+		return this.props.quizzes.quiz && (
 				<View style={{flex: 1}}>
 					<KeyboardAwareScrollView style={[allStyles.container, styles.quizFormContainer ]}>
 					
@@ -102,7 +102,7 @@ class Publish extends React.Component {
 				      </View>
 			    </Modal>
 			 </View>
-		) : null
+		)
 	}
 }
 

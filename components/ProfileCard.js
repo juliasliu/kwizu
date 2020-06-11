@@ -205,7 +205,7 @@ class ProfileCard extends React.Component {
 				}
 			}
 		    
-		return (this.props.user) ? (
+		return this.props.user && (
 				<View style={[ allStyles.card, styles.profileCard ]}>
 					<View style={ styles.profileTopCard }>
 						<View style={ styles.profilePictureContainer }>
@@ -224,16 +224,18 @@ class ProfileCard extends React.Component {
 						          />
 							</View>
 						</View>
-						{ this.state.isOwnProfile ? 
+						{ 
+							this.state.isOwnProfile && 
 							<TouchableOpacity onPress={() => this.props.navigation.push('Settings')}>
 								<TabBarIcon name="md-settings" style={styles.settingsButton}/>
-							</TouchableOpacity> : null }
+							</TouchableOpacity>
+						}
 					</View>
 					{
 						profileSocialBar()
 					}
 			</View>
-		) : null
+		)
 	} 
 }
 

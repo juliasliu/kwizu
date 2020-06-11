@@ -50,26 +50,26 @@ class Requests extends React.Component {
 	render () {
 		let friendsReceivedArray = this.state.friends_received.map(( item, key ) =>
 		{
-			return item != undefined ? (
+			return item != undefined && (
 					<ProfileThumbnail navigation={this.props.navigation}
 					user={item}
 					key={key}
 					style={[ (key === this.state.friends_received.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
 							 (key === 0) ? allStyles.topProfileThumbnailCard : null,
 						]} />
-			) : null
+			)
 		})
 
 		let friendsRequestedArray = this.state.friends_requested.map(( item, key ) =>
 		{
-			return item != undefined ? (
+			return item != undefined && (
 					<ProfileThumbnail navigation={this.props.navigation}
 					user={item}
 					key={key}
 					style={[ (key === this.state.friends_requested.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
 							 (key === 0) ? allStyles.topProfileThumbnailCard : null,
 						]} />
-			) : null
+			)
 		})
 
 		let FirstRoute = () => (

@@ -74,25 +74,25 @@ class SearchScreen extends React.Component {
 		
 		let quizzesArray = this.state.quizzes.map(( item, key ) =>
 		{
-			return item != undefined ? (
+			return item != undefined && (
 					<QuizThumbnail 
 					quiz={item}
 					key={key}
 					type={"thumbnail"}
 					navigation={this.props.navigation}/>
-			) : null
+			)
 		});
 		
 		let usersArray = this.state.users.map(( item, key ) => 
 		{
-			return item != undefined ? (
+			return item != undefined && (
 					<ProfileThumbnail navigation={this.props.navigation} 
 					user={item} 
 					key={key}
 					style={[ (key === this.state.users.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
 							 (key === 0) ? allStyles.topProfileThumbnailCard : null,
 						]} />
-			) : null
+			)
 		})	
 		
 		let FirstRoute = () => (

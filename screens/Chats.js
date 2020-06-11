@@ -81,7 +81,7 @@ class Chats extends React.Component {
 
 		let chatsArray = this.state.chats.map(( item, key ) =>
 		{
-			return item != undefined ? (
+			return item != undefined && (
 					<ChatThumbnail navigation={this.props.navigation}
 					chat={item}
 					logged_in_user_id={this.props.users.id}
@@ -89,12 +89,12 @@ class Chats extends React.Component {
 					style={[ (key === this.state.chats.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
 							 (key === 0) ? allStyles.topProfileThumbnailCard : null,
 						]} />
-			) : null
+			)
 		})
 
 		let friendsArray = this.state.friendResults.map(( item, key ) =>
 		{
-			return item != undefined ? (
+			return item != undefined && (
 					<ChatThumbnail navigation={this.props.navigation}
 					chat={item}
 					logged_in_user_id={this.props.users.id}
@@ -102,7 +102,7 @@ class Chats extends React.Component {
 					style={[ (key === this.state.friendResults.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
 							 (key === 0) ? allStyles.topProfileThumbnailCard : null,
 						]} />
-			) : null
+			)
 		})
 
 		return (
@@ -143,7 +143,7 @@ class Chats extends React.Component {
 				            />
 				          }>
 				      	{
-							!this.state.searching ? (
+							!this.state.searching && (
 									<View style={[styles.friendsList, allStyles.sectionClear]}>
 							 		{
 							 			this.state.chats.length > 0 ? chatsArray :
@@ -158,10 +158,10 @@ class Chats extends React.Component {
 										)
 									}
 									</View>
-							) : null
+							)
 				      	}
 						{
-							this.state.searching ? (
+							this.state.searching && (
 									<View style={[styles.friendsList, allStyles.sectionClear]}>
 										{
 											this.state.friendResults.length > 0 ? friendsArray :
@@ -172,7 +172,7 @@ class Chats extends React.Component {
 												)
 										}
 									</View>
-							) : null
+							)
 						}
 						</ScrollView>
 					</View>

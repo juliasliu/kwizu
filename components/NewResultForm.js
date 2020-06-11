@@ -23,12 +23,7 @@ export default function NewResultForm(props) {
 						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Result {props.result.index + 1}</Text>
 					</View>
 					<View style={[ allStyles.card ]}>
-						{
-							props.registeringError &&
-							<View style={ allStyles.error }>
-								<Text>{props.registeringError}</Text>
-							</View>
-						}
+						
 						<TextInput
 							returnKeyType='next' 
 							style={ allStyles.input } 

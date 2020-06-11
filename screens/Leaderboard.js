@@ -105,22 +105,22 @@ class Leaderboard extends React.Component {
 						</View>
 						)
 			} else {
-				return this.state.usersForResult[result_id] ? (this.state.usersForResult[result_id].map(( item, key ) => 
+				return this.state.usersForResult[result_id] && (this.state.usersForResult[result_id].map(( item, key ) => 
 				{
-					return item != undefined ? (
+					return item != undefined && (
 							<ProfileThumbnail navigation={this.props.navigation} 
 							user={item} 
 							key={key}
 							style={(key === this.state.usersForResult[result_id].length - 1) ? allStyles.bottomProfileThumbnailCard : (key === 0 ? allStyles.profileThumbnailCard : null )} />
-					) : null
-				})) : null
+					)
+				}))
 			}
 			
 		}
 		
 		let resultsArray = this.state.results.map(( item, key ) =>
 		{
-			return item != undefined ? (
+			return item != undefined && (
 					<View 
 					key={key}
 					style={[allStyles.leaderboardResult]}>
@@ -138,7 +138,7 @@ class Leaderboard extends React.Component {
 				      	}
 						</View>	
 					</View>
-			) : null
+			)
 		});
 		
 		return (

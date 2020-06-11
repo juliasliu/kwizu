@@ -102,10 +102,10 @@ class ChatThumbnail extends React.Component {
 							<View style={[ styles.profileCaption, styles.chatThumbnailCaption ]}>
 								<Text style={ styles.chatThumbnailText } numberOfLines={1}>
 									{
-										this.state.lastMessage.user.id == this.props.logged_in_user_id ?
+										this.state.lastMessage.user.id == this.props.logged_in_user_id &&
 												(
 													<Text>You: </Text>
-												) : null
+												)
 									}
 									{this.state.lastMessage.text}
 								</Text>

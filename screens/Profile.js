@@ -83,17 +83,17 @@ class Profile extends React.Component {
 		let quizzesArray = (type) => {
 			return this.state.quizzes[type].map(( item, key ) =>
 			{
-				return item != undefined ? (
+				return item != undefined && (
 						<QuizThumbnail
 						quiz={item}
 						key={key}
 						type={ "thumbnail" }
 						navigation={this.props.navigation}/>
-				) : null
+				)
 			})
 		}
 
-		return (!this.state.refreshing) ? (
+		return (!this.state.refreshing) && (
 				<View style={allStyles.container}>
 			      <ScrollView style={allStyles.container}
 		      		refreshControl={
@@ -173,7 +173,7 @@ class Profile extends React.Component {
 						      </View>
 					</ScrollView>
 				</View>
-		) : null
+		)
 	}
 }
 export default Profile;

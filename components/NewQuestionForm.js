@@ -28,7 +28,7 @@ export default function NewQuestionForm(props) {
 		let choicesArray = props.question.choices.map(( item, key ) =>
 		{
 			let actualArrayIndex = item != undefined ? props.question.choices.findIndex(elem => elem.index === item.index) : null;
-			return item != undefined ? (
+			return item != undefined && (
 					<View style={ styles.choiceContainer } key = { item.index }>
 						<View style={ styles.choiceInput }>
 						<Dropdown
@@ -55,7 +55,7 @@ export default function NewQuestionForm(props) {
 						</TouchableOpacity>
 					</View>
 				</View>
-				) : null
+				)
 		});
 		
 		return (
@@ -64,12 +64,7 @@ export default function NewQuestionForm(props) {
 						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Question {props.question.index + 1}</Text>
 					</View>
 					<View style={[ allStyles.card ]}>
-					{
-						props.registeringError &&
-						<View style={ allStyles.error }>
-							<Text>{props.registeringError}</Text>
-						</View>
-					}
+					
 					<TextInput
 						returnKeyType='next' 
 						style={[ allStyles.input, allStyles.textarea ]} 

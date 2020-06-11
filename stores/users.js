@@ -7,7 +7,7 @@ class Users {
 	@observable id = null;
 	@observable isLoggedIn = false;
 	@observable busy = false; 
-	@observable error = null;
+	@observable errors = null;
 	@observable success = null;
 	
 	@action login = function(email, password) { 
@@ -29,7 +29,7 @@ class Users {
 				this.handleLogout()
 			}
 		})
-		.catch(error => console.log('api errors:', error))
+		.catch(errors => console.log('api errors:', errors))
 	}
 	@action logout = function() {
 		this.busy = true;
@@ -42,10 +42,10 @@ class Users {
 				that.handleLogout()
 				resolve(response)
 			})
-			.catch(error => {
-					that.handleErrors(error)
-					console.log('api errors:', error)
-					reject(error);
+			.catch(errors => {
+					that.handleErrors(errors)
+					console.log('api errors:', errors)
+					reject(errors);
 				})
 		})
 	}
@@ -53,31 +53,6 @@ class Users {
 		this.busy = true;
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then
 
-		if(!email || email == '') {
-			this.busy = false; 
-			this.error = 'Email was not entered'; 
-			return;
-		}
-		if(!name || name == '') {
-			this.busy = false; 
-			this.error = 'Name was not entered'; 
-			return;
-		}
-		if(!username || username == '') {
-			this.busy = false; 
-			this.error = 'Username was not entered'; 
-			return;
-		}
-		if(!password || password == '') {
-			this.busy = false; 
-			this.error = 'Password was not entered';
-			return;
-		}
-		if(!password_confirmation || password_confirmation != password) {
-			this.busy = false; 
-			this.error = 'Password did not match'; 
-			return;
-		}
 		let user = {
 				email: email,
 				name: name,
@@ -99,10 +74,10 @@ class Users {
 					reject(response.data.errors)
 				}
 			})
-			.catch(error => {
-				that.handleErrors(error)
-				console.log('api errors:', error)
-				reject(error);
+			.catch(errors => {
+				that.handleErrors(errors)
+				console.log('api errors:', errors)
+				reject(errors);
 			})
 		})
 	}
@@ -122,10 +97,10 @@ class Users {
 						this.handleLogout()
 					}
 				})
-				.catch(error => {
-					this.handleErrors(error)
-					console.log('api errors:', error)
-					reject(error);
+				.catch(errors => {
+					this.handleErrors(errors)
+					console.log('api errors:', errors)
+					reject(errors);
 				})
 	}
 	
@@ -139,7 +114,7 @@ class Users {
 	            that.handleSuccess()
 				resolve(response.data.users);
 	        })
-	        .catch(error => reject(error))
+	        .catch(errors => reject(errors))
 		})
 	}
 	
@@ -153,7 +128,7 @@ class Users {
 	            that.handleSuccess()
 				resolve(response.data.users);
 	        })
-	        .catch(error => reject(error))
+	        .catch(errors => reject(errors))
 		})
 	}
 	
@@ -171,10 +146,10 @@ class Users {
 	        	}
 	            resolve(response.data.user);
 	        })
-	        .catch(error => {
-				that.handleErrors(error)
-				console.log('api errors:', error)
-				reject(error);
+	        .catch(errors => {
+				that.handleErrors(errors)
+				console.log('api errors:', errors)
+				reject(errors);
 			})
 		})
 	}
@@ -183,12 +158,6 @@ class Users {
 		this.busy = true;
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then
 		
-		if(user.caption.length > 150) {
-			this.busy = false; 
-			this.error = 'Caption is too long, must be ≤150 chars long'; 
-			return;
-		}
-		
 		return new Promise(function(resolve, reject) {
 			axios.put(API_ROOT + '/users/' + user.id, {user}, {withCredentials: true})
 	        .then(response => {
@@ -196,10 +165,10 @@ class Users {
 	        	that.success = "Your profile was saved successfully";
 	            resolve(response.data.user);
 	        })
-	        .catch(error => {
-				that.handleErrors(error)
-				console.log('api errors:', error)
-				reject(error);
+	        .catch(errors => {
+				that.handleErrors(errors)
+				console.log('api errors:', errors)
+				reject(errors);
 			})
 		})
 	}
@@ -214,10 +183,10 @@ class Users {
 	        	that.handleSuccess();
 	            resolve(response.data.user);
 	        })
-	        .catch(error => {
-				that.handleErrors(error)
-				console.log('api errors:', error)
-				reject(error);
+	        .catch(errors => {
+				that.handleErrors(errors)
+				console.log('api errors:', errors)
+				reject(errors);
 			})
 		})
 	}
@@ -232,10 +201,10 @@ class Users {
 	        	that.handleSuccess();
 	            resolve(response.data.user);
 	        })
-	        .catch(error => {
-				that.handleErrors(error)
-				console.log('api errors:', error)
-				reject(error);
+	        .catch(errors => {
+				that.handleErrors(errors)
+				console.log('api errors:', errors)
+				reject(errors);
 			})
 		})
 	}
@@ -250,10 +219,10 @@ class Users {
 	        	that.handleSuccess();
 	            resolve(response.data.user);
 	        })
-	        .catch(error => {
-				that.handleErrors(error)
-				console.log('api errors:', error)
-				reject(error);
+	        .catch(errors => {
+				that.handleErrors(errors)
+				console.log('api errors:', errors)
+				reject(errors);
 			})
 		})
 	}
@@ -270,22 +239,22 @@ class Users {
 	        	that.handleSuccess();
 	            resolve(response.data.points);
 	        })
-	        .catch(error => {
-				that.handleErrors(error)
-				console.log('api errors:', error)
-				reject(error);
+	        .catch(errors => {
+				that.handleErrors(errors)
+				console.log('api errors:', errors)
+				reject(errors);
 			})
 		})
 	}
 	
 	handleSuccess() {
-		this.error = null;
+		this.errors = null;
 		this.success = null;
 		this.busy = false
 	}
 	
 	handleErrors(errors) {
-		this.error = errors
+		this.errors = errors
 		this.success = null;
 		this.busy = false
 	}

@@ -278,7 +278,7 @@ class Take extends React.Component {
 		
 		let questionsArray = this.state.quiz.questions.map(( item, key ) =>
 		{
-			return item != undefined ? (
+			return item != undefined && (
 					<View 
 					key={key}
 					onLayout={event => {
@@ -294,7 +294,7 @@ class Take extends React.Component {
 						setSelectedChoiceValue={this.setSelectedChoiceValue.bind(this)}
 						/>	
 					</View>
-			) : null
+			)
 		});
 		
 		let resultSection = () => {
@@ -308,10 +308,10 @@ class Take extends React.Component {
 						        this.scrollToNext();
 						      }}>
 							{
-								this.state.resultOfQuiz ?
+								this.state.resultOfQuiz &&
 									(
 										<TakeResult result={this.state.resultOfQuiz} />	
-									) : null
+									)
 							}
 							
 							<View style={[allStyles.section]}>
@@ -350,13 +350,13 @@ class Take extends React.Component {
 		
 		let recommendedQuizzes = this.state.recommended.map(( item, key ) =>
 		{
-			return item != undefined ? (
+			return item != undefined && (
 					<QuizThumbnail 
 							quiz={item}
 							key={key}
 							type={"thumbnail"}
 							navigation={this.props.navigation}/>
-				) : null
+				)
 		});
 		
 		return (

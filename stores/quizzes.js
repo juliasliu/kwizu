@@ -6,7 +6,7 @@ class Quizzes {
 	@observable quiz = null;
 	@observable id = null;
 	@observable busy = false; 
-	@observable error = null;
+	@observable errors = null;
 	@observable success = null;
 	
 	@action create = function(quiz) {
@@ -19,12 +19,6 @@ class Quizzes {
 			 * every field exists and is less than assigned chars long
 			 * every choice in each question is assigned to a different result weight
 			 */
-//			if(!title || title == '' || title.length > 150) {
-//				this.busy = false; 
-//				this.error = 'The Kwiz title was entered incorrectly (≤150 chars)'; 
-//				this.success = null;
-//				reject(error);
-//			}
 			
 			axios.post(API_ROOT + '/quizzes', {quiz: quiz, questions: quiz.questions, results: quiz.results}, {withCredentials: true})
 			.then(response => {
@@ -40,10 +34,10 @@ class Quizzes {
 					reject(response.data.errors);
 				}
 			})
-			.catch(error => {
-				that.handleErrors(error)
-				console.log('api errors:', error)
-				reject(error);
+			.catch(errors => {
+				that.handleErrors(errors)
+				console.log('api errors:', errors)
+				reject(errors);
 			})
 		})
 	}
@@ -58,7 +52,7 @@ class Quizzes {
 	            that.handleSuccess()
 	        	resolve(response.data.quizzes);
 	        })
-	        .catch(error => reject(error))
+	        .catch(errors => reject(errors))
 		})
 	}
 	
@@ -72,7 +66,7 @@ class Quizzes {
 	            that.handleSuccess()
 				resolve(response.data.quizzes);
 	        })
-	        .catch(error => reject(error))
+	        .catch(errors => reject(errors))
 		})
 	}
 	
@@ -86,7 +80,7 @@ class Quizzes {
 				that.handleSuccess(response.data.quiz)
 	            resolve({quiz: response.data.quiz, quizzing: response.data.quizzing});
 	        })
-	        .catch(error => reject(error))
+	        .catch(errors => reject(errors))
 		})
 	}
 	
@@ -100,7 +94,7 @@ class Quizzes {
 	            that.handleSuccess(response.data.quiz)
 				resolve({quiz: response.data.quiz, users: response.data.users, quizzings: response.data.quizzings });
 	        })
-	        .catch(error => reject(error))
+	        .catch(errors => reject(errors))
 		})
 	}
 	
@@ -132,7 +126,7 @@ class Quizzes {
 
 				resolve(quizzes);
 	        })
-	        .catch(error => reject(error))
+	        .catch(errors => reject(errors))
 		})
 	}
 	
@@ -146,7 +140,7 @@ class Quizzes {
 	            that.handleSuccess()
 	            resolve(response.data);
 	        })
-	        .catch(error => reject(error))
+	        .catch(errors => reject(errors))
 		})
 	}
 	
@@ -161,10 +155,10 @@ class Quizzes {
 	        	that.success = "Your kwiz was saved successfully";
 	            resolve(response.data.quiz);
 	        })
-	        .catch(error => {
-	        	that.handleErrors(error)
-				console.log('api errors:', error)
-	        	reject(error)
+	        .catch(errors => {
+	        	that.handleErrors(errors)
+				console.log('api errors:', errors)
+	        	reject(errors)
 	        })
 		})
 	}
@@ -179,15 +173,15 @@ class Quizzes {
 	        	that.handleSuccess(null);
 	            resolve(response.data.status);
 	        })
-	        .catch(error => reject(error))
+	        .catch(errors => reject(errors))
 		})
 	}
 	
 	handleSuccess(quiz) {
-		this.quiz = quiz;
+		if (quiz) this.quiz = quiz;
 		if (quiz) this.id = quiz.id;
 		this.busy = false; 
-		this.error = null;
+		this.errors = null;
 		this.success = null;
 	}
 	
@@ -195,7 +189,7 @@ class Quizzes {
 		this.quiz = null;
 		this.id = null;
 		this.busy = false; 
-		this.error = errors
+		this.errors = errors
 		this.success = null;
 	}
 }

@@ -44,14 +44,14 @@ class Friends extends React.Component {
 
 		let friendsArray = this.state.friends.map(( item, key ) =>
 		{
-			return item != undefined ? (
+			return item != undefined && (
 					<ProfileThumbnail navigation={this.props.navigation}
 					user={item}
 					key={key}
 					style={[ (key === this.state.friends.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
 							 (key === 0) ? allStyles.topProfileThumbnailCard : null,
 						]} />
-			) : null
+			)
 		})
 
 		return (

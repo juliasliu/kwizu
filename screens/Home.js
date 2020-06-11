@@ -47,13 +47,13 @@ class HomeScreen extends React.Component {
 		let quizzesArray = (type) => {
 			return this.state.quizzes[type].map(( item, key ) =>
 			{
-				return item != undefined ? (
+				return item != undefined && (
 						<QuizThumbnail 
 								quiz={item}
 								key={key}
 								type={ type == 0 ? "preview" : "thumbnail"}
 								navigation={this.props.navigation}/>
-					) : null
+					)
 			});
 		}
 		
