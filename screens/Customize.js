@@ -184,7 +184,7 @@ class Customize extends React.Component {
 								<Text>{this.state.success}</Text>
 							</View>
 						}
-						<View style={[allStyles.card]}>
+						<View>
 							<View style={[styles.profilePictureEditContainer]}>
 					          	{this.showPickedImage()}
 	

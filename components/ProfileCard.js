@@ -17,7 +17,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/ProfileScreen';
 
-@inject('users') @observer
+@inject('users') @inject('chats') @observer
 class ProfileCard extends React.Component {
 
 	state = {
@@ -132,12 +132,13 @@ class ProfileCard extends React.Component {
 		  };
 		  
 		  let friendButton = () => {
-				if (this.state.OwnProfile) {
+				if (this.state.isOwnProfile) {
 					return (
-							<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.whiteButton ]}>
-							<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon ]}/>
-							<Text>Myself</Text>
-							</TouchableOpacity>	
+							<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.grayButton ]}
+							 	onPress={() => this.props.navigation.push('Friends', {user_id: this.props.user.id})}>
+								<Icon name="user" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+								<Text style={ allStyles.whiteText }>{this.props.user.friends.length} friends</Text>
+							</TouchableOpacity>
 					)
 				} else if (this.state.isFriends) {
 					return (
@@ -177,29 +178,40 @@ class ProfileCard extends React.Component {
 				if (this.state.isOwnProfile) {
 					return (
 						<View style={ styles.profileSocialBar }>
-							<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.grayButton ]}
-							 	onPress={() => this.props.navigation.push('Friends', {user_id: this.props.user.id})}>
-								<Icon name="user" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={ allStyles.whiteText }>{this.props.user.friends.length} friends</Text>
-							</TouchableOpacity>
+							{
+								this.state.busy ? <ActivityIndicator /> : friendButton()
+							}
 							<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.blackButton ]}
-			                	onPress={() => this.props.navigation.push('Requests', {user_id: this.props.user.id})}>
-								<Icon name="user-plus" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={ allStyles.whiteText }>View requests</Text>
+			                	onPress={() => this.props.navigation.push('Chats')}>
+								<Icon name="comments" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+								<Text style={ allStyles.whiteText }>View chats</Text>
 							</TouchableOpacity>
 						</View>
 					)
 				} else {
+					let navigateToChat = () => {
+						this.props.chats.find(this.props.user.id)
+						.then((res) => {
+							console.log("got this chatty " + res.id)
+							if (res.id) this.props.navigation.push("Chat", {chat_id: res.id})
+							else this.props.navigation.push("Chat", {users: [this.props.user]})
+						})
+						.catch((error) => {
+							console.log("and i oop")
+							console.log(error);
+						})
+					}
+					
 					return (
 						<View style={ styles.profileSocialBar }>
-							<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.grayButton ]}
-							 	onPress={() => this.props.navigation.push('Friends', {user_id: this.props.user.id})}>
-								<Icon name="user" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={ allStyles.whiteText }>{this.props.user.friends.length} friends</Text>
-							</TouchableOpacity>
 							{
 								this.state.busy ? <ActivityIndicator /> : friendButton()
 							}
+							<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.blackButton ]}
+			                	onPress={navigateToChat}>
+								<Icon name="commenting" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+								<Text style={ allStyles.whiteText }>Chat</Text>
+							</TouchableOpacity>
 						</View>
 					)
 				}
@@ -208,13 +220,6 @@ class ProfileCard extends React.Component {
 		return this.props.user && (
 				<View style={[ allStyles.card, styles.profileCard ]}>
 					<View style={ styles.profileTopCard }>
-						{ 
-							this.state.isOwnProfile && (
-									<TouchableOpacity onPress={() => this.props.navigation.push('Customize')}>
-										<TabBarIcon name="md-create" style={styles.customizeButton}/>
-									</TouchableOpacity>
-							)
-						}
 						<View style={ styles.profilePictureContainer }>
 							{this.showPickedImage()}
 						</View>
@@ -233,11 +238,10 @@ class ProfileCard extends React.Component {
 						</View>
 						{ 
 							this.state.isOwnProfile && (
-									<TouchableOpacity onPress={() => this.props.navigation.push('Chats')}>
-										<TabBarIcon name="md-chatbubbles" style={styles.chatsButton}/>
+									<TouchableOpacity onPress={() => this.props.navigation.push('Customize')}>
+										<TabBarIcon name="md-create" style={styles.customizeButton}/>
 									</TouchableOpacity>
 							)
-							
 						}
 					</View>
 					{

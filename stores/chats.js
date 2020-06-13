@@ -52,6 +52,25 @@ class Chats {
 		})
 	}
 	
+	@action find = function(user_id) {
+		this.busy = true;
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+		
+		return new Promise(function(resolve, reject) {
+			axios.get(API_ROOT + '/chats/user/' + user_id, {withCredentials: true})
+	        .then(response => {
+	            if (response.data.chat) {
+		        	that.handleSuccess()
+		        	resolve(response.data.chat);
+	            } else {
+	            	that.handleSuccess()
+		        	resolve({});
+	            }
+	        })
+	        .catch(error => reject(error))
+		})
+	}
+	
 	@action show = function(id) {
 		this.busy = true;
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then

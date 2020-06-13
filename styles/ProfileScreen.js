@@ -148,13 +148,6 @@ const styles = StyleSheet.create({
 	  },
 	  customizeButton: {
 		  position: 'absolute',
-		  left: 0,
-		  fontSize: 24,
-		  color: "#B2BECF",
-		  paddingLeft: 10,
-	  },
-	  chatsButton: {
-		  position: 'absolute',
 		  right: 0,
 		  fontSize: 24,
 		  color: "#B2BECF",
