@@ -48,7 +48,7 @@ export default class Register extends React.Component {
 				    this.scrollview_ref = ref;
 				  }}>
 					<KeyboardAwareScrollView contentContainerStyle={styles.welcomeContainer}>
-						<Text style={[ allStyles.title, { textAlign: 'center', marginVertical: 50 } ]}>Sign Up</Text>
+						<Text style={[ allStyles.title, allStyles.center, { marginVertical: 50 } ]}>Sign Up</Text>
 						
 						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton, styles.shareButton ]}
 			                onPress={() => alert("")}>

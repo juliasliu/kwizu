@@ -27,7 +27,20 @@ import Requests from '../screens/Requests'
 import Chats from '../screens/Chats' 
 import Chat from '../screens/Chat' 
 import Customize from '../screens/Customize'
-import Settings from '../screens/Settings'  
+import Settings from '../screens/Settings'
+
+import PushNotifications from '../screens/settings/PushNotifications'
+import FacebookSettings from '../screens/settings/FacebookSettings'
+import ChangeMyPassword from '../screens/settings/ChangeMyPassword'
+import ReportAProblem from '../screens/settings/ReportAProblem'
+import ReportAUser from '../screens/settings/ReportAUser'
+import FlagContent from '../screens/settings/FlagContent'
+import FrequentlyAskedQuestions from '../screens/settings/FrequentlyAskedQuestions'
+import HelpCenter from '../screens/settings/HelpCenter'
+import AboutUs from '../screens/settings/AboutUs'
+import CommunityGuidelines from '../screens/settings/CommunityGuidelines'
+import TermsOfUse from '../screens/settings/TermsOfUse'
+import PrivacyPolicy from '../screens/settings/PrivacyPolicy'
 
 import allStyles from '../styles/AllScreens';
 import * as Colors from '../constants/Colors.js';
@@ -199,12 +212,72 @@ function ProfileStackScreen({navigation}) {
 		  headerTintColor: '#B2BECF',
       }}/>
       <ProfileStack.Screen name="Customize" component={Customize} options={{
-    	  headerTitle: 'Customize', 
+    	  headerTitle: 'Edit Profile', 
 		  headerTitleStyle: { color: '#515d6e' },
 		  headerTintColor: '#B2BECF',
       }} />
       <ProfileStack.Screen name="Settings" component={Settings} options={{
     	  headerTitle: 'Settings', 
+		  headerTitleStyle: { color: '#515d6e' },
+		  headerTintColor: '#B2BECF',
+      }} />	
+      <ProfileStack.Screen name="Push Notifications" component={PushNotifications} options={{
+    	  headerTitle: 'Push Notifications', 
+		  headerTitleStyle: { color: '#515d6e' },
+		  headerTintColor: '#B2BECF',
+      }} />	
+      <ProfileStack.Screen name="Facebook Settings" component={FacebookSettings} options={{
+    	  headerTitle: 'Facebook Settings', 
+		  headerTitleStyle: { color: '#515d6e' },
+		  headerTintColor: '#B2BECF',
+      }} />	
+      <ProfileStack.Screen name="Change My Password" component={ChangeMyPassword} options={{
+    	  headerTitle: 'Change My Password', 
+		  headerTitleStyle: { color: '#515d6e' },
+		  headerTintColor: '#B2BECF',
+      }} />	
+      <ProfileStack.Screen name="Report a Problem" component={ReportAProblem} options={{
+    	  headerTitle: 'Report a Problem', 
+		  headerTitleStyle: { color: '#515d6e' },
+		  headerTintColor: '#B2BECF',
+      }} />	
+      <ProfileStack.Screen name="Report a User" component={ReportAUser} options={{
+    	  headerTitle: 'Report a User', 
+		  headerTitleStyle: { color: '#515d6e' },
+		  headerTintColor: '#B2BECF',
+      }} />	
+      <ProfileStack.Screen name="Flag Content" component={FlagContent} options={{
+    	  headerTitle: 'Flag Content', 
+		  headerTitleStyle: { color: '#515d6e' },
+		  headerTintColor: '#B2BECF',
+      }} />	
+      <ProfileStack.Screen name="Frequently Asked Questions" component={FrequentlyAskedQuestions} options={{
+    	  headerTitle: 'FAQ', 
+		  headerTitleStyle: { color: '#515d6e' },
+		  headerTintColor: '#B2BECF',
+      }} />	
+      <ProfileStack.Screen name="Help Center" component={HelpCenter} options={{
+    	  headerTitle: 'Help Center', 
+		  headerTitleStyle: { color: '#515d6e' },
+		  headerTintColor: '#B2BECF',
+      }} />	
+      <ProfileStack.Screen name="About Us" component={AboutUs} options={{
+    	  headerTitle: 'About Us', 
+		  headerTitleStyle: { color: '#515d6e' },
+		  headerTintColor: '#B2BECF',
+      }} />	
+      <ProfileStack.Screen name="Community Guidelines" component={CommunityGuidelines} options={{
+    	  headerTitle: 'Community Guidelines', 
+		  headerTitleStyle: { color: '#515d6e' },
+		  headerTintColor: '#B2BECF',
+      }} />	
+      <ProfileStack.Screen name="Terms of Use" component={TermsOfUse} options={{
+    	  headerTitle: 'Terms of Use', 
+		  headerTitleStyle: { color: '#515d6e' },
+		  headerTintColor: '#B2BECF',
+      }} />	
+      <ProfileStack.Screen name="Privacy Policy" component={PrivacyPolicy} options={{
+    	  headerTitle: 'Privacy Policy', 
 		  headerTitleStyle: { color: '#515d6e' },
 		  headerTintColor: '#B2BECF',
       }} />	

@@ -44,7 +44,7 @@ class Login extends React.Component {
 				    this.scrollview_ref = ref;
 				  }}>
 				<KeyboardAwareScrollView contentContainerStyle={styles.welcomeContainer}>
-					<Text style={[ allStyles.title, { textAlign: 'center', marginVertical: 50 } ]}>Sign In</Text>
+					<Text style={[ allStyles.title, allStyles.center, { marginVertical: 50 } ]}>Sign In</Text>
 					{
 						this.state.errors &&
 						<View style={ allStyles.errors }

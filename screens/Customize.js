@@ -150,7 +150,7 @@ class Customize extends React.Component {
 			              refreshing={this.state.refreshing}
 			              onRefresh={this._onRefresh}
 			            />
-			      	<View>
+			      	
 						{
 							this.state.errors &&
 							<View style={ allStyles.errors }
@@ -184,73 +184,74 @@ class Customize extends React.Component {
 								<Text>{this.state.success}</Text>
 							</View>
 						}
-						<View style={[styles.profilePictureEditContainer]}>
-				          	{this.showPickedImage()}
-
-				          	{
-				          		this.state.busy ?
-									<ActivityIndicator/> :
-										(
-											<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.grayButton ]}
-									      		onPress={this.getPhotoFromGallery}>
-												<TabBarIcon name="md-image" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-												<Text style={[ allStyles.halfWidthButtonText, allStyles.whiteText ]}>Edit profile picture</Text>
-											</TouchableOpacity>
-										)
-				          	}
-				        </View>
-						<TextInput
-							ref='name'
-							style={ allStyles.input }
-							onChangeText={(name) => this.setProfileName(name)}
-							returnKeyType='next'
-							value={this.state.user.name}
-							placeholder='Name'
-							onSubmitEditing={(event) => {
-								this.refs.username.focus();
-							}}
-						/>
-						<TextInput
-							autoCapitalize='none'
-							autoCorrect={false}
-							ref='username'
-							style={ allStyles.input }
-							onChangeText={(username) => this.setProfileUsername(username)}
-							returnKeyType='next'
-							value={this.state.user.username}
-							placeholder='Username'
-							onSubmitEditing={(event) => {
-								this.refs.email.focus();
-							}}
-						/>
-						<TextInput
-							autoCapitalize='none'
-							autoCorrect={false}
-							ref='email'
-							style={ allStyles.input }
-							onChangeText={(email) => this.setProfileEmail(email)}
-							returnKeyType='next'
-							value={this.state.user.email}
-							placeholder='Email'
-							onSubmitEditing={(event) => {
-								this.refs.caption.focus();
-							}}
-						/>
-						<TextInput
-							autoCapitalize='none'
-							ref='caption'
-							style={[ allStyles.input, allStyles.textarea ]}
-							onChangeText={(caption) => this.setProfileCaption(caption)}
-							returnKeyType='next'
-							value={this.state.user.caption}
-							placeholder='Caption (100 chars max)'
-								multiline={true}
-						/>
+						<View style={[allStyles.card]}>
+							<View style={[styles.profilePictureEditContainer]}>
+					          	{this.showPickedImage()}
+	
+					          	{
+					          		this.state.busy ?
+										<ActivityIndicator/> :
+											(
+												<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.grayButton ]}
+										      		onPress={this.getPhotoFromGallery}>
+													<TabBarIcon name="md-image" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+													<Text style={[ allStyles.halfWidthButtonText, allStyles.whiteText ]}>Edit profile picture</Text>
+												</TouchableOpacity>
+											)
+					          	}
+					        </View>
+							<TextInput
+								ref='name'
+								style={ allStyles.input }
+								onChangeText={(name) => this.setProfileName(name)}
+								returnKeyType='next'
+								value={this.state.user.name}
+								placeholder='Name'
+								onSubmitEditing={(event) => {
+									this.refs.username.focus();
+								}}
+							/>
+							<TextInput
+								autoCapitalize='none'
+								autoCorrect={false}
+								ref='username'
+								style={ allStyles.input }
+								onChangeText={(username) => this.setProfileUsername(username)}
+								returnKeyType='next'
+								value={this.state.user.username}
+								placeholder='Username'
+								onSubmitEditing={(event) => {
+									this.refs.email.focus();
+								}}
+							/>
+							<TextInput
+								autoCapitalize='none'
+								autoCorrect={false}
+								ref='email'
+								style={ allStyles.input }
+								onChangeText={(email) => this.setProfileEmail(email)}
+								returnKeyType='next'
+								value={this.state.user.email}
+								placeholder='Email'
+								onSubmitEditing={(event) => {
+									this.refs.caption.focus();
+								}}
+							/>
+							<TextInput
+								autoCapitalize='none'
+								ref='caption'
+								style={[ allStyles.input, allStyles.textarea ]}
+								onChangeText={(caption) => this.setProfileCaption(caption)}
+								returnKeyType='next'
+								value={this.state.user.caption}
+								placeholder='Caption (100 chars max)'
+									multiline={true}
+							/>
 
 							{
 								this.props.users.busy ?
 										<ActivityIndicator/> :
-								<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.greenButton ]} onPress={this.onPressEdit.bind(this)} title="Save Profile">
+								<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.blackButton ]} onPress={this.onPressEdit.bind(this)} title="Save Profile">
 									<Text style={ allStyles.whiteText }>Save Profile</Text>
 								</TouchableOpacity>
 							}

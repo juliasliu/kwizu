@@ -37,42 +37,42 @@ class Settings extends React.Component {
 		const DATA = [
 			{
 				id: '0',
-				title: 'Push notifications',
+				title: 'Push Notifications',
 				icon: 'bell',
 			},
 			{
 				id: '1',
-				title: 'Facebook settings',
+				title: 'Facebook Settings',
 				icon: 'facebook-square',
 			},
 			{
 				id: '2',
-				title: 'Change my password',
+				title: 'Change My Password',
 				icon: 'key',
 			},
 			{
 				id: '3',
-				title: 'Report a problem',
+				title: 'Report a Problem',
 				icon: 'exclamation-circle',
 			},
 			{
 				id: '4',
-				title: 'Report a user',
+				title: 'Report a User',
 				icon: 'bullhorn',
 			},
 			{
 				id: '5',
-				title: 'Flag content',
+				title: 'Flag Content',
 				icon: 'warning',
 			},
 			{
 				id: '6',
-				title: 'Frequently asked questions',
+				title: 'Frequently Asked Questions',
 				icon: 'lightbulb-o',
 			},
 			{
 				id: '7',
-				title: 'Help center',
+				title: 'Help Center',
 				icon: 'info-circle',
 			},
 			{
