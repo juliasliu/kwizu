@@ -14,13 +14,7 @@ class Quizzes {
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then
 		
 		return new Promise(function(resolve, reject) {
-			/*
-			 * things to check for:
-			 * every field exists and is less than assigned chars long
-			 * every choice in each question is assigned to a different result weight
-			 */
-			
-			axios.post(API_ROOT + '/quizzes', {quiz: quiz, questions: quiz.questions, results: quiz.results}, {withCredentials: true})
+			axios.post(API_ROOT + '/quizzes', {quiz: quiz}, {withCredentials: true})
 			.then(response => {
 				if (response.data.status === 'created') {
 					that.handleSuccess(response.data.quiz)
@@ -149,17 +143,24 @@ class Quizzes {
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then
 		
 		return new Promise(function(resolve, reject) {
-			axios.put(API_ROOT + '/quizzes/' + quiz.id, {quiz: quiz, questions: quiz.questions, results: quiz.results}, {withCredentials: true})
+			axios.put(API_ROOT + '/quizzes/' + quiz.id, {quiz: quiz}, {withCredentials: true})
 	        .then(response => {
-	        	that.handleSuccess(response.data.quiz);
-	        	that.success = "Your kwiz was saved successfully";
-	            resolve(response.data.quiz);
+	        	if (response.data.status === 'updated') {
+		        	that.handleSuccess(response.data.quiz);
+		        	if (!quiz.public) {
+						that.success = "Your Kwiz was saved successfully";
+					}
+		            resolve(response.data.quiz);
+	        	} else {
+	        		that.handleErrors(response.data.errors)
+	        		reject(response.data.errors)
+	        	}
 	        })
 	        .catch(errors => {
-	        	that.handleErrors(errors)
+				that.handleErrors(errors)
 				console.log('api errors:', errors)
-	        	reject(errors)
-	        })
+				reject(errors);
+			})
 		})
 	}
 	
@@ -170,8 +171,14 @@ class Quizzes {
 		return new Promise(function(resolve, reject) {
 			axios.delete(API_ROOT + '/quizzes/' + id, {withCredentials: true})
 	        .then(response => {
-	        	that.handleSuccess(null);
-	            resolve(response.data.status);
+	        	if (response.data.status === 'deleted') {
+		        	that.handleSuccess(null);
+		            resolve(response.data.status);
+	        	} else {
+	        		that.handleErrors(errors)
+	        		that.errors = ["Something went wrong with deleting your kwiz."]
+	        		reject(errors)
+	        	}
 	        })
 	        .catch(errors => reject(errors))
 		})

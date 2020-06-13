@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 import { Image, Platform, StyleSheet, Text,
-	ActivityIndicator, TouchableOpacity, View, Button, TextInput } from 'react-native';
+	ActivityIndicator, TouchableOpacity, View, Button, TextInput, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 import ImagePicker from 'react-native-image-picker';
@@ -20,9 +20,23 @@ class Settings extends React.Component {
 			refreshing: true,
 			busy: false,
 	}
+	
+	_onRefresh = () => {
+	    this.setState({refreshing: true});
+	    this.componentDidMount();
+	  }
 
 	componentDidMount() {
-		this.setState({user: this.props.users.user, refreshing: false});
+		this.props.users.show(this.props.users.id)
+		.then((res) => {
+			console.log("found user!!")
+			console.log(res)
+			this.setState({user: res, refreshing: false});
+		})
+		.catch((error) => {
+			console.log("o no")
+			console.log(error);
+		})
 	}
 
 	onPressLogout() {
@@ -137,7 +151,11 @@ class Settings extends React.Component {
 					ref={ref => {
 					    this.scrollview_ref = ref;
 					  }}>
-					<View>
+				      <RefreshControl
+			              refreshing={this.state.refreshing}
+			              onRefresh={this._onRefresh}
+			            />
+			      	<View>
 						{
 							this.props.users.errors &&
 							<View style={ allStyles.errors }
@@ -230,7 +248,7 @@ class Settings extends React.Component {
 							onChangeText={(caption) => this.setProfileCaption(caption)}
 							returnKeyType='next'
 							value={this.state.user.caption}
-							placeholder='Caption (150 chars max)'
+							placeholder='Caption (100 chars max)'
 								multiline={true}
 						/>
 

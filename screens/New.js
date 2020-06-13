@@ -144,7 +144,6 @@ class New extends React.Component {
 			.then(res => {
 				console.log("updated!")
 				if (this.state.public) {
-					console.log("go public!")
 					if (!oldPublic) {
 						this.addPoints();
 					}
@@ -495,7 +494,7 @@ class New extends React.Component {
 						        });
 						      	}}>
 								{
-									this.props.users.errors.map(( item, key ) =>
+									this.props.quizzes.errors.map(( item, key ) =>
 									{
 										return <Text key={key} style={ allStyles.errorText }>• {item}</Text> 
 									})

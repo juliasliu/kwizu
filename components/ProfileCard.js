@@ -20,84 +20,84 @@ import styles from '../styles/ProfileScreen';
 @inject('users') @observer
 class ProfileCard extends React.Component {
 
-	  state = {
-			    progress: 10,
-			    level: 1,
-			    isOwnProfile: false,
-				sentRequest: false,
-				receivedRequest: false,
-				isFriends: false,
-		}
+	state = {
+			progress: 10,
+			level: 1,
+			isOwnProfile: false,
+			sentRequest: false,
+			receivedRequest: false,
+			isFriends: false,
+	}
 	  
-	  componentDidMount() {
-		  let otherUserId = this.props.user.id;
-		  this.setState({ 
-			  isOwnProfile: this.props.users.id == otherUserId,
-			  isFriends: this.props.users.user.friends.filter(function(e) { return e.id === otherUserId; }).length > 0,
-			  sentRequest: this.props.users.user.friends_requested.filter(function(e) { return e.id === otherUserId; }).length > 0,
-			  receivedRequest: this.props.users.user.friends_received.filter(function(e) { return e.id === otherUserId; }).length > 0,
-		  });
+	componentDidMount() {
+		let otherUserId = this.props.user.id;
+		this.setState({ 
+			isOwnProfile: this.props.users.id == otherUserId,
+			isFriends: this.props.users.user.friends.filter(function(e) { return e.id === otherUserId; }).length > 0,
+			sentRequest: this.props.users.user.friends_requested.filter(function(e) { return e.id === otherUserId; }).length > 0,
+			receivedRequest: this.props.users.user.friends_received.filter(function(e) { return e.id === otherUserId; }).length > 0,
+		});
 
-		  // calculate progress bar and level
-		  // formula for max points MP given level L: MP = L*10 + 2^L
-		  let points = this.props.user.points;
-		  let level = 1;
-		  let maxPoints = level * 10 + Math.pow(2, level);
-		  while(points/parseFloat(maxPoints) > 1) {
-			  points -= maxPoints;
-			  level++;
-			  maxPoints = level * 10 + Math.pow(2, level);
-		  }
-		  this.setState({level: level, progress: points/parseFloat(maxPoints) * 100})
-	  }
-	  
-	  sendRequest() {
-			this.setState({busy: true}, () => 
-				this.props.users.sendRequest(this.props.user.id)
-				.then(res => {
-					console.log("sent request!")
-					this.setState({ sentRequest: true, busy: false });
-				})
-				.catch(error => {
-					console.log("failed");
-					console.log(error);
-				})
-			)
+		// calculate progress bar and level
+		// formula for max points MP given level L: MP = L*10 + 2^L
+		let points = this.props.user.points;
+		let level = 1;
+		let maxPoints = level * 10 + Math.pow(2, level);
+		while(points/parseFloat(maxPoints) > 1) {
+			points -= maxPoints;
+			level++;
+			maxPoints = level * 10 + Math.pow(2, level);
 		}
-		
-		undoRequest() {
-			this.setState({busy: true}, () => 
-				this.props.users.undoRequest(this.props.user.id)
-				.then(res => {
-					console.log("undo request!")
-					this.setState({ sentRequest: false, busy: false });
-				})
-				.catch(error => {
-					console.log("failed");
-					console.log(error);
-				})
-			)
-		}
-	
+		this.setState({level: level, progress: points/parseFloat(maxPoints) * 100})
+	}
+
+	sendRequest() {
+		this.setState({busy: true}, () => 
+		this.props.users.sendRequest(this.props.user.id)
+		.then(res => {
+			console.log("sent request!")
+			this.setState({ sentRequest: true, busy: false });
+		})
+		.catch(error => {
+			console.log("failed");
+			console.log(error);
+		})
+		)
+	}
+
+	undoRequest() {
+		this.setState({busy: true}, () => 
+		this.props.users.undoRequest(this.props.user.id)
+		.then(res => {
+			console.log("undo request!")
+			this.setState({ sentRequest: false, busy: false });
+		})
+		.catch(error => {
+			console.log("failed");
+			console.log(error);
+		})
+		)
+	}
+
 	acceptRequest() {
 		this.setState({busy: true}, () => 
-			this.props.users.acceptRequest(this.props.user.id)
+		this.props.users.acceptRequest(this.props.user.id)
+		.then(res => {
+			console.log("accepted request!")
+			this.setState({ isFriends: true, busy: false });
+			this.props.users.addPoints(5)
 			.then(res => {
-				console.log("accepted request!")
-				this.setState({ isFriends: true, busy: false });
-				this.props.users.addPoints(5)
-				.then(res => {
-					console.log("yay points!" + res)
-				})
-				.catch(error => {
-					console.log("failed");
-					console.log(error);
-				});
+				console.log("yay points!" + res)
 			})
 			.catch(error => {
 				console.log("failed");
 				console.log(error);
-			})
+			});
+		})
+		.catch(error => {
+			console.log("failed");
+			console.log(error);
+		})
 		)
 	}
 	

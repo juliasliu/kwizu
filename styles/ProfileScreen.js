@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
 		  width: '100%',
 	  },
 	  profileThumbnailCard: {
-//		marginBottom: 20,  
 		  borderRadius: 0,
 		  borderWidth: 1,
 		  borderColor: "#e6e6e6",

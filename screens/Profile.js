@@ -97,7 +97,7 @@ class Profile extends React.Component {
 				<View style={allStyles.container}>
 			      <ScrollView style={allStyles.container}
 		      		refreshControl={
-			              <RefreshControl
+			            <RefreshControl
 			              refreshing={this.state.refreshing}
 			              onRefresh={this._onRefresh}
 			            />

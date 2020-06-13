@@ -161,9 +161,15 @@ class Users {
 		return new Promise(function(resolve, reject) {
 			axios.put(API_ROOT + '/users/' + user.id, {user}, {withCredentials: true})
 	        .then(response => {
-	        	that.handleSuccess();
-	        	that.success = "Your profile was saved successfully";
-	            resolve(response.data.user);
+	        	if (response.data.status === 'updated') {
+					that.handleSuccess()
+					that.handleLogin(response.data.user)
+		        	that.success = "Your profile was saved successfully";
+		            resolve(response.data.user);
+				} else {
+					that.handleErrors(response.data.errors)
+					reject(response.data.errors)
+				}
 	        })
 	        .catch(errors => {
 				that.handleErrors(errors)
