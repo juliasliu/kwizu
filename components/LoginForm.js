@@ -31,7 +31,7 @@ class LoginForm extends React.Component {
 					style={ allStyles.input }
 					onChangeText={(loginEmail) => this.setState({loginEmail})}
 					value={this.state.loginEmail}
-					placeholder='Email'
+					placeholder='Email or username'
 					onSubmitEditing={(event) => { 
 						this.refs.loginPassword.focus();
 					}}
