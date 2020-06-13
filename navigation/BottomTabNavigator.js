@@ -26,7 +26,8 @@ import Friends from '../screens/Friends'
 import Requests from '../screens/Requests' 
 import Chats from '../screens/Chats' 
 import Chat from '../screens/Chat' 
-import Settings from '../screens/Settings' 
+import Customize from '../screens/Customize'
+import Settings from '../screens/Settings'  
 
 import allStyles from '../styles/AllScreens';
 import * as Colors from '../constants/Colors.js';
@@ -171,8 +172,8 @@ function ProfileStackScreen({navigation}) {
     	  headerTintColor: '#B2BECF',
     	  headerRight: () => (
     			  <TabBarIcon
-    			  onPress={() => navigation.push("Chats") }
-    			  name="md-chatbubbles"
+    			  onPress={() => navigation.push("Settings") }
+    			  name="md-settings"
     				  style={[ allStyles.headerIcon ]}
     			  />
     	  )
@@ -197,31 +198,36 @@ function ProfileStackScreen({navigation}) {
 		  headerTitleStyle: { color: '#515d6e' },
 		  headerTintColor: '#B2BECF',
       }}/>
+      <ProfileStack.Screen name="Customize" component={Customize} options={{
+    	  headerTitle: 'Customize', 
+		  headerTitleStyle: { color: '#515d6e' },
+		  headerTintColor: '#B2BECF',
+      }} />
       <ProfileStack.Screen name="Settings" component={Settings} options={{
     	  headerTitle: 'Settings', 
 		  headerTitleStyle: { color: '#515d6e' },
 		  headerTintColor: '#B2BECF',
+      }} />	
+      <ProfileStack.Screen name="Take Kwiz" component={Take} options={{
+    	  headerTitle: 'Take Kwiz',
+    	  headerTitleStyle: { color: '#515d6e' },
+    	  headerTintColor: '#B2BECF',
       }} />
-			      <ProfileStack.Screen name="Take Kwiz" component={Take} options={{
-			    	  headerTitle: 'Take Kwiz',
-			    	  headerTitleStyle: { color: '#515d6e' },
-			    	  headerTintColor: '#B2BECF',
-			      	}} />
-			      <ProfileStack.Screen name="New Kwiz" component={New} options={{
-			    	  headerTitle: 'New Kwiz',
-			    	  headerTitleStyle: { color: '#515d6e' },
-			    	  headerTintColor: '#B2BECF',
-			      	}} />
-			      <ProfileStack.Screen name="Publish and Share Kwiz" component={Publish} options={{
-			    	  headerTitle: 'Published Kwiz',
-			    	  headerTitleStyle: { color: '#515d6e' },
-			    	  headerTintColor: '#B2BECF',
-			      	}} />
-			      <ProfileStack.Screen name="Kwiz Results" component={Leaderboard} options={{
-			    	  headerTitle: 'Kwiz Leaderboard',
-			    	  headerTitleStyle: { color: '#515d6e' },
-			    	  headerTintColor: '#B2BECF',
-			      	}} />
+      <ProfileStack.Screen name="New Kwiz" component={New} options={{
+    	  headerTitle: 'New Kwiz',
+    	  headerTitleStyle: { color: '#515d6e' },
+    	  headerTintColor: '#B2BECF',
+      }} />
+      <ProfileStack.Screen name="Publish and Share Kwiz" component={Publish} options={{
+    	  headerTitle: 'Published Kwiz',
+    	  headerTitleStyle: { color: '#515d6e' },
+    	  headerTintColor: '#B2BECF',
+      }} />
+      <ProfileStack.Screen name="Kwiz Results" component={Leaderboard} options={{
+    	  headerTitle: 'Kwiz Leaderboard',
+    	  headerTitleStyle: { color: '#515d6e' },
+    	  headerTintColor: '#B2BECF',
+      }} />
     </ProfileStack.Navigator>
   );
 }

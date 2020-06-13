@@ -146,11 +146,19 @@ const styles = StyleSheet.create({
 		  flexDirection: 'row',
 		  justifyContent: 'space-between',
 	  },
-	  settingsButton: {
+	  customizeButton: {
+		  position: 'absolute',
+		  left: 0,
+		  fontSize: 24,
+		  color: "#B2BECF",
+		  paddingLeft: 10,
+	  },
+	  chatsButton: {
 		  position: 'absolute',
 		  right: 0,
 		  fontSize: 24,
 		  color: "#B2BECF",
+		  paddingLeft: 10,
 	  },
 	  friendsList: {
 		  marginTop: 20,

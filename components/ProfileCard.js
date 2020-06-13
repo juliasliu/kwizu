@@ -208,6 +208,13 @@ class ProfileCard extends React.Component {
 		return this.props.user && (
 				<View style={[ allStyles.card, styles.profileCard ]}>
 					<View style={ styles.profileTopCard }>
+						{ 
+							this.state.isOwnProfile && (
+									<TouchableOpacity onPress={() => this.props.navigation.push('Customize')}>
+										<TabBarIcon name="md-create" style={styles.customizeButton}/>
+									</TouchableOpacity>
+							)
+						}
 						<View style={ styles.profilePictureContainer }>
 							{this.showPickedImage()}
 						</View>
@@ -225,10 +232,12 @@ class ProfileCard extends React.Component {
 							</View>
 						</View>
 						{ 
-							this.state.isOwnProfile && 
-							<TouchableOpacity onPress={() => this.props.navigation.push('Settings')}>
-								<TabBarIcon name="md-settings" style={styles.settingsButton}/>
-							</TouchableOpacity>
+							this.state.isOwnProfile && (
+									<TouchableOpacity onPress={() => this.props.navigation.push('Chats')}>
+										<TabBarIcon name="md-chatbubbles" style={styles.chatsButton}/>
+									</TouchableOpacity>
+							)
+							
 						}
 					</View>
 					{

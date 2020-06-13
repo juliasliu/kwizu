@@ -68,6 +68,30 @@ const styles = StyleSheet.create({
   tabBarLabel: {
 	  fontSize: 16,
   },
+  listItem: {
+	  height: 60, 
+	  borderColor: '#B2BECF',
+	  borderBottomWidth: 1,
+	  marginLeft: 10, 
+	  flexDirection: 'row'
+  },
+  listItemLeft: {
+	  padding: 15,
+	  paddingTop: 20,
+	  width: '15%',
+  },
+  listItemRight: {
+	  padding: 15, 
+	  paddingTop: 20
+  },
+  listItemTitle: {
+	  fontSize: 16,
+	  color: '#515d6e',
+  },
+  listItemIcon: {
+	  fontSize: 20,
+	  color: '#515d6e',
+  },
   section: {
       alignSelf: 'stretch',
       justifyContent: 'center',
