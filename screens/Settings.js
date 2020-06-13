@@ -19,6 +19,8 @@ class Settings extends React.Component {
 			user: {},
 			refreshing: true,
 			busy: false,
+			errors: null,
+			success: null,
 	}
 	
 	_onRefresh = () => {
@@ -33,9 +35,8 @@ class Settings extends React.Component {
 			console.log(res)
 			this.setState({user: res, refreshing: false});
 		})
-		.catch((error) => {
-			console.log("o no")
-			console.log(error);
+		.catch((errors) => {
+			this.setState({errors: this.props.users.errors})
 		})
 	}
 
@@ -43,7 +44,10 @@ class Settings extends React.Component {
 		this.props.users.logout()
 		.then((res) => {
 			console.log("logged out")
-		});
+		})
+		.catch((errors) => {
+			this.setState({errors: this.props.users.errors})
+		})
 	}
 	onPressEdit() {
 		console.log(this.state.user)
@@ -52,10 +56,10 @@ class Settings extends React.Component {
 			console.log(res)
 			console.log("saved!")
 			this.setState({user: this.props.users.user});
+			this.setState({success: this.props.users.success})
 		})
-		.catch(errors => {
-			console.log("failed");
-			console.log(errors);
+		.catch((errors) => {
+			this.setState({errors: this.props.users.errors})
 		})
 	}
 
@@ -157,7 +161,7 @@ class Settings extends React.Component {
 			            />
 			      	<View>
 						{
-							this.props.users.errors &&
+							this.state.errors &&
 							<View style={ allStyles.errors }
 							onLayout={event => {
 						        const layout = event.nativeEvent.layout;
@@ -168,7 +172,7 @@ class Settings extends React.Component {
 						        });
 						      	}}>
 								{
-									this.props.users.errors.map(( item, key ) =>
+									this.state.errors.map(( item, key ) =>
 									{
 										return <Text key={key} style={ allStyles.errorText }>• {item}</Text> 
 									})
@@ -176,7 +180,7 @@ class Settings extends React.Component {
 							</View>
 						}
 						{
-							this.props.users.success &&
+							this.state.success &&
 							<View style={ allStyles.success }
 							onLayout={event => {
 						        const layout = event.nativeEvent.layout;
@@ -186,7 +190,7 @@ class Settings extends React.Component {
 						            animated: true,
 						        });
 						      	}}>
-								<Text>{this.props.users.success}</Text>
+								<Text>{this.state.success}</Text>
 							</View>
 						}
 						<View style={[styles.profilePictureEditContainer]}>

@@ -62,6 +62,8 @@ class New extends React.Component {
 			type: '',					// Personality, Trivia
 		    refreshing: false,
 			busy: false,
+			errors: null,
+			success: null,
 	}
 	
 	/* destructive method for reassigning indices for an array
@@ -105,8 +107,7 @@ class New extends React.Component {
 			this.setState({id: res.quiz.id, title: res.quiz.title, public: res.quiz.public, image_url: res.quiz.image_url, isEditing: true}, this.loadQuiz)
 		})
 		.catch((errors) => {
-			console.log("o no")
-			console.log(errors);
+			this.setState({errors: this.props.quizzes.errors})
 		})
 	}
 	
@@ -143,6 +144,7 @@ class New extends React.Component {
 			this.props.quizzes.update(this.state)
 			.then(res => {
 				console.log("updated!")
+				this.setState({success: this.props.quizzes.success})
 				if (this.state.public) {
 					if (!oldPublic) {
 						this.addPoints();
@@ -151,14 +153,14 @@ class New extends React.Component {
 					this.props.navigation.push("Publish and Share Kwiz");
 				}
 			})
-			.catch(errors => {
-				console.log("failed");
-				console.log(errors);
+			.catch((errors) => {
+				this.setState({errors: this.props.quizzes.errors})
 			})
 		} else {
 			this.props.quizzes.create(this.state)
 			.then(res => {
 				console.log("created!")
+				this.setState({success: this.props.quizzes.success})
 				if (this.state.public) {
 					this.addPoints();
 					this.props.navigation.dispatch(StackActions.pop(1));
@@ -168,9 +170,8 @@ class New extends React.Component {
 					this.setState({id: res.id, title: res.title, public: res.public, image_url: res.image_url, isEditing: true}, this.loadQuiz)
 				}
 			})
-			.catch(errors => {
-				console.log("failed");
-				console.log(errors);
+			.catch((errors) => {
+				this.setState({errors: this.props.quizzes.errors})
 			})
 		}
 	}
@@ -483,7 +484,7 @@ class New extends React.Component {
 						}	
 					
 						{
-							this.props.quizzes.errors &&
+							this.state.errors &&
 							<View style={ allStyles.errors }
 							onLayout={event => {
 						        const layout = event.nativeEvent.layout;
@@ -494,7 +495,7 @@ class New extends React.Component {
 						        });
 						      	}}>
 								{
-									this.props.quizzes.errors.map(( item, key ) =>
+									this.state.errors.map(( item, key ) =>
 									{
 										return <Text key={key} style={ allStyles.errorText }>• {item}</Text> 
 									})
@@ -502,7 +503,7 @@ class New extends React.Component {
 							</View>
 						} 
 						{
-							this.props.quizzes.success &&
+							this.state.success &&
 							<View style={ allStyles.success }
 							onLayout={event => {
 						        const layout = event.nativeEvent.layout;
@@ -512,7 +513,7 @@ class New extends React.Component {
 						            animated: true,
 						        });
 						      	}}>
-								<Text>{this.props.quizzes.success}</Text> 
+								<Text>{this.state.success}</Text> 
 							</View>
 						} 
 						

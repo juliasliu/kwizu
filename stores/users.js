@@ -10,26 +10,30 @@ class Users {
 	@observable errors = null;
 	@observable success = null;
 	
-	@action login = function(email, password) { 
+	@action login = function(email, password) {
 		this.busy = true;
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
 		
 		let user = {
 				email: email,
 				password: password
 		}
 		
-		axios.post(API_ROOT + '/login', {user}, {withCredentials: true})
-		.then(response => {
-			if (response.data.logged_in) {
-				this.handleSuccess()
-				this.handleLogin(response.data.user)
-				console.log()
-			} else {
-				this.handleErrors(response.data.errors)
-				this.handleLogout()
-			}
+		return new Promise(function(resolve, reject) {
+			axios.post(API_ROOT + '/login', {user}, {withCredentials: true})
+			.then(response => {
+				if (response.data.logged_in) {
+					that.handleSuccess()
+					that.handleLogin(response.data.user)
+					resolve(response.data.user)
+				} else {
+					that.handleErrors(response.data.errors)
+					that.handleLogout()
+					reject(response.data.errors);
+				}
+			})
+			.catch(errors => console.log('api errors:', errors))
 		})
-		.catch(errors => console.log('api errors:', errors))
 	}
 	@action logout = function() {
 		this.busy = true;
@@ -43,10 +47,10 @@ class Users {
 				resolve(response)
 			})
 			.catch(errors => {
-					that.handleErrors(errors)
-					console.log('api errors:', errors)
-					reject(errors);
-				})
+				that.handleErrors(errors)
+				console.log('api errors:', errors)
+				reject(errors);
+			})
 		})
 	}
 	@action register = function(email, name, username, password, password_confirmation) {

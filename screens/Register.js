@@ -24,6 +24,10 @@ import RegistrationForm from '../components/RegistrationForm'
 
 export default class Register extends React.Component {
 	
+	state = {
+			errors: null,
+	}
+	
 	onPressRegister(email, name, username, password, password_confirmation) {
 		this.props.users.register(email, name, username, password, password_confirmation)
 		.then(res => {
@@ -31,6 +35,9 @@ export default class Register extends React.Component {
 			.then(res => {
 				console.log("yay points!" + res)
 			})
+		})
+		.catch((errors) => {
+			this.setState({errors: this.props.users.errors})
 		})
 	}
 	
@@ -51,7 +58,7 @@ export default class Register extends React.Component {
 	
 						<Text style={[allStyles.sectionMessage, { marginTop: 25 }]}>Or, if you have an email:</Text>
 						{
-							this.props.users.errors &&
+							this.state.errors &&
 							<View style={ allStyles.errors }
 							onLayout={event => {
 						        const layout = event.nativeEvent.layout;
@@ -62,7 +69,7 @@ export default class Register extends React.Component {
 						        });
 						      	}}>
 								{
-									this.props.users.errors.map(( item, key ) =>
+									this.state.errors.map(( item, key ) =>
 									{
 										return <Text key={key} style={ allStyles.errorText }>• {item}</Text> 
 									})

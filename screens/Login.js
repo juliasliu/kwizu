@@ -22,9 +22,21 @@ import LoginForm from '../components/LoginForm'
 
 @inject('users') @observer
 class Login extends React.Component {
-	onLogin(email, password) { 
-		this.props.users.login(email, password);
+	
+	state = {
+			errors: null,
 	}
+	
+	onLogin(email, password) { 
+		this.props.users.login(email, password)
+		.then(res => {
+			console.log("login!")
+		})
+		.catch((errors) => {
+			this.setState({errors: this.props.users.errors})
+		})
+	}
+	
 	render() {
 		return (
 				<ScrollView style={allStyles.container}
@@ -34,7 +46,7 @@ class Login extends React.Component {
 				<KeyboardAwareScrollView contentContainerStyle={styles.welcomeContainer}>
 					<Text style={[ allStyles.title, { textAlign: 'center', marginVertical: 50 } ]}>Sign In</Text>
 					{
-						this.props.users.errors &&
+						this.state.errors &&
 						<View style={ allStyles.errors }
 						onLayout={event => {
 					        const layout = event.nativeEvent.layout;
@@ -45,7 +57,7 @@ class Login extends React.Component {
 					        });
 					      	}}>
 							{
-								this.props.users.errors.map(( item, key ) =>
+								this.state.errors.map(( item, key ) =>
 								{
 									return <Text key={key} style={ allStyles.errorText }>• {item}</Text> 
 								})
