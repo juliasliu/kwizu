@@ -27,7 +27,7 @@ class Welcome extends React.Component {
 		return (
 				<View style={styles.welcomeContainer}>
 					<View style={ styles.logoContainer }>
-						<Icon name="user" size={100} style={ styles.logo }></Icon>
+						<Image source={require('../assets/images/logo.png')} style={ styles.logo } />
 					</View>
 					<View style={ styles.welcomeButtonsContainer }>
 						

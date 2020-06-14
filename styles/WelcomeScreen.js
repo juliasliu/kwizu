@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
 		height: '50%',
 	},
 	logo: {
-		color: '#ccc',
+		height: '50%',
+		aspectRatio: 1,
 	},
 	welcomeButtonsContainer: {
 		display: 'flex',
