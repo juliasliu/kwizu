@@ -104,7 +104,6 @@ class Users {
 				.catch(errors => {
 					this.handleErrors(errors)
 					console.log('api errors:', errors)
-					reject(errors);
 				})
 	}
 	

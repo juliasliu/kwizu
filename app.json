@@ -13,8 +13,8 @@
     "scheme": "myapp",
     "splash": {
       "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#485061"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
