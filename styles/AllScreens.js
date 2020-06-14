@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 		flex: 0,
 		borderRadius: 20,
 		alignItems: 'center',
-		shadowColor: "#e1e7ed",
+		shadowColor: "#d3dbe3",
 		shadowOffset: {
 			width: 0,
 			height: 5,
@@ -114,12 +114,14 @@ const styles = StyleSheet.create({
 	},
 	sectionSubtitle: {
 		fontWeight: 'bold',
+		fontSize: 14,
 		marginBottom: 10,
 		color: '#8393a8',
 	},
 	sectionMessage: {
 		textAlign: 'center',
 		paddingVertical: 20,
+		fontSize: 14,
 		fontWeight: 'bold',
 		color: '#8393a8',
 	},
@@ -199,9 +201,9 @@ const styles = StyleSheet.create({
 		marginVertical: 10,
 		padding: 10,
 		borderRadius: 20,
-		borderColor: "#e1e7ed",
+		borderColor: "#d3dbe3",
 		borderWidth: 1,
-		shadowColor: "#e1e7ed",
+		shadowColor: "#d3dbe3",
 		shadowOffset: {
 			width: 0,
 			height: 5,
@@ -227,7 +229,7 @@ const styles = StyleSheet.create({
 		width: 'auto',
 		padding: 0,
 		borderWidth: 1,
-		borderColor: '#e1e7ed',
+		borderColor: '#d3dbe3',
 	},
 	button: {
 		display: 'flex',
@@ -240,7 +242,7 @@ const styles = StyleSheet.create({
 		padding: 10,
 		borderWidth: 1,
 		borderRadius: 20,
-		shadowColor: "#e1e7ed",
+		shadowColor: "#d3dbe3",
 		shadowOffset: {
 			width: 0,
 			height: 5,
@@ -289,8 +291,8 @@ const styles = StyleSheet.create({
 	},
 	whiteButton: {
 		backgroundColor: '#fff',
-		shadowColor: "#e1e7ed",
-		borderColor: "#e1e7ed",
+		shadowColor: "#d3dbe3",
+		borderColor: "#d3dbe3",
 	},
 	yellowButton: {
 		backgroundColor: '#FFD660',
@@ -341,7 +343,7 @@ const styles = StyleSheet.create({
 		padding: 10,
 		borderRadius: 20,
 		backgroundColor: "#fff",
-		shadowColor: "#e1e7ed",
+		shadowColor: "#d3dbe3",
 		shadowOffset: {
 			width: 0,
 			height: 5,
@@ -404,7 +406,7 @@ const styles = StyleSheet.create({
 	profileThumbnailCard: {
 		borderRadius: 0,
 		borderWidth: 1,
-		borderColor: "#e1e7ed",
+		borderColor: "#d3dbe3",
 	},
 	topProfileThumbnailCard: {
 		borderTopLeftRadius: 20,

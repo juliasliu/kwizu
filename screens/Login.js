@@ -18,17 +18,17 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/WelcomeScreen';
 
-import LoginForm from '../components/LoginForm'
-
 @inject('users') @observer
 class Login extends React.Component {
 	
 	state = {
 			errors: null,
+			email: '',
+			password: ''
 	}
 	
-	onLogin(email, password) { 
-		this.props.users.login(email, password)
+	onLogin() { 
+		this.props.users.login(this.state.email, this.state.password)
 		.then(res => {
 			console.log("login!")
 		})
@@ -39,34 +39,71 @@ class Login extends React.Component {
 	
 	render() {
 		return (
-				<ScrollView style={allStyles.container}
+				<ScrollView contentContainerStyle={[styles.welcomeContainer]}
 				ref={ref => {
 				    this.scrollview_ref = ref;
 				  }}>
-				<KeyboardAwareScrollView contentContainerStyle={styles.welcomeContainer}>
-					<Text style={[ allStyles.title, allStyles.center, { marginVertical: 50 } ]}>Sign In</Text>
-					{
-						this.state.errors &&
-						<View style={ allStyles.errors }
-						onLayout={event => {
-					        const layout = event.nativeEvent.layout;
-					        this.scrollview_ref.scrollTo({
-					            x: 0,
-					            y: layout.y,
-					            animated: true,
-					        });
-					      	}}>
-							{
-								this.state.errors.map(( item, key ) =>
+				<View style={styles.welcomeBackgroundContainer}>
+					<Image source={require("../assets/images/login.png")} style={styles.welcomeBackground} />
+				</View>
+				<KeyboardAwareScrollView contentContainerStyle={[styles.welcomeFormContainer]}>
+					<View style={styles.welcomeForm}>
+						<Text style={[ allStyles.title, allStyles.center, allStyles.whiteText ]}>Sign In</Text>
+						{
+							this.state.errors &&
+							<View style={ allStyles.errors }
+							onLayout={event => {
+						        const layout = event.nativeEvent.layout;
+						        this.scrollview_ref.scrollTo({
+						            x: 0,
+						            y: layout.y,
+						            animated: true,
+						        });
+						      	}}>
 								{
-									return <Text key={key} style={ allStyles.errorText }>• {item}</Text> 
-								})
+									this.state.errors.map(( item, key ) =>
+									{
+										return <Text key={key} style={ allStyles.errorText }>• {item}</Text> 
+									})
+								}
+							</View>
+						}
+						<TextInput
+							autoCapitalize='none'
+							autoCorrect={false}
+							keyboardType='email-address'
+							returnKeyType='next'
+							style={ allStyles.input }
+							onChangeText={(email) => this.setState({email})}
+							value={this.state.email}
+							placeholder='Email or username'
+							onSubmitEditing={(event) => { 
+								this.refs.password.focus();
+							}}
+						/>
+						<TextInput
+							ref='password' 
+							style={ allStyles.input } 
+							onChangeText={(password) => this.setState({password})} 
+							value={this.state.password} 
+							secureTextEntry={true} 
+							placeholder='Password'
+						/>
+						<View style={ allStyles.flexContainer }>
+							<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.redButton ]}
+			                	onPress={() => this.props.navigation.navigate('Welcome')}>
+								<Text style={[ styles.fullWidthButtonText, allStyles.whiteText ]}>Cancel</Text>
+							</TouchableOpacity>
+							{
+								this.props.users.busy ? 
+								<ActivityIndicator/> :
+								<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.whiteButton ]}
+									onPress={this.onLogin.bind(this)}>
+									<Text style={[ allStyles.fullWidthButtonText ]}>Sign me in!</Text>
+								</TouchableOpacity>
 							}
 						</View>
-					}
-					<LoginForm onPress={this.onLogin.bind(this)} 
-					busy={this.props.users.busy}
-					navigation={this.props.navigation}></LoginForm>
+					</View>
 				</KeyboardAwareScrollView>
 				</ScrollView>
 		) 

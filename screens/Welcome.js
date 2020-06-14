@@ -25,34 +25,35 @@ import styles from '../styles/WelcomeScreen';
 class Welcome extends React.Component {
 	render() {
 		return (
-				<View style={styles.welcomeContainer}>
-					<View style={ styles.logoContainer }>
-						<Image source={require('../assets/images/logo.png')} style={ styles.logo } />
+				<View style={[styles.welcomeContainer]}>
+					<View style={styles.welcomeBackgroundContainer}>
+						<Image source={require("../assets/images/welcome.png")} style={styles.welcomeBackground} />
 					</View>
-					<View style={ styles.welcomeButtonsContainer }>
-						
-						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton, styles.shareButton ]}
-			                onPress={() => alert("")}>
-							<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Sign in with Facebook</Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
-			                onPress={() => this.props.navigation.navigate('Login')}>
-							<TabBarIcon name="md-mail" style={[ allStyles.buttonIcon ]}/>
-							<Text style={ allStyles.fullWidthButtonText }>Sign in with email</Text>
-						</TouchableOpacity>
-						
-						<Text style={{ fontSize: 16, marginTop: 25 }}>Don't have an account yet?</Text> 
-						
-						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.greenButton ]}
-			                onPress={() => this.props.navigation.navigate('Register')}>
-							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Sign up</Text>
-						</TouchableOpacity>
-						<Text style={{ textAlign: 'center', marginTop: 25 }}>
-							By continuing, you agree to our 
-							<Text style={ allStyles.link } onPress={() => Linking.openURL('http://google.com')}>
-								Terms and Privacy Policy</Text>.
-						</Text>
+					<View style={styles.welcomeButtonsContainer}>
+						<View style={ styles.welcomeButtons }>
+							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton, styles.shareButton ]}
+				                onPress={() => alert("")}>
+								<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+								<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Sign in with Facebook</Text>
+							</TouchableOpacity>
+							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
+				                onPress={() => this.props.navigation.navigate('Login')}>
+								<TabBarIcon name="md-mail" style={[ allStyles.buttonIcon ]}/>
+								<Text style={ allStyles.fullWidthButtonText }>Sign in with email</Text>
+							</TouchableOpacity>
+							
+							<Text style={[allStyles.subheading]}>Don't have an account yet?</Text> 
+							
+							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton ]}
+				                onPress={() => this.props.navigation.navigate('Register')}>
+								<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Sign up</Text>
+							</TouchableOpacity>
+							<Text style={[allStyles.text, allStyles.center, { marginTop: 25 }]}>
+								By continuing, you agree to our
+								<Text style={ allStyles.link } onPress={() => Linking.openURL('http://google.com')}> Terms of Service </Text> and 
+								<Text style={ allStyles.link } onPress={() => Linking.openURL('http://google.com')}> Privacy Policy</Text>.
+							</Text>
+						</View>
 					</View>
 				</View>
 		) 
