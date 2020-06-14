@@ -5,13 +5,10 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#F1F2F6',
-		padding: 10,
-		paddingBottom: 0,
 	},
 	contentContainer: {
 		flex: 1,
-		flexDirection: 'column',
-		alignItems: 'center',
+		padding: 20,
 	},
 	flexContainer: {
 		flexWrap: 'wrap', 
@@ -129,19 +126,19 @@ const styles = StyleSheet.create({
 		color: 'blue',  
 	},
 	title: {
-		fontSize: 32,  
+		fontSize: 28,  
 		fontWeight: 'bold',
 		marginVertical: 20,
 		color: "#2F3542",
 	},
 	heading: {
-		fontSize: 24,  
+		fontSize: 20,  
 		fontWeight: 'bold',
 		marginVertical: 10,
 		color: "#2F3542",
 	},
 	subheading: {
-		fontSize: 20,  
+		fontSize: 16,  
 		fontWeight: 'bold',
 		marginVertical: 10,
 		color: "#515d6e",

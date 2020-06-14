@@ -31,7 +31,7 @@ class Settings extends React.Component {
 		
 		return (
 				<View style={allStyles.container}>
-			      <ScrollView style={allStyles.container}
+			      <ScrollView style={allStyles.contentContainer}
 					ref={ref => {
 					    this.scrollview_ref = ref;
 					  }}>

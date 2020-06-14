@@ -99,7 +99,7 @@ class Settings extends React.Component {
 		
 		return (
 				<View style={allStyles.container}>
-			      <ScrollView style={allStyles.container}
+			      <ScrollView
 					ref={ref => {
 					    this.scrollview_ref = ref;
 					  }}>
@@ -116,7 +116,7 @@ class Settings extends React.Component {
 							) 
 						}}
 						/>
-						<View style={{marginTop: 25, marginBottom: 50}}>
+						<View style={allStyles.contentContainer}>
 				      		{
 								this.props.users.busy ?
 								<ActivityIndicator/> :

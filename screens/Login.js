@@ -43,11 +43,11 @@ class Login extends React.Component {
 					<View style={styles.welcomeBackgroundContainer}>
 						<Image source={require("../assets/images/login.png")} style={styles.welcomeBackground} />
 					</View>
-					<ScrollView contentContainerStyle={[styles.welcomeContainer]}
+					<KeyboardAwareScrollView style={[styles.welcomeContainer]}
 						ref={ref => {
 						    this.scrollview_ref = ref;
-						  }}>
-					<KeyboardAwareScrollView contentContainerStyle={[styles.welcomeFormContainer]}>
+					  }}>
+					<View style={[styles.welcomeFormContainer]}>
 						<View style={styles.welcomeForm}>
 							<Text style={[ allStyles.title, allStyles.center, allStyles.whiteText ]}>Sign In</Text>
 							{
@@ -105,8 +105,8 @@ class Login extends React.Component {
 								}
 							</View>
 						</View>
+					</View>
 					</KeyboardAwareScrollView>
-					</ScrollView>
 				</View>
 		) 
 	}

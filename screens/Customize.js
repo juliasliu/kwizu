@@ -142,7 +142,7 @@ class Customize extends React.Component {
 
 		return (!this.state.refreshing) && (
 				<View style={allStyles.container}>
-			      <ScrollView style={allStyles.container}
+			      <ScrollView style={allStyles.contentContainer}
 					ref={ref => {
 					    this.scrollview_ref = ref;
 					  }}>
@@ -150,7 +150,7 @@ class Customize extends React.Component {
 			              refreshing={this.state.refreshing}
 			              onRefresh={this._onRefresh}
 			            />
-			      	
+			      		<View style={{marginBottom: 50}}>
 						{
 							this.state.errors &&
 							<View style={ allStyles.errors }
@@ -255,6 +255,7 @@ class Customize extends React.Component {
 									<Text style={ allStyles.whiteText }>Save Profile</Text>
 								</TouchableOpacity>
 							}
+					</View>
 					</View>
 					</ScrollView>
 				</View>

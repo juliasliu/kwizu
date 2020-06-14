@@ -59,7 +59,7 @@ class HomeScreen extends React.Component {
 		
 		  return (
 		    <View style={allStyles.container}>
-		      <ScrollView style={allStyles.container}
+		      <ScrollView style={allStyles.contentContainer}
 		      		refreshControl={
 		              <RefreshControl
 		              refreshing={this.state.refreshing}

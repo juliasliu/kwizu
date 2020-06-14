@@ -135,7 +135,7 @@ class Chats extends React.Component {
 			         </View>
 			      </View>
 			      <View style={allStyles.container}>
-				      <ScrollView style={allStyles.container}
+				      <ScrollView style={allStyles.contentContainer}
 			      		refreshControl={
 				              <RefreshControl
 				              refreshing={this.state.refreshing}
