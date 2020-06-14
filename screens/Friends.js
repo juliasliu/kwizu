@@ -2,9 +2,10 @@ import React, { PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button, RefreshControl } from 'react-native';
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button, RefreshControl, Dimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
 import ProfileThumbnail from '../components/ProfileThumbnail';
 
@@ -15,8 +16,14 @@ import styles from '../styles/ProfileScreen';
 class Friends extends React.Component {
 	state = {
 			friends: [],
+			friends_received: [],
 			isOwnProfile: false,
 			refreshing: false,
+			index: 0,
+			routes: [
+				{ key: 'first', title: 'Friends' },
+				{ key: 'second', title: 'Requests' },
+			],
 	}
 
 	_onRefresh = () => {
@@ -32,12 +39,16 @@ class Friends extends React.Component {
 		this.props.users.show(user_id)
 		.then((res) => {
 			console.log("gotem")
-			this.setState({friends: res.friends, refreshing: false});
+			this.setState({friends: res.friends, friends_received: res.friends_received, refreshing: false});
 		})
 		.catch((error) => {
 			console.log("and i oop")
 			console.log(error);
 		})
+	}
+	
+	setIndex(index) {
+		this.setState({index: index});
 	}
 
 	render () {
@@ -53,38 +64,114 @@ class Friends extends React.Component {
 						]} />
 			)
 		})
-
-		return (
-				<View style={allStyles.container}>
-			      <ScrollView style={allStyles.container}
-		      		refreshControl={
-			              <RefreshControl
-			              refreshing={this.state.refreshing}
-			              onRefresh={this._onRefresh}
-			            />
-			          }>
-				      <TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton ]}
+		
+		let friendsReceivedArray = this.state.friends_received.map(( item, key ) =>
+		{
+			return item != undefined && (
+					<ProfileThumbnail navigation={this.props.navigation}
+					user={item}
+					key={key}
+					style={[ (key === this.state.friends_received.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
+							 (key === 0) ? allStyles.topProfileThumbnailCard : null,
+						]} />
+			)
+		})
+		
+		let FirstRoute = () => (
+				<ScrollView style={allStyles.container}
+	      		refreshControl={
+		              <RefreshControl
+		              refreshing={this.state.refreshing}
+		              onRefresh={this._onRefresh}
+		            />
+		          }>
+		      	<View style={[styles.friendsList, allStyles.container]}>
+			      	<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton ]}
 		                onPress={() => alert("")}>
 						<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 						<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Add from Facebook</Text>
 					</TouchableOpacity>
-			      	<View style={styles.friendsList}>
-						{
-							this.state.friends.length > 0 ? friendsArray :
-								(
-										this.state.isOwnProfile ? (
-													<View style={[ allStyles.section, allStyles.sectionClear ]}>
-														<Text style={[ allStyles.sectionMessage ]}>No friends yet! Find people by taking more kwizzes or import your friends from Facebook!</Text>
-													</View>
-												) : (
-													<View style={[ allStyles.section, allStyles.sectionClear ]}>
-														<Text style={[ allStyles.sectionMessage ]}>This user has no friends yet. Be their first friend!</Text>
-													</View>
-												)
-								)
+					{
+						this.state.friends.length > 0 ? friendsArray :
+							(
+									this.state.isOwnProfile ? (
+												<View style={[ allStyles.section, allStyles.sectionClear ]}>
+													<Text style={[ allStyles.sectionMessage ]}>No friends yet! Find people by taking more kwizzes or import your friends from Facebook!</Text>
+												</View>
+											) : (
+												<View style={[ allStyles.section, allStyles.sectionClear ]}>
+													<Text style={[ allStyles.sectionMessage ]}>This user has no friends yet. Be their first friend!</Text>
+												</View>
+											)
+							)
+					}
+				</View>
+				</ScrollView>
+		);
+
+		let SecondRoute = () => (
+				<ScrollView style={allStyles.container}
+				refreshControl={
+						<RefreshControl
+						refreshing={this.state.refreshing}
+						onRefresh={this._onRefresh}
+						/>
+				}>
+				<View style={[styles.friendsList, allStyles.container]}>
+				{
+					this.state.friends_received.length > 0 ? friendsReceivedArray :
+						(
+								<View style={[ allStyles.section, allStyles.sectionClear ]}>
+								<Text style={[ allStyles.sectionMessage ]}>You have no incoming friend requests! You're all caught up.</Text>
+								</View>
+						)
+				}
+				</View>
+				</ScrollView>
+		);
+
+		const renderTabBar = props => (
+				<TabBar
+				{...props}
+				indicatorStyle={ allStyles.tabIndicator }
+				style={ allStyles.tabBar }
+				renderLabel={({ route, focused, color }) => (
+						<View style={allStyles.tabBarContainer}>
+							<Icon
+						    name={
+						    		route.title == "Requests" ? (
+						    				focused ? 'envelope-open' : 'envelope-open-o'
+						    		) : (
+						    				focused ? 'user' : 'user-o'
+						    		)
+						    }
+						    color={color}
+						    style={ allStyles.tabBarIcon }
+						    />
+							<Text style={[ allStyles.tabBarLabel, { color }]}>
+								{route.title}
+						    </Text>
+						 </View>
+					  )}
+				activeColor={"#fff"}
+				inactiveColor={"#8393a8"}
+				/>
+		);
+
+		return (
+				<View style={{flex: 1}}>
+					<TabView
+				      navigationState={{ index: this.state.index, routes: this.state.routes }}
+				      renderScene={
+							SceneMap({
+								first: FirstRoute,
+								second: SecondRoute,
+							})
 						}
-					</View>
-					</ScrollView>
+				      onIndexChange={this.setIndex.bind(this)}
+				      initialLayout={{ width: Dimensions.get('window').width }}
+						renderTabBar={renderTabBar}
+				    />
 				</View>
 		)
 	}
