@@ -46,13 +46,14 @@ export default class Register extends React.Component {
 	
 	render() {
 		return (
-				<ScrollView contentContainerStyle={[styles.welcomeContainer]}
-				ref={ref => {
-				    this.scrollview_ref = ref;
-				  }}>
+				<View style={[styles.welcomeContainer]}>
 					<View style={styles.welcomeBackgroundContainer}>
-						<Image source={require("../assets/images/register.png")} style={styles.welcomeBackground} />
+						<Image source={require("../assets/images/login.png")} style={styles.welcomeBackground} />
 					</View>
+					<ScrollView contentContainerStyle={[styles.welcomeContainer]}
+						ref={ref => {
+						    this.scrollview_ref = ref;
+					  }}>
 					<KeyboardAwareScrollView contentContainerStyle={[styles.welcomeFormContainer]}>
 						<View style={styles.welcomeForm}>
 							<Text style={[ allStyles.title, allStyles.center, allStyles.whiteText ]}>Sign Up</Text>
@@ -156,6 +157,7 @@ export default class Register extends React.Component {
 						</View>
 					</KeyboardAwareScrollView>
 				</ScrollView>
+			</View>
 		) 
 	}
 }

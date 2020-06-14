@@ -129,9 +129,9 @@ const styles = StyleSheet.create({
 		color: 'blue',  
 	},
 	title: {
-		fontSize: 28,  
+		fontSize: 32,  
 		fontWeight: 'bold',
-		marginVertical: 10,
+		marginVertical: 20,
 		color: "#2F3542",
 	},
 	heading: {

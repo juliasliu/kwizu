@@ -12,6 +12,7 @@ import {
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
 import * as WebBrowser from 'expo-web-browser';
 import TabBarIcon from '../components/TabBarIcon';
+import Thumbnails from '../constants/Thumbnails';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
@@ -35,12 +36,13 @@ export default function QuizThumbnail(props) {
 
 		if (image_url != null && image_url != undefined) {
 			return (
-					<Image source={{ uri: image_url }} style={[styles.quizImage]} />
+					<Image source={{ uri: image_url }} 
+					style={[styles.quizImage]} />
 			);
 		} else {
-			let imgPlaceholder = 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg';
 			return (
-					<Image source={{ uri: imgPlaceholder }} style={[styles.quizImage]} />
+					<Image source={Thumbnails.quiz} 
+					style={[styles.quizImage]} />
 			);
 		}
 	}

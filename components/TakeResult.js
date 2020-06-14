@@ -25,10 +25,7 @@ export default function TakeResult(props) {
 					<Image source={{ uri: image_url }} style={[allStyles.quizResultImage]} />
 			);
 		} else {
-			let imgPlaceholder = 'https://img1.looper.com/img/gallery/things-that-make-no-sense-about-harry-potter/intro-1550086067.jpg';
-			return (
-					<Image source={{ uri: imgPlaceholder }} style={[allStyles.quizResultImage]} />
-			);
+			return null;
 		}
 	}
 	

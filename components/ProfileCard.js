@@ -14,6 +14,8 @@ import ProgressBarAnimated from 'react-native-progress-bar-animated';
 import TabBarIcon from '../components/TabBarIcon';
 import Icon from 'react-native-vector-icons/FontAwesome'
 
+import Thumbnails from '../constants/Thumbnails';
+
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/ProfileScreen';
 
@@ -112,10 +114,9 @@ class ProfileCard extends React.Component {
 					/>
 			);
 		} else {
-			let imgPlaceholder = 'https://imgix.bustle.com/uploads/image/2018/5/9/fa2d3d8d-9b6c-4df4-af95-f4fa760e3c5c-2t4a9501.JPG?w=970&h=546&fit=crop&crop=faces&auto=format%2Ccompress&cs=srgb&q=70';
 			return (
 					<Image
-					source={{uri: imgPlaceholder}}
+					source={ Thumbnails.avatar }
 					style={ styles.profilePicture }
 					/>
 			);
