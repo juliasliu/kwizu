@@ -21,7 +21,7 @@ class Chats extends React.Component {
 			friendResults: [],
 			searchKeyword: "",
 			searching: false,
-			refreshing: false,
+			refreshing: true,
 			isModalVisible: false,
 	}
 

@@ -20,7 +20,7 @@ class Friends extends React.Component {
 			friends: [],
 			friends_received: [],
 			isOwnProfile: false,
-			refreshing: false,
+			refreshing: true,
 			isModalVisible: false,
 			index: 0,
 			routes: [

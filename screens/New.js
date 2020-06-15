@@ -62,7 +62,7 @@ class New extends React.Component {
 					],
 			isEditing: false,
 			type: '',					// Personality, Trivia
-		    refreshing: false,
+		    refreshing: true,
 			busy: false,
 			errors: null,
 			success: null,

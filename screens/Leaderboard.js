@@ -34,7 +34,7 @@ class Leaderboard extends React.Component {
 			quizzings: [],
 			isOwner: false,			// if the logged in user own this quiz, see all users not just friends
 			usersForResult: {},		// dictionary { result_id: users }
-			refreshing: false,
+			refreshing: true,
 			isModalVisible: false,
 	}
 	

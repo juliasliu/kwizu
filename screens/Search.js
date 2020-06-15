@@ -19,7 +19,7 @@ class SearchScreen extends React.Component {
 		quizzes: [],
 		users: [],
 		searchKeyword: "",
-	      refreshing: false,
+	      refreshing: true,
 			index: 0,
 			routes: [
 				{ key: 'first', title: 'Kwizzes' },

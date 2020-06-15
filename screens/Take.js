@@ -58,7 +58,7 @@ class Take extends React.Component {
 		hasTaken: false,		// if quizzing exists, hasTaken = true; if retake the quiz or quiz has been changed, hasTaken = false
 		scrollIndices: [70,],	// starting scroll position is 70 given the title heading of the kwiz
 		scrollHeights: [],
-	    refreshing: false,
+	    refreshing: true,
 	    recommended: [],		// list of recommended quizzes based on this quiz
 	    isModalVisible: false,
 	}

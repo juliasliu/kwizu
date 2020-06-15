@@ -20,7 +20,7 @@ class Chats extends React.Component {
 	state = {
 			messages: [],
 			message: "",
-			refreshing: false,
+			refreshing: true,
 			isModalVisible: false,
 	}
 

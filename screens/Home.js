@@ -19,7 +19,7 @@ class HomeScreen extends React.Component {
 			[ /* personality */ ],
 			[ /* trivia */ ],
 		],
-	      refreshing: false,
+	      refreshing: true,
 	}
 	
 	_onRefresh = () => {
