@@ -85,12 +85,12 @@ class Friends extends React.Component {
 		              onRefresh={this._onRefresh}
 		            />
 		          }>
+		      	<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton ]}
+	                onPress={() => alert("")}>
+					<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+					<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Add from Facebook</Text>
+				</TouchableOpacity>
 		      	<View style={[styles.friendsList, allStyles.container]}>
-			      	<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton ]}
-		                onPress={() => alert("")}>
-						<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-						<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Add from Facebook</Text>
-					</TouchableOpacity>
 					{
 						this.state.friends.length > 0 ? friendsArray :
 							(

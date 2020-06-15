@@ -27,13 +27,6 @@ class HomeScreen extends React.Component {
 	}
 	
 	componentDidMount() {
-		if (Platform.OS === 'android') { // B
-			Linking.getInitialURL().then(url => {
-				this.navigate(url);
-			});
-		} else {
-			Linking.addEventListener('url', this.handleOpenURL);
-		}
 		this.props.quizzes.index()
 		.then((res) => {
 			var quizzes = [...this.state.quizzes]
@@ -47,33 +40,6 @@ class HomeScreen extends React.Component {
 		.catch((error) => {
 			console.log(error);
 		})
-	}
-	
-	/* Deep Linking Routes */
-	
-	static navigationOptions = { // A
-		title: 'Home',
-	};
-
-	componentWillUnmount() { // C
-		Linking.removeEventListener('url', this.handleOpenURL);
-	}
-	handleOpenURL = (event) => { // D
-		this.navigate(event.url);
-	}
-	navigate = (url) => { // E
-		const { navigate } = this.props.navigation;
-		const route = url.replace(/.*?:\/\//g, '');
-		const id = route.match(/\/([^\/]+)\/?$/)[1];
-		const routeName = route.split('/')[0];
-
-		if (routeName === 'quizzes') {
-			navigate('Take Kwiz', { quiz_id: id })
-		} else if (routeName === 'users') {
-			navigate('Profile', { user_id: id })
-		} else if (routeName === 'chats') {
-			navigate('Chat', { chat_id: id })
-		}
 	}
 	
 	render() {

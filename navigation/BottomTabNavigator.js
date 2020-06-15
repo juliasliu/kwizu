@@ -4,6 +4,7 @@ import {
 	Button,
 	TouchableOpacity,
 	View,
+	Linking,
 } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -55,6 +56,43 @@ class HomeStackScreen extends React.Component {
 	toggleModal = () => {
 		this.setState({isModalVisible: !this.state.isModalVisible});
 	};
+	
+	componentDidMount() {
+		if (Platform.OS === 'android') { // B
+			Linking.getInitialURL().then(url => {
+				this.navigate(url);
+			});
+		} else {
+			Linking.getInitialURL().then(url => {
+				if (url) this.navigate(url);
+			});
+			Linking.addEventListener('url', this.handleOpenURL);
+			console.log("here")
+		}
+	}
+	
+	/* Deep Linking Routes */
+
+	componentWillUnmount() { // C
+		Linking.removeEventListener('url', this.handleOpenURL);
+	}
+	handleOpenURL = (event) => { // D
+		console.log("hi " + event)
+		this.navigate(event.url);
+	}
+	navigate = (url) => { // E
+		console.log("hi " + url)
+		const { navigate } = this.props.navigation;
+		const route = url.replace(/.*?:\/\//g, '');
+		const id = route.match(/\/([^\/]+)\/?$/)[1];
+		const routeName = route.split('/')[0];
+
+		if (routeName === 'quizzes') {
+			navigate('Take Kwiz', { quiz_id: id })
+		} else if (routeName === 'users') {
+			navigate('Profile', { user_id: id })
+		}
+	}
 
 	  render() {
 			return (
