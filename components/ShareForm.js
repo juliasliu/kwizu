@@ -26,41 +26,42 @@ class ShareForm extends React.Component {
 	}
 	
 	render() {
-		let url = "https://kwizu.app/quizzes/";
+		let url = "kwizu://quizzes/";
 
-			writeToClipboard = async () => {
-				await Clipboard.setString(url + this.props.quiz.id);
-				this.setState({copyMessage: "Copied"});
-			};
+		writeToClipboard = async () => {
+			await Clipboard.setString(url + this.props.quiz.id);
+			this.setState({copyMessage: "Copied"});
+		};
 
-			let shareToMedia = async () => {
-				const result = await Share.share({
-					message: 'Kwizu | Hey! I just took or created a Kwiz. Check it out!',
-					url: url + this.props.quiz.id,
-				}, {
-					// Android only:
-					dialogTitle: 'Kwizu: Quizzes With You',
-					// iOS only:
-					excludedActivityTypes: [
-//						'com.apple.UIKit.activity.PostToTwitter'
-						]
-				})
+		let shareToMedia = async () => {
+			const result = await Share.share({
+				message: 'Kwizu | Hey! I just took or created a Kwiz. Check it out!',
+				url: url + this.props.quiz.id,
+			}, {
+				// Android only:
+				dialogTitle: 'Kwizu: Quizzes With You',
+				// iOS only:
+				excludedActivityTypes: [
+//					'com.apple.UIKit.activity.PostToTwitter'
+					]
+			})
 
-				if (result.action === Share.sharedAction) {
-					if (result.activityType) {
-						// shared with activity type of result.activityType
-						console.log(result.activityType)
-					} else {
-						// shared
-						console.log("wot")
-					}
-					// boost profile level points
-				} else if (result.action === Share.dismissedAction) {
-					// dismissed
+			if (result.action === Share.sharedAction) {
+				if (result.activityType) {
+					// shared with activity type of result.activityType
+					console.log(result.activityType)
+				} else {
+					// shared
+					console.log("wot")
 				}
+				// boost profile level points
+			} else if (result.action === Share.dismissedAction) {
+				// dismissed
+				console.log("nvm")
 			}
+		}
 
-			return (
+		return (
 			<View>
 				<View style={[ allStyles.section, allStyles.sectionClear ]}>
 					<View style={[ styles.quizFormHeader, styles.shareFormHeader ]}>

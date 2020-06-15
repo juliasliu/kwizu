@@ -161,11 +161,19 @@ const styles = StyleSheet.create({
 		  justifyContent: 'space-between', 
 		  flexDirection: 'column' 
 	  },
+	  chatMessagesContainer: {
+		  flex: 1,
+		  justifyContent: 'flex-start',
+	  },
+	  chatBottomContainer: {
+		  flex: 0,
+		  justifyContent: 'flex-end',
+	  },
 	  chatInputContainer: {
 		  width: '100%',
 		  display: 'flex',
 		  flexDirection: 'row',
-		  justifyContent: 'flex-start',
+//		  justifyContent: 'flex-start',
 		  padding: 10,
 		  backgroundColor: "#515d6e",
 	  },

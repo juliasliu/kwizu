@@ -32,6 +32,8 @@ const styles = StyleSheet.create({
 		shadowOpacity: 1,
 		shadowRadius: 0,
 		elevation: 1,
+		paddingVertical: 10,
+		margin: 0,
 	},
 	modalTitle: {
 		color: '#fff',

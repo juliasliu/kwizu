@@ -19,6 +19,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import CheckBox from 'react-native-check-box'
 import { StackActions } from '@react-navigation/native';
+import Modal from 'react-native-modal';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
@@ -58,12 +59,13 @@ class Take extends React.Component {
 		scrollHeights: [],
 	    refreshing: false,
 	    recommended: [],		// list of recommended quizzes based on this quiz
+	    isModalVisible: false,
 	}
 	
 	_onRefresh = () => {
 	    this.setState({refreshing: true});
 	    this.componentDidMount();
-	  }
+	}
 	
 	componentDidMount() {
 		const {quiz_id} = this.props.route.params;
@@ -91,8 +93,9 @@ class Take extends React.Component {
 			}
 		})
 		.catch((error) => {
-			console.log("o no")
+			console.log("o no quiz doesn't exist")
 			console.log(error);
+			this.setState({isModalVisible: true});
 		})
 	}
 	
@@ -359,30 +362,50 @@ class Take extends React.Component {
 				)
 		});
 		
-		return (
-				<ScrollView style={[allStyles.container, styles.quizFormContainer ]}
-				ref={ref => {
-				    this.scrollview_ref = ref;
-				  }}
-	      		refreshControl={
-			              <RefreshControl
-			              refreshing={this.state.refreshing}
-			              onRefresh={this._onRefresh}
-			            />
-			          }>
-					
-					<Text style={ allStyles.heading }>{ this.state.quiz.title }</Text>
-					
-					{
-						questionsArray
-					}
-					
-					{
-						resultSection()
-					}
-
-				</ScrollView>
-		) 
+		return <View style={allStyles.container}>
+				{
+					!this.state.refreshing && (
+						<ScrollView style={[allStyles.contentContainer, styles.quizFormContainer ]}
+						ref={ref => {
+						    this.scrollview_ref = ref;
+						  }}
+			      		refreshControl={
+					              <RefreshControl
+					              refreshing={this.state.refreshing}
+					              onRefresh={this._onRefresh}
+					            />
+					          }>
+							
+							<Text style={ allStyles.heading }>{ this.state.quiz.title }</Text>
+							
+							{
+								questionsArray
+							}
+							
+							{
+								resultSection()
+							}
+						</ScrollView>
+					)
+				}
+				<Modal isVisible={this.state.isModalVisible} 
+			      coverScreen={false} 
+			      backdropOpacity={0} 
+			      onBackdropPress={() => this.props.navigation.navigate("Home")} 
+			      animationIn="slideInDown"
+			      animationOut="slideOutUp"
+			      style={[ allStyles.modal ]}>
+			      <View style={[ allStyles.card, allStyles.modalView, allStyles.modalViewDanger ]}>
+			        <Text style={ allStyles.modalTitle }>Oh no, something went wrong.</Text>
+			        <TouchableOpacity onPress={() => this.props.navigation.navigate("Home")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
+			        	<Text>Go to Home</Text>
+			        </TouchableOpacity>
+			        <TouchableOpacity onPress={() => this.props.navigation.navigate("Home")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.clearButton ]}>
+			        	<Text style={ allStyles.whiteText }>Go Back</Text>
+			        </TouchableOpacity>
+			      </View>
+			    </Modal>
+			</View>
 	}
 }
 

@@ -6,6 +6,7 @@ import { Image, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, B
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import Modal from 'react-native-modal';
 
 import ChatMessage from '../components/ChatMessage';
 
@@ -14,11 +15,12 @@ import styles from '../styles/ProfileScreen';
 
 @inject('users') @inject('chats') @observer
 class Chats extends React.Component {
-
+	
 	state = {
 			messages: [],
 			message: "",
 			refreshing: false,
+			isModalVisible: false,
 	}
 
 	_onRefresh = () => {
@@ -38,6 +40,7 @@ class Chats extends React.Component {
 			.catch((error) => {
 				console.log("and i oop")
 				console.log(error);
+				this.setState({isModalVisible: true});
 			})
 		}
 	}
@@ -95,45 +98,66 @@ class Chats extends React.Component {
 		})
 
 		return (
-				<View style={{flex: 1}}>
-			      <View style={styles.chatContainer}>
-				      <View style={{flex: 1, justifyContent: 'flex-start' }}>
-				      		<ScrollView>
-					      	{
-					      		messageArray
-					      	}
-					      	</ScrollView>
-				      </View>
-				    <View style={{flex: 1, justifyContent: 'flex-end' }}>
-				    	<KeyboardAwareScrollView>
-					      	<View style={[allStyles.searchInputContainer, styles.chatInputContainer]}>
-							  <View style={[ allStyles.input, allStyles.searchInput, styles.chatInput ]}>
-				                <TextInput
-				                style={[ allStyles.searchInputText ]}
-				                placeholder={'Type your message here...'}
-				                placeholderTextColor={'#8393a8'}
-				                underlineColorAndroid={'#fff'}
-								autoCapitalize='none'
-				                autoCorrect={false}
-				                returnKeyType='search'
-				                value={ this.state.message }
-				                onChangeText={(keyword) => this.setMessage(keyword)}
-				                onSubmitEditing={this.sendMessage.bind(this)}
-				                />
-				              </View>
-				              <View style={[styles.chatInputIconContainer]}>
-				                <TouchableOpacity onPress={this.sendMessage.bind(this)}>
-					              	<Icon
-					                  name='send'
-					                  style={[allStyles.buttonIcon, allStyles.whiteText]}
+				<View style={allStyles.container}>
+				{
+					!this.state.refreshing && (
+				      <View style={styles.chatContainer}>
+					      <View style={styles.chatMessagesContainer}>
+					      		<ScrollView>
+						      	{
+						      		messageArray
+						      	}
+						      	</ScrollView>
+					      </View>
+					    <View style={styles.chatBottomContainer}>
+					    	<KeyboardAwareScrollView>
+						      	<View style={[allStyles.searchInputContainer, styles.chatInputContainer]}>
+								  <View style={[ allStyles.input, allStyles.searchInput, styles.chatInput ]}>
+					                <TextInput
+					                style={[ allStyles.searchInputText ]}
+					                placeholder={'Type your message here...'}
+					                placeholderTextColor={'#8393a8'}
+					                underlineColorAndroid={'#fff'}
+									autoCapitalize='none'
+					                autoCorrect={false}
+					                returnKeyType='search'
+					                value={ this.state.message }
+					                onChangeText={(keyword) => this.setMessage(keyword)}
+					                onSubmitEditing={this.sendMessage.bind(this)}
 					                />
-					            </TouchableOpacity>
-					          </View>
-				           </View>
-				         </KeyboardAwareScrollView>
+					              </View>
+					              <View style={[styles.chatInputIconContainer]}>
+					                <TouchableOpacity onPress={this.sendMessage.bind(this)}>
+						              	<Icon
+						                  name='send'
+						                  style={[allStyles.buttonIcon, allStyles.whiteText]}
+						                />
+						            </TouchableOpacity>
+						          </View>
+					           </View>
+					         </KeyboardAwareScrollView>
+					      </View>
 				      </View>
+				      )
+				}
+			      <Modal isVisible={this.state.isModalVisible} 
+			      coverScreen={false} 
+			      backdropOpacity={0} 
+			      onBackdropPress={() => this.props.navigation.navigate("Profile")} 
+			      animationIn="slideInDown"
+			      animationOut="slideOutUp"
+			      style={[ allStyles.modal ]}>
+			      <View style={[ allStyles.card, allStyles.modalView, allStyles.modalViewDanger ]}>
+			        <Text style={ allStyles.modalTitle }>Oh no, something went wrong.</Text>
+			        <TouchableOpacity onPress={() => this.props.navigation.navigate("Profile")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
+			        	<Text>Go to Profile</Text>
+			        </TouchableOpacity>
+			        <TouchableOpacity onPress={() => this.props.navigation.navigate("Profile")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.clearButton ]}>
+			        	<Text style={ allStyles.whiteText }>Go Back</Text>
+			        </TouchableOpacity>
 			      </View>
-				</View>
+			    </Modal>
+			</View>
 		)
 	}
 }
