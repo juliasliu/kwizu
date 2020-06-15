@@ -37,9 +37,9 @@ class Requests extends React.Component {
 			console.log("gotem")
 			this.setState({friends_requested: res.friends_requested, friends_received: res.friends_received, refreshing: false});
 		})
-		.catch((error) => {
+		.catch((errors) => {
 			console.log("and i oop")
-			console.log(error);
+			console.log(errors);
 		})
 	}
 

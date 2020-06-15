@@ -37,8 +37,8 @@ class HomeScreen extends React.Component {
 			this.setState({quizzes})
 		      this.setState({refreshing: false});
 		})
-		.catch((error) => {
-			console.log(error);
+		.catch((errors) => {
+			console.log(errors);
 		})
 	}
 	

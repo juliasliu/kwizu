@@ -37,9 +37,9 @@ class Chats extends React.Component {
 				this.setState({messages: this.props.chats.chat.messages});
 				this.setState({refreshing: false});
 			})
-			.catch((error) => {
+			.catch((errors) => {
 				console.log("and i oop")
-				console.log(error);
+				console.log(errors);
 				this.setState({isModalVisible: true});
 			})
 		}
@@ -59,9 +59,9 @@ class Chats extends React.Component {
 				console.log("created chatty chat")
 				this.sendMessageHelper();
 			})
-			.catch((error) => {
+			.catch((errors) => {
 				console.log("and i oop")
-				console.log(error);
+				console.log(errors);
 			})
 		} else {
 			this.sendMessageHelper();
@@ -75,8 +75,8 @@ class Chats extends React.Component {
 			this.setState({messages: this.props.chats.chat.messages});
 			this.setState({message: "", refreshing: false});
 		})
-		.catch((error) => {
-			console.log(error);
+		.catch((errors) => {
+			console.log(errors);
 		})
 	}
 

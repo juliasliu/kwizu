@@ -19,6 +19,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import CheckBox from 'react-native-check-box'
 import ImagePicker from 'react-native-image-picker';
+import Modal from 'react-native-modal';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
@@ -64,6 +65,7 @@ class New extends React.Component {
 			busy: false,
 			errors: null,
 			success: null,
+			isModalVisible: false,
 	}
 	
 	/* destructive method for reassigning indices for an array
@@ -108,6 +110,7 @@ class New extends React.Component {
 		})
 		.catch((errors) => {
 			this.setState({errors: this.props.quizzes.errors})
+			this.setState({isModalVisible: true});
 		})
 	}
 	
@@ -462,12 +465,14 @@ class New extends React.Component {
 							)
 		}
 		
-		return (
-				<KeyboardAwareScrollView style={[allStyles.container, styles.quizFormContainer ]}
-				innerRef={ref => {
-				    this.scrollview_ref = ref;
-				  }}
-	      		refreshControl={
+		return <View style={allStyles.container}>
+				{
+					!this.state.refreshing && (
+					<KeyboardAwareScrollView style={[allStyles.contentContainer, styles.quizFormContainer ]}
+					innerRef={ref => {
+					    this.scrollview_ref = ref;
+					  }}
+		      		refreshControl={
 			              <RefreshControl
 			              refreshing={this.state.refreshing}
 			              onRefresh={this._onRefresh}
@@ -643,7 +648,26 @@ class New extends React.Component {
 								)
 					}
 				</KeyboardAwareScrollView>
-		) 
+				)
+			}
+				<Modal isVisible={this.state.isModalVisible} 
+			      coverScreen={false} 
+			      backdropOpacity={0} 
+			      onBackdropPress={() => this.props.navigation.navigate("Home")} 
+			      animationIn="slideInDown"
+			      animationOut="slideOutUp"
+			      style={[ allStyles.modal ]}>
+			      <View style={[ allStyles.card, allStyles.modalView, allStyles.modalViewDanger ]}>
+			        <Text style={ allStyles.modalTitle }>Oh no, something went wrong.</Text>
+			        <TouchableOpacity onPress={() => this.props.navigation.navigate("Home")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
+			        	<Text>Go to Home</Text>
+			        </TouchableOpacity>
+			        <TouchableOpacity onPress={() => this.props.navigation.navigate("Home")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.clearButton ]}>
+			        	<Text style={ allStyles.whiteText }>Go Back</Text>
+			        </TouchableOpacity>
+			      </View>
+			    </Modal>
+		</View>
 	}
 }
 

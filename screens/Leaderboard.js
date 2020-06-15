@@ -17,6 +17,7 @@ import { observer, inject } from 'mobx-react'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import CheckBox from 'react-native-check-box'
 import Icon5 from 'react-native-vector-icons/FontAwesome5'
+import Modal from 'react-native-modal';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
@@ -33,6 +34,7 @@ class Leaderboard extends React.Component {
 			isOwner: false,			// if the logged in user own this quiz, see all users not just friends
 			usersForResult: {},		// dictionary { result_id: users }
 			refreshing: false,
+			isModalVisible: false,
 	}
 	
 	_onRefresh = () => {
@@ -48,9 +50,10 @@ class Leaderboard extends React.Component {
 			this.setState({results: res.quiz.results, users: res.users, quizzings: res.quizzings, isOwner: res.quiz.user_id == this.props.users.id}, this.loadUsersForResult)
 		    this.setState({refreshing: false});
 		})
-		.catch((error) => {
+		.catch((errors) => {
 			console.log("and i oop")
-			console.log(error);
+			console.log(errors);
+			this.setState({isModalVisible: true});
 		})
 	}
 	
@@ -142,21 +145,44 @@ class Leaderboard extends React.Component {
 		});
 		
 		return (
-				<KeyboardAwareScrollView style={[allStyles.container, styles.quizFormContainer ]}
-	      		refreshControl={
-			              <RefreshControl
-			              refreshing={this.state.refreshing}
-			              onRefresh={this._onRefresh}
-			            />
-			          }>
-						
-					<View style={[ allStyles.section, allStyles.sectionClear ]}>
-						{
-							resultsArray
-						}
-					</View>
-					
-				</KeyboardAwareScrollView>
+				<View style={allStyles.container}>
+					{
+						!this.state.refreshing && (
+							<ScrollView style={[allStyles.contentContainer, styles.quizFormContainer ]}
+				      		refreshControl={
+						              <RefreshControl
+						              refreshing={this.state.refreshing}
+						              onRefresh={this._onRefresh}
+						            />
+						          }>
+									
+								<View style={[ allStyles.section, allStyles.sectionClear ]}>
+									{
+										resultsArray
+									}
+								</View>
+								
+							</ScrollView>
+							)
+					}
+					<Modal isVisible={this.state.isModalVisible} 
+				      coverScreen={false} 
+				      backdropOpacity={0} 
+				      onBackdropPress={() => this.props.navigation.navigate("Home")} 
+				      animationIn="slideInDown"
+				      animationOut="slideOutUp"
+				      style={[ allStyles.modal ]}>
+				      <View style={[ allStyles.card, allStyles.modalView, allStyles.modalViewDanger ]}>
+				        <Text style={ allStyles.modalTitle }>Oh no, something went wrong.</Text>
+				        <TouchableOpacity onPress={() => this.props.navigation.navigate("Home")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
+				        	<Text>Go to Home</Text>
+				        </TouchableOpacity>
+				        <TouchableOpacity onPress={() => this.props.navigation.navigate("Home")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.clearButton ]}>
+				        	<Text style={ allStyles.whiteText }>Go Back</Text>
+				        </TouchableOpacity>
+				      </View>
+				    </Modal>
+				</View>
 		) 
 	}
 }

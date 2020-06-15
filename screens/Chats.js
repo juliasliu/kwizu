@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import { Image, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, Button, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
+import Modal from 'react-native-modal';
 
 import ChatThumbnail from '../components/ChatThumbnail';
 
@@ -20,6 +21,7 @@ class Chats extends React.Component {
 			searchKeyword: "",
 			searching: false,
 			refreshing: false,
+			isModalVisible: false,
 	}
 
 	_onRefresh = () => {
@@ -33,9 +35,10 @@ class Chats extends React.Component {
 			console.log("got those chats")
 			this.setState({chats: res, refreshing: false});
 		})
-		.catch((error) => {
+		.catch((errors) => {
 			console.log("and i oop")
-			console.log(error);
+			console.log(errors);
+			this.setState({isModalVisible: true});
 		})
 	}
 
@@ -64,8 +67,8 @@ class Chats extends React.Component {
 			this.setState({friendResults})
 			this.setState({searching: true, refreshing: false});
 		})
-		.catch((error) => {
-			console.log(error);
+		.catch((errors) => {
+			console.log(errors);
 		})
 	}
 
@@ -134,47 +137,71 @@ class Chats extends React.Component {
 			            </TouchableOpacity>
 			         </View>
 			      </View>
+			      
 			      <View style={allStyles.container}>
-				      <ScrollView style={allStyles.contentContainer}
-			      		refreshControl={
-				              <RefreshControl
-				              refreshing={this.state.refreshing}
-				              onRefresh={this._onRefresh}
-				            />
-				          }>
-				      	{
-							!this.state.searching && (
-									<View style={[styles.friendsList, allStyles.sectionClear]}>
-							 		{
-							 			this.state.chats.length > 0 ? chatsArray :
-										(
-											<View style={[ allStyles.section, allStyles.sectionClear ]}>
-												<Text style={[ allStyles.sectionMessage ]}>No chats yet! Start a new conversation with a friend right now.</Text>
-													<TouchableOpacity onPress={() => this.refs.searchInput.focus()} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.grayButton ]}>
-											        	<TabBarIcon name="md-add" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-											        	<Text style={allStyles.whiteText}>New chat</Text>
-											        </TouchableOpacity>
-											</View>
-										)
-									}
-									</View>
-							)
-				      	}
-						{
-							this.state.searching && (
-									<View style={[styles.friendsList, allStyles.sectionClear]}>
-										{
-											this.state.friendResults.length > 0 ? friendsArray :
-												(
-													<View style={[ allStyles.section, allStyles.sectionClear ]}>
-														<Text style={[ allStyles.sectionMessage ]}>There are no results.</Text>
-													</View>
-												)
+			      	{
+						!this.state.refreshing && (  
+				      	<ScrollView style={allStyles.contentContainer}
+				      		refreshControl={
+					              <RefreshControl
+					              refreshing={this.state.refreshing}
+					              onRefresh={this._onRefresh}
+					            />
+					          }>
+				      		{
+								!this.state.searching && (
+										<View style={[styles.friendsList, allStyles.sectionClear]}>
+								 		{
+								 			this.state.chats.length > 0 ? chatsArray :
+											(
+												<View style={[ allStyles.section, allStyles.sectionClear ]}>
+													<Text style={[ allStyles.sectionMessage ]}>No chats yet! Start a new conversation with a friend right now.</Text>
+														<TouchableOpacity onPress={() => this.refs.searchInput.focus()} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.grayButton ]}>
+												        	<TabBarIcon name="md-add" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+												        	<Text style={allStyles.whiteText}>New chat</Text>
+												        </TouchableOpacity>
+												</View>
+											)
 										}
-									</View>
-							)
-						}
+										</View>
+								)
+					      	}
+							{
+								this.state.searching && (
+										<View style={[styles.friendsList, allStyles.sectionClear]}>
+											{
+												this.state.friendResults.length > 0 ? friendsArray :
+													(
+														<View style={[ allStyles.section, allStyles.sectionClear ]}>
+															<Text style={[ allStyles.sectionMessage ]}>There are no results.</Text>
+														</View>
+													)
+											}
+										</View>
+								)
+							}
 						</ScrollView>
+						)
+			      	}
+			      	
+					      <Modal isVisible={this.state.isModalVisible} 
+					      coverScreen={false} 
+					      backdropOpacity={0} 
+					      onBackdropPress={() => this.props.navigation.navigate("Profile")} 
+					      animationIn="slideInDown"
+					      animationOut="slideOutUp"
+					      style={[ allStyles.modal ]}>
+					      <View style={[ allStyles.card, allStyles.modalView, allStyles.modalViewDanger ]}>
+					        <Text style={ allStyles.modalTitle }>Oh no, something went wrong.</Text>
+					        <TouchableOpacity onPress={() => this.props.navigation.navigate("Profile")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
+					        	<Text>Go to Profile</Text>
+					        </TouchableOpacity>
+					        <TouchableOpacity onPress={() => this.props.navigation.navigate("Profile")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.clearButton ]}>
+					        	<Text style={ allStyles.whiteText }>Go Back</Text>
+					        </TouchableOpacity>
+					      </View>
+					    </Modal>
+					    
 					</View>
 				</View>
 		)

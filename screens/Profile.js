@@ -49,9 +49,9 @@ class Profile extends React.Component {
 			quizzes[1] = res.quizzes;
 			this.setState({quizzes: quizzes, user: res}, this.loadUser)
 		})
-		.catch((error) => {
+		.catch((errors) => {
 			console.log("o no")
-			console.log(error);
+			console.log(errors);
 			this.setState({isModalVisible: true});
 		})
 	}

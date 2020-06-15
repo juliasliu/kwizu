@@ -92,9 +92,9 @@ class Take extends React.Component {
 				this.setState({quiz: res.quiz, quizzing: res.quizzing, hasTaken: false}, this.loadQuizzing)
 			}
 		})
-		.catch((error) => {
+		.catch((errors) => {
 			console.log("o no quiz doesn't exist")
-			console.log(error);
+			console.log(errors);
 			this.setState({isModalVisible: true});
 		})
 	}
@@ -252,15 +252,15 @@ class Take extends React.Component {
 					.then(res => {
 						console.log("yay points!" + res)
 					})
-					.catch(error => {
+					.catch(errors => {
 						console.log("failed");
-						console.log(error);
+						console.log(errors);
 					});
 				}
 			})
-			.catch((error) => {
+			.catch((errors) => {
 				console.log("o noes")
-				console.log(error);
+				console.log(errors);
 			})
 		}
 	}
@@ -271,9 +271,9 @@ class Take extends React.Component {
 			console.log("calculatek")
 			this.setState({recommended: res})
 		})
-		.catch((error) => {
+		.catch((errors) => {
 			console.log("o noes")
-			console.log(error);
+			console.log(errors);
 		})
 	}
 	

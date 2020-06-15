@@ -7,6 +7,7 @@ import { Image, Platform, StyleSheet, Text,
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 import ImagePicker from 'react-native-image-picker';
+import Modal from 'react-native-modal';
 
 import TabBarIcon from '../components/TabBarIcon';
 import Thumbnails from '../constants/Thumbnails';
@@ -22,6 +23,7 @@ class Customize extends React.Component {
 			busy: false,
 			errors: null,
 			success: null,
+			isModalVisible: false,
 	}
 	
 	_onRefresh = () => {
@@ -38,6 +40,7 @@ class Customize extends React.Component {
 		})
 		.catch((errors) => {
 			this.setState({errors: this.props.users.errors})
+			this.setState({isModalVisible: true});
 		})
 	}
 
@@ -140,126 +143,145 @@ class Customize extends React.Component {
 
 	render () {
 
-		return (!this.state.refreshing) && (
-				<View style={allStyles.container}>
-			      <ScrollView style={allStyles.contentContainer}
-					ref={ref => {
-					    this.scrollview_ref = ref;
-					  }}>
-				      <RefreshControl
-			              refreshing={this.state.refreshing}
-			              onRefresh={this._onRefresh}
-			            />
-			      		<View style={{marginBottom: 50}}>
-						{
-							this.state.errors &&
-							<View style={ allStyles.errors }
-							onLayout={event => {
-						        const layout = event.nativeEvent.layout;
-						        this.scrollview_ref.scrollTo({
-						            x: 0,
-						            y: layout.y,
-						            animated: true,
-						        });
-						      	}}>
+		return <View style={allStyles.container}>
+				{
+					!this.state.refreshing && (
+						<ScrollView style={allStyles.contentContainer}
+							ref={ref => {
+							    this.scrollview_ref = ref;
+							  }}>
+						      <RefreshControl
+					              refreshing={this.state.refreshing}
+					              onRefresh={this._onRefresh}
+					            />
+					      		<View style={{marginBottom: 50}}>
 								{
-									this.state.errors.map(( item, key ) =>
-									{
-										return <Text key={key} style={ allStyles.errorText }>• {item}</Text> 
-									})
+									this.state.errors &&
+									<View style={ allStyles.errors }
+									onLayout={event => {
+								        const layout = event.nativeEvent.layout;
+								        this.scrollview_ref.scrollTo({
+								            x: 0,
+								            y: layout.y,
+								            animated: true,
+								        });
+								      	}}>
+										{
+											this.state.errors.map(( item, key ) =>
+											{
+												return <Text key={key} style={ allStyles.errorText }>• {item}</Text> 
+											})
+										}
+									</View>
 								}
-							</View>
-						}
-						{
-							this.state.success &&
-							<View style={ allStyles.success }
-							onLayout={event => {
-						        const layout = event.nativeEvent.layout;
-						        this.scrollview_ref.scrollTo({
-						            x: 0,
-						            y: layout.y,
-						            animated: true,
-						        });
-						      	}}>
-								<Text>{this.state.success}</Text>
-							</View>
-						}
-						<View>
-							<View style={[styles.profilePictureEditContainer]}>
-					          	{this.showPickedImage()}
-	
-					          	{
-					          		this.state.busy ?
-										<ActivityIndicator/> :
-											(
-												<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.grayButton ]}
-										      		onPress={this.getPhotoFromGallery}>
-													<TabBarIcon name="md-image" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-													<Text style={[ allStyles.halfWidthButtonText, allStyles.whiteText ]}>Edit profile picture</Text>
-												</TouchableOpacity>
-											)
-					          	}
-					        </View>
-							<TextInput
-								ref='name'
-								style={ allStyles.input }
-								onChangeText={(name) => this.setProfileName(name)}
-								returnKeyType='next'
-								value={this.state.user.name}
-								placeholder='Name'
-								onSubmitEditing={(event) => {
-									this.refs.username.focus();
-								}}
-							/>
-							<TextInput
-								autoCapitalize='none'
-								autoCorrect={false}
-								ref='username'
-								style={ allStyles.input }
-								onChangeText={(username) => this.setProfileUsername(username)}
-								returnKeyType='next'
-								value={this.state.user.username}
-								placeholder='Username'
-								onSubmitEditing={(event) => {
-									this.refs.email.focus();
-								}}
-							/>
-							<TextInput
-								autoCapitalize='none'
-								autoCorrect={false}
-								ref='email'
-								style={ allStyles.input }
-								onChangeText={(email) => this.setProfileEmail(email)}
-								returnKeyType='next'
-								value={this.state.user.email}
-								placeholder='Email'
-								onSubmitEditing={(event) => {
-									this.refs.caption.focus();
-								}}
-							/>
-							<TextInput
-								autoCapitalize='none'
-								ref='caption'
-								style={[ allStyles.input, allStyles.textarea ]}
-								onChangeText={(caption) => this.setProfileCaption(caption)}
-								returnKeyType='next'
-								value={this.state.user.caption}
-								placeholder='Caption (100 chars max)'
-									multiline={true}
-							/>
+								{
+									this.state.success &&
+									<View style={ allStyles.success }
+									onLayout={event => {
+								        const layout = event.nativeEvent.layout;
+								        this.scrollview_ref.scrollTo({
+								            x: 0,
+								            y: layout.y,
+								            animated: true,
+								        });
+								      	}}>
+										<Text>{this.state.success}</Text>
+									</View>
+								}
+								<View>
+									<View style={[styles.profilePictureEditContainer]}>
+							          	{this.showPickedImage()}
+			
+							          	{
+							          		this.state.busy ?
+												<ActivityIndicator/> :
+													(
+														<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.grayButton ]}
+												      		onPress={this.getPhotoFromGallery}>
+															<TabBarIcon name="md-image" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+															<Text style={[ allStyles.halfWidthButtonText, allStyles.whiteText ]}>Edit profile picture</Text>
+														</TouchableOpacity>
+													)
+							          	}
+							        </View>
+									<TextInput
+										ref='name'
+										style={ allStyles.input }
+										onChangeText={(name) => this.setProfileName(name)}
+										returnKeyType='next'
+										value={this.state.user.name}
+										placeholder='Name'
+										onSubmitEditing={(event) => {
+											this.refs.username.focus();
+										}}
+									/>
+									<TextInput
+										autoCapitalize='none'
+										autoCorrect={false}
+										ref='username'
+										style={ allStyles.input }
+										onChangeText={(username) => this.setProfileUsername(username)}
+										returnKeyType='next'
+										value={this.state.user.username}
+										placeholder='Username'
+										onSubmitEditing={(event) => {
+											this.refs.email.focus();
+										}}
+									/>
+									<TextInput
+										autoCapitalize='none'
+										autoCorrect={false}
+										ref='email'
+										style={ allStyles.input }
+										onChangeText={(email) => this.setProfileEmail(email)}
+										returnKeyType='next'
+										value={this.state.user.email}
+										placeholder='Email'
+										onSubmitEditing={(event) => {
+											this.refs.caption.focus();
+										}}
+									/>
+									<TextInput
+										autoCapitalize='none'
+										ref='caption'
+										style={[ allStyles.input, allStyles.textarea ]}
+										onChangeText={(caption) => this.setProfileCaption(caption)}
+										returnKeyType='next'
+										value={this.state.user.caption}
+										placeholder='Caption (100 chars max)'
+											multiline={true}
+									/>
 
-							{
-								this.props.users.busy ?
-										<ActivityIndicator/> :
-								<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.blackButton ]} onPress={this.onPressEdit.bind(this)} title="Save Profile">
-									<Text style={ allStyles.whiteText }>Save Profile</Text>
-								</TouchableOpacity>
-							}
-					</View>
-					</View>
-					</ScrollView>
+									{
+										this.props.users.busy ?
+												<ActivityIndicator/> :
+										<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.blackButton ]} onPress={this.onPressEdit.bind(this)} title="Save Profile">
+											<Text style={ allStyles.whiteText }>Save Profile</Text>
+										</TouchableOpacity>
+									}
+								</View>
+							</View>
+						</ScrollView>
+					)
+				}
+					<Modal isVisible={this.state.isModalVisible} 
+				      coverScreen={false} 
+				      backdropOpacity={0} 
+				      onBackdropPress={() => this.props.navigation.navigate("Profile")} 
+				      animationIn="slideInDown"
+				      animationOut="slideOutUp"
+				      style={[ allStyles.modal ]}>
+				      <View style={[ allStyles.card, allStyles.modalView, allStyles.modalViewDanger ]}>
+				        <Text style={ allStyles.modalTitle }>Oh no, something went wrong.</Text>
+				        <TouchableOpacity onPress={() => this.props.navigation.navigate("Profile")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
+				        	<Text>Go to Profile</Text>
+				        </TouchableOpacity>
+				        <TouchableOpacity onPress={() => this.props.navigation.navigate("Profile")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.clearButton ]}>
+				        	<Text style={ allStyles.whiteText }>Go Back</Text>
+				        </TouchableOpacity>
+				      </View>
+				    </Modal>
 				</View>
-		)
 	}
 }
 export default Customize;

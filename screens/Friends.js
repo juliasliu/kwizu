@@ -6,6 +6,7 @@ import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button, Refr
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import Modal from 'react-native-modal';
 
 import ProfileThumbnail from '../components/ProfileThumbnail';
 
@@ -19,6 +20,7 @@ class Friends extends React.Component {
 			friends_received: [],
 			isOwnProfile: false,
 			refreshing: false,
+			isModalVisible: false,
 			index: 0,
 			routes: [
 				{ key: 'first', title: 'Friends' },
@@ -41,9 +43,10 @@ class Friends extends React.Component {
 			console.log("gotem")
 			this.setState({friends: res.friends, friends_received: res.friends_received, refreshing: false});
 		})
-		.catch((error) => {
+		.catch((errors) => {
 			console.log("and i oop")
-			console.log(error);
+			console.log(errors);
+			this.setState({isModalVisible: true});
 		})
 	}
 	
@@ -78,56 +81,102 @@ class Friends extends React.Component {
 		})
 		
 		let FirstRoute = () => (
-				<ScrollView style={allStyles.contentContainer}
-	      		refreshControl={
-		              <RefreshControl
-		              refreshing={this.state.refreshing}
-		              onRefresh={this._onRefresh}
-		            />
-		          }>
-		      	<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton ]}
-	                onPress={() => alert("")}>
-					<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-					<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Add from Facebook</Text>
-				</TouchableOpacity>
-		      	<View style={[styles.friendsList, allStyles.container]}>
-					{
-						this.state.friends.length > 0 ? friendsArray :
-							(
-									this.state.isOwnProfile ? (
-												<View style={[ allStyles.section, allStyles.sectionClear ]}>
-													<Text style={[ allStyles.sectionMessage ]}>No friends yet! Find people by taking more kwizzes or import your friends from Facebook!</Text>
-												</View>
-											) : (
-												<View style={[ allStyles.section, allStyles.sectionClear ]}>
-													<Text style={[ allStyles.sectionMessage ]}>This user has no friends yet. Be their first friend!</Text>
-												</View>
-											)
-							)
-					}
-				</View>
-				</ScrollView>
+				<View style={{flex: 1}}>
+				{
+					!this.state.refreshing && (
+						<ScrollView style={allStyles.contentContainer}
+			      		refreshControl={
+				              <RefreshControl
+				              refreshing={this.state.refreshing}
+				              onRefresh={this._onRefresh}
+				            />
+				          }>
+				      	<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton ]}
+			                onPress={() => alert("")}>
+							<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Add from Facebook</Text>
+						</TouchableOpacity>
+				      	<View style={[styles.friendsList, allStyles.container]}>
+							{
+								this.state.friends.length > 0 ? friendsArray :
+									(
+											this.state.isOwnProfile ? (
+														<View style={[ allStyles.section, allStyles.sectionClear ]}>
+															<Text style={[ allStyles.sectionMessage ]}>No friends yet! Find people by taking more kwizzes or import your friends from Facebook!</Text>
+														</View>
+													) : (
+														<View style={[ allStyles.section, allStyles.sectionClear ]}>
+															<Text style={[ allStyles.sectionMessage ]}>This user has no friends yet. Be their first friend!</Text>
+														</View>
+													)
+									)
+							}
+						</View>
+						</ScrollView>
+						)
+				}
+					<Modal isVisible={this.state.isModalVisible} 
+				      coverScreen={false} 
+				      backdropOpacity={0} 
+				      onBackdropPress={() => this.props.navigation.navigate("Profile")} 
+				      animationIn="slideInDown"
+				      animationOut="slideOutUp"
+				      style={[ allStyles.modal ]}>
+				      <View style={[ allStyles.card, allStyles.modalView, allStyles.modalViewDanger ]}>
+				        <Text style={ allStyles.modalTitle }>Oh no, something went wrong.</Text>
+				        <TouchableOpacity onPress={() => this.props.navigation.navigate("Profile")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
+				        	<Text>Go to Profile</Text>
+				        </TouchableOpacity>
+				        <TouchableOpacity onPress={() => this.props.navigation.navigate("Profile")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.clearButton ]}>
+				        	<Text style={ allStyles.whiteText }>Go Back</Text>
+				        </TouchableOpacity>
+				      </View>
+				    </Modal>
+				 </View>
 		);
 
 		let SecondRoute = () => (
-				<ScrollView style={allStyles.contentContainer}
-				refreshControl={
-						<RefreshControl
-						refreshing={this.state.refreshing}
-						onRefresh={this._onRefresh}
-						/>
-				}>
-				<View style={[styles.friendsList, allStyles.container]}>
+				<View style={{flex: 1}}>
 				{
-					this.state.friends_received.length > 0 ? friendsReceivedArray :
-						(
-								<View style={[ allStyles.section, allStyles.sectionClear ]}>
-								<Text style={[ allStyles.sectionMessage ]}>You have no incoming friend requests! You're all caught up.</Text>
-								</View>
+					!this.state.refreshing && (
+							<ScrollView style={allStyles.contentContainer}
+							refreshControl={
+									<RefreshControl
+									refreshing={this.state.refreshing}
+									onRefresh={this._onRefresh}
+									/>
+							}>
+							<View style={[styles.friendsList, allStyles.container]}>
+							{
+								this.state.friends_received.length > 0 ? friendsReceivedArray :
+									(
+											<View style={[ allStyles.section, allStyles.sectionClear ]}>
+											<Text style={[ allStyles.sectionMessage ]}>You have no incoming friend requests! You're all caught up.</Text>
+											</View>
+									)
+							}
+							</View>
+							</ScrollView>
 						)
 				}
+					<Modal isVisible={this.state.isModalVisible} 
+				      coverScreen={false} 
+				      backdropOpacity={0} 
+				      onBackdropPress={() => this.props.navigation.navigate("Profile")} 
+				      animationIn="slideInDown"
+				      animationOut="slideOutUp"
+				      style={[ allStyles.modal ]}>
+				      <View style={[ allStyles.card, allStyles.modalView, allStyles.modalViewDanger ]}>
+				        <Text style={ allStyles.modalTitle }>Oh no, something went wrong.</Text>
+				        <TouchableOpacity onPress={() => this.props.navigation.navigate("Profile")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
+				        	<Text>Go to Profile</Text>
+				        </TouchableOpacity>
+				        <TouchableOpacity onPress={() => this.props.navigation.navigate("Profile")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.clearButton ]}>
+				        	<Text style={ allStyles.whiteText }>Go Back</Text>
+				        </TouchableOpacity>
+				      </View>
+				    </Modal>
 				</View>
-				</ScrollView>
 		);
 
 		const renderTabBar = props => (
@@ -159,7 +208,6 @@ class Friends extends React.Component {
 		);
 
 		return (
-				<View style={{flex: 1}}>
 					<TabView
 				      navigationState={{ index: this.state.index, routes: this.state.routes }}
 				      renderScene={
@@ -172,7 +220,6 @@ class Friends extends React.Component {
 				      initialLayout={{ width: Dimensions.get('window').width }}
 						renderTabBar={renderTabBar}
 				    />
-				</View>
 		)
 	}
 }
