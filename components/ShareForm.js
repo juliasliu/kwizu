@@ -35,11 +35,11 @@ class ShareForm extends React.Component {
 
 		let shareToMedia = async () => {
 			const result = await Share.share({
-				message: 'Kwizu | Hey! I just took or created a Kwiz. Check it out!',
+				message: 'Hey! Check out this kwiz:',
 				url: url + this.props.quiz.id,
 			}, {
 				// Android only:
-				dialogTitle: 'Kwizu: Quizzes With You',
+				dialogTitle: 'Kwizu',
 				// iOS only:
 				excludedActivityTypes: [
 //					'com.apple.UIKit.activity.PostToTwitter'

@@ -24,6 +24,7 @@ import styles from '../styles/HomeScreen';
 
 import TabBarIcon from '../components/TabBarIcon';
 import ProfileThumbnail from '../components/ProfileThumbnail'
+import Loading from '../components/Loading';
 
 @inject('users') @inject('quizzes') @observer
 class Leaderboard extends React.Component {
@@ -147,7 +148,7 @@ class Leaderboard extends React.Component {
 		return (
 				<View style={allStyles.container}>
 					{
-						!this.state.refreshing && (
+						this.state.refreshing ? <Loading /> : (
 							<ScrollView style={[allStyles.contentContainer, styles.quizFormContainer ]}
 				      		refreshControl={
 						              <RefreshControl

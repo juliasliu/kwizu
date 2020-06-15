@@ -11,6 +11,7 @@ import Modal from 'react-native-modal';
 
 import TabBarIcon from '../components/TabBarIcon';
 import Thumbnails from '../constants/Thumbnails';
+import Loading from '../components/Loading';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/ProfileScreen';
@@ -145,7 +146,7 @@ class Customize extends React.Component {
 
 		return <View style={allStyles.container}>
 				{
-					!this.state.refreshing && (
+					this.state.refreshing ? <Loading /> : (
 						<ScrollView style={allStyles.contentContainer}
 							ref={ref => {
 							    this.scrollview_ref = ref;

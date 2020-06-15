@@ -28,6 +28,7 @@ import TabBarIcon from '../components/TabBarIcon';
 
 import NewResultForm from '../components/NewResultForm'
 import NewQuestionForm from '../components/NewQuestionForm'
+import Loading from '../components/Loading'
 
 @inject('users') @inject('quizzes') @observer
 class New extends React.Component {
@@ -467,7 +468,7 @@ class New extends React.Component {
 		
 		return <View style={allStyles.container}>
 				{
-					!this.state.refreshing && (
+					this.state.refreshing ? <Loading /> : (
 					<KeyboardAwareScrollView style={[allStyles.contentContainer, styles.quizFormContainer ]}
 					innerRef={ref => {
 					    this.scrollview_ref = ref;

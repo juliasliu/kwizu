@@ -9,6 +9,7 @@ import * as WebBrowser from 'expo-web-browser';
 import Modal from 'react-native-modal';
 
 import ChatThumbnail from '../components/ChatThumbnail';
+import Loading from '../components/Loading';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/ProfileScreen';
@@ -140,7 +141,7 @@ class Chats extends React.Component {
 			      
 			      <View style={allStyles.container}>
 			      	{
-						!this.state.refreshing && (  
+			      		this.state.refreshing ? <Loading /> : ( 
 				      	<ScrollView style={allStyles.contentContainer}
 				      		refreshControl={
 					              <RefreshControl

@@ -25,6 +25,7 @@ import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
 
 import TabBarIcon from '../components/TabBarIcon';
+import Loading from '../components/Loading';
 
 import TakeQuestion from '../components/TakeQuestion'
 import TakeResult from '../components/TakeResult'
@@ -364,7 +365,7 @@ class Take extends React.Component {
 		
 		return <View style={allStyles.container}>
 				{
-					!this.state.refreshing && (
+					this.state.refreshing ? <Loading /> : (
 						<ScrollView style={[allStyles.contentContainer, styles.quizFormContainer ]}
 						ref={ref => {
 						    this.scrollview_ref = ref;

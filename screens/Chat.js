@@ -9,6 +9,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Modal from 'react-native-modal';
 
 import ChatMessage from '../components/ChatMessage';
+import Loading from '../components/Loading';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/ProfileScreen';
@@ -100,7 +101,7 @@ class Chats extends React.Component {
 		return (
 				<View style={allStyles.container}>
 				{
-					!this.state.refreshing && (
+					this.state.refreshing ? <Loading /> : (
 				      <View style={styles.chatContainer}>
 					      <View style={styles.chatMessagesContainer}>
 					      		<ScrollView>

@@ -10,6 +10,7 @@ import Modal from 'react-native-modal';
 
 import ProfileCard from '../components/ProfileCard';
 import QuizThumbnail from '../components/QuizThumbnail';
+import Loading from '../components/Loading';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/ProfileScreen';
@@ -97,7 +98,7 @@ class Profile extends React.Component {
 
 		return <View style={allStyles.container}>
 				{
-					!this.state.refreshing && (
+					this.state.refreshing ? <Loading /> : (
 						      <ScrollView style={allStyles.contentContainer}
 					      		refreshControl={
 						            <RefreshControl

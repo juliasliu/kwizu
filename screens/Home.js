@@ -5,6 +5,7 @@ import Modal from 'react-native-modal';
 import { observer, inject } from 'mobx-react'
 
 import QuizThumbnail from '../components/QuizThumbnail';
+import Loading from '../components/Loading';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
@@ -60,7 +61,7 @@ class HomeScreen extends React.Component {
 		  return (
 		    <View style={allStyles.container}>
 		    {
-				!this.state.refreshing && (
+				this.state.refreshing ? <Loading /> : (
 			      <ScrollView style={allStyles.contentContainer}
 			      		refreshControl={
 			              <RefreshControl

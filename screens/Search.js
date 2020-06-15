@@ -8,6 +8,7 @@ import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
 import QuizThumbnail from '../components/QuizThumbnail';
 import ProfileThumbnail from '../components/ProfileThumbnail';
+import Loading from '../components/Loading';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';

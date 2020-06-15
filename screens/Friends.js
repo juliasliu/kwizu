@@ -9,6 +9,7 @@ import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import Modal from 'react-native-modal';
 
 import ProfileThumbnail from '../components/ProfileThumbnail';
+import Loading from '../components/Loading';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/ProfileScreen';
@@ -83,7 +84,7 @@ class Friends extends React.Component {
 		let FirstRoute = () => (
 				<View style={{flex: 1}}>
 				{
-					!this.state.refreshing && (
+					this.state.refreshing ? <Loading /> : (
 						<ScrollView style={allStyles.contentContainer}
 			      		refreshControl={
 				              <RefreshControl
