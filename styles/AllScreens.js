@@ -308,6 +308,16 @@ const styles = StyleSheet.create({
 		shadowColor: "#8b9db0",
 		borderColor: "#8b9db0",
 	},
+	purpleButton: {
+		backgroundColor: "#69596e",
+		shadowColor: "#4b2e39",
+		borderColor: "#4b2e39",
+	},
+	lavenderButton: {
+		backgroundColor: "#b298b5",
+		shadowColor: "#937596",
+		borderColor: "#937596",
+	},
 	facebookButton: {
 		backgroundColor: '#4d70bd',
 		shadowColor: "#3C5999",

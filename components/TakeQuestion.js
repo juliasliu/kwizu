@@ -22,6 +22,10 @@ export default class TakeQuestion extends React.Component {
 		this.props.setSelectedChoiceValue(this.props.question.id, weight, id);
 	}
 	
+	headerColors = [
+		"#77A0A9", "#566C8A", "#485061",
+	]
+	
 	getSelectedChoiceStyle = (type, isChecked) => {
 		if (type == "button")
 			return isChecked && allStyles.greenButton
@@ -29,6 +33,11 @@ export default class TakeQuestion extends React.Component {
 			return isChecked ? '#fff' : "#a0acba"
 		if (type == "text")
 			return isChecked && allStyles.whiteText
+	}
+	
+	randomHeaderColor = () => {
+		let index = Math.floor(Math.random() * this.headerColors.length);
+		return { backgroundColor: this.headerColors[index] };
 	}
 	
 	render() {
@@ -53,7 +62,7 @@ export default class TakeQuestion extends React.Component {
 		
 		return (
 				<View style={[ styles.quizForm ]}>
-					<View style={[ styles.quizFormHeader, styles.questionHeader ]}>
+					<View style={[ styles.quizFormHeader, styles.questionHeader, this.randomHeaderColor() ]}>
 						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Question {this.props.index + 1}</Text>
 					</View>
 					<View style={[ allStyles.card ]}>

@@ -48,7 +48,7 @@ export default class Register extends React.Component {
 		return (
 				<View style={[styles.welcomeContainer]}>
 					<View style={styles.welcomeBackgroundContainer}>
-						<Image source={require("../assets/images/login.png")} style={styles.welcomeBackground} />
+						<Image source={require("../assets/images/register.png")} style={styles.welcomeBackground} />
 					</View>
 					<KeyboardAwareScrollView style={[styles.welcomeContainer]}
 						innerRef={ref => {
