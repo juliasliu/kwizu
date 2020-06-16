@@ -118,27 +118,25 @@ class Chats {
 		channel = cable.setChannel(
 				chatChannel, // channel name to which we will pass data from Rails app with `stream_from`
 				actionCable.subscriptions.create({
-					channel: 'ChatsChannel', // from Rails app app/channels/chats_channel.rb
-					chat_id,
+					channel: "ChatsChannel", // from Rails app app/channels/chats_channel.rb
+					id: chat_id,
 				})
 		)
 		channel
-		.on( 'received', this.handleReceived )
-		.on( 'connected', this.handleConnected )
-		.on( 'rejected', this.handleDisconnected )
-		.on( 'disconnected', this.handleDisconnected )
+		.on( 'received', this.handleReceived.bind(this) )
+		.on( 'connected', this.handleConnected.bind(this) )
+		.on( 'rejected', this.handleDisconnected.bind(this) )
+		.on( 'disconnected', this.handleDisconnected.bind(this) )
 	}
 
-	handleReceived = (data) => {
+	handleReceived(data) {
 		console.log("HANDLE RECEIVED")
 		console.log(data)
-		let chatChannel = "chat_" + this.id;
-		switch(data.type) {
-			case 'new_incoming_message': {
-				cable.channel(chatChannel).perform('send_message', { text: 'Hey' })
-			}
+		console.log(this)
+		if (data.chat_id && this.chat && this.chat.messages && this.chat.messages.findIndex(elem => elem.id === data.id) < 0) {
+			// add message to chat if doesn't exist
+			this.chat.messages.push(data);
 		}
-		// add message to chat
 	}
 
 	handleConnected = () => {
@@ -152,7 +150,7 @@ class Chats {
 	}
 	
 	handleSuccess(chat) {
-		this.chat = chat;
+		if (chat) this.chat = chat;
 		if (chat) this.id = chat.id;
 		this.busy = false; 
 		this.errors = null;

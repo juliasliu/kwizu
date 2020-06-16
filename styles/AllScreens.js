@@ -196,9 +196,10 @@ const styles = StyleSheet.create({
 	},
 	input: {
 		backgroundColor: '#fff',
-		height: 50,
+		height: 45,
 		marginVertical: 10,
 		padding: 10,
+		fontSize: 14,
 		borderRadius: 20,
 		borderColor: "#d3dbe3",
 		borderWidth: 1,
@@ -236,7 +237,6 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		backgroundColor: "#fff",
-		fontSize: 20,
 		marginVertical: 10,
 		padding: 10,
 		borderWidth: 1,
@@ -260,9 +260,6 @@ const styles = StyleSheet.create({
 	},
 	fullWidthButton: {
 		width: '100%',
-	},
-	fullWidthButtonText: {
-		fontSize: 16,
 	},
 	halfWidthButton: {
 		width: '47.5%',
@@ -455,7 +452,6 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 	},
 	searchInputText: {
-		fontSize: 16,
 		width: '80%',
 	},
 	showPointsOverlayContainer: {

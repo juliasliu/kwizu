@@ -79,7 +79,7 @@ export default class Register extends React.Component {
 							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton, styles.shareButton ]}
 				                onPress={() => alert("")}>
 								<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Sign up with Facebook</Text>
+								<Text style={[ allStyles.whiteText ]}>Sign up with Facebook</Text>
 							</TouchableOpacity>
 							<Text style={[allStyles.subheading, allStyles.center, { marginTop: 25 }, allStyles.whiteText]}>Or, if you have an email:</Text>
 							<TextInput
@@ -143,14 +143,14 @@ export default class Register extends React.Component {
 							<View style={ allStyles.flexContainer }>
 								<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.redButton ]}
 				                	onPress={() => this.props.navigation.navigate('Welcome')}>
-									<Text style={[ styles.fullWidthButtonText, allStyles.whiteText ]}>Cancel</Text>
+									<Text style={[ allStyles.whiteText ]}>Cancel</Text>
 								</TouchableOpacity>
 								{
 									this.props.users.busy ? 
 									<ActivityIndicator/> :
 									<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.whiteButton ]}
 										onPress={this.onPressRegister.bind(this)}>
-										<Text style={[ allStyles.fullWidthButtonText ]}>Sign me up!</Text>
+										<Text>Sign me up!</Text>
 									</TouchableOpacity>
 								}
 							</View>

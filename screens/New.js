@@ -148,7 +148,7 @@ class New extends React.Component {
 			this.props.quizzes.update(this.state)
 			.then(res => {
 				console.log("updated!")
-				this.setState({success: this.props.quizzes.success})
+				this.setState({success: this.props.quizzes.success, errors: null})
 				if (this.state.public) {
 					if (!oldPublic) {
 						this.addPoints();
@@ -164,7 +164,7 @@ class New extends React.Component {
 			this.props.quizzes.create(this.state)
 			.then(res => {
 				console.log("created!")
-				this.setState({success: this.props.quizzes.success})
+				this.setState({success: this.props.quizzes.success, errors: null})
 				if (this.state.public) {
 					this.addPoints();
 					this.props.navigation.dispatch(StackActions.pop(1));
@@ -460,7 +460,7 @@ class New extends React.Component {
 								<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.greenButton ]}
 					                onPress={this.onPressAddResult.bind(this)}>
 									<TabBarIcon name="md-add" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-									<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>New result</Text>
+									<Text style={[ allStyles.whiteText ]}>New result</Text>
 								</TouchableOpacity>
 							</View>
 							)
@@ -542,19 +542,19 @@ class New extends React.Component {
 													<TouchableOpacity style={[ styles.imageButtonEdit, allStyles.button, allStyles.grayButton ]}
 										                onPress={() => this.getPhotoFromGallery("quiz")}>
 														<TabBarIcon name="md-image" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-														<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Edit Thumbnail</Text>
+														<Text style={[ allStyles.whiteText ]}>Edit Thumbnail</Text>
 													</TouchableOpacity>
 													<TouchableOpacity style={[ styles.imageButtonDelete, allStyles.button, allStyles.redButton ]}
 										                onPress={() => this.deletePhoto("quiz")}>
 														<TabBarIcon name="md-trash" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-														<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Delete</Text>
+														<Text style={[ allStyles.whiteText ]}>Delete</Text>
 													</TouchableOpacity>
 												</View>
 											) : (
 												<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton ]}
 									                onPress={() => this.getPhotoFromGallery("quiz")}>
 													<TabBarIcon name="md-image" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-													<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Add Thumbnail</Text>
+													<Text style={[ allStyles.whiteText ]}>Add Thumbnail</Text>
 												</TouchableOpacity>
 											)
 										)
@@ -577,7 +577,7 @@ class New extends React.Component {
 						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.greenButton ]}
 			                onPress={this.onPressAddQuestion.bind(this)}>
 							<TabBarIcon name="md-add" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>New question</Text>
+							<Text style={[ allStyles.whiteText ]}>New question</Text>
 						</TouchableOpacity>
 					</View>
 						
@@ -594,7 +594,7 @@ class New extends React.Component {
 														<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
 											                onPress={() => this.onPressCreate(true)}>
 															<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-															<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Update your kwiz</Text>
+															<Text style={[ allStyles.whiteText ]}>Update your kwiz</Text>
 														</TouchableOpacity>
 													}
 													<Text style={[ allStyles.sectionSubtitle, styles.quizSaveText ]}>The changes to your kwiz will automatically be public once you update it. Removing results, choices, or questions will result in users who took the kwiz to lose their saved responses.</Text>
@@ -607,7 +607,7 @@ class New extends React.Component {
 															<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
 											                onPress={() => this.onPressCreate(false)}>
 															<TabBarIcon name="md-create" style={[ allStyles.buttonIcon ]}/>
-															<Text style={[ allStyles.fullWidthButtonText ]}>Save your kwiz</Text>
+															<Text>Save your kwiz</Text>
 														</TouchableOpacity>
 													}
 													{
@@ -616,7 +616,7 @@ class New extends React.Component {
 														<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
 											                onPress={() => this.onPressCreate(true)}>
 															<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-															<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Publish and share</Text>
+															<Text style={[ allStyles.whiteText ]}>Publish and share</Text>
 														</TouchableOpacity>
 													}
 													<Text style={[ allStyles.sectionSubtitle, styles.quizSaveText ]}>You can save a draft if you are not finished editing your kwiz. You can publish later when you're ready.</Text>
@@ -632,7 +632,7 @@ class New extends React.Component {
 												<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
 								                onPress={() => this.onPressCreate(false)}>
 												<TabBarIcon name="md-create" style={[ allStyles.buttonIcon ]}/>
-												<Text style={[ allStyles.fullWidthButtonText ]}>Save a draft</Text>
+												<Text>Save a draft</Text>
 											</TouchableOpacity>
 										}
 										{
@@ -641,7 +641,7 @@ class New extends React.Component {
 											<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
 								                onPress={() => this.onPressCreate(true)}>
 												<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-												<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Publish and share</Text>
+												<Text style={[ allStyles.whiteText ]}>Publish and share</Text>
 											</TouchableOpacity>
 										}
 											<Text style={[ allStyles.sectionSubtitle, styles.quizSaveText ]}>You can save a draft if you are not finished editing your kwiz. You can publish later when you're ready.</Text>

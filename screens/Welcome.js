@@ -34,19 +34,19 @@ class Welcome extends React.Component {
 							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton, styles.shareButton ]}
 				                onPress={() => alert("")}>
 								<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Sign in with Facebook</Text>
+								<Text style={[ allStyles.whiteText ]}>Sign in with Facebook</Text>
 							</TouchableOpacity>
 							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
 				                onPress={() => this.props.navigation.navigate('Login')}>
 								<TabBarIcon name="md-mail" style={[ allStyles.buttonIcon ]}/>
-								<Text style={ allStyles.fullWidthButtonText }>Sign in with email</Text>
+								<Text>Sign in with email</Text>
 							</TouchableOpacity>
 							
 							<Text style={[allStyles.subheading]}>Don't have an account yet?</Text> 
 							
 							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton ]}
 				                onPress={() => this.props.navigation.navigate('Register')}>
-								<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Sign up</Text>
+								<Text style={[ allStyles.whiteText ]}>Sign up</Text>
 							</TouchableOpacity>
 							<Text style={[allStyles.text, allStyles.center, { marginTop: 25 }]}>
 								By continuing, you agree to our

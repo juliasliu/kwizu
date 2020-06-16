@@ -93,14 +93,14 @@ class Login extends React.Component {
 							<View style={ allStyles.flexContainer }>
 								<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.redButton ]}
 				                	onPress={() => this.props.navigation.navigate('Welcome')}>
-									<Text style={[ styles.fullWidthButtonText, allStyles.whiteText ]}>Cancel</Text>
+									<Text style={[ allStyles.whiteText ]}>Cancel</Text>
 								</TouchableOpacity>
 								{
 									this.props.users.busy ? 
 									<ActivityIndicator/> :
 									<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.whiteButton ]}
 										onPress={this.onLogin.bind(this)}>
-										<Text style={[ allStyles.fullWidthButtonText ]}>Sign me in!</Text>
+										<Text>Sign me in!</Text>
 									</TouchableOpacity>
 								}
 							</View>

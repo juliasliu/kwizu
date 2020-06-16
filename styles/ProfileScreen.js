@@ -69,8 +69,8 @@ const styles = StyleSheet.create({
 		  height: 75,
 	  },
 	  chatThumbnailPicture: {
-		  width: 75,
-		  height: 75,
+		  width: 50,
+		  height: 50,
 	  },
 	  profileResultPicture: {
 		  width: 50,
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
 	  },
 	  chatThumbnailDescriptionContainer: {
 		  width: '75%',
-		  marginVertical: 20,
+		  marginVertical: 10,
 		  paddingLeft: 10,
 	  },
 	  profileName: {
@@ -163,11 +163,12 @@ const styles = StyleSheet.create({
 	  chatContainer: { 
 		  flexGrow: 1, 
 		  justifyContent: 'space-between', 
-		  flexDirection: 'column' 
+		  flexDirection: 'column',
 	  },
 	  chatMessagesContainer: {
 		  flex: 1,
 		  justifyContent: 'flex-start',
+		  paddingVertical: 10,
 	  },
 	  chatBottomContainer: {
 		  flex: 0,
@@ -203,15 +204,15 @@ const styles = StyleSheet.create({
 	  },
 	  chatMessagePictureContainer: {
 		  width: '25%',
-		  marginVertical: 10,
+		  marginVertical: 5,
 	  },
 	  chatMessagePicture: {
-		  width: 50,
-		  height: 50,
+		  width: 40,
+		  height: 40,
 	  },
 	  chatMessageDescriptionContainer: {
 		  maxWidth: '75%',
-		  marginBottom: 10,
+		  marginBottom: 5,
 		  paddingHorizontal: 20,
 		  paddingVertical: 10,
 		  borderRadius: 20,
@@ -231,7 +232,7 @@ const styles = StyleSheet.create({
 	  },
 	  chatMessageDescription: {
 		  width: 'auto',
-		  fontSize: 18,
+		  fontSize: 16,
 	  },
 	  chatMessageDescriptionRight: {
 		  color: "#fff",

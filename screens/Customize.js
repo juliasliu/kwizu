@@ -52,7 +52,7 @@ class Customize extends React.Component {
 			console.log(res)
 			console.log("saved!")
 			this.setState({user: this.props.users.user});
-			this.setState({success: this.props.users.success})
+			this.setState({success: this.props.users.success, errors: null})
 		})
 		.catch((errors) => {
 			this.setState({errors: this.props.users.errors})

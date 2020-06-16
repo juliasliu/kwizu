@@ -95,7 +95,7 @@ class Friends extends React.Component {
 				      	<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton ]}
 			                onPress={() => alert("")}>
 							<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Add from Facebook</Text>
+							<Text style={[ allStyles.whiteText ]}>Add from Facebook</Text>
 						</TouchableOpacity>
 				      	<View style={[styles.friendsList, allStyles.container]}>
 							{

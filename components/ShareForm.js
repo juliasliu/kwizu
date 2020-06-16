@@ -87,12 +87,12 @@ class ShareForm extends React.Component {
 					<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton, styles.shareButton ]}
 		                onPress={() => alert("")}>
 						<TabBarIcon name="md-chatbubbles" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-						<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Send to friends in chat</Text>
+						<Text style={[ allStyles.whiteText ]}>Send to friends in chat</Text>
 					</TouchableOpacity>
 					<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton, styles.shareButton, styles.bottomShareButton ]}
 		                onPress={shareToMedia}>
 						<TabBarIcon name="md-share" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-						<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Share on social media</Text>
+						<Text style={[ allStyles.whiteText ]}>Share on social media</Text>
 					</TouchableOpacity>
 				</View>
 			</View>

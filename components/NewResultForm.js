@@ -53,19 +53,19 @@ export default function NewResultForm(props) {
 															<TouchableOpacity style={[ styles.imageButtonEdit, allStyles.button, allStyles.grayButton ]}
 												                onPress={() => props.getPhotoFromGallery("result", props.result.index)}>
 																<TabBarIcon name="md-image" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-																<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Edit Image</Text>
+																<Text style={[  allStyles.whiteText ]}>Edit Image</Text>
 															</TouchableOpacity>
 															<TouchableOpacity style={[ styles.imageButtonDelete, allStyles.button, allStyles.redButton ]}
 												                onPress={() => props.deletePhoto("result", props.result.index)}>
 																<TabBarIcon name="md-trash" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-																<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Delete</Text>
+																<Text style={[  allStyles.whiteText ]}>Delete</Text>
 															</TouchableOpacity>
 														</View>
 													) : (
 														<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton ]}
 												            onPress={() => props.getPhotoFromGallery("result", props.result.index)}>
 															<TabBarIcon name="md-image" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-															<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Add image</Text>
+															<Text style={[  allStyles.whiteText ]}>Add image</Text>
 														</TouchableOpacity>
 													)
 										)
@@ -76,7 +76,7 @@ export default function NewResultForm(props) {
 						<TouchableOpacity style={[ allStyles.button, allStyles.redButton, styles.quizFormAddButton ]}
 			                onPress={() => props.onPressDelete(props.result.index)}>
 							<TabBarIcon name="md-trash" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-							<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Delete result</Text>
+							<Text style={[  allStyles.whiteText ]}>Delete result</Text>
 						</TouchableOpacity>
 					</View>
 			</View>

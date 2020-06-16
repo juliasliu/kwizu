@@ -82,7 +82,7 @@ export default function NewQuestionForm(props) {
 					<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton ]}
 	                	onPress={() => props.onPressAddChoice(props.question.index)}>
 						<TabBarIcon name="md-add" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-						<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Add choice</Text>
+						<Text style={[ allStyles.whiteText ]}>Add choice</Text>
 					</TouchableOpacity>
 				</View>
 				
@@ -90,7 +90,7 @@ export default function NewQuestionForm(props) {
 					<TouchableOpacity style={[ allStyles.button, allStyles.redButton, styles.quizFormAddButton ]}
 		                onPress={() => props.onPressDelete(props.question.index)}>
 						<TabBarIcon name="md-trash" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-						<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Delete question</Text>
+						<Text style={[ allStyles.whiteText ]}>Delete question</Text>
 					</TouchableOpacity>
 				</View>
 			</View>

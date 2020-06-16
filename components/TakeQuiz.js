@@ -42,20 +42,20 @@ export default function TakeQuiz(props) {
 									<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton, styles.shareButton, styles.topShareButton ]}
 						                onPress={props.retakeQuiz}>
 										<TabBarIcon name="md-happy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-										<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Retake the kwiz</Text>
+										<Text style={[ allStyles.whiteText ]}>Retake the kwiz</Text>
 									</TouchableOpacity>
 								) : (
 									<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton, styles.shareButton, styles.topShareButton ]}
 						                onPress={props.takeQuiz}>
 										<TabBarIcon name="md-happy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-										<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>View your own result</Text>
+										<Text style={[ allStyles.whiteText ]}>View your own result</Text>
 									</TouchableOpacity>
 								)
 							}
 							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton, styles.shareButton, styles.bottomShareButton ]}
 						        onPress={() => props.navigation.push("Kwiz Results", {quiz_id: props.quiz.id})}>
 								<TabBarIcon name="md-trophy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>See how your friends did!</Text>
+								<Text style={[ allStyles.whiteText ]}>See how your friends did!</Text>
 							</TouchableOpacity>
 						</View>
 
@@ -64,7 +64,7 @@ export default function TakeQuiz(props) {
 					    	  props.viewMyResult ? (
 					    			  <Text style={allStyles.sectionTitle}>Recommended</Text>
 					    	  ) : (
-					    			  <Text style={allStyles.sectionTitle}>{props.user.name} also took the kwizzes:</Text>
+					    			  <Text style={allStyles.sectionTitle}>{props.user.name} took these kwizzes:</Text>
 					    	  )
 					      }
 					    	

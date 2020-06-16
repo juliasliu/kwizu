@@ -56,8 +56,9 @@ class ViewTake extends React.Component {
 		this.props.quizzes.quizzing(quiz_id, user_id)
 		.then((res) => {
 			// if logged in user has not taken this quiz or viewing own result, redirect to "Take"
-			if (this.props.users.user.taken_quizzes.findIndex(elem => elem.id === res.quiz.id) < 0
-					|| this.props.users.id == user_id) {
+			// and logged in user did not create this quiz
+			if ((this.props.users.user.taken_quizzes.findIndex(elem => elem.id === res.quiz.id) < 0
+					|| this.props.users.id == user_id) && this.props.users.id != res.quiz.user.id) {
 				this.props.navigation.dispatch(StackActions.pop(1));
 				this.props.navigation.push("Take Kwiz", {quiz_id: res.quiz.id})
 				this.setState({refreshing: false});
@@ -88,7 +89,7 @@ class ViewTake extends React.Component {
 	}
 	
 	takeQuiz() {
-		this.props.navigation.push("Take Kwiz", {quiz_id: this.state.quiz.id})
+		this.props.navigation.push("Take Kwiz", {quiz_id: this.state.quiz.id, fromPublish: true})
 	}
 	
 	showPickedImage() {
@@ -128,10 +129,11 @@ class ViewTake extends React.Component {
 					          }>
 							
 							<Text style={ allStyles.title }>{ this.state.quiz.title }</Text>
-							<View style={{display: 'flex', flexDirection: 'row', alignItems: 'center',}}>
+							<TouchableOpacity style={{display: 'flex', flexDirection: 'row', alignItems: 'center',}} 
+							onPress={() => this.props.navigation.push("Profile", {user_id: this.state.user.id})}>
 								{this.showPickedImage()}
 								<Text style={[ allStyles.heading, {marginLeft: 10,} ]}>{ this.state.user.name } got the result:</Text>
-							</View>
+							</TouchableOpacity>
 							{
 								<TakeQuiz 
 								navigation={this.props.navigation}

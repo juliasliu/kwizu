@@ -58,12 +58,12 @@ class Publish extends React.Component {
 							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton, styles.shareButton, styles.topShareButton ]}
 				                onPress={() => this.props.navigation.push("Take Kwiz", {quiz_id: this.props.quizzes.quiz.id, fromPublish: true})}>
 								<TabBarIcon name="md-happy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Take your own kwiz</Text>
+								<Text style={[ allStyles.whiteText ]}>Take your own kwiz</Text>
 							</TouchableOpacity>
 							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton, styles.shareButton, styles.bottomShareButton ]}
 						        onPress={() => this.props.navigation.push("Kwiz Results", {quiz_id: this.props.quizzes.quiz.id})}>
 								<TabBarIcon name="md-trophy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>See results of your kwiz!</Text>
+								<Text style={[ allStyles.whiteText ]}>See results of your kwiz!</Text>
 							</TouchableOpacity>
 						</View>
 						
@@ -73,12 +73,12 @@ class Publish extends React.Component {
 							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
 				                onPress={() => this.props.navigation.push("New Kwiz", {type: "Personality", quiz_id: this.props.quizzes.quiz.id})}>
 								<TabBarIcon name="md-create" style={[ allStyles.buttonIcon ]}/>
-								<Text style={[ allStyles.fullWidthButtonText ]}>Edit your kwiz</Text>
+								<Text>Edit your kwiz</Text>
 							</TouchableOpacity>
 							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.redButton ]}
 				                onPress={this.toggleModal}>
 								<TabBarIcon name="md-trash" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Delete your kwiz</Text>
+								<Text style={[ allStyles.whiteText ]}>Delete your kwiz</Text>
 							</TouchableOpacity>
 						</View>
 					</KeyboardAwareScrollView>

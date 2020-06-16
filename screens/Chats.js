@@ -57,11 +57,19 @@ class Chats extends React.Component {
 				// dont add yourself
 				if (results[i].id != this.props.users.id) {
 					// if have a chat with this friend already, get actual chat; todo later
-					var chat;
-					chat = {
-							title: results[i].name,
-							users: [results[i]],
+					var chat = this.props.users.user.chats.filter(value => 
+						results[i].chats.findIndex(elem => elem.id == value.id));
+					if (chat.length > 0) {
+						chat = chat[0];
+					} else {
+						chat = {
+								title: results[i].name,
+								users: [results[i]],
+						}
 					}
+					console.log("push")
+					console.log(chat)
+					console.log('done')
 					friendResults.push(chat);
 				}
 			}

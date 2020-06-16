@@ -18,7 +18,7 @@ import styles from '../styles/ProfileScreen';
 class Chats extends React.Component {
 	
 	state = {
-			messages: [],
+//			messages: [],
 			message: "",
 			refreshing: true,
 			isModalVisible: false,
@@ -35,7 +35,7 @@ class Chats extends React.Component {
 			this.props.chats.show(chat_id)
 			.then((res) => {
 				console.log("got chatty chat")
-				this.setState({messages: this.props.chats.chat.messages});
+//				this.setState({messages: this.props.chats.chat.messages});
 				this.setState({refreshing: false});
 			})
 			.catch((errors) => {
@@ -75,7 +75,7 @@ class Chats extends React.Component {
 		this.props.chats.send(this.state.message, this.props.chats.id)
 		.then((res) => {
 			console.log("sent a messagey message")
-			this.setState({messages: this.props.chats.chat.messages});
+//			this.setState({messages: this.props.chats.chat.messages});
 			this.setState({message: "", refreshing: false});
 		})
 		.catch((errors) => {
@@ -89,16 +89,19 @@ class Chats extends React.Component {
 
 	render () {
 
-		let messageArray = this.state.messages.map(( item, key ) =>
-		{
-			return item != undefined && (
-					<ChatMessage
-					message={item}
-					user={item.user}
-					logged_in_user_id={this.props.users.id}
-					key={key} />
-			)
-		})
+		let messageArray;
+		if (this.props.chats.chat && this.props.chats.chat.messages) {
+			messageArray = this.props.chats.chat.messages.map(( item, key ) =>
+			{
+				return item != undefined && (
+						<ChatMessage
+						message={item}
+						user={item.user}
+						logged_in_user_id={this.props.users.id}
+						key={key} />
+				)
+			})
+		}
 
 		return (
 				<View style={allStyles.container}>
@@ -106,7 +109,11 @@ class Chats extends React.Component {
 					this.state.refreshing ? <Loading /> : (
 				      <View style={styles.chatContainer}>
 					      <View style={styles.chatMessagesContainer}>
-					      		<ScrollView>
+					      		<ScrollView
+					      		ref={ref => {
+								    this.scrollview_ref = ref;
+								  }}
+							    onContentSizeChange={() => this.scrollview_ref.scrollToEnd({animated: true})}>
 						      	{
 						      		messageArray
 						      	}
