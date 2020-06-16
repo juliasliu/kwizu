@@ -326,6 +326,7 @@ class Take extends React.Component {
 								navigation={this.props.navigation}
 								resultOfQuiz={this.state.resultOfQuiz}
 								quiz={this.state.quiz}
+								user={this.props.users.user}
 								recommended={this.state.recommended}
 								viewMyResult={true}
 								scrollIndexHelper={this.scrollIndexHelper.bind(this)}

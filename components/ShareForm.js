@@ -26,17 +26,23 @@ class ShareForm extends React.Component {
 	}
 	
 	render() {
-		let url = "kwizu://quizzes/";
+		// determine url based on whether you are sharing the quiz or the result
+		let url = "";
+		if (this.props.user) {
+			url = "kwizu://quizzings/" + this.props.quiz.id + "/" + this.props.user.id;
+		} else {
+			url = "kwizu://quizzes/" + this.props.quiz.id;
+		}
 
 		writeToClipboard = async () => {
-			await Clipboard.setString(url + this.props.quiz.id);
+			await Clipboard.setString(url);
 			this.setState({copyMessage: "Copied"});
 		};
 
 		let shareToMedia = async () => {
 			const result = await Share.share({
 				message: 'Hey! Check out this kwiz:',
-				url: url + this.props.quiz.id,
+				url: url,
 			}, {
 				// Android only:
 				dialogTitle: 'Kwizu',
@@ -68,7 +74,7 @@ class ShareForm extends React.Component {
 						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Share the link</Text>
 					</View>
 					<View style={[ allStyles.card, styles.shareLinkCard, styles.shareButton, styles.topShareButton, { height: 'auto' } ]}>
-						<Text style={styles.shareLink}>{url}{this.props.quiz.id}</Text>
+						<Text style={styles.shareLink}>{url}</Text>
 						<TouchableOpacity style={[ allStyles.button, allStyles.whiteButton ]}
 			                onPress={writeToClipboard}>
 							<TabBarIcon name="md-copy" style={[ allStyles.buttonIcon ]}/>

@@ -51,7 +51,7 @@ class Publish extends React.Component {
 					<KeyboardAwareScrollView style={[allStyles.container, styles.quizFormContainer ]}>
 					
 						<View style={[ allStyles.section, allStyles.sectionClear ]}>
-							<Text style={[ allStyles.heading, allStyles.center ]}>Your Kwiz is ready!</Text>
+							<Text style={[ allStyles.title, allStyles.center ]}>Your Kwiz is ready!</Text>
 						</View>
 							
 						<View style={[ allStyles.section, allStyles.sectionClear ]}>
