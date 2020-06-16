@@ -22,7 +22,7 @@ class ChatThumbnail extends React.Component {
 	
 	state = {
 			title: "",
-			lastMessage: {text: "Start a conversation!", user: {}},
+			lastMessage: {text: "", user: {}},
 	}
 	
 	componentDidMount() {

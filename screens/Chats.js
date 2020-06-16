@@ -18,9 +18,6 @@ import styles from '../styles/ProfileScreen';
 class Chats extends React.Component {
 	state = {
 			chats: [],
-			friendResults: [],
-			searchKeyword: "",
-			searching: false,
 			refreshing: true,
 			isModalVisible: false,
 	}
@@ -43,52 +40,6 @@ class Chats extends React.Component {
 		})
 	}
 
-	searchSubmit() {
-		if (this.state.searchKeyword == "") {
-			this.setState({refreshing: false});
-			return;
-		}
-		this.props.users.search_friends(this.state.searchKeyword)
-		.then((res) => {
-			var results = res;
-			var friendResults = []
-			// convert into chat thumbnail item
-			for (var i = 0; i < results.length; i++) {
-				// dont add yourself
-				if (results[i].id != this.props.users.id) {
-					// if have a chat with this friend already, get actual chat; todo later
-					var chat = this.props.users.user.chats.filter(value => 
-						results[i].chats.findIndex(elem => elem.id == value.id));
-					if (chat.length > 0) {
-						chat = chat[0];
-					} else {
-						chat = {
-								title: results[i].name,
-								users: [results[i]],
-						}
-					}
-					console.log("push")
-					console.log(chat)
-					console.log('done')
-					friendResults.push(chat);
-				}
-			}
-			this.setState({friendResults})
-			this.setState({searching: true, refreshing: false});
-		})
-		.catch((errors) => {
-			console.log(errors);
-		})
-	}
-
-	setSearchKeyword(searchKeyword) {
-		this.setState({searchKeyword})
-	}
-
-	deleteSearchKeyword() {
-		this.setState({searchKeyword: "", searching: false});
-	}
-
 	render () {
 
 		let chatsArray = this.state.chats.map(( item, key ) =>
@@ -104,48 +55,8 @@ class Chats extends React.Component {
 			)
 		})
 
-		let friendsArray = this.state.friendResults.map(( item, key ) =>
-		{
-			return item != undefined && (
-					<ChatThumbnail navigation={this.props.navigation}
-					chat={item}
-					logged_in_user_id={this.props.users.id}
-					key={key}
-					style={[ (key === this.state.friendResults.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
-							 (key === 0) ? allStyles.topProfileThumbnailCard : null,
-						]} />
-			)
-		})
-
 		return (
 				<View style={{flex: 1}}>
-			      <View style={[allStyles.searchInputContainer]}>
-					  <View style={[ allStyles.input, allStyles.searchInput ]}>
-		                <Icon
-		                  name='search'
-		                  style={allStyles.searchIcon}
-		                />
-		                <TextInput
-		                ref={'searchInput'}
-		                style={[ allStyles.searchInputText ]}
-		                placeholder={'Find a friend here...'}
-		                placeholderTextColor={'#8393a8'}
-		                underlineColorAndroid={'#fff'}
-						autoCapitalize='none'
-		                autoCorrect={false}
-		                returnKeyType='search'
-		                value={ this.state.searchKeyword }
-		                onChangeText={(keyword) => this.setSearchKeyword(keyword)}
-		                onSubmitEditing={this.searchSubmit.bind(this)}
-		                />
-		                <TouchableOpacity onPress={this.deleteSearchKeyword.bind(this)}>
-			                <TabBarIcon
-			                  name='md-close'
-			                  style={[allStyles.searchIcon, allStyles.searchDeleteIcon]}
-			                />
-			            </TouchableOpacity>
-			         </View>
-			      </View>
 			      
 			      <View style={allStyles.container}>
 			      	{

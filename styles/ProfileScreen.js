@@ -168,7 +168,6 @@ const styles = StyleSheet.create({
 	  chatMessagesContainer: {
 		  flex: 1,
 		  justifyContent: 'flex-start',
-		  paddingVertical: 10,
 	  },
 	  chatBottomContainer: {
 		  flex: 0,
@@ -197,6 +196,7 @@ const styles = StyleSheet.create({
 		  alignItems: 'flex-end',
 		  justifyContent: 'flex-start',
 		  width: '75%',
+		  marginVertical: 5,
 	  },
 	  chatMessageContainerRight: {
 		  alignSelf: 'flex-end',

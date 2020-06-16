@@ -166,7 +166,7 @@ class ProfileCard extends React.Component {
 					)
 				} else {
 					return (
-							<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.blackButton ]}
+							<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.grayButton ]}
 							onPress={this.sendRequest.bind(this)}>
 							<TabBarIcon name="md-add" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 							<Text style={ allStyles.whiteText }>Add friend</Text>
@@ -208,11 +208,20 @@ class ProfileCard extends React.Component {
 							{
 								this.state.busy ? <ActivityIndicator /> : friendButton()
 							}
-							<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.blackButton ]}
-			                	onPress={navigateToChat}>
-								<Icon name="commenting" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={ allStyles.whiteText }>Chat</Text>
-							</TouchableOpacity>
+							{
+								this.state.isFriends ? (
+									<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.blackButton ]}
+					                	onPress={navigateToChat}>
+										<Icon name="commenting" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+										<Text style={ allStyles.whiteText }>Chat</Text>
+									</TouchableOpacity>	
+								) : (
+									<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.grayButton ]}>
+										<Icon name="commenting" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+										<Text style={ allStyles.whiteText }>Chat</Text>
+									</TouchableOpacity>
+								)
+							}
 						</View>
 					)
 				}

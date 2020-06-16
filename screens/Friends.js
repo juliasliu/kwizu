@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import TabBarIcon from '../components/TabBarIcon';
 
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button, RefreshControl, Dimensions } from 'react-native';
+import { Image, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, Button, RefreshControl, Dimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';

@@ -121,20 +121,6 @@ class Users {
 		})
 	}
 	
-	@action search_friends = function(keyword) {
-		this.busy = true;
-		let that = this;	// have to reassign because 'this' changes scope within the promise.then
-		
-		return new Promise(function(resolve, reject) {
-			axios.get(API_ROOT + '/users/search_friends/' + keyword, {withCredentials: true})
-	        .then(response => {
-	            that.handleSuccess()
-				resolve(response.data.users);
-	        })
-	        .catch(errors => reject(errors))
-		})
-	}
-	
 	@action show = function(id) {
 		this.busy = true;
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then

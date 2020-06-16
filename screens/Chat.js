@@ -20,6 +20,7 @@ class Chats extends React.Component {
 	state = {
 //			messages: [],
 			message: "",
+			newChat: false,
 			refreshing: true,
 			isModalVisible: false,
 	}
@@ -44,7 +45,7 @@ class Chats extends React.Component {
 				this.setState({isModalVisible: true});
 			})
 		} else {
-			this.setState({refreshing: false});
+			this.setState({refreshing: false, newChat: true});
 		}
 	}
 
@@ -54,12 +55,13 @@ class Chats extends React.Component {
 			return;
 		}
 
-		const {users} = this.props.route.params;
-		if(users) {
+		if(this.state.newChat) {
 			// open new channel
+			const {users} = this.props.route.params;
 			this.props.chats.create(null, users)
 			.then((res) => {
 				console.log("created chatty chat")
+				this.setState({chat: res, newChat: false})
 				this.sendMessageHelper();
 			})
 			.catch((errors) => {
