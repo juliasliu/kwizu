@@ -17,6 +17,7 @@ import Home from '../screens/Home';
 import Search from '../screens/Search';
 import Take from '../screens/Take';
 import New from '../screens/New';
+import ViewTake from '../screens/ViewTake';
 import Publish from '../screens/Publish';
 import Leaderboard from '../screens/Leaderboard';
 
@@ -124,6 +125,11 @@ class HomeStackScreen extends React.Component {
 			      }} />
 			      <HomeStack.Screen name="Take Kwiz" component={Take} options={{
 			    	  headerTitle: 'Take Kwiz',
+			    	  headerTitleStyle: { color: '#515d6e' },
+			    	  headerTintColor: '#B2BECF',
+			      	}} />
+			      <HomeStack.Screen name="Kwiz Result" component={ViewTake} options={{
+			    	  headerTitle: 'View Kwiz Result',
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',
 			      	}} />
@@ -324,6 +330,11 @@ function ProfileStackScreen({navigation}) {
     	  headerTitleStyle: { color: '#515d6e' },
     	  headerTintColor: '#B2BECF',
       }} />
+      <ProfileStack.Screen name="Kwiz Result" component={ViewTake} options={{
+    	  headerTitle: 'View Kwiz Result',
+    	  headerTitleStyle: { color: '#515d6e' },
+    	  headerTintColor: '#B2BECF',
+      	}} />
       <ProfileStack.Screen name="New Kwiz" component={New} options={{
     	  headerTitle: 'New Kwiz',
     	  headerTitleStyle: { color: '#515d6e' },

@@ -72,6 +72,10 @@ const styles = StyleSheet.create({
 		  width: 75,
 		  height: 75,
 	  },
+	  profileResultPicture: {
+		  width: 50,
+		  height: 50,
+	  },
 	  profileDescriptionContainer: {
 		  width: '50%',
 		  marginVertical: 20,

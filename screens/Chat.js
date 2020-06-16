@@ -43,6 +43,8 @@ class Chats extends React.Component {
 				console.log(errors);
 				this.setState({isModalVisible: true});
 			})
+		} else {
+			this.setState({refreshing: false});
 		}
 	}
 
@@ -121,7 +123,7 @@ class Chats extends React.Component {
 					                underlineColorAndroid={'#fff'}
 									autoCapitalize='none'
 					                autoCorrect={false}
-					                returnKeyType='search'
+					                returnKeyType='send'
 					                value={ this.state.message }
 					                onChangeText={(keyword) => this.setMessage(keyword)}
 					                onSubmitEditing={this.sendMessage.bind(this)}

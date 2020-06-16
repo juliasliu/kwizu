@@ -78,6 +78,20 @@ class Quizzes {
 		})
 	}
 	
+	@action quizzing = function(quiz_id, user_id) {
+		this.busy = true;
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+		
+		return new Promise(function(resolve, reject) {
+			axios.get(API_ROOT + '/quizzings/' + quiz_id + '/' + user_id, {withCredentials: true})
+	        .then(response => {
+				that.handleSuccess(response.data.quiz)
+	            resolve({quiz: response.data.quiz, quizzing: response.data.quizzing});
+	        })
+	        .catch(errors => reject(errors))
+		})
+	}
+	
 	@action leader = function(id) {
 		this.busy = true;
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then

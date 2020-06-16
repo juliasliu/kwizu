@@ -12,7 +12,7 @@ class Chats {
 	@observable chat = null;
 	@observable id = null;
 	@observable busy = false;
-	@observable error = null;
+	@observable errors = null;
 	@observable success = null;
 	@observable channel = null;
 	
@@ -30,10 +30,10 @@ class Chats {
 				that.handleChannel(response.data.chat.id)
 				resolve(response.data.chat);
 			})
-			.catch(error => {
-				that.handleErrors(error)
-				console.log('api errors:', error)
-				reject(error);
+			.catch(errors => {
+				that.handleErrors(errors)
+				console.log('api errors:', errors)
+				reject(errors);
 			})
 		})
 	}
@@ -48,7 +48,7 @@ class Chats {
 	            that.handleSuccess()
 	        	resolve(response.data.chats);
 	        })
-	        .catch(error => reject(error))
+	        .catch(errors => reject(errors))
 		})
 	}
 	
@@ -67,7 +67,7 @@ class Chats {
 		        	resolve({});
 	            }
 	        })
-	        .catch(error => reject(error))
+	        .catch(errors => reject(errors))
 		})
 	}
 	
@@ -78,14 +78,14 @@ class Chats {
 		return new Promise(function(resolve, reject) {
 			axios.get(API_ROOT + '/chats/' + id, {withCredentials: true})
 	        .then(response => {
-	        	console.log("here with da chat")
 	        	that.handleSuccess(response.data.chat);
+	        	that.handleChannel(response.data.chat.id)
 	            resolve(response.data.chat);
 	        })
-	        .catch(error => {
-				that.handleErrors(error)
-				console.log('api errors:', error)
-				reject(error);
+	        .catch(errors => {
+				that.handleErrors(errors)
+				console.log('api errors:', errors)
+				reject(errors);
 			})
 		})
 	}
@@ -104,10 +104,10 @@ class Chats {
 	        	that.handleSuccess(response.data.chat);
 	            resolve(response.data.chat);
 	        })
-	        .catch(error => {
-				that.handleErrors(error)
-				console.log('api errors:', error)
-				reject(error);
+	        .catch(errors => {
+				that.handleErrors(errors)
+				console.log('api errors:', errors)
+				reject(errors);
 			})
 		})
 	}
@@ -131,6 +131,7 @@ class Chats {
 
 	handleReceived = (data) => {
 		console.log("HANDLE RECEIVED")
+		console.log(data)
 		let chatChannel = "chat_" + this.id;
 		switch(data.type) {
 			case 'new_incoming_message': {
@@ -154,7 +155,7 @@ class Chats {
 		this.chat = chat;
 		if (chat) this.id = chat.id;
 		this.busy = false; 
-		this.error = null;
+		this.errors = null;
 		this.success = null;
 	}
 	
@@ -162,7 +163,7 @@ class Chats {
 		this.chat = null;
 		this.id = null;
 		this.busy = false; 
-		this.error = errors
+		this.errors = errors
 		this.success = null;
 	}
 }

@@ -23,7 +23,7 @@ import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
 
 import TabBarIcon from '../components/TabBarIcon';
-import ProfileThumbnail from '../components/ProfileThumbnail'
+import ProfileResult from '../components/ProfileResult'
 import Loading from '../components/Loading';
 
 @inject('users') @inject('quizzes') @observer
@@ -112,8 +112,9 @@ class Leaderboard extends React.Component {
 				return this.state.usersForResult[result_id] && (this.state.usersForResult[result_id].map(( item, key ) => 
 				{
 					return item != undefined && (
-							<ProfileThumbnail navigation={this.props.navigation} 
+							<ProfileResult navigation={this.props.navigation} 
 							user={item} 
+							quiz={this.props.quizzes.quiz}
 							key={key}
 							style={(key === this.state.usersForResult[result_id].length - 1) ? allStyles.bottomProfileThumbnailCard : (key === 0 ? allStyles.profileThumbnailCard : null )} />
 					)

@@ -27,10 +27,9 @@ import styles from '../styles/HomeScreen';
 import TabBarIcon from '../components/TabBarIcon';
 import Loading from '../components/Loading';
 
+import TakeQuiz from '../components/TakeQuiz'
 import TakeQuestion from '../components/TakeQuestion'
 import TakeResult from '../components/TakeResult'
-import ShareForm from '../components/ShareForm'
-import QuizThumbnail from '../components/QuizThumbnail'
 
 @inject('users') @inject('quizzes') @observer
 class Take extends React.Component {
@@ -56,7 +55,7 @@ class Take extends React.Component {
 		resultOfQuiz : null,	// stores the result object
 		isDone: false,			// if quizzing exists or done taking the quiz, isDone = true
 		hasTaken: false,		// if quizzing exists, hasTaken = true; if retake the quiz or quiz has been changed, hasTaken = false
-		scrollIndices: [70,],	// starting scroll position is 70 given the title heading of the kwiz
+		scrollIndices: [80,],	// starting scroll position is 70 given the title heading of the kwiz
 		scrollHeights: [],
 	    refreshing: true,
 	    recommended: [],		// list of recommended quizzes based on this quiz
@@ -301,68 +300,6 @@ class Take extends React.Component {
 			)
 		});
 		
-		let resultSection = () => {
-			if (this.state.isDone) {
-				
-				return (
-						<View
-					      onLayout={event => {
-						        const layout = event.nativeEvent.layout;
-						        this.scrollIndexHelper();
-						        this.scrollToNext();
-						      }}>
-							{
-								this.state.resultOfQuiz &&
-									(
-										<TakeResult result={this.state.resultOfQuiz} />	
-									)
-							}
-							
-							<View style={[allStyles.section]}>
-								<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton, styles.shareButton, styles.topShareButton ]}
-					                onPress={this.retakeQuiz.bind(this)}>
-									<TabBarIcon name="md-happy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-									<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>Retake the kwiz</Text>
-								</TouchableOpacity>
-								<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton, styles.shareButton, styles.bottomShareButton ]}
-							        onPress={() => this.props.navigation.push("Kwiz Results", {quiz_id: this.state.quiz.id})}>
-									<TabBarIcon name="md-trophy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-									<Text style={[ allStyles.fullWidthButtonText, allStyles.whiteText ]}>See how your friends did!</Text>
-								</TouchableOpacity>
-							</View>
-	
-						      <View style={allStyles.section}>
-						    	<Text style={allStyles.sectionTitle}>Recommended</Text>
-						      	<Text style={allStyles.sectionSubtitle}>Take another one! We promise it's not an addiction. ;)</Text>
-						    	<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
-						  			{
-						  				recommendedQuizzes
-						  			}
-						  		</ScrollView>
-						      </View>
-							
-							<View style={[allStyles.section]}>
-								<Text style={allStyles.sectionTitle}>Share your results!</Text>
-								<Text style={allStyles.sectionSubtitle}>Share the fun by sending the Kwiz to your friends or posting on social media.</Text>
-								<ShareForm quiz={ this.state.quiz } />
-							</View>
-						</View>
-						)
-			}
-			
-		}
-		
-		let recommendedQuizzes = this.state.recommended.map(( item, key ) =>
-		{
-			return item != undefined && (
-					<QuizThumbnail 
-							quiz={item}
-							key={key}
-							type={"thumbnail"}
-							navigation={this.props.navigation}/>
-				)
-		});
-		
 		return <View style={allStyles.container}>
 				{
 					this.state.refreshing ? <Loading /> : (
@@ -377,14 +314,23 @@ class Take extends React.Component {
 					            />
 					          }>
 							
-							<Text style={ allStyles.heading }>{ this.state.quiz.title }</Text>
+							<Text style={ allStyles.title }>{ this.state.quiz.title }</Text>
 							
 							{
 								questionsArray
 							}
 							
 							{
-								resultSection()
+								this.state.isDone && 
+								<TakeQuiz 
+								navigation={this.props.navigation}
+								resultOfQuiz={this.state.resultOfQuiz}
+								quiz={this.state.quiz}
+								recommended={this.state.recommended}
+								viewMyResult={true}
+								scrollIndexHelper={this.scrollIndexHelper.bind(this)}
+								scrollToNext={this.scrollToNext.bind(this)}
+								retakeQuiz={this.retakeQuiz.bind(this)} />
 							}
 						</ScrollView>
 					)
