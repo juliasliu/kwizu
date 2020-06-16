@@ -28,10 +28,13 @@ class ShareForm extends React.Component {
 	render() {
 		// determine url based on whether you are sharing the quiz or the result
 		let url = "";
+		let message = "";
 		if (this.props.user) {
 			url = "kwizu://quizzings/" + this.props.quiz.id + "/" + this.props.user.id;
+			message = 'Hey! Check out this kwiz I took:';
 		} else {
 			url = "kwizu://quizzes/" + this.props.quiz.id;
+			message = 'Hey! Check out this kwiz:';
 		}
 
 		writeToClipboard = async () => {
@@ -41,7 +44,7 @@ class ShareForm extends React.Component {
 
 		let shareToMedia = async () => {
 			const result = await Share.share({
-				message: 'Hey! Check out this kwiz:',
+				message: message,
 				url: url,
 			}, {
 				// Android only:

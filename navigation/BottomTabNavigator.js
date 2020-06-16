@@ -85,13 +85,18 @@ class HomeStackScreen extends React.Component {
 		console.log("hi " + url)
 		const { navigate } = this.props.navigation;
 		const route = url.replace(/.*?:\/\//g, '');
-		const id = route.match(/\/([^\/]+)\/?$/)[1];
 		const routeName = route.split('/')[0];
 
 		if (routeName === 'quizzes') {
+			const id = route.match(/\/([^\/]+)\/?$/)[1];
 			navigate('Take Kwiz', { quiz_id: id })
 		} else if (routeName === 'users') {
+			const id = route.match(/\/([^\/]+)\/?$/)[1];
 			navigate('Profile', { user_id: id })
+		} else if (routeName === 'quizzings') {
+			const quiz_id = route.match(/\/([^\/]+)/)[1];
+			const user_id = route.match(/\/([^\/]+)\/?$/)[1];
+			navigate('Kwiz Result', { quiz_id: quiz_id, user_id: user_id })
 		}
 	}
 
