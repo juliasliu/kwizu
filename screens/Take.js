@@ -348,7 +348,7 @@ class Take extends React.Component {
 			        <TouchableOpacity onPress={() => this.props.navigation.navigate("Home")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
 			        	<Text>Go to Home</Text>
 			        </TouchableOpacity>
-			        <TouchableOpacity onPress={() => this.props.navigation.navigate("Home")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.clearButton ]}>
+			        <TouchableOpacity onPress={() => this.props.navigation.dispatch(StackActions.pop(1))} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.clearButton ]}>
 			        	<Text style={ allStyles.whiteText }>Go Back</Text>
 			        </TouchableOpacity>
 			      </View>
