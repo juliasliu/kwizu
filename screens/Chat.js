@@ -19,7 +19,7 @@ import styles from '../styles/ProfileScreen';
 class Chats extends React.Component {
 	
 	state = {
-//			messages: [],
+			users: [],
 			message: "",
 			newChat: false,
 			refreshing: true,
@@ -33,11 +33,12 @@ class Chats extends React.Component {
 
 	componentDidMount() {
 		const {chat_id} = this.props.route.params;
+		const {users} = this.props.route.params;
+		this.setState({users})
 		if (chat_id) {
 			this.props.chats.show(chat_id)
 			.then((res) => {
 				console.log("got chatty chat")
-//				this.setState({messages: this.props.chats.chat.messages});
 				this.setState({refreshing: false});
 			})
 			.catch((errors) => {
@@ -47,6 +48,7 @@ class Chats extends React.Component {
 			})
 		} else {
 			this.setState({refreshing: false, newChat: true});
+			this.props.chats.chat.messages = [];
 		}
 	}
 
@@ -78,7 +80,6 @@ class Chats extends React.Component {
 		this.props.chats.send(this.state.message, this.props.chats.id)
 		.then((res) => {
 			console.log("sent a messagey message")
-//			this.setState({messages: this.props.chats.chat.messages});
 			this.setState({message: "", refreshing: false});
 		})
 		.catch((errors) => {
@@ -88,6 +89,14 @@ class Chats extends React.Component {
 
 	setMessage(message) {
 		this.setState({message})
+	}
+	
+	showChatCreatedTime() {
+		// 2020-06-16T19:38:27.257-07:00
+		const regex = /(\d+)-(\d+)-(\d+)T(\d+):(\d+):(\d+)\.(\d+)(.*)/
+		let matches = this.props.chats.chat.created_at.match(regex);
+		let [date, year, month, day, hours, minutes, seconds, milliseconds, timezone] = matches;
+		return month + "/" + day + "/" + (year % 1000);
 	}
 
 	render () {
@@ -118,6 +127,13 @@ class Chats extends React.Component {
 								  }}
 							    onContentSizeChange={() => this.scrollview_ref.scrollToEnd({animated: true})}>
 						      	{
+						      		this.state.newChat ? (
+						      			<Text style={allStyles.sectionMessage}>Send a message to start a chat with {this.state.users.map((item, key) => {return item.name})}!</Text>	
+						      		) : (
+						      			<Text style={allStyles.sectionMessage}>This conversation was started {this.showChatCreatedTime()}</Text>		
+						      		)
+						      	}
+					      		{
 						      		messageArray
 						      	}
 						      	</ScrollView>
