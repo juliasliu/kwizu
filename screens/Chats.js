@@ -18,7 +18,6 @@ import styles from '../styles/ProfileScreen';
 @inject('users') @inject('chats') @observer
 class Chats extends React.Component {
 	state = {
-			chats: [],
 			refreshing: true,
 			isModalVisible: false,
 	}
@@ -76,7 +75,7 @@ class Chats extends React.Component {
 					          }>
 				      		{
 								!this.state.searching && (
-										<View style={[styles.friendsList, allStyles.sectionClear]}>
+										<View style={[styles.friendsList, allStyles.section, allStyles.sectionClear]}>
 								 		{
 								 			this.props.chats.chats.length > 0 ? chatsArray :
 											(
@@ -92,20 +91,6 @@ class Chats extends React.Component {
 										</View>
 								)
 					      	}
-							{
-								this.state.searching && (
-										<View style={[styles.friendsList, allStyles.sectionClear]}>
-											{
-												this.state.friendResults.length > 0 ? friendsArray :
-													(
-														<View style={[ allStyles.section, allStyles.sectionClear ]}>
-															<Text style={[ allStyles.sectionMessage ]}>There are no results.</Text>
-														</View>
-													)
-											}
-										</View>
-								)
-							}
 						</ScrollView>
 						)
 			      	}

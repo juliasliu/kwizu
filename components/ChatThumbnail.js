@@ -82,7 +82,7 @@ class ChatThumbnail extends React.Component {
 		this.setState({lastMessageTime})
 	}
 	
-	showPickedImage(message) {
+	showPickedImage() {
 		// get avatar of the other user
 		var indexOfUser = this.props.chat.users.findIndex(elem => elem.id !== this.props.logged_in_user_id);
 		const { avatar_url } = this.props.chat.users[indexOfUser];
@@ -119,10 +119,7 @@ class ChatThumbnail extends React.Component {
 							{this.showPickedImage()}
 						</View>
 						<View style={[ styles.profileDescriptionContainer, styles.chatThumbnailDescriptionContainer ] }>
-							<TouchableOpacity style={[ allStyles.clearButton ]}
-		                		onPress={navigateToChat}>
-								<Text style={[ styles.profileName, styles.chatThumbnailName ]}>{this.state.title}</Text>
-							</TouchableOpacity>
+							<Text style={[ styles.profileName, styles.chatThumbnailName ]}>{this.state.title}</Text>
 							<View style={[ styles.profileCaption, styles.chatThumbnailCaption ]}>
 								<Text style={ styles.chatThumbnailText } numberOfLines={1}>
 									{

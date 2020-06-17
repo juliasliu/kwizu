@@ -70,6 +70,7 @@ class Chats extends React.Component {
 			.catch((errors) => {
 				console.log("and i oop")
 				console.log(errors);
+				this.setState({isModalVisible: true});
 			})
 		} else {
 			this.sendMessageHelper();
@@ -84,6 +85,7 @@ class Chats extends React.Component {
 		})
 		.catch((errors) => {
 			console.log(errors);
+			this.setState({isModalVisible: true});
 		})
 	}
 

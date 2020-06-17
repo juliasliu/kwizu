@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import { observer, inject } from 'mobx-react'
 import {
 	TextInput,
 	Button,
@@ -19,10 +20,21 @@ import TabBarIcon from '../components/TabBarIcon';
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
 
+@inject('chats') @observer
 class ShareForm extends React.Component {
 		
 	state = {
 			copyMessage: "Copy",
+	}
+	
+	sendChat() {
+		let url;
+		if (this.props.user) {
+			url = "kwizu://quizzings/" + this.props.quiz.id + "/" + this.props.user.id;
+		} else {
+			url = "kwizu://quizzes/" + this.props.quiz.id;
+		}
+		this.props.navigation.navigate("Chat Result", {message: url});
 	}
 	
 	render() {
@@ -85,7 +97,7 @@ class ShareForm extends React.Component {
 						</TouchableOpacity>
 					</View>
 					<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton, styles.shareButton ]}
-		                onPress={() => alert("")}>
+		                onPress={this.sendChat.bind(this)}>
 						<TabBarIcon name="md-chatbubbles" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 						<Text style={[ allStyles.whiteText ]}>Send to friends in chat</Text>
 					</TouchableOpacity>

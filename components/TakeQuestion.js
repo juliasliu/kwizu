@@ -18,10 +18,6 @@ import styles from '../styles/HomeScreen';
 
 export default class TakeQuestion extends React.Component {
 	
-	setSelectedChoiceValue = (weight, id) => {
-		this.props.setSelectedChoiceValue(this.props.question.id, weight, id);
-	}
-	
 	headerColors = [
 		"#77A0A9", "#566C8A", "#485061",
 	]
@@ -30,7 +26,7 @@ export default class TakeQuestion extends React.Component {
 		if (type == "button")
 			return isChecked && allStyles.greenButton
 		if (type == "checkbox")
-			return isChecked ? '#fff' : "#a0acba"
+			return isChecked ? '#fff' : "#77A0A9"
 		if (type == "text")
 			return isChecked && allStyles.whiteText
 	}
@@ -48,9 +44,9 @@ export default class TakeQuestion extends React.Component {
 			return item != undefined && (
 					<View style={[ styles.choiceContainer]} key = { key } >
 						<TouchableOpacity style={[ allStyles.button, styles.choice, this.getSelectedChoiceStyle("button", isChecked) ]}
-							onPress={() => this.setSelectedChoiceValue(item.weight, item.id)}>
+							onPress={() => this.props.setSelectedChoiceValue(this.props.question.id, item.weight, item.id)}>
 							<CheckBox
-								onClick={() => this.setSelectedChoiceValue(item.weight, item.id)}
+								onClick={() => this.props.setSelectedChoiceValue(this.props.question.id, item.weight, item.id)}
 								checkBoxColor= {this.getSelectedChoiceStyle("checkbox", isChecked)}
 								isChecked={isChecked}
 							/>

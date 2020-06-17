@@ -28,6 +28,7 @@ import Friends from '../screens/Friends'
 import Requests from '../screens/Requests' 
 import Chats from '../screens/Chats' 
 import Chat from '../screens/Chat' 
+import ChatResult from '../screens/ChatResult' 
 import Customize from '../screens/Customize'
 import Settings from '../screens/Settings'
 
@@ -138,6 +139,11 @@ class HomeStackScreen extends React.Component {
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',
 			      	}} />
+			      <HomeStack.Screen name="Chat Result" component={ChatResult} options={{
+			    	  headerTitle: 'Send Chat', 
+					  headerTitleStyle: { color: '#515d6e' },
+					  headerTintColor: '#B2BECF',
+			      }}/>
 			      <HomeStack.Screen name="New Kwiz" component={New} options={{
 			    	  headerTitle: 'New Kwiz',
 			    	  headerTitleStyle: { color: '#515d6e' },
@@ -257,6 +263,11 @@ function ProfileStackScreen({navigation}) {
       }}/>
       <ProfileStack.Screen name="Chat" component={Chat} options={{
     	  headerTitle: 'Chat', 
+		  headerTitleStyle: { color: '#515d6e' },
+		  headerTintColor: '#B2BECF',
+      }}/>
+      <ProfileStack.Screen name="Chat Result" component={ChatResult} options={{
+    	  headerTitle: 'Send Chat', 
 		  headerTitleStyle: { color: '#515d6e' },
 		  headerTintColor: '#B2BECF',
       }}/>

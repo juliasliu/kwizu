@@ -90,6 +90,7 @@ export default function TakeQuiz(props) {
 									<Text style={allStyles.sectionTitle}>Share your results!</Text>
 									<Text style={allStyles.sectionSubtitle}>Share the fun by sending the Kwiz to your friends or posting on social media.</Text>
 									<ShareForm 
+									navigation={ props.navigation }
 									quiz={ props.quiz }
 									user={ props.user }/>
 								</View>	

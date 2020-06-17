@@ -94,12 +94,27 @@ const styles = StyleSheet.create({
 		  marginVertical: 10,
 		  paddingLeft: 10,
 	  },
+	  profileChatThumbnailDescriptionContainer: {
+		  display: 'flex',
+		  flexDirection: 'row',
+		  alignItems: 'center',
+	  },
+	  profileThumbnailDescription: {
+		  display: 'flex',
+		  flexDirection: 'row',
+		  alignItems: 'center',
+	  },
 	  profileName: {
 		  fontSize: 20,
 		  fontWeight: 'bold',
 	  },
 	  profileThumbnailName: {
 		  fontSize: 18,
+		  maxWidth: '50%',
+	  },
+	  profileThumbnailUserName: {
+		  marginLeft: 10,
+		  maxWidth: '50%',
 	  },
 	  chatThumbnailName: {
 		  fontSize: 18,
@@ -127,6 +142,11 @@ const styles = StyleSheet.create({
 		  width: '25%',
 		  minWidth: 55,
 		  color: '#515d6e',
+	  },
+	  profileChatThumbnailCheckbox: {
+		  display: 'flex',
+		  flexDirection: 'row',
+		  justifyContent: 'flex-end',
 	  },
 	  profileLevel: {
 		  marginTop: 10,

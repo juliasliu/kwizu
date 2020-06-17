@@ -166,10 +166,10 @@ class ProfileThumbnail extends React.Component {
 							{this.showPickedImage()}
 						</View>
 						<View style={[ styles.profileDescriptionContainer, styles.profileThumbnailDescriptionContainer ] }>
-							<TouchableOpacity style={[ allStyles.clearButton ]}
-		                		onPress={navigateToProfile}>
-								<Text style={[ styles.profileName, styles.profileThumbnailName ]}>{ this.props.user.name }</Text>
-							</TouchableOpacity>
+							<View style={[styles.profileThumbnailDescription]}>
+								<Text style={[ styles.profileName, styles.profileThumbnailName ]} numberOfLines={1}>{ this.props.user.name }</Text>
+								<Text style={[ styles.profileUsername, styles.profileThumbnailUserName ]} numberOfLines={1}>@{ this.props.user.username }</Text>
+							</View>
 							{
 								this.state.busy ? <ActivityIndicator /> : friendButton()
 							}

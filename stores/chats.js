@@ -158,7 +158,7 @@ class Chats {
 			}
 		}
 		// if data is a chat
-		else if (data.title) {
+		else if (data.messages) {
 			// add the chat if it doesn't exist
 			var chatIndex = this.chats.findIndex(elem => elem.id === data.chat_id)
 			if (chatIndex < 0) {

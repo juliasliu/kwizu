@@ -67,7 +67,9 @@ class Publish extends React.Component {
 							</TouchableOpacity>
 						</View>
 						
-						<ShareForm quiz={ this.props.quizzes.quiz } />
+						<ShareForm 
+						navigation={ this.props.navigation }
+						quiz={ this.props.quizzes.quiz } />
 						
 						<View style={[ allStyles.section, allStyles.sectionClear ]}>
 							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
