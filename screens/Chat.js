@@ -7,6 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Modal from 'react-native-modal';
+import { StackActions } from '@react-navigation/native';
 
 import ChatMessage from '../components/ChatMessage';
 import Loading from '../components/Loading';

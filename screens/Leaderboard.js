@@ -18,6 +18,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import CheckBox from 'react-native-check-box'
 import Icon5 from 'react-native-vector-icons/FontAwesome5'
 import Modal from 'react-native-modal';
+import { StackActions } from '@react-navigation/native';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';

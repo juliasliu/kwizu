@@ -27,6 +27,13 @@ class ChatThumbnail extends React.Component {
 	
 	componentDidMount() {
 		if (this.props.chat.messages && this.props.chat.messages.length > 0) {
+			// 2020-06-16T19:38:27.257-07:00
+//			this.props.chat.messages.sort(function (a, b) {
+//			    return ('' + a.attr).localeCompare(b.attr);
+//			})
+//			const route = url.replace(/.*?:\/\//g, '');
+//			const routeName = route.split('/')[0];
+//			const id = route.match(/\/([^\/]+)\/?$/)[1];
 			// determine what the last message from this chat is; fix later
 			this.setState({lastMessage: this.props.chat.messages[this.props.chat.messages.length - 1]});
 			

@@ -8,6 +8,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import Modal from 'react-native-modal';
+import { StackActions } from '@react-navigation/native';
 
 import ProfileThumbnail from '../components/ProfileThumbnail';
 import Loading from '../components/Loading';

@@ -9,6 +9,7 @@ const actionCable = ActionCable.createConsumer(API_WS_ROOT);
 const cable = new Cable({});
 
 class Chats {
+	@observable chats = [];
 	@observable chat = null;
 	@observable id = null;
 	@observable busy = false;
@@ -46,6 +47,10 @@ class Chats {
 			axios.get(API_ROOT + '/chats', {withCredentials: true})
 	        .then(response => {
 	            that.handleSuccess()
+	            that.chats = response.data.chats;
+	            for (var i = 0; i < response.data.chats.length; i++) {
+	            	that.handleChannel(response.data.chats[i].id)
+	            }
 	        	resolve(response.data.chats);
 	        })
 	        .catch(errors => reject(errors))
@@ -133,9 +138,32 @@ class Chats {
 		console.log("HANDLE RECEIVED")
 		console.log(data)
 		console.log(this)
-		if (data.chat_id && this.chat && this.chat.messages && this.chat.messages.findIndex(elem => elem.id === data.id) < 0) {
-			// add message to chat if doesn't exist
-			this.chat.messages.push(data);
+		// if data is a message
+		if (data.chat_id) {
+			// add the latest message to the right chat it if doesn't exist yet
+			var chatIndex = this.chats.findIndex(elem => elem.id === data.chat_id)
+			if (chatIndex >= 0 && this.chats[chatIndex].messages.findIndex(elem => elem.id === data.id) < 0) {
+				console.log("ADDING MESAGE")
+				var chats = this.chats;
+				chats[chatIndex].messages.push(data);
+				this.chats = []
+				this.chats = chats;
+				console.log(this.chats[chatIndex].messages);
+			}
+			
+			if (this.chat && this.chat.id == data.chat_id && 
+					this.chat.messages && this.chat.messages.findIndex(elem => elem.id === data.id) < 0) {
+				// add message to chat if doesn't exist yet
+				this.chat.messages.push(data);
+			}
+		}
+		// if data is a chat
+		else if (data.title) {
+			// add the chat if it doesn't exist
+			var chatIndex = this.chats.findIndex(elem => elem.id === data.chat_id)
+			if (chatIndex < 0) {
+				this.chats.push(data);
+			}
 		}
 	}
 

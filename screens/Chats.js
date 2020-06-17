@@ -7,6 +7,7 @@ import { Image, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, B
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 import Modal from 'react-native-modal';
+import { StackActions } from '@react-navigation/native';
 
 import ChatThumbnail from '../components/ChatThumbnail';
 import Loading from '../components/Loading';
@@ -31,7 +32,7 @@ class Chats extends React.Component {
 		this.props.chats.index()
 		.then((res) => {
 			console.log("got those chats")
-			this.setState({chats: res, refreshing: false});
+			this.setState({refreshing: false});
 		})
 		.catch((errors) => {
 			console.log("and i oop")
@@ -42,19 +43,24 @@ class Chats extends React.Component {
 
 	render () {
 
-		let chatsArray = this.state.chats.map(( item, key ) =>
-		{
-			return item != undefined && (
-					<ChatThumbnail navigation={this.props.navigation}
-					chat={item}
-					logged_in_user_id={this.props.users.id}
-					key={key}
-					style={[ (key === this.state.chats.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
-							 (key === 0) ? allStyles.topProfileThumbnailCard : null,
-						]} />
-			)
-		})
-
+		console.log('CHATS CHATHS A CHATHAS CHHATHS CHATTTSSS')
+		console.log(this.props.chats.chats);
+		let chatsArray;
+		if (this.props.chats.chats) {
+			chatsArray = this.props.chats.chats.map(( item, key ) =>
+			{
+				return item != undefined && (
+						<ChatThumbnail navigation={this.props.navigation}
+						chat={item}
+						logged_in_user_id={this.props.users.id}
+						key={key}
+						style={[ (key === this.props.chats.chats.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
+								(key === 0) ? allStyles.topProfileThumbnailCard : null,
+										]} />
+				)
+			})
+		}
+		
 		return (
 				<View style={{flex: 1}}>
 			      
@@ -72,7 +78,7 @@ class Chats extends React.Component {
 								!this.state.searching && (
 										<View style={[styles.friendsList, allStyles.sectionClear]}>
 								 		{
-								 			this.state.chats.length > 0 ? chatsArray :
+								 			this.props.chats.chats.length > 0 ? chatsArray :
 											(
 												<View style={[ allStyles.section, allStyles.sectionClear ]}>
 													<Text style={[ allStyles.sectionMessage ]}>No chats yet! Start a new conversation with a friend right now.</Text>
