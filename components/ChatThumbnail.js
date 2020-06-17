@@ -23,32 +23,17 @@ class ChatThumbnail extends React.Component {
 	state = {
 			title: "",
 			lastMessage: {text: "", user: {}},
+			lastMessageTime: "",
 	}
 	
 	componentDidMount() {
 		if (this.props.chat.messages && this.props.chat.messages.length > 0) {
-			// 2020-06-16T19:38:27.257-07:00
-//			this.props.chat.messages.sort(function (a, b) {
-//			    return ('' + a.attr).localeCompare(b.attr);
-//			})
-//			const route = url.replace(/.*?:\/\//g, '');
-//			const routeName = route.split('/')[0];
-//			const id = route.match(/\/([^\/]+)\/?$/)[1];
+			let sortedMessages = this.props.chat.messages.sort(function (a, b) {
+			    return ('' + a.attr).localeCompare(b.attr);
+			})
+			console.log(sortedMessages[this.props.chat.messages.length - 1])
 			// determine what the last message from this chat is; fix later
-			this.setState({lastMessage: this.props.chat.messages[this.props.chat.messages.length - 1]});
-			
-			let lastMessageTime;
-			// convert updated_at to a readable time format; todo later
-			let timestamp = this.state.lastMessage.updated_at_localtime;
-			
-			// if in the same day, get the time
-			if (true) {
-				lastMessageTime = timestamp;
-			}
-			// if not same day, count number of days since
-			else {
-				lastMessageTime = this.state.lastMessage.updated_at_localtime;
-			}
+			this.setState({lastMessage: sortedMessages[this.props.chat.messages.length - 1]}, this.showLastMessageTime);
 		}
 		// if no chat title exists, make title of chat default string of users names besides yourself
 		if (!this.props.chat.title) {
@@ -64,6 +49,37 @@ class ChatThumbnail extends React.Component {
 		} else {
 			this.setState({title: this.props.chat.title})
 		}
+	}
+	
+	showLastMessageTime() {
+		// 2020-06-16T19:38:27.257-07:00
+		const regex = /(\d+)-(\d+)-(\d+)T(\d+):(\d+):(\d+)\.(\d+)(.*)/
+		let matches = this.state.lastMessage.updated_at.match(regex);
+		let [date, year, month, day, hours, minutes, seconds, milliseconds, timezone] = matches;
+		let timestamp = new Date(year, month-1, day, hours, minutes, seconds, milliseconds);
+		let today = new Date();
+		console.log(year + ", " + month + ", " + day + ", " + milliseconds)
+		console.log(timestamp)
+		console.log(today)
+		
+		let lastMessageTime;
+		// if in the same day, get the time
+		let numDaysSince = Math.round((today.getTime() - timestamp.getTime()) / (1000 * 3600 * 24));
+		matches = this.state.lastMessage.updated_at_localtime.match(regex);
+		[date, year, month, day, hours, minutes, seconds, milliseconds, timezone] = matches
+		if (numDaysSince < 1) {
+			lastMessageTime = hours % 12 + ":" + minutes;
+			if (hours / 12.0 > 1) {
+				lastMessageTime += " pm"
+			} else {
+				lastMessageTime += " am"
+			}
+		}
+		// if not same day, get the date
+		else {
+			lastMessageTime = month + "/" + day + "/" + (year % 1000);
+		}
+		this.setState({lastMessageTime})
 	}
 	
 	showPickedImage(message) {
@@ -117,7 +133,7 @@ class ChatThumbnail extends React.Component {
 									}
 									{this.state.lastMessage.text}
 								</Text>
-								<Text style={ styles.chatThumbnailTime }>{this.state.lastMessage.updated_at_localtime}</Text>
+								<Text style={ styles.chatThumbnailTime }>{this.state.lastMessageTime}</Text>
 							</View>
 						</View>
 					</View>
