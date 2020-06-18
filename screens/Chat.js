@@ -50,7 +50,7 @@ class Chats extends React.Component {
 			})
 		} else {
 			this.setState({refreshing: false, newChat: true});
-			this.props.chats.chat.messages = [];
+			this.props.chats.initiateChat();
 		}
 	}
 

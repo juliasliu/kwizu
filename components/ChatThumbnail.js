@@ -53,7 +53,8 @@ class ChatThumbnail extends React.Component {
 		matches = this.state.lastMessage.updated_at_localtime.match(regex);
 		[date, year, month, day, hours, minutes, seconds, milliseconds, timezone] = matches
 		if (numDaysSince < 1) {
-			lastMessageTime = hours % 12 + ":" + minutes;
+			if (hours % 12 == 0) lastMessageTime = 12 + ":" + minutes;
+			else lastMessageTime = hours % 12 + ":" + minutes;
 			if (hours / 12.0 > 1) {
 				lastMessageTime += " pm"
 			} else {

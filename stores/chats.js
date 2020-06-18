@@ -39,6 +39,11 @@ class Chats {
 		})
 	}
 	
+	@action initiateChat = function() {
+		this.chat = {};
+		this.chat.messages = [];
+	}
+	
 	@action index = function() {
 		this.busy = true;
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then
