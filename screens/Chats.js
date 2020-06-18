@@ -48,20 +48,38 @@ class Chats extends React.Component {
 	deleteSearchKeyword() {
 		this.setState({searchKeyword: ""});
 	}
+	
+	getTitle(chat) {
+		// if no chat title exists, make title of chat default string of users names besides yourself
+		if (!chat.title) {
+			let title = "";
+			console.log(this.props.users.id)
+			for (var i = 0; i < chat.users.length; i++) {
+				if (chat.users[i].id != this.props.users.id) {
+					title += chat.users[i].name + ", ";
+				}
+			}
+			title = title.slice(0, title.length - 2);
+			return title;
+		}
+		return chat.title;
+	}
 
 	render () {
 		console.log('CHATS CHATHS A CHATHAS CHHATHS CHATTTSSS')
 		console.log(this.props.chats.chats);
 		let chatsArray;
 		if (this.props.chats.chats) {
-			chatsArray = this.props.chats.chats.filter(elem => elem.created_at.includes(this.state.searchKeyword)).map(( item, key ) =>
+			chatsArray = this.props.chats.chats.filter(elem => this.getTitle(elem).toLowerCase().includes(this.state.searchKeyword.toLowerCase()))
+			chatsArray = chatsArray.map(( item, key ) =>
 			{
 				return item != undefined && (
 						<ChatThumbnail navigation={this.props.navigation}
 						chat={item}
+						title={this.getTitle(item)}
 						logged_in_user_id={this.props.users.id}
 						key={key}
-						style={[ (key === this.props.chats.chats.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
+						style={[ (key === chatsArray.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
 								(key === 0) ? allStyles.topProfileThumbnailCard : null,
 										]} />
 				)

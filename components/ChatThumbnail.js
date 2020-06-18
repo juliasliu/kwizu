@@ -21,7 +21,6 @@ import styles from '../styles/ProfileScreen';
 class ChatThumbnail extends React.Component {
 	
 	state = {
-			title: "",
 			lastMessage: {text: "", user: {}},
 			lastMessageTime: "",
 	}
@@ -34,20 +33,6 @@ class ChatThumbnail extends React.Component {
 			console.log(sortedMessages[this.props.chat.messages.length - 1])
 			// determine what the last message from this chat is; fix later
 			this.setState({lastMessage: sortedMessages[this.props.chat.messages.length - 1]}, this.showLastMessageTime);
-		}
-		// if no chat title exists, make title of chat default string of users names besides yourself
-		if (!this.props.chat.title) {
-			let title = "";
-			console.log(this.props.logged_in_user_id)
-			for (var i = 0; i < this.props.chat.users.length; i++) {
-				if (this.props.chat.users[i].id != this.props.logged_in_user_id) {
-					title += this.props.chat.users[i].name + ", ";
-				}
-			}
-			title = title.slice(0, title.length - 2);
-			this.setState({title})
-		} else {
-			this.setState({title: this.props.chat.title})
 		}
 	}
 	
@@ -119,7 +104,7 @@ class ChatThumbnail extends React.Component {
 							{this.showPickedImage()}
 						</View>
 						<View style={[ styles.profileDescriptionContainer, styles.chatThumbnailDescriptionContainer ] }>
-							<Text style={[ styles.profileName, styles.chatThumbnailName ]}>{this.state.title}</Text>
+							<Text style={[ styles.profileName, styles.chatThumbnailName ]}>{this.props.title}</Text>
 							<View style={[ styles.profileCaption, styles.chatThumbnailCaption ]}>
 								<Text style={ styles.chatThumbnailText } numberOfLines={1}>
 									{
