@@ -123,6 +123,7 @@ class ChatResult extends React.Component {
 				{
 		      		this.state.refreshing ? <Loading /> : ( 
 			      	<ScrollView style={allStyles.contentContainer}
+			      		showsVerticalScrollIndicator={false}
 			      		refreshControl={
 				              <RefreshControl
 				              refreshing={this.state.refreshing}

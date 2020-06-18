@@ -149,6 +149,7 @@ class Customize extends React.Component {
 				{
 					this.state.refreshing ? <Loading /> : (
 						<ScrollView style={allStyles.contentContainer}
+						showsVerticalScrollIndicator={false}
 							ref={ref => {
 							    this.scrollview_ref = ref;
 							  }}>

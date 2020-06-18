@@ -470,6 +470,7 @@ class New extends React.Component {
 				{
 					this.state.refreshing ? <Loading /> : (
 					<KeyboardAwareScrollView style={[allStyles.contentContainer, styles.quizFormContainer ]}
+					showsVerticalScrollIndicator={false} 
 					innerRef={ref => {
 					    this.scrollview_ref = ref;
 					  }}

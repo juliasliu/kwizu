@@ -74,6 +74,7 @@ class Requests extends React.Component {
 
 		let FirstRoute = () => (
 				<ScrollView style={allStyles.contentContainer}
+				showsVerticalScrollIndicator={false} 
 				refreshControl={
 						<RefreshControl
 						refreshing={this.state.refreshing}
@@ -95,6 +96,7 @@ class Requests extends React.Component {
 
 		let SecondRoute = () => (
 				<ScrollView style={allStyles.contentContainer}
+				showsVerticalScrollIndicator={false} 
 				refreshControl={
 						<RefreshControl
 						refreshing={this.state.refreshing}

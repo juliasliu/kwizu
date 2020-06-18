@@ -48,7 +48,8 @@ class Publish extends React.Component {
 	render() {
 		return this.props.quizzes.quiz && (
 				<View style={{flex: 1}}>
-					<KeyboardAwareScrollView style={[allStyles.container, styles.quizFormContainer ]}>
+					<ScrollView style={[allStyles.container, styles.quizFormContainer ]}
+					showsVerticalScrollIndicator={false}>
 					
 						<View style={[ allStyles.section, allStyles.sectionClear ]}>
 							<Text style={[ allStyles.title, allStyles.center ]}>Your Kwiz is ready!</Text>
@@ -83,7 +84,7 @@ class Publish extends React.Component {
 								<Text style={[ allStyles.whiteText ]}>Delete your kwiz</Text>
 							</TouchableOpacity>
 						</View>
-					</KeyboardAwareScrollView>
+					</ScrollView>
 				
 			      <Modal isVisible={this.state.isModalVisible} 
 				      coverScreen={false} 

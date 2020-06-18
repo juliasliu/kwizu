@@ -101,6 +101,7 @@ class Profile extends React.Component {
 				{
 					this.state.refreshing ? <Loading /> : (
 						      <ScrollView style={allStyles.contentContainer}
+						      showsVerticalScrollIndicator={false} 
 					      		refreshControl={
 						            <RefreshControl
 						              refreshing={this.state.refreshing}
@@ -123,7 +124,7 @@ class Profile extends React.Component {
 
 								      	{
 								      		(this.state.quizzes[0].length > 0) ? (
-								      				<ScrollView contentContainerStyle={[ allStyles.quizThumbnailContainer ]} horizontal= {true} decelerationRate={0} snapToInterval={250} snapToAlignment={"center"}>
+								      				<ScrollView contentContainerStyle={[ allStyles.quizThumbnailContainer ]} showsHorizontalScrollIndicator={false} horizontal= {true} decelerationRate={0} snapToInterval={250} snapToAlignment={"center"}>
 								      				{
 								      					quizzesArray(0)
 								      				}
@@ -170,7 +171,7 @@ class Profile extends React.Component {
 									      		}
 									      	{
 									      		(this.state.quizzes[1].length > 0) ? (
-									      				<ScrollView contentContainerStyle={[ allStyles.quizThumbnailContainer ]} horizontal= {true} decelerationRate={0} snapToInterval={250} snapToAlignment={"center"}>
+									      				<ScrollView contentContainerStyle={[ allStyles.quizThumbnailContainer ]} showsHorizontalScrollIndicator={false} horizontal= {true} decelerationRate={0} snapToInterval={250} snapToAlignment={"center"}>
 									      				{
 									      					quizzesArray(1)
 									      				}

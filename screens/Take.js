@@ -305,6 +305,7 @@ class Take extends React.Component {
 				{
 					this.state.refreshing ? <Loading /> : (
 						<ScrollView style={[allStyles.contentContainer, styles.quizFormContainer ]}
+						showsVerticalScrollIndicator={false} 
 						ref={ref => {
 						    this.scrollview_ref = ref;
 						  }}

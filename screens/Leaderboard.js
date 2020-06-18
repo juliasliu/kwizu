@@ -188,6 +188,7 @@ class Leaderboard extends React.Component {
 					{
 						this.state.refreshing ? <Loading /> : (
 							<ScrollView style={[allStyles.contentContainer, styles.quizFormContainer ]}
+							showsVerticalScrollIndicator={false} 
 				      		refreshControl={
 						              <RefreshControl
 						              refreshing={this.state.refreshing}

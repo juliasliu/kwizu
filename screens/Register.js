@@ -51,6 +51,7 @@ export default class Register extends React.Component {
 						<Image source={require("../assets/images/register.png")} style={styles.welcomeBackground} />
 					</View>
 					<KeyboardAwareScrollView style={[styles.welcomeContainer]}
+					showsVerticalScrollIndicator={false} 
 						innerRef={ref => {
 						    this.scrollview_ref = ref;
 					  }}>

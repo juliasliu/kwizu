@@ -135,6 +135,7 @@ class Settings extends React.Component {
 						</View>
 					</View>
 					<ScrollView
+					showsVerticalScrollIndicator={false} 
 					ref={ref => {
 					    this.scrollview_ref = ref;
 					  }}>

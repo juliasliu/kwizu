@@ -44,6 +44,7 @@ class Login extends React.Component {
 						<Image source={require("../assets/images/login.png")} style={styles.welcomeBackground} />
 					</View>
 					<KeyboardAwareScrollView style={[styles.welcomeContainer]}
+					showsVerticalScrollIndicator={false} 
 						innerRef={ref => {
 						    this.scrollview_ref = ref;
 					  }}>

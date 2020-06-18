@@ -173,7 +173,8 @@ class Chats extends React.Component {
 					      		ref={ref => {
 								    this.scrollview_ref = ref;
 								  }}
-							    onContentSizeChange={() => this.scrollview_ref.scrollToEnd({animated: true})}>
+							    onContentSizeChange={() => this.scrollview_ref.scrollToEnd({animated: true})}
+					      		showsVerticalScrollIndicator={false}>
 						      	{
 						      		this.state.newChat ? (
 						      			<Text style={allStyles.sectionMessage}>Send a message to start a chat with {this.state.users.map((item, key) => {return item.name})}!</Text>	

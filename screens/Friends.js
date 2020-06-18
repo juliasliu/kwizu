@@ -123,6 +123,7 @@ class Friends extends React.Component {
 					{
 						this.state.refreshing ? <Loading /> : (
 							<ScrollView style={allStyles.contentContainer}
+							showsVerticalScrollIndicator={false}
 				      		refreshControl={
 					              <RefreshControl
 					              refreshing={this.state.refreshing}
@@ -178,6 +179,7 @@ class Friends extends React.Component {
 				{
 					!this.state.refreshing && (
 							<ScrollView style={allStyles.contentContainer}
+							showsVerticalScrollIndicator={false}
 							refreshControl={
 									<RefreshControl
 									refreshing={this.state.refreshing}

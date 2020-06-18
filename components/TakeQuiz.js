@@ -69,7 +69,7 @@ export default function TakeQuiz(props) {
 					      }
 					    	
 					      	<Text style={allStyles.sectionSubtitle}>Take another one! We promise it's not an addiction. ;)</Text>
-					    	<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
+					    	<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} showsHorizontalScrollIndicator={false} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
 					  			{
 					  				props.recommended.map(( item, key ) =>
 					  				{
