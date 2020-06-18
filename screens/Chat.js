@@ -10,6 +10,8 @@ import Modal from 'react-native-modal';
 import { StackActions } from '@react-navigation/native';
 
 import ChatMessage from '../components/ChatMessage';
+import ChatQuiz from '../components/ChatQuiz';
+import ChatQuizzing from '../components/ChatQuizzing';
 import Loading from '../components/Loading';
 
 import allStyles from '../styles/AllScreens';
@@ -100,13 +102,57 @@ class Chats extends React.Component {
 		let [date, year, month, day, hours, minutes, seconds, milliseconds, timezone] = matches;
 		return month + "/" + day + "/" + (year % 1000);
 	}
-
+	
+	messageToUrl(message) {
+		console.log(message)
+		let regex = /(\w*):\/\/(\w*)\/(\d*)/
+		let matches = message.match(regex);
+		if (matches) {
+			let [full, app, type, quiz_id, user_id] = matches;
+			console.log(matches);
+			if (app === "kwizu" && type === "quizzes" && quiz_id) {
+				return {type: type, quiz_id: quiz_id};
+			}
+		}
+		regex = /(\w*):\/\/(\w*)\/(\d*)\/(\d*)/;
+		matches = message.match(regex);
+		if (matches) {
+			let [full, app, type, quiz_id, user_id] = matches;
+			if (app === "kwizu" && type === "quizzings" && quiz_id && user_id) {
+				return {type: type, quiz_id: quiz_id, user_id: user_id};
+			}
+		}
+		return false;
+	}
+	
 	render () {
-
+		
 		let messageArray;
 		if (this.props.chats.chat && this.props.chats.chat.messages) {
 			messageArray = this.props.chats.chat.messages.map(( item, key ) =>
 			{
+				let url = this.messageToUrl(item.text)
+				if (url && url.type == "quizzes") {
+					return (
+							<ChatQuiz
+							navigation={this.props.navigation}
+							quiz_id={url.quiz_id}
+							user={item.user}
+							logged_in_user_id={this.props.users.id}
+							key={key} />
+					)
+				}
+				if (url && url.type == "quizzings") {
+					return (
+							<ChatQuizzing
+							navigation={this.props.navigation}
+							quiz_id={url.quiz_id}
+							user_id={url.user_id}
+							user={item.user}
+							logged_in_user_id={this.props.users.id}
+							key={key} />
+					)
+				}
 				return item != undefined && (
 						<ChatMessage
 						message={item}

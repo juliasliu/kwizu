@@ -22,15 +22,15 @@ const styles = StyleSheet.create({
 		  borderRadius: 0,
 		  borderWidth: 1,
 		  borderColor: "#e6e6e6",
-		  },
-		  topChatThumbnailCard: {
-			  borderTopLeftRadius: 20,
-			  borderTopRightRadius: 20,
-		  },
-		  bottomChatThumbnailCard: {
-			  borderBottomLeftRadius: 20,
-			  borderBottomRightRadius: 20,
-		  },
+	  },
+	  topChatThumbnailCard: {
+		  borderTopLeftRadius: 20,
+		  borderTopRightRadius: 20,
+	  },
+	  bottomChatThumbnailCard: {
+		  borderBottomLeftRadius: 20,
+		  borderBottomRightRadius: 20,
+	  },
 	  profileTopCard: {
 		  display: 'flex',
 		  flexDirection: 'row',
@@ -247,6 +247,14 @@ const styles = StyleSheet.create({
 		  shadowRadius: 0,
 		  elevation: 1,
 	  },
+	  chatQuizMessageContainer: {
+		  backgroundColor: "#2ED673",
+		  shadowColor: "#1CC15F",
+	  },
+	  chatQuizMessageDescriptionContainer: {
+		  width: '75%',
+		  paddingVertical: 20,
+	  },
 	  chatMessageDescriptionContainerRight: {
 		  backgroundColor: "#8393a8",
 		  shadowColor: "#515d6e",
@@ -263,6 +271,18 @@ const styles = StyleSheet.create({
 		  flexDirection: 'column',
 		  alignItems: 'center',
 		  marginVertical: 10,
+	  },
+	  chatQuizImageContainer: {
+		  width: '100%',
+	  },
+	  chatMessageImageContainerRight: {
+		  shadowColor: "#515d6e",
+	  },
+	  chatQuizImage: {
+		  aspectRatio: 250/150,
+	  },
+	  chatQuizTitle: {
+		  marginVertical: 5,
 	  },
 });
 

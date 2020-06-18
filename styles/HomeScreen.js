@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 	  maxWidth: (Dimensions.get('window').width - 80) * 3 / 4,
 	  width: (Dimensions.get('window').width - 80) * 3 / 4,
 	  minHeight: 150,
-	aspectRatio: 250/150,
+	  aspectRatio: 250/150,
   },
   quizThumbnail: {
 	  maxWidth: (Dimensions.get('window').width - 80) / 2,

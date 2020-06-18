@@ -125,7 +125,8 @@ const styles = StyleSheet.create({
 		color: '#8393a8',
 	},
 	link: {
-		color: 'blue',  
+		color: '#77A0A9',
+		fontWeight: 'bold',
 	},
 	title: {
 		fontSize: 28,  
@@ -257,6 +258,9 @@ const styles = StyleSheet.create({
 	},
 	whiteText: {
 		color: "#fff",
+	},
+	boldText: {
+		fontWeight: "bold",
 	},
 	fullWidthButton: {
 		width: '100%',
