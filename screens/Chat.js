@@ -41,7 +41,7 @@ class Chats extends React.Component {
 			this.props.chats.show(chat_id)
 			.then((res) => {
 				console.log("got chatty chat")
-				this.setState({refreshing: false});
+				this.setState({refreshing: false}, this.setTitle);
 			})
 			.catch((errors) => {
 				console.log("and i oop")
@@ -49,9 +49,26 @@ class Chats extends React.Component {
 				this.setState({isModalVisible: true});
 			})
 		} else {
-			this.setState({refreshing: false, newChat: true});
+			this.setState({refreshing: false, newChat: true}, this.setTitle);
 			this.props.chats.initiateChat();
 		}
+	}
+	
+	setTitle() {
+		// if no chat title exists, make title of chat default string of users names besides yourself
+		let title = "";
+		if (!this.props.chats.chat.title) {
+			console.log(this.props.users.id)
+			for (var i = 0; i < this.props.chats.chat.users.length; i++) {
+				if (this.props.chats.chat.users[i].id != this.props.users.id) {
+					title += this.props.chats.chat.users[i].name + ", ";
+				}
+			}
+			title = title.slice(0, title.length - 2);
+		} else {
+			title = this.props.chats.chat.title
+		}
+		this.props.navigation.setOptions({headerTitle: title})
 	}
 
 	sendMessage() {

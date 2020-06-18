@@ -47,8 +47,8 @@ class Profile extends React.Component {
 			console.log("found user!!")
 			console.log(res)
 			var quizzes = [...this.state.quizzes]
-			quizzes[0] = res.taken_quizzes;
-			quizzes[1] = res.quizzes;
+			quizzes[0] = res.taken_quizzes.slice(0, 5);
+			quizzes[1] = res.quizzes.slice(0, 5);
 			this.setState({quizzes: quizzes, user: res}, this.loadUser)
 		})
 		.catch((errors) => {
@@ -78,6 +78,7 @@ class Profile extends React.Component {
 				sentRequest: this.props.users.user.friends_requested.filter(function(e) { return e.id === otherUserId; }).length > 0,
 				receivedRequest: this.props.users.user.friends_received.filter(function(e) { return e.id === otherUserId; }).length > 0,
 			});
+			this.props.navigation.setOptions({headerRight: null})
 			this.setState({refreshing: false});
 		}
 

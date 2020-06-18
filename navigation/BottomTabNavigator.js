@@ -136,7 +136,7 @@ class HomeStackScreen extends React.Component {
 			    	  headerTintColor: '#B2BECF',
 			      	}} />
 			      <HomeStack.Screen name="Kwiz Result" component={ViewTake} options={{
-			    	  headerTitle: 'View Kwiz Result',
+			    	  headerTitle: 'Kwiz Result',
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',
 			      	}} />
@@ -151,7 +151,7 @@ class HomeStackScreen extends React.Component {
 			    	  headerTintColor: '#B2BECF',
 			      	}} />
 			      <HomeStack.Screen name="Publish and Share Kwiz" component={Publish} options={{
-			    	  headerTitle: 'Published Kwiz',
+			    	  headerTitle: 'Your Kwiz',
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',
 			      	}} />
@@ -358,7 +358,7 @@ function ProfileStackScreen({navigation}) {
     	  headerTintColor: '#B2BECF',
       }} />
       <ProfileStack.Screen name="Kwiz Result" component={ViewTake} options={{
-    	  headerTitle: 'View Kwiz Result',
+    	  headerTitle: 'Kwiz Result',
     	  headerTitleStyle: { color: '#515d6e' },
     	  headerTintColor: '#B2BECF',
       	}} />
@@ -368,7 +368,7 @@ function ProfileStackScreen({navigation}) {
     	  headerTintColor: '#B2BECF',
       }} />
       <ProfileStack.Screen name="Publish and Share Kwiz" component={Publish} options={{
-    	  headerTitle: 'Published Kwiz',
+    	  headerTitle: 'Your Kwiz',
     	  headerTitleStyle: { color: '#515d6e' },
     	  headerTintColor: '#B2BECF',
       }} />
