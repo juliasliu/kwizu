@@ -168,10 +168,6 @@ class Users {
 		})
 	}
 	
-	@action takenQuiz = function(quiz) {
-		if (this.user.taken_quizzes.findIndex(elem => elem.id == quiz.id) < 0) this.user.taken_quizzes.push(quiz)
-	}
-	
 	@action sendRequest = function(id) {
 		this.busy = true;
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then
@@ -180,6 +176,7 @@ class Users {
 			axios.put(API_ROOT + '/users/' + id + '/send_request', {withCredentials: true})
 	        .then(response => {
 	        	that.handleSuccess();
+	        	that.show(that.id);
 	            resolve(response.data.user);
 	        })
 	        .catch(errors => {
@@ -198,6 +195,7 @@ class Users {
 			axios.delete(API_ROOT + '/users/' + id + '/undo_request', {withCredentials: true})
 	        .then(response => {
 	        	that.handleSuccess();
+	        	that.show(that.id);
 	            resolve(response.data.user);
 	        })
 	        .catch(errors => {
@@ -216,6 +214,7 @@ class Users {
 			axios.put(API_ROOT + '/users/' + id + '/accept_request', {withCredentials: true})
 	        .then(response => {
 	        	that.handleSuccess();
+	        	that.show(that.id);
 	            resolve(response.data.user);
 	        })
 	        .catch(errors => {

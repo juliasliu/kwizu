@@ -173,6 +173,7 @@ class New extends React.Component {
 					this.setState({refreshing: true})
 					this.setState({id: res.id, title: res.title, public: res.public, image_url: res.image_url, isEditing: true}, this.loadQuiz)
 				}
+				this.props.users.show(this.props.users.id);
 			})
 			.catch((errors) => {
 				this.setState({errors: this.props.quizzes.errors})

@@ -58,12 +58,21 @@ class Chats extends React.Component {
 		// if no chat title exists, make title of chat default string of users names besides yourself
 		let title = "";
 		if (!this.props.chats.chat.title) {
-			console.log(this.props.users.id)
-			for (var i = 0; i < this.props.chats.chat.users.length; i++) {
-				if (this.props.chats.chat.users[i].id != this.props.users.id) {
-					title += this.props.chats.chat.users[i].name + ", ";
+			if (this.props.chats.chat.users) {
+				for (var i = 0; i < this.props.chats.chat.users.length; i++) {
+					if (this.props.chats.chat.users[i].id != this.props.users.id) {
+						title += this.props.chats.chat.users[i].name + ", ";
+					}
+				}
+			} else {
+				const {users} = this.props.route.params;
+				for (var i = 0; i < users.length; i++) {
+					if (users[i].id != this.props.users.id) {
+						title += users[i].name + ", ";
+					}
 				}
 			}
+			
 			title = title.slice(0, title.length - 2);
 		} else {
 			title = this.props.chats.chat.title
