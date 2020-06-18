@@ -131,7 +131,7 @@ class ChatResult extends React.Component {
 				          }>
 			      		{
 							!this.state.searching && (
-									<View style={[styles.friendsList, allStyles.section, allStyles.sectionClear]}>
+									<View style={[allStyles.section, allStyles.sectionClear]}>
 							 		{
 							 			this.state.friends.length > 0 ? friendsArray :
 										(

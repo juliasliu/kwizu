@@ -91,10 +91,10 @@ class ProfileCard extends React.Component {
 			.then(res => {
 				console.log("yay points!" + res)
 			})
-			.catch(error => {
-				console.log("failed");
-				console.log(error);
-			});
+			this.props.users.addPoints(5, this.props.user.id)
+			.then(res => {
+				console.log("yay points!" + res)
+			})
 		})
 		.catch(error => {
 			console.log("failed");

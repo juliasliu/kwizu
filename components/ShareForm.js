@@ -34,7 +34,7 @@ class ShareForm extends React.Component {
 		} else {
 			url = "kwizu://quizzes/" + this.props.quiz.id;
 		}
-		this.props.navigation.navigate("Chat Result", {message: url});
+		this.props.navigation.push("Chat Result", {message: url});
 	}
 	
 	render() {

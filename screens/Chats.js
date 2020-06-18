@@ -18,6 +18,7 @@ import styles from '../styles/ProfileScreen';
 @inject('users') @inject('chats') @observer
 class Chats extends React.Component {
 	state = {
+			searchKeyword: "",
 			refreshing: true,
 			isModalVisible: false,
 	}
@@ -40,13 +41,20 @@ class Chats extends React.Component {
 		})
 	}
 
-	render () {
+	setSearchKeyword(searchKeyword) {
+		this.setState({searchKeyword})
+	}
 
+	deleteSearchKeyword() {
+		this.setState({searchKeyword: ""});
+	}
+
+	render () {
 		console.log('CHATS CHATHS A CHATHAS CHHATHS CHATTTSSS')
 		console.log(this.props.chats.chats);
 		let chatsArray;
 		if (this.props.chats.chats) {
-			chatsArray = this.props.chats.chats.map(( item, key ) =>
+			chatsArray = this.props.chats.chats.filter(elem => elem.created_at.includes(this.state.searchKeyword)).map(( item, key ) =>
 			{
 				return item != undefined && (
 						<ChatThumbnail navigation={this.props.navigation}
@@ -62,7 +70,31 @@ class Chats extends React.Component {
 		
 		return (
 				<View style={{flex: 1}}>
-			      
+					<View style={[allStyles.searchInputContainer]}>
+						<View style={[ allStyles.input, allStyles.searchInput ]}>
+						  <Icon
+						    name='search'
+						    style={allStyles.searchIcon}
+						  />
+						  <TextInput
+						  style={[ allStyles.searchInputText ]}
+						  placeholder={'Search...'}
+						  placeholderTextColor={'#8393a8'}
+						  underlineColorAndroid={'#fff'}
+						  autoCapitalize='none'
+						  autoCorrect={false}
+						  returnKeyType='search'
+						  value={ this.state.searchKeyword }
+						  onChangeText={(keyword) => this.setSearchKeyword(keyword)}
+						  />
+						  <TouchableOpacity onPress={this.deleteSearchKeyword.bind(this)}>
+						      <TabBarIcon
+						        name='md-close'
+						        style={[allStyles.searchIcon, allStyles.searchDeleteIcon]}
+						      />
+						  </TouchableOpacity>
+						</View>
+					</View>
 			      <View style={allStyles.container}>
 			      	{
 			      		this.state.refreshing ? <Loading /> : ( 
@@ -75,16 +107,12 @@ class Chats extends React.Component {
 					          }>
 				      		{
 								!this.state.searching && (
-										<View style={[styles.friendsList, allStyles.section, allStyles.sectionClear]}>
+										<View style={[allStyles.section, allStyles.sectionClear]}>
 								 		{
 								 			this.props.chats.chats.length > 0 ? chatsArray :
 											(
 												<View style={[ allStyles.section, allStyles.sectionClear ]}>
 													<Text style={[ allStyles.sectionMessage ]}>No chats yet! Start a new conversation with a friend right now.</Text>
-														<TouchableOpacity onPress={() => this.refs.searchInput.focus()} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.grayButton ]}>
-												        	<TabBarIcon name="md-add" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-												        	<Text style={allStyles.whiteText}>New chat</Text>
-												        </TouchableOpacity>
 												</View>
 											)
 										}

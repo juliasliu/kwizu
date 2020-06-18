@@ -214,6 +214,23 @@ class SearchScreen extends React.Component {
 					      initialLayout={{ width: Dimensions.get('window').width }}
 							renderTabBar={renderTabBar}
 					    />
+						<Modal isVisible={this.state.isModalVisible} 
+					      coverScreen={false} 
+					      backdropOpacity={0} 
+					      onBackdropPress={() => this.props.navigation.navigate("Profile")} 
+					      animationIn="slideInDown"
+					      animationOut="slideOutUp"
+					      style={[ allStyles.modal ]}>
+					      <View style={[ allStyles.card, allStyles.modalView, allStyles.modalViewDanger ]}>
+					        <Text style={ allStyles.modalTitle }>Oh no, something went wrong.</Text>
+					        <TouchableOpacity onPress={() => this.props.navigation.navigate("Profile")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
+					        	<Text>Go to Profile</Text>
+					        </TouchableOpacity>
+					        <TouchableOpacity onPress={() => this.props.navigation.dispatch(StackActions.pop(1))} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.clearButton ]}>
+					        	<Text style={ allStyles.whiteText }>Go Back</Text>
+					        </TouchableOpacity>
+					      </View>
+					    </Modal>
 				</View>
 		  );
 		}

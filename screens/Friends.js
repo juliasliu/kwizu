@@ -21,6 +21,7 @@ class Friends extends React.Component {
 	state = {
 			friends: [],
 			friends_received: [],
+			searchKeyword: "",
 			isOwnProfile: false,
 			refreshing: true,
 			isModalVisible: false,
@@ -56,16 +57,25 @@ class Friends extends React.Component {
 	setIndex(index) {
 		this.setState({index: index});
 	}
+	
+	setSearchKeyword(searchKeyword) {
+		this.setState({searchKeyword})
+	}
+
+	deleteSearchKeyword() {
+		this.setState({searchKeyword: ""});
+	}
 
 	render () {
 
-		let friendsArray = this.state.friends.map(( item, key ) =>
+		let friendsArray = this.state.friends.filter(elem => elem.name.toLowerCase().includes(this.state.searchKeyword.toLowerCase()) || elem.username.toLowerCase().includes(this.state.searchKeyword.toLowerCase()))
+		friendsArray = friendsArray.map(( item, key ) =>
 		{
 			return item != undefined && (
 					<ProfileThumbnail navigation={this.props.navigation}
 					user={item}
 					key={key}
-					style={[ (key === this.state.friends.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
+					style={[ (key === friendsArray.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
 							 (key === 0) ? allStyles.topProfileThumbnailCard : null,
 						]} />
 			)
@@ -85,39 +95,64 @@ class Friends extends React.Component {
 		
 		let FirstRoute = () => (
 				<View style={{flex: 1}}>
-				{
-					this.state.refreshing ? <Loading /> : (
-						<ScrollView style={allStyles.contentContainer}
-			      		refreshControl={
-				              <RefreshControl
-				              refreshing={this.state.refreshing}
-				              onRefresh={this._onRefresh}
-				            />
-				          }>
-				      	<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton ]}
-			                onPress={() => alert("")}>
-							<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-							<Text style={[ allStyles.whiteText ]}>Add from Facebook</Text>
-						</TouchableOpacity>
-				      	<View style={[styles.friendsList, allStyles.container]}>
-							{
-								this.state.friends.length > 0 ? friendsArray :
-									(
-											this.state.isOwnProfile ? (
-														<View style={[ allStyles.section, allStyles.sectionClear ]}>
-															<Text style={[ allStyles.sectionMessage ]}>No friends yet! Find people by taking more kwizzes or import your friends from Facebook!</Text>
-														</View>
-													) : (
-														<View style={[ allStyles.section, allStyles.sectionClear ]}>
-															<Text style={[ allStyles.sectionMessage ]}>This user has no friends yet. Be their first friend!</Text>
-														</View>
-													)
-									)
-							}
+					<View style={[allStyles.searchInputContainer]}>
+						<View style={[ allStyles.input, allStyles.searchInput ]}>
+						  <Icon
+						    name='search'
+						    style={allStyles.searchIcon}
+						  />
+						  <TextInput
+						  style={[ allStyles.searchInputText ]}
+						  placeholder={'Search...'}
+						  placeholderTextColor={'#8393a8'}
+						  underlineColorAndroid={'#fff'}
+						  autoCapitalize='none'
+						  autoCorrect={false}
+						  returnKeyType='search'
+						  value={ this.state.searchKeyword }
+						  onChangeText={(keyword) => this.setSearchKeyword(keyword)}
+						  />
+						  <TouchableOpacity onPress={this.deleteSearchKeyword.bind(this)}>
+						      <TabBarIcon
+						        name='md-close'
+						        style={[allStyles.searchIcon, allStyles.searchDeleteIcon]}
+						      />
+						  </TouchableOpacity>
 						</View>
-						</ScrollView>
-						)
-				}
+					</View>
+					{
+						this.state.refreshing ? <Loading /> : (
+							<ScrollView style={allStyles.contentContainer}
+				      		refreshControl={
+					              <RefreshControl
+					              refreshing={this.state.refreshing}
+					              onRefresh={this._onRefresh}
+					            />
+					          }>
+					      	<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton ]}
+				                onPress={() => alert("")}>
+								<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+								<Text style={[ allStyles.whiteText ]}>Add from Facebook</Text>
+							</TouchableOpacity>
+					      	<View style={[allStyles.section, allStyles.sectionClear]}>
+								{
+									this.state.friends.length > 0 ? friendsArray :
+										(
+												this.state.isOwnProfile ? (
+															<View style={[ allStyles.section, allStyles.sectionClear ]}>
+																<Text style={[ allStyles.sectionMessage ]}>No friends yet! Find people by taking more kwizzes or import your friends from Facebook!</Text>
+															</View>
+														) : (
+															<View style={[ allStyles.section, allStyles.sectionClear ]}>
+																<Text style={[ allStyles.sectionMessage ]}>This user has no friends yet. Be their first friend!</Text>
+															</View>
+														)
+										)
+								}
+							</View>
+							</ScrollView>
+							)
+					}
 					<Modal isVisible={this.state.isModalVisible} 
 				      coverScreen={false} 
 				      backdropOpacity={0} 
@@ -149,7 +184,7 @@ class Friends extends React.Component {
 									onRefresh={this._onRefresh}
 									/>
 							}>
-							<View style={[styles.friendsList, allStyles.container]}>
+							<View style={[allStyles.section, allStyles.sectionClear]}>
 							{
 								this.state.friends_received.length > 0 ? friendsReceivedArray :
 									(

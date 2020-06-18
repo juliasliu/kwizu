@@ -100,7 +100,7 @@ class ChatQuiz extends React.Component {
 							{
 								this.state.opened ? (
 									<TouchableOpacity style={[ styles.chatMessageDescriptionContainer, styles.chatMessageDescriptionContainerRight, styles.chatQuizMessageDescriptionContainer ]} 
-										onPress={() => this.props.navigation.navigate('Kwiz Result', { quiz_id: this.state.quiz.id, user_id: this.props.user_id })}>
+										onPress={() => this.props.navigation.push('Kwiz Result', { quiz_id: this.state.quiz.id, user_id: this.props.user_id })}>
 										<View style={[allStyles.card, allStyles.quizResultImageContainer, styles.chatQuizImageContainer, styles.chatMessageImageContainerRight]}>
 											{
 												this.showQuizImage()
@@ -126,7 +126,7 @@ class ChatQuiz extends React.Component {
 							{
 								this.state.opened ? (
 									<TouchableOpacity style={[ styles.chatMessageDescriptionContainer, styles.chatQuizMessageDescriptionContainer ]} 
-										onPress={() => this.props.navigation.navigate('Kwiz Result', { quiz_id: this.state.quiz.id, user_id: this.props.user_id })}>
+										onPress={() => this.props.navigation.push('Kwiz Result', { quiz_id: this.state.quiz.id, user_id: this.props.user_id })}>
 										<View style={[allStyles.card, allStyles.quizResultImageContainer, styles.chatQuizImageContainer]}>
 											{
 												this.showQuizImage()

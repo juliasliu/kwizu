@@ -19,6 +19,7 @@ import CheckBox from 'react-native-check-box'
 import Icon5 from 'react-native-vector-icons/FontAwesome5'
 import Modal from 'react-native-modal';
 import { StackActions } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
@@ -35,6 +36,7 @@ class Leaderboard extends React.Component {
 			quizzings: [],
 			isOwner: false,			// if the logged in user own this quiz, see all users not just friends
 			usersForResult: {},		// dictionary { result_id: users }
+			searchKeyword: "",
 			refreshing: true,
 			isModalVisible: false,
 	}
@@ -93,6 +95,14 @@ class Leaderboard extends React.Component {
 		}
 	}
 	
+	setSearchKeyword(searchKeyword) {
+		this.setState({searchKeyword})
+	}
+
+	deleteSearchKeyword() {
+		this.setState({searchKeyword: ""});
+	}
+	
 	render() {
 		
 		let usersArrayForResult = (result_id) => {
@@ -124,7 +134,8 @@ class Leaderboard extends React.Component {
 			
 		}
 		
-		let resultsArray = this.state.results.map(( item, key ) =>
+		let resultsArray = this.state.results.filter(elem => elem.title.toLowerCase().includes(this.state.searchKeyword.toLowerCase()))
+		resultsArray = resultsArray.map(( item, key ) =>
 		{
 			return item != undefined && (
 					<View 
@@ -149,6 +160,31 @@ class Leaderboard extends React.Component {
 		
 		return (
 				<View style={allStyles.container}>
+					<View style={[allStyles.searchInputContainer]}>
+						<View style={[ allStyles.input, allStyles.searchInput ]}>
+						  <Icon
+						    name='search'
+						    style={allStyles.searchIcon}
+						  />
+						  <TextInput
+						  style={[ allStyles.searchInputText ]}
+						  placeholder={'Search...'}
+						  placeholderTextColor={'#8393a8'}
+						  underlineColorAndroid={'#fff'}
+						  autoCapitalize='none'
+						  autoCorrect={false}
+						  returnKeyType='search'
+						  value={ this.state.searchKeyword }
+						  onChangeText={(keyword) => this.setSearchKeyword(keyword)}
+						  />
+						  <TouchableOpacity onPress={this.deleteSearchKeyword.bind(this)}>
+						      <TabBarIcon
+						        name='md-close'
+						        style={[allStyles.searchIcon, allStyles.searchDeleteIcon]}
+						      />
+						  </TouchableOpacity>
+						</View>
+					</View>
 					{
 						this.state.refreshing ? <Loading /> : (
 							<ScrollView style={[allStyles.contentContainer, styles.quizFormContainer ]}

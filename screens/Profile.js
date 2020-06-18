@@ -110,8 +110,13 @@ class Profile extends React.Component {
 									<ProfileCard user={this.state.user}
 										navigation={this.props.navigation}
 									/>
-									<View style={allStyles.section}>
-										<Text style={[ allStyles.sectionTitle, {marginTop: 20} ]}>Kwiz Feed</Text>
+									<View style={[allStyles.section, {marginTop: 20}]}>
+										<View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+											<Text style={[ allStyles.sectionTitle ]}>Kwiz Feed</Text>
+							   				<TouchableOpacity onPress={() => this.props.navigation.push("Profile Kwizzes", {user_id: this.state.user.id, type: "taken"})}>
+							   					<Text style={allStyles.sectionSubtitle}>View all</Text>
+							   				</TouchableOpacity>
+							   			</View>
 								      	{ this.state.isOwnProfile ?
 								      		<Text style={allStyles.sectionSubtitle}>The kwizzes you have taken will show up here. See if your friends also got the same results!</Text>
 								      		: <Text style={allStyles.sectionSubtitle}>{this.state.user.name} has taken these kwizzes. Take them to find out if you got the same results!</Text> }
@@ -142,13 +147,23 @@ class Profile extends React.Component {
 								   		{ this.state.isOwnProfile ?
 								   				(
 												   		<View>
-									   						<Text style={allStyles.sectionTitle}>Your Kwizzes</Text>
+									   						<View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+												   				<Text style={allStyles.sectionTitle}>Your Kwizzes</Text>
+												   				<TouchableOpacity onPress={() => this.props.navigation.push("Profile Kwizzes", {user_id: this.state.user.id, type: "created"})}>
+												   					<Text style={allStyles.sectionSubtitle}>View all</Text>
+												   				</TouchableOpacity>
+												   			</View>
 									   						<Text style={allStyles.sectionSubtitle}>All your homemade kwizzes show up here. Edit them, share them, or even create a new one in Home!</Text>
 													    </View>
 								   					)
 									      		: (
 												   		<View>
-									   						<Text style={allStyles.sectionTitle}>{this.state.user.name}'s Kwizzes</Text>
+												   			<View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+												   				<Text style={allStyles.sectionTitle}>{this.state.user.name}'s Kwizzes</Text>
+												   				<TouchableOpacity onPress={() => this.props.navigation.push("Profile Kwizzes", {user_id: this.state.user.id, type: "created"})}>
+												   					<Text style={allStyles.sectionSubtitle}>View all</Text>
+												   				</TouchableOpacity>
+													   		</View>
 										      				<Text style={allStyles.sectionSubtitle}>Check out the kwizzes {this.state.user.name} has created! Share the results that you got with your friends!</Text>
 													    </View>
 									      				)

@@ -178,9 +178,6 @@ const styles = StyleSheet.create({
 		  color: "#B2BECF",
 		  paddingLeft: 10,
 	  },
-	  friendsList: {
-		  marginTop: 20,
-	  },
 	  chatContainer: { 
 		  flexGrow: 1, 
 		  justifyContent: 'space-between', 

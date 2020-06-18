@@ -24,6 +24,7 @@ import Leaderboard from '../screens/Leaderboard';
 import Match from '../screens/Match';
 
 import Profile from '../screens/Profile' 
+import ProfileQuizzes from '../screens/ProfileQuizzes'
 import Friends from '../screens/Friends' 
 import Requests from '../screens/Requests' 
 import Chats from '../screens/Chats' 
@@ -164,6 +165,11 @@ class HomeStackScreen extends React.Component {
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#B2BECF',
 			      }} />
+			      <HomeStack.Screen name="Profile Kwizzes" component={ProfileQuizzes} options={{
+			    	  headerTitle: 'Kwizzes', 
+			    	  headerTitleStyle: { color: '#515d6e' },
+			    	  headerTintColor: '#B2BECF',
+			      }} />
 			      <HomeStack.Screen name="Friends" component={Friends} options={{
 			    	  headerTitle: 'Friends', 
 					  headerTitleStyle: { color: '#515d6e' },
@@ -245,6 +251,11 @@ function ProfileStackScreen({navigation}) {
     				  style={[ allStyles.headerIcon ]}
     			  />
     	  )
+      }} />
+      <ProfileStack.Screen name="Profile Kwizzes" component={ProfileQuizzes} options={{
+    	  headerTitle: 'Kwizzes', 
+    	  headerTitleStyle: { color: '#515d6e' },
+    	  headerTintColor: '#B2BECF',
       }} />
       <ProfileStack.Screen name="Friends" component={Friends} options={{
     	  headerTitle: 'Friends', 
