@@ -41,6 +41,12 @@ class ChatMessage extends React.Component {
 	}
 		
 	render() {
+		
+		let navigateToProfile = () => {
+			console.log("hi")
+			this.props.navigation.push("Profile", {user_id: this.props.user.id})
+		}
+		
 		return (
 				<View style={{flex: 1}}>
 				{
@@ -59,9 +65,10 @@ class ChatMessage extends React.Component {
 					) : (
 						// if other user, float left
 						<View style={[styles.chatMessageContainer]}>
-							<View style={[styles.profilePictureContainer, styles.chatMessagePictureContainer]}>
+							<TouchableOpacity style={[styles.profilePictureContainer, styles.chatMessagePictureContainer]}
+							onPress={navigateToProfile}>
 								{ this.showPickedImage() }
-							</View>
+							</TouchableOpacity>
 							<View style={[styles.chatMessageDescriptionContainer]}>
 								<Text style={[styles.chatMessageDescription]}>
 									{ this.props.message.text }

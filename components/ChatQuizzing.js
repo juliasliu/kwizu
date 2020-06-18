@@ -88,6 +88,12 @@ class ChatQuiz extends React.Component {
 	}
 		
 	render() {
+		
+		let navigateToProfile = () => {
+			console.log("hi")
+			this.props.navigation.push("Profile", {user_id: this.props.user.id})
+		}
+		
 		return (
 				<View style={{flex: 1}}>
 				{
@@ -120,9 +126,10 @@ class ChatQuiz extends React.Component {
 					) : (
 						// if other user, float left
 						<View style={[styles.chatMessageContainer]}>
-							<View style={[styles.profilePictureContainer, styles.chatMessagePictureContainer]}>
+							<TouchableOpacity style={[styles.profilePictureContainer, styles.chatMessagePictureContainer]}
+							onPress={navigateToProfile}>
 								{ this.showPickedImage() }
-							</View>
+							</TouchableOpacity>
 							{
 								this.state.opened ? (
 									<TouchableOpacity style={[ styles.chatMessageDescriptionContainer, styles.chatQuizMessageDescriptionContainer ]} 

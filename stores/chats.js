@@ -179,7 +179,6 @@ class Chats {
 
 	handleDisconnected = () => {
 		console.log("HANDLE NO  DICSCONENT")
-		this.handleErrors();
 	}
 	
 	handleSuccess(chat) {

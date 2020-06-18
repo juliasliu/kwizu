@@ -21,7 +21,6 @@ import styles from '../styles/ProfileScreen';
 class Chats extends React.Component {
 	
 	state = {
-			users: [],
 			message: "",
 			newChat: false,
 			refreshing: true,
@@ -36,7 +35,6 @@ class Chats extends React.Component {
 	componentDidMount() {
 		const {chat_id} = this.props.route.params;
 		const {users} = this.props.route.params;
-		this.setState({users})
 		if (chat_id) {
 			this.props.chats.show(chat_id)
 			.then((res) => {
@@ -58,26 +56,28 @@ class Chats extends React.Component {
 		// if no chat title exists, make title of chat default string of users names besides yourself
 		let title = "";
 		if (!this.props.chats.chat.title) {
-			if (this.props.chats.chat.users) {
-				for (var i = 0; i < this.props.chats.chat.users.length; i++) {
-					if (this.props.chats.chat.users[i].id != this.props.users.id) {
-						title += this.props.chats.chat.users[i].name + ", ";
-					}
-				}
-			} else {
-				const {users} = this.props.route.params;
-				for (var i = 0; i < users.length; i++) {
-					if (users[i].id != this.props.users.id) {
-						title += users[i].name + ", ";
-					}
-				}
-			}
-			
-			title = title.slice(0, title.length - 2);
+			title = this.getStringOfUsers()
 		} else {
 			title = this.props.chats.chat.title
 		}
 		this.props.navigation.setOptions({headerTitle: title})
+	}
+	
+	getStringOfUsers() {
+		let title = "";
+		let users = [];
+		if (this.props.chats.chat.users) {
+			users = this.props.chats.chat.users;
+		} else {
+			users = this.props.route.params.users;
+		}
+		for (var i = 0; i < users.length; i++) {
+			if (users[i].id != this.props.users.id) {
+				title += users[i].name + ", ";
+			}
+		}
+		title = title.slice(0, title.length - 2);
+		return title;
 	}
 
 	sendMessage() {
@@ -122,11 +122,13 @@ class Chats extends React.Component {
 	}
 	
 	showChatCreatedTime() {
-		// 2020-06-16T19:38:27.257-07:00
-		const regex = /(\d+)-(\d+)-(\d+)T(\d+):(\d+):(\d+)\.(\d+)(.*)/
-		let matches = this.props.chats.chat.created_at.match(regex);
-		let [date, year, month, day, hours, minutes, seconds, milliseconds, timezone] = matches;
-		return month + "/" + day + "/" + (year % 1000);
+		if (this.props.chats.chat) {
+			// 2020-06-16T19:38:27.257-07:00
+			const regex = /(\d+)-(\d+)-(\d+)T(\d+):(\d+):(\d+)\.(\d+)(.*)/
+			let matches = this.props.chats.chat.created_at.match(regex);
+			let [date, year, month, day, hours, minutes, seconds, milliseconds, timezone] = matches;
+			return month + "/" + day + "/" + (year % 1000);
+		}
 	}
 	
 	messageToUrl(message) {
@@ -181,6 +183,7 @@ class Chats extends React.Component {
 				}
 				return item != undefined && (
 						<ChatMessage
+						navigation={this.props.navigation}
 						message={item}
 						user={item.user}
 						logged_in_user_id={this.props.users.id}
@@ -203,7 +206,7 @@ class Chats extends React.Component {
 					      		showsVerticalScrollIndicator={false}>
 						      	{
 						      		this.state.newChat ? (
-						      			<Text style={allStyles.sectionMessage}>Send a message to start a chat with {this.state.users.map((item, key) => {return item.name})}!</Text>	
+						      			<Text style={allStyles.sectionMessage}>Send a message to start a chat with {this.getStringOfUsers()}!</Text>	
 						      		) : (
 						      			<Text style={allStyles.sectionMessage}>This conversation was started {this.showChatCreatedTime()}</Text>		
 						      		)
