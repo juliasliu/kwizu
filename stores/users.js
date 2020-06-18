@@ -168,6 +168,10 @@ class Users {
 		})
 	}
 	
+	@action takenQuiz = function(quiz) {
+		if (this.user.taken_quizzes.findIndex(elem => elem.id == quiz.id) < 0) this.user.taken_quizzes.push(quiz)
+	}
+	
 	@action sendRequest = function(id) {
 		this.busy = true;
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then

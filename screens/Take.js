@@ -256,6 +256,7 @@ class Take extends React.Component {
 						console.log("failed");
 						console.log(errors);
 					});
+					this.props.users.takenQuiz(res.quiz);
 				}
 			})
 			.catch((errors) => {

@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
 	  },
 	  chatThumbnailTime: {
 		  width: '25%',
-		  minWidth: 55,
+		  minWidth: 60,
 		  color: '#515d6e',
 	  },
 	  profileChatThumbnailCheckbox: {
