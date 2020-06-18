@@ -138,7 +138,7 @@ class ChatQuiz extends React.Component {
 								) : (
 									<TouchableOpacity style={[ styles.chatMessageDescriptionContainer, styles.chatQuizMessageContainer ]} 
 										onPress={this.openThumbnail.bind(this)}>
-										<Text style={[allStyles.whiteText, allStyles.boldText]}>Sent a kwiz</Text>
+										<Text style={[allStyles.whiteText, allStyles.boldText]}>Sent a kwiz result</Text>
 									</TouchableOpacity>
 								)
 							}
