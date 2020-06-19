@@ -68,7 +68,7 @@ class Settings extends React.Component {
 							{
 								this.props.users.busy ?
 										<ActivityIndicator/> :
-								<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.redButton ]} onPress={() => alert("")}>
+								<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.blueButton ]} onPress={() => alert("")}>
 									<Text style={ allStyles.whiteText }>Submit a Ticket</Text>
 								</TouchableOpacity>
 							}
