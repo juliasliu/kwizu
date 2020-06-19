@@ -5,10 +5,12 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#F1F2F6',
-	},
-	contentContainer: {
-		flex: 1,
 		padding: 20,
+	},
+	containerNoPadding: {
+		flex: 1,
+		backgroundColor: '#F1F2F6',
+		padding: 0,
 	},
 	flexContainer: {
 		flexWrap: 'wrap', 
@@ -435,8 +437,6 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 	},
 	searchInputContainer: {
-		paddingHorizontal: 20,
-		paddingTop: 10,
 		backgroundColor: "#F1F2F6",
 	},
 	blackInputContainer: {

@@ -17,11 +17,11 @@ import styles from '../../styles/ProfileScreen';
 class Settings extends React.Component {
 	render () {
 		return (
-				<View style={allStyles.container}>
-			      <ScrollView style={allStyles.contentContainer}
-					ref={ref => {
-					    this.scrollview_ref = ref;
-					  }}>
+				<ScrollView
+				ref={ref => {
+				    this.scrollview_ref = ref;
+				  }}>
+					<View style={allStyles.container}>
 						<View style={[allStyles.card, allStyles.center]}>
 							<Text style={allStyles.heading}>Kwizu</Text>
 							<Text style={allStyles.subheading}>Quizzes + You</Text>
@@ -44,8 +44,8 @@ class Settings extends React.Component {
 								you enjoyed using our platform! It would really mean the world to us. 💖
 							</Text>
 				        </View>
-					</ScrollView>
 				</View>
+			</ScrollView>
 		)
 	}
 }

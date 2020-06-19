@@ -30,11 +30,11 @@ class Settings extends React.Component {
 	render () {
 		
 		return (
-				<View style={allStyles.container}>
-			      <ScrollView style={allStyles.contentContainer}
+			      <ScrollView
 					ref={ref => {
 					    this.scrollview_ref = ref;
 					  }}>
+				<View style={allStyles.container}>
 				      <View style={[allStyles.section, allStyles.sectionClear]}>
 					      <Switch
 					        trackColor={{ false: "#767577", true: "#81b0ff" }}
@@ -44,8 +44,8 @@ class Settings extends React.Component {
 					        value={this.state.isEnabled}
 					      />
 					  </View>
-					</ScrollView>
 				</View>
+				</ScrollView>
 		)
 	}
 }

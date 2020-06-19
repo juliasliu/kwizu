@@ -158,36 +158,39 @@ class Leaderboard extends React.Component {
 			)
 		});
 		
+		let searchInput = (
+			<View style={[allStyles.searchInputContainer]}>
+				<View style={[ allStyles.input, allStyles.searchInput ]}>
+				  <Icon
+				    name='search'
+				    style={allStyles.searchIcon}
+				  />
+				  <TextInput
+				  style={[ allStyles.searchInputText ]}
+				  placeholder={'Search...'}
+				  placeholderTextColor={'#8393a8'}
+				  underlineColorAndroid={'#fff'}
+				  autoCapitalize='none'
+				  autoCorrect={false}
+				  returnKeyType='search'
+				  value={ this.state.searchKeyword }
+				  onChangeText={(keyword) => this.setSearchKeyword(keyword)}
+				  />
+				  <TouchableOpacity onPress={this.deleteSearchKeyword.bind(this)}>
+				      <TabBarIcon
+				        name='md-close'
+				        style={[allStyles.searchIcon, allStyles.searchDeleteIcon]}
+				      />
+				  </TouchableOpacity>
+				</View>
+			</View>	
+		)
+		
 		return (
-				<View style={allStyles.container}>
-					<View style={[allStyles.searchInputContainer]}>
-						<View style={[ allStyles.input, allStyles.searchInput ]}>
-						  <Icon
-						    name='search'
-						    style={allStyles.searchIcon}
-						  />
-						  <TextInput
-						  style={[ allStyles.searchInputText ]}
-						  placeholder={'Search...'}
-						  placeholderTextColor={'#8393a8'}
-						  underlineColorAndroid={'#fff'}
-						  autoCapitalize='none'
-						  autoCorrect={false}
-						  returnKeyType='search'
-						  value={ this.state.searchKeyword }
-						  onChangeText={(keyword) => this.setSearchKeyword(keyword)}
-						  />
-						  <TouchableOpacity onPress={this.deleteSearchKeyword.bind(this)}>
-						      <TabBarIcon
-						        name='md-close'
-						        style={[allStyles.searchIcon, allStyles.searchDeleteIcon]}
-						      />
-						  </TouchableOpacity>
-						</View>
-					</View>
+				<View style={allStyles.containerNoPadding}>
 					{
 						this.state.refreshing ? <Loading /> : (
-							<ScrollView style={[allStyles.contentContainer, styles.quizFormContainer ]}
+							<ScrollView
 							showsVerticalScrollIndicator={false} 
 				      		refreshControl={
 						              <RefreshControl
@@ -195,13 +198,16 @@ class Leaderboard extends React.Component {
 						              onRefresh={this._onRefresh}
 						            />
 						          }>
-									
+							<View style={allStyles.container}>
+								{
+									searchInput
+								}
 								<View style={[ allStyles.section, allStyles.sectionClear ]}>
 									{
 										resultsArray
 									}
 								</View>
-								
+							</View>
 							</ScrollView>
 							)
 					}

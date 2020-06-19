@@ -73,7 +73,7 @@ class Requests extends React.Component {
 		})
 
 		let FirstRoute = () => (
-				<ScrollView style={allStyles.contentContainer}
+				<ScrollView
 				showsVerticalScrollIndicator={false} 
 				refreshControl={
 						<RefreshControl
@@ -95,7 +95,7 @@ class Requests extends React.Component {
 		);
 
 		let SecondRoute = () => (
-				<ScrollView style={allStyles.contentContainer}
+				<ScrollView
 				showsVerticalScrollIndicator={false} 
 				refreshControl={
 						<RefreshControl
@@ -145,7 +145,7 @@ class Requests extends React.Component {
 		);
 
 		return (
-				<View style={{flex: 1}}>
+				<View style={allStyles.containerNoPadding}>
 					<TabView
 				      navigationState={{ index: this.state.index, routes: this.state.routes }}
 				      renderScene={

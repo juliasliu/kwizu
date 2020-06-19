@@ -59,10 +59,10 @@ class HomeScreen extends React.Component {
 		}
 		
 		  return (
-		    <View style={allStyles.container}>
+		    <View style={allStyles.containerNoPadding}>
 		    {
 				this.state.refreshing ? <Loading /> : (
-			      <ScrollView style={allStyles.contentContainer}
+			      <ScrollView
 			      showsVerticalScrollIndicator={false}
 			      		refreshControl={
 			              <RefreshControl
@@ -70,33 +70,34 @@ class HomeScreen extends React.Component {
 			              onRefresh={this._onRefresh}
 			            />
 			          }>
-			      	
-				      <View style={allStyles.section}>
-				      	<Text style={allStyles.sectionTitle}>Daily</Text>
-				      	<Text style={allStyles.sectionSubtitle}>These kwizzes are updated every 24 hours. Come back every day and check them out!</Text>
-				      	<ScrollView contentContainerStyle={[ allStyles.quizThumbnailContainer ]} showsHorizontalScrollIndicator={false} horizontal= {true} decelerationRate={0} snapToInterval={250} snapToAlignment={"center"}>
-				      		{
-				      			quizzesArray(0)
+			      	<View style={allStyles.container}>
+					      <View style={allStyles.section}>
+					      	<Text style={allStyles.sectionTitle}>Daily</Text>
+					      	<Text style={allStyles.sectionSubtitle}>These kwizzes are updated every 24 hours. Come back every day and check them out!</Text>
+					      	<ScrollView contentContainerStyle={[ allStyles.quizThumbnailContainer ]} showsHorizontalScrollIndicator={false} horizontal= {true} decelerationRate={0} snapToInterval={250} snapToAlignment={"center"}>
+					      		{
+					      			quizzesArray(0)
+					      		}
+							</ScrollView>
+					      </View>
+					      <View style={allStyles.section}>
+					    	<Text style={allStyles.sectionTitle}>Seasonal</Text>
+					      	<Text style={allStyles.sectionSubtitle}>We cycle through categories of kwizzes based on the time of the year. See how you do on them!</Text>
+					    	<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} showsHorizontalScrollIndicator={false} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
+					    	{
+				      			quizzesArray(1)
 				      		}
-						</ScrollView>
-				      </View>
-				      <View style={allStyles.section}>
-				    	<Text style={allStyles.sectionTitle}>Seasonal</Text>
-				      	<Text style={allStyles.sectionSubtitle}>We cycle through categories of kwizzes based on the time of the year. See how you do on them!</Text>
-				    	<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} showsHorizontalScrollIndicator={false} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
-				    	{
-			      			quizzesArray(1)
-			      		}
-				  		</ScrollView>
-				      </View>
-				      <View style={allStyles.section}>
-				      	<Text style={allStyles.sectionTitle}>Personality</Text>
-				      	<Text style={allStyles.sectionSubtitle}>Take these kwizzes to uncover layers of your personality or just explore various fun aspects of life!</Text>
-				    	<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} showsHorizontalScrollIndicator={false} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
-				    	{
-			      			quizzesArray(2)
-			      		}
-						</ScrollView>
+					  		</ScrollView>
+					      </View>
+					      <View style={allStyles.section}>
+					      	<Text style={allStyles.sectionTitle}>Personality</Text>
+					      	<Text style={allStyles.sectionSubtitle}>Take these kwizzes to uncover layers of your personality or just explore various fun aspects of life!</Text>
+					    	<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} showsHorizontalScrollIndicator={false} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
+					    	{
+				      			quizzesArray(2)
+				      		}
+							</ScrollView>
+					      </View>
 				      </View>
 			      </ScrollView>
 			      )

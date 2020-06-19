@@ -17,11 +17,11 @@ import styles from '../../styles/ProfileScreen';
 class Settings extends React.Component {
 	render () {
 		return (
-				<View style={allStyles.container}>
-			      <ScrollView style={allStyles.contentContainer}
+			    <ScrollView
 					ref={ref => {
 					    this.scrollview_ref = ref;
 					  }}>
+					<View style={allStyles.container}>
 				      <View style={[allStyles.card, allStyles.center]}>
 						<Text style={allStyles.heading}>Community Guidelines</Text>
 						<Text style={[allStyles.text, allStyles.center]}>
@@ -32,8 +32,8 @@ class Settings extends React.Component {
 							Section body text
 						</Text>
 				      </View>
-					</ScrollView>
 				</View>
+			</ScrollView>
 		)
 	}
 }

@@ -97,7 +97,7 @@ class ProfileQuizzes extends React.Component {
 					</View>
 					{
 						this.state.refreshing ? <Loading /> : (
-				          <ScrollView style={[allStyles.contentContainer]}
+				          <ScrollView
 				          showsVerticalScrollIndicator={false} 
 				      		refreshControl={
 				              <RefreshControl

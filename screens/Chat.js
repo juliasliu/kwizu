@@ -193,7 +193,7 @@ class Chats extends React.Component {
 		}
 
 		return (
-				<View style={allStyles.container}>
+				<View style={allStyles.containerNoPadding}>
 				{
 					this.state.refreshing ? <Loading /> : (
 				      <View style={styles.chatContainer}>

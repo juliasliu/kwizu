@@ -57,9 +57,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#2F3542',
   },
-  quizFormContainer: {
-	  paddingHorizontal: 20,
-  },
   quizForm: {
 		marginVertical: 20,  
 	  },

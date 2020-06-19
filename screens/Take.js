@@ -301,10 +301,10 @@ class Take extends React.Component {
 			)
 		});
 		
-		return <View style={allStyles.container}>
+		return <View style={allStyles.containerNoPadding}>
 				{
 					this.state.refreshing ? <Loading /> : (
-						<ScrollView style={[allStyles.contentContainer, styles.quizFormContainer ]}
+						<ScrollView
 						showsVerticalScrollIndicator={false} 
 						ref={ref => {
 						    this.scrollview_ref = ref;
@@ -315,7 +315,7 @@ class Take extends React.Component {
 					              onRefresh={this._onRefresh}
 					            />
 					          }>
-							
+						<View style={allStyles.container}>
 							<Text style={ allStyles.title }>{ this.state.quiz.title }</Text>
 							
 							{
@@ -335,6 +335,7 @@ class Take extends React.Component {
 								scrollToNext={this.scrollToNext.bind(this)}
 								retakeQuiz={this.retakeQuiz.bind(this)} />
 							}
+						</View>
 						</ScrollView>
 					)
 				}

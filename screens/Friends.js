@@ -93,36 +93,39 @@ class Friends extends React.Component {
 			)
 		})
 		
+		let searchInput = (
+				<View style={[allStyles.searchInputContainer]}>
+				<View style={[ allStyles.input, allStyles.searchInput ]}>
+				  <Icon
+				    name='search'
+				    style={allStyles.searchIcon}
+				  />
+				  <TextInput
+				  style={[ allStyles.searchInputText ]}
+				  placeholder={'Search...'}
+				  placeholderTextColor={'#8393a8'}
+				  underlineColorAndroid={'#fff'}
+				  autoCapitalize='none'
+				  autoCorrect={false}
+				  returnKeyType='search'
+				  value={ this.state.searchKeyword }
+				  onChangeText={(keyword) => this.setSearchKeyword(keyword)}
+				  />
+				  <TouchableOpacity onPress={this.deleteSearchKeyword.bind(this)}>
+				      <TabBarIcon
+				        name='md-close'
+				        style={[allStyles.searchIcon, allStyles.searchDeleteIcon]}
+				      />
+				  </TouchableOpacity>
+				</View>
+			</View>	
+		)
+		
 		let FirstRoute = () => (
-				<View style={{flex: 1}}>
-					<View style={[allStyles.searchInputContainer]}>
-						<View style={[ allStyles.input, allStyles.searchInput ]}>
-						  <Icon
-						    name='search'
-						    style={allStyles.searchIcon}
-						  />
-						  <TextInput
-						  style={[ allStyles.searchInputText ]}
-						  placeholder={'Search...'}
-						  placeholderTextColor={'#8393a8'}
-						  underlineColorAndroid={'#fff'}
-						  autoCapitalize='none'
-						  autoCorrect={false}
-						  returnKeyType='search'
-						  value={ this.state.searchKeyword }
-						  onChangeText={(keyword) => this.setSearchKeyword(keyword)}
-						  />
-						  <TouchableOpacity onPress={this.deleteSearchKeyword.bind(this)}>
-						      <TabBarIcon
-						        name='md-close'
-						        style={[allStyles.searchIcon, allStyles.searchDeleteIcon]}
-						      />
-						  </TouchableOpacity>
-						</View>
-					</View>
+				<View style={allStyles.containerNoPadding}>
 					{
 						this.state.refreshing ? <Loading /> : (
-							<ScrollView style={allStyles.contentContainer}
+							<ScrollView
 							showsVerticalScrollIndicator={false}
 				      		refreshControl={
 					              <RefreshControl
@@ -130,26 +133,31 @@ class Friends extends React.Component {
 					              onRefresh={this._onRefresh}
 					            />
 					          }>
-					      	<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton ]}
-				                onPress={() => alert("")}>
-								<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={[ allStyles.whiteText ]}>Add from Facebook</Text>
-							</TouchableOpacity>
-					      	<View style={[allStyles.section, allStyles.sectionClear]}>
+							<View style={allStyles.container}>
 								{
-									this.state.friends.length > 0 ? friendsArray :
-										(
-												this.state.isOwnProfile ? (
-															<View style={[ allStyles.section, allStyles.sectionClear ]}>
-																<Text style={[ allStyles.sectionMessage ]}>No friends yet! Find people by taking more kwizzes or import your friends from Facebook!</Text>
-															</View>
-														) : (
-															<View style={[ allStyles.section, allStyles.sectionClear ]}>
-																<Text style={[ allStyles.sectionMessage ]}>This user has no friends yet. Be their first friend!</Text>
-															</View>
-														)
-										)
+									searchInput
 								}
+						      	<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton ]}
+					                onPress={() => alert("")}>
+									<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+									<Text style={[ allStyles.whiteText ]}>Add from Facebook</Text>
+								</TouchableOpacity>
+						      	<View style={[allStyles.section, allStyles.sectionClear]}>
+									{
+										this.state.friends.length > 0 ? friendsArray :
+											(
+													this.state.isOwnProfile ? (
+																<View style={[ allStyles.section, allStyles.sectionClear ]}>
+																	<Text style={[ allStyles.sectionMessage ]}>No friends yet! Find people by taking more kwizzes or import your friends from Facebook!</Text>
+																</View>
+															) : (
+																<View style={[ allStyles.section, allStyles.sectionClear ]}>
+																	<Text style={[ allStyles.sectionMessage ]}>This user has no friends yet. Be their first friend!</Text>
+																</View>
+															)
+											)
+									}
+								</View>
 							</View>
 							</ScrollView>
 							)
@@ -175,10 +183,10 @@ class Friends extends React.Component {
 		);
 
 		let SecondRoute = () => (
-				<View style={{flex: 1}}>
+				<View style={allStyles.containerNoPadding}>
 				{
 					!this.state.refreshing && (
-							<ScrollView style={allStyles.contentContainer}
+							<ScrollView
 							showsVerticalScrollIndicator={false}
 							refreshControl={
 									<RefreshControl
@@ -186,15 +194,17 @@ class Friends extends React.Component {
 									onRefresh={this._onRefresh}
 									/>
 							}>
-							<View style={[allStyles.section, allStyles.sectionClear]}>
-							{
-								this.state.friends_received.length > 0 ? friendsReceivedArray :
-									(
-											<View style={[ allStyles.section, allStyles.sectionClear ]}>
-											<Text style={[ allStyles.sectionMessage ]}>You have no incoming friend requests! You're all caught up.</Text>
-											</View>
-									)
-							}
+							<View style={allStyles.container}>
+								<View style={[allStyles.section, allStyles.sectionClear]}>
+								{
+									this.state.friends_received.length > 0 ? friendsReceivedArray :
+										(
+												<View style={[ allStyles.section, allStyles.sectionClear ]}>
+												<Text style={[ allStyles.sectionMessage ]}>You have no incoming friend requests! You're all caught up.</Text>
+												</View>
+										)
+								}
+								</View>
 							</View>
 							</ScrollView>
 						)

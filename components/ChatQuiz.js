@@ -83,7 +83,7 @@ class ChatQuiz extends React.Component {
 		}
 		
 		return (
-				<View style={{flex: 1}}>
+				<View style={allStyles.containerNoPadding}>
 				{
 					// if you, float right
 					this.props.user.id == this.props.logged_in_user_id ? (

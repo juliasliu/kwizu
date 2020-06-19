@@ -25,18 +25,18 @@ class Settings extends React.Component {
 
 	render () {
 		return (
-				<View style={allStyles.container}>
-			      <ScrollView style={allStyles.contentContainer}
+			 <ScrollView
 					ref={ref => {
 					    this.scrollview_ref = ref;
 					  }}>
+			      <View style={allStyles.container}>
 						<View style={[allStyles.section, allStyles.sectionClear]}>
 							<Text style={allStyles.sectionTitle}>Daily</Text>
 							<Text style={allStyles.sectionSubtitle}>These kwizzes are updated every 24 hours. Come back every day and check them out!</Text>
 							<Text style={allStyles.sectionText}>asfkldjah aklsjfd a</Text>
 				        </View>
-					</ScrollView>
 				</View>
+			</ScrollView>
 		)
 	}
 }

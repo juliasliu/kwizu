@@ -143,10 +143,10 @@ class Customize extends React.Component {
 
 	render () {
 
-		return <View style={allStyles.container}>
+		return <View style={allStyles.containerNoPadding}>
 				{
 					this.state.refreshing ? <Loading /> : (
-						<ScrollView style={allStyles.contentContainer}
+						<ScrollView
 						showsVerticalScrollIndicator={false}
 							ref={ref => {
 							    this.scrollview_ref = ref;
@@ -155,7 +155,7 @@ class Customize extends React.Component {
 					              refreshing={this.state.refreshing}
 					              onRefresh={this._onRefresh}
 					            />
-					      		<View style={{marginBottom: 50}}>
+						      <View style={allStyles.container}>
 								{
 									this.state.errors &&
 									<View style={ allStyles.errors }
@@ -260,29 +260,29 @@ class Customize extends React.Component {
 											<Text style={ allStyles.whiteText }>Save Profile</Text>
 										</TouchableOpacity>
 									}
-								</View>
 							</View>
-						</ScrollView>
-					)
+					</View>
+				</ScrollView>
+				)
 				}
-					<Modal isVisible={this.state.isModalVisible} 
-				      coverScreen={false} 
-				      backdropOpacity={0} 
-				      onBackdropPress={() => this.props.navigation.navigate("Profile")} 
-				      animationIn="slideInDown"
-				      animationOut="slideOutUp"
-				      style={[ allStyles.modal ]}>
-				      <View style={[ allStyles.card, allStyles.modalView, allStyles.modalViewDanger ]}>
-				        <Text style={ allStyles.modalTitle }>Oh no, something went wrong.</Text>
-				        <TouchableOpacity onPress={() => this.props.navigation.navigate("Profile")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
-				        	<Text>Go to Profile</Text>
-				        </TouchableOpacity>
-				        <TouchableOpacity onPress={() => this.props.navigation.dispatch(StackActions.pop(1))} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.clearButton ]}>
-				        	<Text style={ allStyles.whiteText }>Go Back</Text>
-				        </TouchableOpacity>
-				      </View>
-				    </Modal>
-				</View>
+				<Modal isVisible={this.state.isModalVisible} 
+			      coverScreen={false} 
+			      backdropOpacity={0} 
+			      onBackdropPress={() => this.props.navigation.navigate("Profile")} 
+			      animationIn="slideInDown"
+			      animationOut="slideOutUp"
+			      style={[ allStyles.modal ]}>
+			      <View style={[ allStyles.card, allStyles.modalView, allStyles.modalViewDanger ]}>
+			        <Text style={ allStyles.modalTitle }>Oh no, something went wrong.</Text>
+			        <TouchableOpacity onPress={() => this.props.navigation.navigate("Profile")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
+			        	<Text>Go to Profile</Text>
+			        </TouchableOpacity>
+			        <TouchableOpacity onPress={() => this.props.navigation.dispatch(StackActions.pop(1))} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.clearButton ]}>
+			        	<Text style={ allStyles.whiteText }>Go Back</Text>
+			        </TouchableOpacity>
+			      </View>
+			    </Modal>
+		</View>
 	}
 }
 export default Customize;

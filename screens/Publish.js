@@ -47,7 +47,7 @@ class Publish extends React.Component {
 	
 	render() {
 		return this.props.quizzes.quiz && (
-				<View style={{flex: 1}}>
+				<View style={allStyles.containerNoPadding}>
 					<ScrollView style={[allStyles.container, styles.quizFormContainer ]}
 					showsVerticalScrollIndicator={false}>
 					

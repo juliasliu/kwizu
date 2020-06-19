@@ -97,7 +97,7 @@ class SearchScreen extends React.Component {
 		})	
 		
 		let FirstRoute = () => (
-				<ScrollView style={[allStyles.contentContainer]}
+				<ScrollView
 				showsVerticalScrollIndicator={false} 
 		      		refreshControl={
 		              <RefreshControl
@@ -128,7 +128,7 @@ class SearchScreen extends React.Component {
 		);
 
 		let SecondRoute = () => (
-				<ScrollView style={allStyles.contentContainer}
+				<ScrollView
 				showsVerticalScrollIndicator={false} 
 				refreshControl={
 						<RefreshControl

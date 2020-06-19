@@ -467,10 +467,10 @@ class New extends React.Component {
 							)
 		}
 		
-		return <View style={allStyles.container}>
+		return <View style={allStyles.containerNoPadding}>
 				{
 					this.state.refreshing ? <Loading /> : (
-					<KeyboardAwareScrollView style={[allStyles.contentContainer, styles.quizFormContainer ]}
+					<KeyboardAwareScrollView
 					showsVerticalScrollIndicator={false} 
 					innerRef={ref => {
 					    this.scrollview_ref = ref;
@@ -481,176 +481,177 @@ class New extends React.Component {
 			              onRefresh={this._onRefresh}
 			            />
 			          }>
-					
-					<View style={[ allStyles.section, allStyles.sectionClear ]}>
-						{
-							(this.state.isEditing) ? (
-									<Text style={allStyles.sectionTitle}>Edit {this.state.type} Kwiz</Text>	
-							) : (
-									<Text style={allStyles.sectionTitle}>New {this.state.type} Kwiz</Text>		
-							)
-						}	
-					
-						{
-							this.state.errors &&
-							<View style={ allStyles.errors }
-							onLayout={event => {
-						        const layout = event.nativeEvent.layout;
-						        this.scrollview_ref.scrollTo({
-						            x: 0,
-						            y: layout.y,
-						            animated: true,
-						        });
-						      	}}>
-								{
-									this.state.errors.map(( item, key ) =>
-									{
-										return <Text key={key} style={ allStyles.errorText }>• {item}</Text> 
-									})
-								}
-							</View>
-						} 
-						{
-							this.state.success &&
-							<View style={ allStyles.success }
-							onLayout={event => {
-						        const layout = event.nativeEvent.layout;
-						        this.scrollview_ref.scrollTo({
-						            x: 0,
-						            y: layout.y,
-						            animated: true,
-						        });
-						      	}}>
-								<Text>{this.state.success}</Text> 
-							</View>
-						} 
+					<View style={allStyles.container}>
+						<View style={[ allStyles.section, allStyles.sectionClear ]}>
+							{
+								(this.state.isEditing) ? (
+										<Text style={allStyles.sectionTitle}>Edit {this.state.type} Kwiz</Text>	
+								) : (
+										<Text style={allStyles.sectionTitle}>New {this.state.type} Kwiz</Text>		
+								)
+							}	
 						
-						<TextInput
-							returnKeyType='next' 
-							style={ allStyles.input } 
-							onChangeText={(title) => this.setState({title})} 
-							value={this.state.title} 
-							placeholder='Title (150 chars max)'
-						/>
-					
-							{this.showPickedImage("quiz")}
-
-				          	{
-				          		this.state.busy ? 
-									<ActivityIndicator/> :
-										(
-											this.getPickedImage("quiz") ? (
-												<View style={[ styles.imageButtonContainer ]}>
-													<TouchableOpacity style={[ styles.imageButtonEdit, allStyles.button, allStyles.grayButton ]}
+							{
+								this.state.errors &&
+								<View style={ allStyles.errors }
+								onLayout={event => {
+							        const layout = event.nativeEvent.layout;
+							        this.scrollview_ref.scrollTo({
+							            x: 0,
+							            y: layout.y,
+							            animated: true,
+							        });
+							      	}}>
+									{
+										this.state.errors.map(( item, key ) =>
+										{
+											return <Text key={key} style={ allStyles.errorText }>• {item}</Text> 
+										})
+									}
+								</View>
+							} 
+							{
+								this.state.success &&
+								<View style={ allStyles.success }
+								onLayout={event => {
+							        const layout = event.nativeEvent.layout;
+							        this.scrollview_ref.scrollTo({
+							            x: 0,
+							            y: layout.y,
+							            animated: true,
+							        });
+							      	}}>
+									<Text>{this.state.success}</Text> 
+								</View>
+							} 
+							
+							<TextInput
+								returnKeyType='next' 
+								style={ allStyles.input } 
+								onChangeText={(title) => this.setState({title})} 
+								value={this.state.title} 
+								placeholder='Title (150 chars max)'
+							/>
+						
+								{this.showPickedImage("quiz")}
+	
+					          	{
+					          		this.state.busy ? 
+										<ActivityIndicator/> :
+											(
+												this.getPickedImage("quiz") ? (
+													<View style={[ styles.imageButtonContainer ]}>
+														<TouchableOpacity style={[ styles.imageButtonEdit, allStyles.button, allStyles.grayButton ]}
+											                onPress={() => this.getPhotoFromGallery("quiz")}>
+															<TabBarIcon name="md-image" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+															<Text style={[ allStyles.whiteText ]}>Edit Thumbnail</Text>
+														</TouchableOpacity>
+														<TouchableOpacity style={[ styles.imageButtonDelete, allStyles.button, allStyles.redButton ]}
+											                onPress={() => this.deletePhoto("quiz")}>
+															<TabBarIcon name="md-trash" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+															<Text style={[ allStyles.whiteText ]}>Delete</Text>
+														</TouchableOpacity>
+													</View>
+												) : (
+													<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton ]}
 										                onPress={() => this.getPhotoFromGallery("quiz")}>
 														<TabBarIcon name="md-image" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-														<Text style={[ allStyles.whiteText ]}>Edit Thumbnail</Text>
+														<Text style={[ allStyles.whiteText ]}>Add Thumbnail</Text>
 													</TouchableOpacity>
-													<TouchableOpacity style={[ styles.imageButtonDelete, allStyles.button, allStyles.redButton ]}
-										                onPress={() => this.deletePhoto("quiz")}>
-														<TabBarIcon name="md-trash" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-														<Text style={[ allStyles.whiteText ]}>Delete</Text>
-													</TouchableOpacity>
-												</View>
-											) : (
-												<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton ]}
-									                onPress={() => this.getPhotoFromGallery("quiz")}>
-													<TabBarIcon name="md-image" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-													<Text style={[ allStyles.whiteText ]}>Add Thumbnail</Text>
-												</TouchableOpacity>
+												)
 											)
-										)
-				          	}
-						
-					</View>
-
-					{
-						resultSection()
-					}
-					
-					<View style={[ allStyles.section ]}>
-						<Text style={allStyles.sectionTitle}>Kwiz Questions</Text>
-						<Text style={allStyles.sectionSubtitle}>Make sure the number of choices for each question match the total number of results above.</Text>
-						
+					          	}
+							
+						</View>
+	
 						{
-							questionsArray
+							resultSection()
 						}
 						
-						<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.greenButton ]}
-			                onPress={this.onPressAddQuestion.bind(this)}>
-							<TabBarIcon name="md-add" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-							<Text style={[ allStyles.whiteText ]}>New question</Text>
-						</TouchableOpacity>
-					</View>
-						
-					{
-						(this.state.isEditing) ? (
-								<View style={[ allStyles.section, allStyles.sectionClear ]}>
-								{
-									this.state.public ? 
-											(
-													<View>
-													{
-														this.props.quizzes.busy ? 
-														<ActivityIndicator/> :
-														<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
-											                onPress={() => this.onPressCreate(true)}>
-															<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-															<Text style={[ allStyles.whiteText ]}>Update your kwiz</Text>
-														</TouchableOpacity>
-													}
-													<Text style={[ allStyles.sectionSubtitle, styles.quizSaveText ]}>The changes to your kwiz will automatically be public once you update it. Removing results, choices, or questions will result in users who took the kwiz to lose their saved responses.</Text>
-													</View>
-											) : (
-													<View>
-													{
-														this.props.quizzes.busy ? 
-														<ActivityIndicator/> :
-															<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
-											                onPress={() => this.onPressCreate(false)}>
-															<TabBarIcon name="md-create" style={[ allStyles.buttonIcon ]}/>
-															<Text>Save your kwiz</Text>
-														</TouchableOpacity>
-													}
-													{
-														this.props.quizzes.busy ? 
-														<ActivityIndicator/> :
-														<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
-											                onPress={() => this.onPressCreate(true)}>
-															<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-															<Text style={[ allStyles.whiteText ]}>Publish and share</Text>
-														</TouchableOpacity>
-													}
-													<Text style={[ allStyles.sectionSubtitle, styles.quizSaveText ]}>You can save a draft if you are not finished editing your kwiz. You can publish later when you're ready.</Text>
-													</View>
-											)
-								}
-								</View>
-								) : (
-										<View style={[ allStyles.section, allStyles.sectionClear ]}>
-										{
-											this.props.quizzes.busy ? 
-											<ActivityIndicator/> :
-												<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
-								                onPress={() => this.onPressCreate(false)}>
-												<TabBarIcon name="md-create" style={[ allStyles.buttonIcon ]}/>
-												<Text>Save a draft</Text>
-											</TouchableOpacity>
-										}
-										{
-											this.props.quizzes.busy ? 
-											<ActivityIndicator/> :
-											<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
-								                onPress={() => this.onPressCreate(true)}>
-												<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-												<Text style={[ allStyles.whiteText ]}>Publish and share</Text>
-											</TouchableOpacity>
-										}
-											<Text style={[ allStyles.sectionSubtitle, styles.quizSaveText ]}>You can save a draft if you are not finished editing your kwiz. You can publish later when you're ready.</Text>
-										</View>
-								)
-					}
-				</KeyboardAwareScrollView>
+						<View style={[ allStyles.section ]}>
+							<Text style={allStyles.sectionTitle}>Kwiz Questions</Text>
+							<Text style={allStyles.sectionSubtitle}>Make sure the number of choices for each question match the total number of results above.</Text>
+							
+							{
+								questionsArray
+							}
+							
+							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.greenButton ]}
+				                onPress={this.onPressAddQuestion.bind(this)}>
+								<TabBarIcon name="md-add" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+								<Text style={[ allStyles.whiteText ]}>New question</Text>
+							</TouchableOpacity>
+						</View>
+							
+						{
+							(this.state.isEditing) ? (
+									<View style={[ allStyles.section, allStyles.sectionClear ]}>
+									{
+										this.state.public ? 
+												(
+														<View>
+														{
+															this.props.quizzes.busy ? 
+															<ActivityIndicator/> :
+															<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
+												                onPress={() => this.onPressCreate(true)}>
+																<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+																<Text style={[ allStyles.whiteText ]}>Update your kwiz</Text>
+															</TouchableOpacity>
+														}
+														<Text style={[ allStyles.sectionSubtitle, styles.quizSaveText ]}>The changes to your kwiz will automatically be public once you update it. Removing results, choices, or questions will result in users who took the kwiz to lose their saved responses.</Text>
+														</View>
+												) : (
+														<View>
+														{
+															this.props.quizzes.busy ? 
+															<ActivityIndicator/> :
+																<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
+												                onPress={() => this.onPressCreate(false)}>
+																<TabBarIcon name="md-create" style={[ allStyles.buttonIcon ]}/>
+																<Text>Save your kwiz</Text>
+															</TouchableOpacity>
+														}
+														{
+															this.props.quizzes.busy ? 
+															<ActivityIndicator/> :
+															<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
+												                onPress={() => this.onPressCreate(true)}>
+																<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+																<Text style={[ allStyles.whiteText ]}>Publish and share</Text>
+															</TouchableOpacity>
+														}
+														<Text style={[ allStyles.sectionSubtitle, styles.quizSaveText ]}>You can save a draft if you are not finished editing your kwiz. You can publish later when you're ready.</Text>
+														</View>
+												)
+									}
+									</View>
+									) : (
+											<View style={[ allStyles.section, allStyles.sectionClear ]}>
+											{
+												this.props.quizzes.busy ? 
+												<ActivityIndicator/> :
+													<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
+									                onPress={() => this.onPressCreate(false)}>
+													<TabBarIcon name="md-create" style={[ allStyles.buttonIcon ]}/>
+													<Text>Save a draft</Text>
+												</TouchableOpacity>
+											}
+											{
+												this.props.quizzes.busy ? 
+												<ActivityIndicator/> :
+												<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
+									                onPress={() => this.onPressCreate(true)}>
+													<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+													<Text style={[ allStyles.whiteText ]}>Publish and share</Text>
+												</TouchableOpacity>
+											}
+												<Text style={[ allStyles.sectionSubtitle, styles.quizSaveText ]}>You can save a draft if you are not finished editing your kwiz. You can publish later when you're ready.</Text>
+											</View>
+									)
+						}
+						</View>
+					</KeyboardAwareScrollView>
 				)
 			}
 				<Modal isVisible={this.state.isModalVisible} 

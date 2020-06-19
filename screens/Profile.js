@@ -96,10 +96,10 @@ class Profile extends React.Component {
 			})
 		}
 
-		return <View style={allStyles.container}>
+		return <View style={allStyles.containerNoPadding}>
 				{
 					this.state.refreshing ? <Loading /> : (
-						      <ScrollView style={allStyles.contentContainer}
+						      <ScrollView
 						      showsVerticalScrollIndicator={false} 
 					      		refreshControl={
 						            <RefreshControl
@@ -107,6 +107,7 @@ class Profile extends React.Component {
 						              onRefresh={this._onRefresh}
 						            />
 						          }>
+						      <View style={allStyles.container}>
 									<ProfileCard user={this.state.user}
 										navigation={this.props.navigation}
 									/>
@@ -191,6 +192,7 @@ class Profile extends React.Component {
 									      	}
 
 									      </View>
+									  </View>
 								</ScrollView>
 						)
 				}
