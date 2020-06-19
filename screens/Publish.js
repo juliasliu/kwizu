@@ -48,41 +48,42 @@ class Publish extends React.Component {
 	render() {
 		return this.props.quizzes.quiz && (
 				<View style={allStyles.containerNoPadding}>
-					<ScrollView style={[allStyles.container, styles.quizFormContainer ]}
+					<ScrollView
 					showsVerticalScrollIndicator={false}>
-					
-						<View style={[ allStyles.section, allStyles.sectionClear ]}>
-							<Text style={[ allStyles.title, allStyles.center ]}>Your Kwiz is ready!</Text>
-						</View>
+						<View style={allStyles.container}>
+							<View style={[ allStyles.section, allStyles.sectionClear ]}>
+								<Text style={[ allStyles.title, allStyles.center ]}>Your Kwiz is ready!</Text>
+							</View>
+								
+							<View style={[ allStyles.section, allStyles.sectionClear ]}>
+								<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton, styles.shareButton, styles.topShareButton ]}
+					                onPress={() => this.props.navigation.push("Take Kwiz", {quiz_id: this.props.quizzes.quiz.id, fromPublish: true})}>
+									<TabBarIcon name="md-happy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+									<Text style={[ allStyles.whiteText ]}>Take your own kwiz</Text>
+								</TouchableOpacity>
+								<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton, styles.shareButton, styles.bottomShareButton ]}
+							        onPress={() => this.props.navigation.push("Kwiz Results", {quiz_id: this.props.quizzes.quiz.id})}>
+									<TabBarIcon name="md-trophy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+									<Text style={[ allStyles.whiteText ]}>See results of your kwiz!</Text>
+								</TouchableOpacity>
+							</View>
 							
-						<View style={[ allStyles.section, allStyles.sectionClear ]}>
-							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton, styles.shareButton, styles.topShareButton ]}
-				                onPress={() => this.props.navigation.push("Take Kwiz", {quiz_id: this.props.quizzes.quiz.id, fromPublish: true})}>
-								<TabBarIcon name="md-happy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={[ allStyles.whiteText ]}>Take your own kwiz</Text>
-							</TouchableOpacity>
-							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton, styles.shareButton, styles.bottomShareButton ]}
-						        onPress={() => this.props.navigation.push("Kwiz Results", {quiz_id: this.props.quizzes.quiz.id})}>
-								<TabBarIcon name="md-trophy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={[ allStyles.whiteText ]}>See results of your kwiz!</Text>
-							</TouchableOpacity>
-						</View>
-						
-						<ShareForm 
-						navigation={ this.props.navigation }
-						quiz={ this.props.quizzes.quiz } />
-						
-						<View style={[ allStyles.section, allStyles.sectionClear ]}>
-							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
-				                onPress={() => this.props.navigation.push("New Kwiz", {type: "Personality", quiz_id: this.props.quizzes.quiz.id})}>
-								<TabBarIcon name="md-create" style={[ allStyles.buttonIcon ]}/>
-								<Text>Edit your kwiz</Text>
-							</TouchableOpacity>
-							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.redButton ]}
-				                onPress={this.toggleModal}>
-								<TabBarIcon name="md-trash" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={[ allStyles.whiteText ]}>Delete your kwiz</Text>
-							</TouchableOpacity>
+							<ShareForm 
+							navigation={ this.props.navigation }
+							quiz={ this.props.quizzes.quiz } />
+							
+							<View style={[ allStyles.section, allStyles.sectionClear ]}>
+								<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
+					                onPress={() => this.props.navigation.push("New Kwiz", {type: "Personality", quiz_id: this.props.quizzes.quiz.id})}>
+									<TabBarIcon name="md-create" style={[ allStyles.buttonIcon ]}/>
+									<Text>Edit your kwiz</Text>
+								</TouchableOpacity>
+								<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.redButton ]}
+					                onPress={this.toggleModal}>
+									<TabBarIcon name="md-trash" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+									<Text style={[ allStyles.whiteText ]}>Delete your kwiz</Text>
+								</TouchableOpacity>
+							</View>
 						</View>
 					</ScrollView>
 				

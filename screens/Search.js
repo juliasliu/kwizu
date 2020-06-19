@@ -105,7 +105,7 @@ class SearchScreen extends React.Component {
 		              onRefresh={this._onRefresh}
 		            />
 		          }>
-				<View style={[allStyles.container]}>
+				<View style={allStyles.container}>
 			      {
 			    	  this.props.quizzes.busy ? 
 								<ActivityIndicator/> : (
@@ -136,7 +136,7 @@ class SearchScreen extends React.Component {
 						onRefresh={this._onRefresh}
 						/>
 				}>
-				<View style={[allStyles.container]}>
+				<View style={allStyles.container}>
 				{
 					this.props.users.busy ? 
 							<ActivityIndicator/> : (
@@ -182,9 +182,9 @@ class SearchScreen extends React.Component {
 		);
 		
 		  return (
-				  <View style={{ flex: 1 }}>
+				  <View style={allStyles.containerNoPadding}>
 					  <View style={[allStyles.searchInputContainer, allStyles.blackInputContainer]}>
-						  <View style={[ allStyles.input, allStyles.searchInput ]}>
+						  <View style={[ allStyles.input, allStyles.searchInput, {marginVertical: 20, margin: 20} ]}>
 			                <Icon
 			                  name='search'
 			                  style={allStyles.searchIcon}
@@ -216,7 +216,7 @@ class SearchScreen extends React.Component {
 					      initialLayout={{ width: Dimensions.get('window').width }}
 							renderTabBar={renderTabBar}
 					    />
-						<Modal isVisible={this.state.isModalVisible} 
+						  <Modal isVisible={this.state.isModalVisible} 
 					      coverScreen={false} 
 					      backdropOpacity={0} 
 					      onBackdropPress={() => this.props.navigation.navigate("Profile")} 
