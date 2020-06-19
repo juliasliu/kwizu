@@ -29,6 +29,7 @@ import Friends from '../screens/Friends'
 import Requests from '../screens/Requests' 
 import Chats from '../screens/Chats' 
 import Chat from '../screens/Chat' 
+import ChatSettings from '../screens/ChatSettings' 
 import ChatResult from '../screens/ChatResult' 
 import ChatGroup from '../screens/ChatGroup' 
 import Customize from '../screens/Customize'
@@ -287,6 +288,18 @@ function ProfileStackScreen({navigation}) {
       }}/>
       <ProfileStack.Screen name="Chat" component={Chat} options={{
     	  headerTitle: 'Chat', 
+		  headerTitleStyle: { color: '#515d6e' },
+		  headerTintColor: '#B2BECF',
+    	  headerRight: () => (
+					<TabBarIcon
+					onPress={() => navigation.push("Chat Settings")}
+					name="md-more"
+						style={[ allStyles.headerIcon ]}
+						/>
+					)
+      }}/>
+      <ProfileStack.Screen name="Chat Settings" component={ChatSettings} options={{
+    	  headerTitle: 'Chat Settings', 
 		  headerTitleStyle: { color: '#515d6e' },
 		  headerTintColor: '#B2BECF',
       }}/>

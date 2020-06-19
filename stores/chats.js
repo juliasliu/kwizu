@@ -100,6 +100,30 @@ class Chats {
 		})
 	}
 	
+	@action update = function(chat, title) {
+		this.busy = true;
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+		
+		return new Promise(function(resolve, reject) {
+			axios.put(API_ROOT + '/chats/' + chat.id, {title}, {withCredentials: true})
+	        .then(response => {
+	        	if (response.data.status === 'updated') {
+					that.handleSuccess(response.data.chat)
+		        	that.success = "The chat name was saved successfully";
+		            resolve(response.data.chat);
+				} else {
+					that.handleErrors(response.data.errors)
+					reject(response.data.errors)
+				}
+	        })
+	        .catch(errors => {
+				that.handleErrors(errors)
+				console.log('api errors:', errors)
+				reject(errors);
+			})
+		})
+	}
+	
 	@action send = function(message_text, chat_id) {
 		this.busy = true;
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then

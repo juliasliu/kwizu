@@ -48,6 +48,7 @@ class Chats extends React.Component {
 			})
 		} else {
 			this.setState({refreshing: false, newChat: true}, this.setTitle);
+			this.props.navigation.setOptions({headerRight: null})
 			this.props.chats.initiateChat();
 		}
 	}
