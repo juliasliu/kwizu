@@ -137,18 +137,15 @@ class Settings extends React.Component {
 		
 		return (
 				<View style={allStyles.containerNoPadding}>
-					<ScrollView
-					showsVerticalScrollIndicator={false} 
-					ref={ref => {
-					    this.scrollview_ref = ref;
-					  }}>
+					
 						<View style={allStyles.container}>
 						{
 							searchInput
 						}  
 						<FlatList 
 							data={DATA} 
-							keyExtractor={(item, index) => item.id} 
+							keyExtractor={(item, index) => item.id}
+							showsVerticalScrollIndicator={false} 
 							renderItem={({item}) => {
 								return ( 
 										<ListItem
@@ -169,7 +166,6 @@ class Settings extends React.Component {
 								}
 					      	</View>
 				      	</View>
-					</ScrollView>
 				</View>
 		)
 	}
