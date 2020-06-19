@@ -37,7 +37,7 @@ class Settings extends React.Component {
 						<Text style={[allStyles.text, allStyles.center]}>
 							Please use this area to detail any bugs, errors, or problems that you noticed
 							while using the app. We will try to respond within 48 hours. For a faster response time,
-							please email us at <Text style={[allStyles.link]}>kwizu@gmail.com</Text>.
+							please email us at <Text style={[allStyles.link]}>kwizu.app@gmail.com</Text>.
 						</Text>
 				      </View>
 				      <View style={[allStyles.section, allStyles.sectionClear]}>

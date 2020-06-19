@@ -37,7 +37,7 @@ class Settings extends React.Component {
 							<Text style={allStyles.subheading}>Contact</Text>
 							<Text style={[allStyles.text, allStyles.center]}>
 								We would love to hear from you! If you have any feedback on your experience using our app, 
-								please feel free to shoot us an email at <Text style={allStyles.link}>kwizu@gmail.com</Text>.
+								please feel free to shoot us an email at <Text style={allStyles.link}>kwizu.app@gmail.com</Text>.
 							</Text>
 							<Text style={[allStyles.text, allStyles.center]}>
 								Lastly, visit us on the <Text style={allStyles.link}>App Store</Text> and give us 5 stars if 

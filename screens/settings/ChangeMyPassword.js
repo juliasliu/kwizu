@@ -77,7 +77,7 @@ class Settings extends React.Component {
 				      <View style={[allStyles.card, allStyles.center]}>
 						<Text style={allStyles.heading}>Reset My Password</Text>
 						<Text style={[allStyles.text, allStyles.center]}>
-							If you have forgotten your password, please email us at <Text style={[allStyles.link]}>kwizu@gmail.com</Text>.
+							If you have forgotten your password, please email us at <Text style={[allStyles.link]}>kwizu.app@gmail.com</Text>.
 						</Text>
 				      </View>
 				      <View style={[allStyles.section, allStyles.sectionClear]}>

@@ -17,7 +17,7 @@ import styles from '../../styles/ProfileScreen';
 class Settings extends React.Component {
 	render () {
 		return (
-			      <ScrollView
+			    <ScrollView
 					ref={ref => {
 					    this.scrollview_ref = ref;
 					  }}>
