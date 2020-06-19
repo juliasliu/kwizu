@@ -44,8 +44,6 @@ class Profile extends React.Component {
 
 		this.props.users.show(user_id)
 		.then((res) => {
-			console.log("found user!!")
-			console.log(res)
 			var quizzes = [...this.state.quizzes]
 			quizzes[0] = res.taken_quizzes.slice(0, 5);
 			quizzes[1] = res.quizzes.slice(0, 5);
@@ -112,7 +110,7 @@ class Profile extends React.Component {
 									<ProfileCard user={this.state.user}
 										navigation={this.props.navigation}
 									/>
-									<View style={[allStyles.section, {marginTop: 20}]}>
+									<View style={[allStyles.section, {marginTop: 10}]}>
 										<View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
 											<Text style={[ allStyles.sectionTitle ]}>Kwiz Feed</Text>
 							   				<TouchableOpacity onPress={() => this.props.navigation.push("Profile Kwizzes", {user_id: this.state.user.id, type: "taken"})}>

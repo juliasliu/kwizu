@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import TabBarIcon from '../components/TabBarIcon';
 
 import { Image, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, Button, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -21,6 +22,9 @@ class ChatResult extends React.Component {
 	state = {
 			friends: [],
 			selectedUsers: [],
+			chats: [],
+			selectedChats: [],
+			searchKeyword: "",
 			refreshing: true,
 			isModalVisible: false,
 	}
@@ -31,10 +35,20 @@ class ChatResult extends React.Component {
 	}
 
 	componentDidMount() {
-		this.props.users.show(this.props.users.id)
+		this.props.chats.index()
 		.then((res) => {
-			console.log("gotem")
-			this.setState({friends: res.friends, refreshing: false});
+			console.log("got those chats")
+			this.setState({chats: res});
+			this.props.users.show(this.props.users.id)
+			.then((res) => {
+				console.log("gotem")
+				this.setState({friends: res.friends, refreshing: false}, this.loadChats);
+			})
+			.catch((errors) => {
+				console.log("and i oop")
+				console.log(errors);
+				this.setState({isModalVisible: true});
+			})
 		})
 		.catch((errors) => {
 			console.log("and i oop")
@@ -43,14 +57,63 @@ class ChatResult extends React.Component {
 		})
 	}
 	
+	loadChats() {
+		// if chat exists with this single user, remove from the friends array
+		var friends = [...this.state.friends]
+		for (var i = 0; i < this.state.chats.length; i++) {
+			let chat = this.state.chats[i];
+			if (chat.users.length == 2) {
+				let indexOfUser = chat.users.findIndex(elem => elem.id !== this.props.users.id)
+				let otherUser = chat.users[indexOfUser]
+				let friendIndex = friends.findIndex(elem => elem.id == otherUser.id)
+				if (friendIndex >= 0) {
+					friends.splice(friendIndex, 1)
+				}
+			}
+		}
+		this.setState({friends})
+	}
+	
+	setSearchKeyword(searchKeyword) {
+		this.setState({searchKeyword})
+	}
+
+	deleteSearchKeyword() {
+		this.setState({searchKeyword: ""});
+	}
+	
+	getTitle(chat) {
+		// if no chat title exists, make title of chat default string of users names besides yourself
+		if (!chat.title) {
+			let title = "";
+			console.log(this.props.users.id)
+			for (var i = 0; i < chat.users.length; i++) {
+				if (chat.users[i].id != this.props.users.id) {
+					title += chat.users[i].name + ", ";
+				}
+			}
+			title = title.slice(0, title.length - 2);
+			return title;
+		}
+		return chat.title;
+	}
+	
+	getImage(chat) {
+		var indexOfUser = chat.users.findIndex(elem => elem.id !== this.props.users.id);
+		return chat.users[indexOfUser].avatar_url;
+	}
+	
 	sendMessages() {
 		for (var i = 0; i < this.state.selectedUsers.length; i++) {
-			this.sendMessage(this.state.selectedUsers[i]);
+			this.sendMessageToUser(this.state.selectedUsers[i]);
+		}
+		for (var i = 0; i < this.state.selectedChats.length; i++) {
+			this.sendMessageToChat(this.state.selectedChats[i]);
 		}
 		this.props.navigation.dispatch(StackActions.pop(1))
 	}
 
-	sendMessage(user) {
+	sendMessageToUser(user) {
 		// if chat doesn't exist, create chat and then send
 		this.props.chats.find(user.id)
 		.then((res) => {
@@ -79,6 +142,10 @@ class ChatResult extends React.Component {
 		})
 	}
 	
+	sendMessageToChat(chat) {
+		this.sendMessageHelper(chat.id);
+	}
+	
 	sendMessageHelper(chat_id) {
 		const {message} = this.props.route.params;
 		this.props.chats.send(message, chat_id)
@@ -101,18 +168,51 @@ class ChatResult extends React.Component {
 
 		this.setState({selectedUsers})
 	}
+	
+	selectChat(chat) {
+		// toggle the user in selectedUsers if not in there already
+		var selectedChats = [...this.state.selectedChats]
+		if (selectedChats.findIndex(elem => elem.id === chat.id) >= 0)
+			selectedChats.splice(selectedChats.findIndex(elem => elem.id === chat.id), 1);
+		else
+			selectedChats = [...selectedChats, chat]
+
+		this.setState({selectedChats})
+	}
 
 	render () {
 
-		let friendsArray = this.state.friends.map(( item, key ) =>
+		let chatsArray = this.state.chats.filter(elem => this.getTitle(elem).toLowerCase().includes(this.state.searchKeyword.toLowerCase()))
+		chatsArray = chatsArray.map(( item, key ) =>
 		{
 			return item != undefined && (
 					<ProfileChatThumbnail navigation={this.props.navigation}
-					user={item}
+					item={item}
+					id={item.id}
+					title={this.getTitle(item)}
+					avatar_url={this.getImage(item)}
 					key={key}
-					selectUser={this.selectUser.bind(this)}
-					selectedUsers={this.state.selectedUsers}
-					style={[ (key === this.state.friends.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
+					select={this.selectChat.bind(this)}
+					selected={this.state.selectedChats}
+					style={[ (key === chatsArray.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
+							(key === 0) ? allStyles.topProfileThumbnailCard : null,
+									]} />
+			)
+		})
+		
+		let friendsArray = this.state.friends.filter(elem => elem.name.toLowerCase().includes(this.state.searchKeyword.toLowerCase()) || elem.username.toLowerCase().includes(this.state.searchKeyword.toLowerCase()))
+		friendsArray = friendsArray.map(( item, key ) =>
+		{
+			return item != undefined && (
+					<ProfileChatThumbnail navigation={this.props.navigation}
+					item={item}
+					id={item.id}
+					title={item.name}
+					avatar_url={item.avatar_url}
+					key={key}
+					select={this.selectUser.bind(this)}
+					selected={this.state.selectedUsers}
+					style={[ (key === friendsArray.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
 							(key === 0) ? allStyles.topProfileThumbnailCard : null,
 									]} />
 			)
@@ -120,6 +220,31 @@ class ChatResult extends React.Component {
 
 		return (
 				<View style={allStyles.container}>
+					<View style={[allStyles.searchInputContainer]}>
+						<View style={[ allStyles.input, allStyles.searchInput ]}>
+						  <Icon
+						    name='search'
+						    style={allStyles.searchIcon}
+						  />
+						  <TextInput
+						  style={[ allStyles.searchInputText ]}
+						  placeholder={'Search...'}
+						  placeholderTextColor={'#8393a8'}
+						  underlineColorAndroid={'#fff'}
+						  autoCapitalize='none'
+						  autoCorrect={false}
+						  returnKeyType='search'
+						  value={ this.state.searchKeyword }
+						  onChangeText={(keyword) => this.setSearchKeyword(keyword)}
+						  />
+						  <TouchableOpacity onPress={this.deleteSearchKeyword.bind(this)}>
+						      <TabBarIcon
+						        name='md-close'
+						        style={[allStyles.searchIcon, allStyles.searchDeleteIcon]}
+						      />
+						  </TouchableOpacity>
+						</View>
+					</View>
 				{
 		      		this.state.refreshing ? <Loading /> : ( 
 			      	<ScrollView style={allStyles.contentContainer}
@@ -130,20 +255,26 @@ class ChatResult extends React.Component {
 				              onRefresh={this._onRefresh}
 				            />
 				          }>
-			      		{
-							!this.state.searching && (
-									<View style={[allStyles.section, allStyles.sectionClear]}>
-							 		{
-							 			this.state.friends.length > 0 ? friendsArray :
-										(
-											<View style={[ allStyles.section, allStyles.sectionClear ]}>
-												<Text style={[ allStyles.sectionMessage ]}>No friends yet! Make a friend so you can send a message to them.</Text>
-											</View>
-										)
-									}
-									</View>
-							)
-				      	}
+			      			{
+			      				(this.state.chats.length == 0 && this.state.friends.length == 0) ? (
+			      					<View style={[ allStyles.section, allStyles.sectionClear ]}>
+		      							<Text style={[ allStyles.sectionMessage ]}>No chats yet! Make a friend so you can send a message to them.</Text>
+		      						</View>	
+			      				) : (
+			      					<View style={{flex: 1}}>
+			      						<View style={[allStyles.section, allStyles.sectionClear]}>	
+			      							{
+			      								chatsArray
+			      							}
+			      						</View>
+			      						<View style={[allStyles.section, allStyles.sectionClear]}>
+						      				{
+						      					friendsArray
+						      				}
+						      			</View>
+						      		</View>
+			      				)
+			      			}
 			      		<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.blackButton ]} onPress={this.sendMessages.bind(this)}>
 							<Text style={ allStyles.whiteText }>Send!</Text>
 						</TouchableOpacity>

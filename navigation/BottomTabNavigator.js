@@ -30,6 +30,7 @@ import Requests from '../screens/Requests'
 import Chats from '../screens/Chats' 
 import Chat from '../screens/Chat' 
 import ChatResult from '../screens/ChatResult' 
+import ChatGroup from '../screens/ChatGroup' 
 import Customize from '../screens/Customize'
 import Settings from '../screens/Settings'
 
@@ -270,7 +271,19 @@ function ProfileStackScreen({navigation}) {
       <ProfileStack.Screen name="Chats" component={Chats} options={{
     	  headerTitle: 'Chats', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF'
+		  headerTintColor: '#B2BECF',
+    	  headerRight: () => (
+					<TabBarIcon
+					onPress={() => navigation.push("Chat Group")}
+					name="md-add"
+						style={[ allStyles.headerIcon ]}
+						/>
+					)
+      }}/>
+      <ProfileStack.Screen name="Chat Group" component={ChatGroup} options={{
+    	  headerTitle: 'Make Group Chat', 
+		  headerTitleStyle: { color: '#515d6e' },
+		  headerTintColor: '#B2BECF',
       }}/>
       <ProfileStack.Screen name="Chat" component={Chat} options={{
     	  headerTitle: 'Chat', 

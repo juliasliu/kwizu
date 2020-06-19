@@ -34,7 +34,7 @@ class Chats extends React.Component {
 
 	componentDidMount() {
 		const {chat_id} = this.props.route.params;
-		const {users} = this.props.route.params;
+		const users = this.props.route.params.users;
 		if (chat_id) {
 			this.props.chats.show(chat_id)
 			.then((res) => {
@@ -88,7 +88,7 @@ class Chats extends React.Component {
 
 		if(this.state.newChat) {
 			// open new channel
-			const {users} = this.props.route.params;
+			const users = this.props.route.params.users;
 			this.props.chats.create(null, users)
 			.then((res) => {
 				console.log("created chatty chat")

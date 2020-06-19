@@ -36,8 +36,6 @@ class Customize extends React.Component {
 	componentDidMount() {
 		this.props.users.show(this.props.users.id)
 		.then((res) => {
-			console.log("found user!!")
-			console.log(res)
 			this.setState({user: res, refreshing: false});
 		})
 		.catch((errors) => {

@@ -22,8 +22,7 @@ import styles from '../styles/ProfileScreen';
 class ProfileChatThumbnail extends React.Component {
 	
 	showPickedImage() {
-		// get avatar of the other user
-		const { avatar_url } = this.props.user;
+		const { avatar_url } = this.props;
 
 		if (avatar_url != null && avatar_url != undefined) {
 			return (
@@ -48,25 +47,25 @@ class ProfileChatThumbnail extends React.Component {
 		
 	render() {
 
-		let selectUser = () => {
-			this.props.selectUser(this.props.user);
+		let select = () => {
+			this.props.select(this.props.item);
 		}
 		
-		// isChecked is true if there is a user in this.props.selectUsers with the same id
-		let isChecked = this.props.selectedUsers.findIndex(elem => elem.id === this.props.user.id) != -1;
+		// isChecked is true if there is a user in this.props.selected with the same id
+		let isChecked = this.props.selected.findIndex(elem => elem.id === this.props.id) != -1;
 		
 		return (
-			<TouchableOpacity onPress={selectUser}>
+			<TouchableOpacity onPress={select}>
 				<View style={[ allStyles.card, styles.profileCard, styles.chatThumbnailCard, this.props.style ]}>
 					<View style={ styles.profileTopCard }>
 						<View style={[ styles.profilePictureContainer, styles.chatThumbnailPictureContainer ] }>
 							{this.showPickedImage()}
 						</View>
 						<View style={[ styles.profileDescriptionContainer, styles.chatThumbnailDescriptionContainer, styles.profileChatThumbnailDescriptionContainer ] }>
-							<Text style={[ styles.profileName, styles.chatThumbnailName ]} numberOfLines={1}>{this.props.user.name}</Text>
+							<Text style={[ styles.profileName, styles.chatThumbnailName ]} numberOfLines={1}>{this.props.title}</Text>
 							<View style={[ styles.profileCaption, styles.chatThumbnailCaption, styles.profileChatThumbnailCheckbox ]}>
 								<CheckBox
-									onClick={() => this.setSelectedChoiceValue(item.weight, item.id)}
+									onClick={select}
 									checkBoxColor= {this.getSelectedChoiceStyle(isChecked)}
 									isChecked={isChecked}
 								/>

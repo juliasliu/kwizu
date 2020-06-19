@@ -28,7 +28,7 @@ class Chats {
 			axios.post(API_ROOT + '/chats', {chat: chat, users: users}, {withCredentials: true})
 			.then(response => {
 				that.handleSuccess(response.data.chat)
-				that.handleChannel(response.data.chat.id)
+				that.handleChatChannel(response.data.chat.id)
 				resolve(response.data.chat);
 			})
 			.catch(errors => {
@@ -54,7 +54,7 @@ class Chats {
 	            that.handleSuccess()
 	            that.chats = response.data.chats;
 	            for (var i = 0; i < response.data.chats.length; i++) {
-	            	that.handleChannel(response.data.chats[i].id)
+	            	that.handleChatChannel(response.data.chats[i].id)
 	            }
 	        	resolve(response.data.chats);
 	        })
@@ -89,7 +89,7 @@ class Chats {
 			axios.get(API_ROOT + '/chats/' + id, {withCredentials: true})
 	        .then(response => {
 	        	that.handleSuccess(response.data.chat);
-	        	that.handleChannel(response.data.chat.id)
+	        	that.handleChatChannel(response.data.chat.id)
 	            resolve(response.data.chat);
 	        })
 	        .catch(errors => {
@@ -122,7 +122,7 @@ class Chats {
 		})
 	}
 	
-	handleChannel(chat_id) {
+	handleChatChannel(chat_id) {
 		let chatChannel = "chat_" + chat_id;
 		console.log("set channel to " + chatChannel)
 		channel = cable.setChannel(
@@ -164,6 +164,7 @@ class Chats {
 		}
 		// if data is a chat
 		else if (data.messages) {
+			console.log("GOT A CHATTTTTT")
 			// add the chat if it doesn't exist
 			var chatIndex = this.chats.findIndex(elem => elem.id === data.chat_id)
 			if (chatIndex < 0) {
