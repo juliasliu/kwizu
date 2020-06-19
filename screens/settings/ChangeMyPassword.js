@@ -15,14 +15,23 @@ import styles from '../../styles/ProfileScreen';
 
 @inject('users') @observer
 class Settings extends React.Component {
-	state= {
-		oldPassword: "",
+	state = {
+		old_password: "",
 		password: "",
-		passwordConfirmation: "",
+		password_confirmation: "",
+		busy: false,
+		errors: null,
+		success: null,
 	}
 
-	componentDidMount() {
-		
+	onPressResetPassword() {
+		this.props.users.reset(this.state.old_password, this.state.password, this.state.password_confirmation)
+		.then(res => {
+			this.setState({success: this.props.users.success, errors: null})
+		})
+		.catch((errors) => {
+			this.setState({errors: this.props.users.errors})
+		})
 	}
 
 	render () {
@@ -32,6 +41,39 @@ class Settings extends React.Component {
 					    this.scrollview_ref = ref;
 					  }}>
 					<View style={allStyles.container}>
+					{
+						this.state.errors &&
+						<View style={ allStyles.errors }
+						onLayout={event => {
+					        const layout = event.nativeEvent.layout;
+					        this.scrollview_ref.scrollTo({
+					            x: 0,
+					            y: layout.y,
+					            animated: true,
+					        });
+					      	}}>
+							{
+								this.state.errors.map(( item, key ) =>
+								{
+									return <Text key={key} style={ allStyles.errorText }>• {item}</Text> 
+								})
+							}
+						</View>
+					}
+					{
+						this.state.success &&
+						<View style={ allStyles.success }
+						onLayout={event => {
+					        const layout = event.nativeEvent.layout;
+					        this.scrollview_ref.scrollTo({
+					            x: 0,
+					            y: layout.y,
+					            animated: true,
+					        });
+					      	}}>
+							<Text>{this.state.success}</Text>
+						</View>
+					}
 				      <View style={[allStyles.card, allStyles.center]}>
 						<Text style={allStyles.heading}>Reset My Password</Text>
 						<Text style={[allStyles.text, allStyles.center]}>
@@ -40,45 +82,42 @@ class Settings extends React.Component {
 				      </View>
 				      <View style={[allStyles.section, allStyles.sectionClear]}>
 					      <TextInput
-							autoCapitalize='none'
-							autoCorrect={false}
-							ref='oldPassword'
-							style={ allStyles.input }
-							onChangeText={(oldPassword) => this.setOldPassword(oldPassword)}
-							returnKeyType='next'
-							value={this.state.oldPassword}
-							placeholder='Your old password'
+							ref='old_password' 
+							style={ allStyles.input } 
+							onChangeText={(old_password) => this.setState({old_password})} 
+							returnKeyType='next' 
+							value={this.state.old_password} 
+							secureTextEntry={true} 
+							placeholder='Old Password'
 							onSubmitEditing={(event) => {
 								this.refs.password.focus();
 							}}
 						/>
-						<TextInput
-							autoCapitalize='none'
-							autoCorrect={false}
-							ref='password'
-							style={ allStyles.input }
-							onChangeText={(password) => this.setPassword(password)}
-							returnKeyType='next'
-							value={this.state.password}
-							placeholder='Your new password'
+					      <TextInput
+							ref='password' 
+							style={ allStyles.input } 
+							onChangeText={(password) => this.setState({password})} 
+							returnKeyType='next' 
+							value={this.state.password} 
+							secureTextEntry={true} 
+							placeholder='New Password'
 							onSubmitEditing={(event) => {
-								this.refs.passwordConfirmation.focus();
+								this.refs.password_confirmation.focus();
 							}}
 						/>
 						<TextInput
-							autoCapitalize='none'
-							autoCorrect={false}
-							ref='passwordConfirmation'
-							style={ allStyles.input }
-							onChangeText={(passwordConfirmation) => this.setPasswordConfirmation(passwordConfirmation)}
-							returnKeyType='next'
-							value={this.state.passwordConfirmation}
-							placeholder='New password confirmation'
+							ref='password_confirmation' 
+							style={ allStyles.input } 
+							onChangeText={(password_confirmation) => this.setState({password_confirmation})} 
+							value={this.state.password_confirmation} 
+							secureTextEntry={true} 
+							placeholder='New Password Confirmation'
 						/>
 							{
 								this.props.users.busy ?
 										<ActivityIndicator/> :
-								<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.blueButton ]} onPress={() => alert("")}>
+								<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.blueButton ]} 
+								onPress={this.onPressResetPassword.bind(this)}>
 									<Text style={ allStyles.whiteText }>Reset My Password</Text>
 								</TouchableOpacity>
 							}

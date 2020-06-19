@@ -2,13 +2,14 @@ import React, { PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-import { Image, Platform, StyleSheet, Text, Switch,
+import { Image, Platform, StyleSheet, Text, Switch, FlatList,
 	ActivityIndicator, TouchableOpacity, View, Button, TextInput, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 import ImagePicker from 'react-native-image-picker';
 
 import TabBarIcon from '../../components/TabBarIcon';
+import SwitchItem from '../../components/SwitchItem';
 
 import allStyles from '../../styles/AllScreens';
 import styles from '../../styles/ProfileScreen';
@@ -16,36 +17,73 @@ import styles from '../../styles/ProfileScreen';
 @inject('users') @observer
 class Settings extends React.Component {
 	state= {
-			isEnabled: false,
-	}
-
-	componentDidMount() {
-		
+			DATA: [
+				{
+					id: '0',
+					title: 'Daily kwiz recommendations',
+					isEnabled: true,
+				},
+				{
+					id: '1',
+					title: 'Users who took your kwiz',
+					isEnabled: true,
+				},
+				{
+					id: '2',
+					title: 'Friends who took the same kwiz',
+					isEnabled: true,
+				},
+				{
+					id: '3',
+					title: 'Reminders to publish drafts',
+					isEnabled: true,
+				},
+				{
+					id: '4',
+					title: 'Chat messages received',
+					isEnabled: true,
+				},
+				{
+					id: '5',
+					title: 'Friend requests received',
+					isEnabled: true,
+				},
+				{
+					id: '6',
+					title: 'New friend accepted your request',
+					isEnabled: true,
+				},
+			],
 	}
 	
-	setIsEnabled() {
-		this.setState({isEnabled: !this.state.isEnabled})
+	setIsEnabled(id) {
+		let data = [...this.state.DATA]
+		let index = data.findIndex(elem => elem.id == id)
+		data[index].isEnabled = !data[index].isEnabled
+		this.setState({DATA: data})
 	}
 
 	render () {
 		
 		return (
-			      <ScrollView
-					ref={ref => {
-					    this.scrollview_ref = ref;
-					  }}>
 				<View style={allStyles.container}>
-				      <View style={[allStyles.section, allStyles.sectionClear]}>
-					      <Switch
-					        trackColor={{ false: "#767577", true: "#81b0ff" }}
-					        thumbColor={this.state.isEnabled ? "#f5dd4b" : "#f4f3f4"}
-					        ios_backgroundColor="#3e3e3e"
-					        onValueChange={this.setIsEnabled.bind(this)}
-					        value={this.state.isEnabled}
-					      />
-					  </View>
+				<FlatList 
+				data={this.state.DATA} 
+				keyExtractor={(item, index) => item.id}
+				showsVerticalScrollIndicator={false} 
+				renderItem={({item}) => {
+					return ( 
+							<SwitchItem
+							id={item.id}
+							text={item.title}
+							isEnabled={item.isEnabled}
+							setIsEnabled={this.setIsEnabled.bind(this)}
+							/>
+					) 
+				}}
+				/>
+
 				</View>
-				</ScrollView>
 		)
 	}
 }

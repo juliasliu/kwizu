@@ -24,6 +24,9 @@ class ChatSettings extends React.Component {
 	state = {
 			title: "",
 			users: [],
+			busy: false,
+			errors: null,
+			success: null,
 			refreshing: true,
 			isModalVisible: false,
 	}

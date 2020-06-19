@@ -83,7 +83,13 @@ const styles = StyleSheet.create({
 	},
 	listItemRight: {
 		padding: 15, 
-		paddingTop: 20
+		paddingTop: 20,
+		flex: 1,
+		display: 'flex',
+		flexDirection: 'row',
+	},
+	switchItemRight: {
+		justifyContent: 'space-between',
 	},
 	listItemTitle: {
 		fontSize: 16,

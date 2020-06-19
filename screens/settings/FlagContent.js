@@ -16,8 +16,9 @@ import styles from '../../styles/ProfileScreen';
 @inject('users') @observer
 class Settings extends React.Component {
 	state= {
-		type: "help",
+		type: "content",
 		title: "",
+		id: "",
 		content: "",
 	}
 
@@ -35,8 +36,11 @@ class Settings extends React.Component {
 				      <View style={[allStyles.card, allStyles.center]}>
 						<Text style={allStyles.heading}>Flag Content</Text>
 						<Text style={[allStyles.text, allStyles.center]}>
-							Please check the FAQ to see if your question has already been addressed before 
-							submitting a ticket.
+							Please use this area to notify us of problematic content published on the platform. 
+							Please read over the community guidelines carefully in order to better describe the situation
+							and the kwiz that it concerns.
+							We will try to respond within 48 hours. For a faster response time,
+							please email us at <Text style={[allStyles.link]}>kwizu@gmail.com</Text>.
 						</Text>
 				      </View>
 				      <View style={[allStyles.section, allStyles.sectionClear]}>
@@ -45,10 +49,24 @@ class Settings extends React.Component {
 							autoCorrect={false}
 							ref='title'
 							style={ allStyles.input }
-							onChangeText={(title) => this.setProfileTitle(title)}
+							onChangeText={(title) => this.setState({title})}
 							returnKeyType='next'
 							value={this.state.title}
-							placeholder='Title (150 chars max)'
+							placeholder='Problem title (150 chars max)'
+							onSubmitEditing={(event) => {
+								this.refs.id.focus();
+							}}
+						/>
+					      <TextInput
+							autoCapitalize='none'
+							autoCorrect={false}
+							ref='id'
+							keyboardType='numeric'
+							style={ allStyles.input }
+							onChangeText={(id) => this.setState({id})}
+							returnKeyType='next'
+							value={this.state.id}
+							placeholder='Unique ID of the kwiz (i.e. 42)'
 							onSubmitEditing={(event) => {
 								this.refs.content.focus();
 							}}
@@ -57,10 +75,10 @@ class Settings extends React.Component {
 							autoCapitalize='none'
 							ref='content'
 							style={[ allStyles.input, allStyles.textarea ]}
-							onChangeText={(content) => this.setProfileContent(content)}
+							onChangeText={(content) => this.setState({content})}
 							returnKeyType='next'
 							value={this.state.content}
-							placeholder='Content (1000 chars max)'
+							placeholder='Problem description (1000 chars max)'
 								multiline={true}
 						/>
 							{

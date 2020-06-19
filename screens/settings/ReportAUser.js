@@ -16,8 +16,9 @@ import styles from '../../styles/ProfileScreen';
 @inject('users') @observer
 class Settings extends React.Component {
 	state= {
-		type: "help",
+		type: "user",
 		title: "",
+		username: "",
 		content: "",
 	}
 
@@ -31,12 +32,15 @@ class Settings extends React.Component {
 					ref={ref => {
 					    this.scrollview_ref = ref;
 					  }}>
-				<View style={allStyles.container}>
+			      <View style={allStyles.container}>
 				      <View style={[allStyles.card, allStyles.center]}>
 						<Text style={allStyles.heading}>Report a User</Text>
 						<Text style={[allStyles.text, allStyles.center]}>
-							Please check the FAQ to see if your question has already been addressed before 
-							submitting a ticket.
+							Please use this area to notify us of a problematic user on the platform. 
+							Please read over the community guidelines carefully in order to better describe the situation
+							and the user whom it concerns.
+							We will try to respond within 48 hours. For a faster response time,
+							please email us at <Text style={[allStyles.link]}>kwizu@gmail.com</Text>.
 						</Text>
 				      </View>
 				      <View style={[allStyles.section, allStyles.sectionClear]}>
@@ -45,10 +49,23 @@ class Settings extends React.Component {
 							autoCorrect={false}
 							ref='title'
 							style={ allStyles.input }
-							onChangeText={(title) => this.setProfileTitle(title)}
+							onChangeText={(title) => this.setState({title})}
 							returnKeyType='next'
 							value={this.state.title}
-							placeholder='Title (150 chars max)'
+							placeholder='Problem title (150 chars max)'
+							onSubmitEditing={(event) => {
+								this.refs.username.focus();
+							}}
+						/>
+					      <TextInput
+							autoCapitalize='none'
+							autoCorrect={false}
+							ref='username'
+							style={ allStyles.input }
+							onChangeText={(username) => this.setState({username})}
+							returnKeyType='next'
+							value={this.state.username}
+							placeholder='Username of the user (i.e. johnsmith)'
 							onSubmitEditing={(event) => {
 								this.refs.content.focus();
 							}}
@@ -57,10 +74,10 @@ class Settings extends React.Component {
 							autoCapitalize='none'
 							ref='content'
 							style={[ allStyles.input, allStyles.textarea ]}
-							onChangeText={(content) => this.setProfileContent(content)}
+							onChangeText={(content) => this.setState({content})}
 							returnKeyType='next'
 							value={this.state.content}
-							placeholder='Content (1000 chars max)'
+							placeholder='Problem description (1000 chars max)'
 								multiline={true}
 						/>
 							{
