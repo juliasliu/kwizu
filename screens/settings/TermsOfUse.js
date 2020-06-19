@@ -36,7 +36,7 @@ class Settings extends React.Component {
 							<Text style={[allStyles.text, allStyles.center]}>These terms require the use of arbitration Section 10.2 on an individual basis to resolve disputes and also limit the remedies available to you in the event of a dispute. These Terms of Use were created with the help of the <Text style={ allStyles.link } onPress={() => Linking.openURL("https://www.termsofusegenerator.net")}>Terms Of Use Generator</Text> and the <Text style={ allStyles.link } onPress={() => Linking.openURL("https://www.privacy-policy-sample.com")}>Privacy Policy Sample</Text>.</Text>
 
 
-							<Text style={allStyles.subheading}>Access to the Site</Text>
+							<Text style={[allStyles.subheading, allStyles.center]}>Access to the Site</Text>
 
 							<Text style={[allStyles.text, allStyles.center]}><Text style={ allStyles.bold }>Subject to these Terms.</Text> Company grants you a non-transferable, non-exclusive, revocable, limited license to access the Site solely for your own personal, noncommercial use.</Text>
 
@@ -48,7 +48,7 @@ class Settings extends React.Component {
 
 							<Text style={[allStyles.text, allStyles.center]}>Excluding any User Content that you may provide, you are aware that all the intellectual property rights, including copyrights, patents, trademarks, and trade secrets, in the Site and its content are owned by Company or Company’s suppliers. Note that these Terms and access to the Site do not give you any rights, title or interest in or to any intellectual property rights, except for the limited access rights expressed in Section 2.1. Company and its suppliers reserve all rights not granted in these Terms.</Text>
 
-							<Text style={allStyles.subheading}>User Content</Text>
+							<Text style={[allStyles.subheading, allStyles.center]}>User Content</Text>
 
 							<Text style={[allStyles.text, allStyles.center]}><Text style={ allStyles.bold }>User Content.</Text> "User Content" means any and all information and content that a user submits to the Site. You are exclusively responsible for your User Content. You bear all risks associated with use of your User Content.  You hereby certify that your User Content does not violate our Acceptable Use Policy.  You may not represent or imply to others that your User Content is in any way provided, sponsored or endorsed by Company. Because you alone are responsible for your User Content, you may expose yourself to liability. Company is not obliged to backup any User Content that you post; also, your User Content may be deleted at any time without prior notice to you. You are solely responsible for making your own backup copies of your User Content if you desire.</Text>
 
@@ -65,7 +65,7 @@ class Settings extends React.Component {
 
 								<Text style={[allStyles.text, allStyles.center]}>You agree to indemnify and hold Company and its officers, employees, and agents harmless, including costs and attorneys’ fees, from any claim or demand made by any third-party due to or arising out of (a) your use of the Site, (b) your violation of these Terms, (c) your violation of applicable laws or regulations or (d) your User Content.  Company reserves the right to assume the exclusive defense and control of any matter for which you are required to indemnify us, and you agree to cooperate with our defense of these claims.  You agree not to settle any matter without the prior written consent of Company.  Company will use reasonable efforts to notify you of any such claim, action or proceeding upon becoming aware of it.</Text>
 
-								<Text style={allStyles.subheading}>Third-Party Links & Ads; Other Users</Text>
+								<Text style={[allStyles.subheading, allStyles.center]}>Third-Party Links & Ads; Other Users</Text>
 
 								<Text style={[allStyles.text, allStyles.center]}><Text style={ allStyles.bold }>Third-Party Links & Ads.</Text> The Site may contain links to third-party websites and services, and/or display advertisements for third-parties.  Such Third-Party Links & Ads are not under the control of Company, and Company is not responsible for any Third-Party Links & Ads.  Company provides access to these Third-Party Links & Ads only as a convenience to you, and does not review, approve, monitor, endorse, warrant, or make any representations with respect to Third-Party Links & Ads.  You use all Third-Party Links & Ads at your own risk, and should apply a suitable level of caution and discretion in doing so. When you click on any of the Third-Party Links & Ads, the applicable third party’s terms and policies apply, including the third party’s privacy and data gathering practices.</Text>
 
@@ -78,16 +78,16 @@ class Settings extends React.Component {
 								<Text style={[allStyles.text, allStyles.center]}><Text style={ allStyles.bold }>Our Advertising Partners.</Text> Some of advertisers on our site may use cookies and web beacons. Our advertising partners are listed below. Each of our advertising partners has their own Privacy Policy for their policies on user data. For easier access, we hyperlinked to their Privacy Policies below.</Text>
 
 								<View>
-								<Text style={[allStyles.text, allStyles.center]}>Google: <Text style={ allStyles.link } onPress={() => Linking.openURL("https://policies.google.com/technologies/ads")}>https://policies.google.com/technologies/ads</Text></Text>
+								<Text style={[allStyles.text, allStyles.center]}>• Google: <Text style={ allStyles.link } onPress={() => Linking.openURL("https://policies.google.com/technologies/ads")}>https://policies.google.com/technologies/ads</Text></Text>
 									</View>
 
-								<Text style={allStyles.subheading}>Disclaimers</Text>
+								<Text style={[allStyles.subheading, allStyles.center]}>Disclaimers</Text>
 
 								<Text style={[allStyles.text, allStyles.center]}>The site is provided on an "as-is" and "as available" basis, and company and our suppliers expressly disclaim any and all warranties and conditions of any kind, whether express, implied, or statutory, including all warranties or conditions of merchantability, fitness for a particular purpose, title, quiet enjoyment, accuracy, or non-infringement.  We and our suppliers make not guarantee that the site will meet your requirements, will be available on an uninterrupted, timely, secure, or error-free basis, or will be accurate, reliable, free of viruses or other harmful code, complete, legal, or safe.  If applicable law requires any warranties with respect to the site, all such warranties are limited in duration to ninety (90) days from the date of first use.</Text>
 
 								<Text style={[allStyles.text, allStyles.center]}>Some jurisdictions do not allow the exclusion of implied warranties, so the above exclusion may not apply to you.  Some jurisdictions do not allow limitations on how long an implied warranty lasts, so the above limitation may not apply to you.</Text>
 
-								<Text style={allStyles.subheading}>Limitation on Liability</Text>
+								<Text style={[allStyles.subheading, allStyles.center]}>Limitation on Liability</Text>
 
 								<Text style={[allStyles.text, allStyles.center]}>To the maximum extent permitted by law, in no event shall company or our suppliers be liable to you or any third-party for any lost profits, lost data, costs of procurement of substitute products, or any indirect, consequential, exemplary, incidental, special or punitive damages arising from or relating to these terms or your use of, or incapability to use the site even if company has been advised of the possibility of such damages.  Access to and use of the site is at your own discretion and risk, and you will be solely responsible for any damage to your device or computer system, or loss of data resulting therefrom.</Text>
 
@@ -97,23 +97,23 @@ class Settings extends React.Component {
 
 								<Text style={[allStyles.text, allStyles.center]}><Text style={ allStyles.bold }>Term and Termination.</Text> Subject to this Section, these Terms will remain in full force and effect while you use the Site.  We may suspend or terminate your rights to use the Site at any time for any reason at our sole discretion, including for any use of the Site in violation of these Terms.  Upon termination of your rights under these Terms, your Account and right to access and use the Site will terminate immediately.  You understand that any termination of your Account may involve deletion of your User Content associated with your Account from our live databases.  Company will not have any liability whatsoever to you for any termination of your rights under these Terms.  Even after your rights under these Terms are terminated, the following provisions of these Terms will remain in effect: Sections 2 through 2.5, Section 3 and Sections 4 through 10.</Text>
 
-								<Text style={allStyles.subheading}>Copyright Policy.</Text>
+								<Text style={[allStyles.subheading, allStyles.center]}>Copyright Policy.</Text>
 
 								<Text style={[allStyles.text, allStyles.center]}>Company respects the intellectual property of others and asks that users of our Site do the same.  In connection with our Site, we have adopted and implemented a policy respecting copyright law that provides for the removal of any infringing materials and for the termination of users of our online Site who are repeated infringers of intellectual property rights, including copyrights.  If you believe that one of our users is, through the use of our Site, unlawfully infringing the copyright(s) in a work, and wish to have the allegedly infringing material removed, the following information in the form of a written notification (pursuant to 17 U.S.C. § 512(c)) must be provided to our designated Copyright Agent:</Text>
 
 								<View>
-								<Text style={[allStyles.text, allStyles.center]}>your physical or electronic signature;</Text>
-								<Text style={[allStyles.text, allStyles.center]}>identification of the copyrighted work(s) that you claim to have been infringed;</Text>
-								<Text style={[allStyles.text, allStyles.center]}>identification of the material on our services that you claim is infringing and that you request us to remove;</Text>
-								<Text style={[allStyles.text, allStyles.center]}>sufficient information to permit us to locate such material;</Text>
-								<Text style={[allStyles.text, allStyles.center]}>your address, telephone number, and e-mail address;</Text>
-								<Text style={[allStyles.text, allStyles.center]}>a statement that you have a good faith belief that use of the objectionable material is not authorized by the copyright owner, its agent, or under the law; and</Text>
-								<Text style={[allStyles.text, allStyles.center]}>a statement that the information in the notification is accurate, and under penalty of perjury, that you are either the owner of the copyright that has allegedly been infringed or that you are authorized to act on behalf of the copyright owner.</Text>
+								<Text style={[allStyles.text, allStyles.center]}>• your physical or electronic signature;</Text>
+								<Text style={[allStyles.text, allStyles.center]}>• identification of the copyrighted work(s) that you claim to have been infringed;</Text>
+								<Text style={[allStyles.text, allStyles.center]}>• identification of the material on our services that you claim is infringing and that you request us to remove;</Text>
+								<Text style={[allStyles.text, allStyles.center]}>• sufficient information to permit us to locate such material;</Text>
+								<Text style={[allStyles.text, allStyles.center]}>• your address, telephone number, and e-mail address;</Text>
+								<Text style={[allStyles.text, allStyles.center]}>• a statement that you have a good faith belief that use of the objectionable material is not authorized by the copyright owner, its agent, or under the law; and</Text>
+								<Text style={[allStyles.text, allStyles.center]}>• a statement that the information in the notification is accurate, and under penalty of perjury, that you are either the owner of the copyright that has allegedly been infringed or that you are authorized to act on behalf of the copyright owner.</Text>
 								</View>
 
 								<Text style={[allStyles.text, allStyles.center]}>Please note that, pursuant to 17 U.S.C. § 512(f), any misrepresentation of material fact in a written notification automatically subjects the complaining party to liability for any damages, costs and attorney’s fees incurred by us in connection with the written notification and allegation of copyright infringement.</Text>
 
-								<Text style={allStyles.subheading}>General</Text>
+								<Text style={[allStyles.subheading, allStyles.center]}>General</Text>
 
 								<Text style={[allStyles.text, allStyles.center]}>These Terms are subject to occasional revision, and if we make any substantial changes, we may notify you by sending you an e-mail to the last e-mail address you provided to us and/or by prominently posting notice of the changes on our Site.  You are responsible for providing us with your most current e-mail address.  In the event that the last e-mail address that you have provided us is not valid our dispatch of the e-mail containing such notice will nonetheless constitute effective notice of the changes described in the notice.  Any changes to these Terms will be effective upon the earliest of thirty (30) calendar days following our dispatch of an e-mail notice to you or thirty (30) calendar days following our posting of notice of the changes on our Site.  These changes will be effective immediately for new users of our Site.  Continued use of our Site following notice of such changes shall indicate your acknowledgement of such changes and agreement to be bound by the terms and conditions of such changes.
 								Dispute Resolution. Please read this Arbitration Agreement carefully. It is part of your contract with Company and affects your rights.  It contains procedures for MANDATORY BINDING ARBITRATION AND A CLASS ACTION WAIVER.</Text>
@@ -162,7 +162,7 @@ class Settings extends React.Component {
 
 								<Text style={[allStyles.text, allStyles.center]}><Text style={ allStyles.bold }>Copyright/Trademark Information.</Text> Copyright ©. All rights reserved.  All trademarks, logos and service marks displayed on the Site are our property or the property of other third-parties. You are not permitted to use these Marks without our prior written consent or the consent of such third party which may own the Marks.</Text>
 
-								<Text style={allStyles.subheading}>Contact Information</Text>
+								<Text style={[allStyles.subheading, allStyles.center]}>Contact Information</Text>
 
 								<Text style={[allStyles.text, allStyles.center]}>Address: Berkeley, CA</Text>
 								<Text style={[allStyles.text, allStyles.center]}>Email: kwizu.app@gmail.com</Text>
