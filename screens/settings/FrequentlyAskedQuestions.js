@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-import { Image, Platform, StyleSheet, Text,
+import { Image, Platform, StyleSheet, Text, Linking,
 	ActivityIndicator, TouchableOpacity, View, Button, TextInput, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
@@ -33,7 +33,8 @@ class Settings extends React.Component {
 				      <View style={[allStyles.card, allStyles.center]}>
 						<Text style={allStyles.heading}>Frequently Asked Questions</Text>
 						<Text style={[allStyles.text, allStyles.center]}>
-							If you have additional questions, please visit and submit a ticket at the Help Center.
+							If you have additional questions, please visit and submit a ticket at the 
+							<Text style={[allStyles.link]} onPress={() => this.props.navigation.push("Help Center")}> Help Center</Text>.
 						</Text>
 						<Text style={allStyles.subheading}>I. How do I take a kwiz?</Text>
 						<Text style={[allStyles.text, allStyles.center]}>

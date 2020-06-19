@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-import { Image, Platform, StyleSheet, Text,
+import { Image, Platform, StyleSheet, Text, Linking,
 	ActivityIndicator, TouchableOpacity, View, Button, TextInput, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
@@ -65,8 +65,7 @@ class Settings extends React.Component {
 
 								<Text style={[allStyles.subheading, allStyles.center]}>Log Files</Text>
 
-								<Text style={[allStyles.text, allStyles.center]}>Kwizu follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services' analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the site, tracking users' movement on the website, and gathering demographic information. Our Privacy Policy was created with the help of the <Text style={ allStyles.link } onPress={() => Linking.openURL("https://www.privacypolicygenerator.info")}>Privacy Policy Generator</Text> and the <Text style={ allStyles.link } onPress={() => Linking.openURL("https://www.privacypolicyonline.com/privacy-policy-generator/")}>Online Privacy Policy Generator</Text>.</Text>
-
+								<Text style={[allStyles.text, allStyles.center]}>Kwizu follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services' analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the site, tracking users' movement on the website, and gathering demographic information.</Text>
 
 
 								<Text style={[allStyles.subheading, allStyles.center]}>Our Advertising Partners</Text>
@@ -74,7 +73,7 @@ class Settings extends React.Component {
 								<Text style={[allStyles.text, allStyles.center]}>Some of advertisers on our site may use cookies and web beacons. Our advertising partners are listed below. Each of our advertising partners has their own Privacy Policy for their policies on user data. For easier access, we hyperlinked to their Privacy Policies below.</Text>
 
 								<View>
-								    <Text style={[allStyles.text, allStyles.center]}>• Google: <Text style={ allStyles.link } onPress={() => Linking.openURL("https://policies.google.com/technologies/ads")}>https://policies.google.com/technologies/ads</Text></Text>
+								    <Text style={[allStyles.text, allStyles.center]}>• Google: <Text style={[allStyles.link]} onPress={() => Linking.openURL("https://policies.google.com/technologies/ads")}>https://policies.google.com/technologies/ads</Text></Text>
 								</View>
 
 								<Text style={[allStyles.subheading, allStyles.center]}>Advertising Partners Privacy Policies</Text>

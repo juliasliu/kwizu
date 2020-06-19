@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-import { Image, Platform, StyleSheet, Text,
+import { Image, Platform, StyleSheet, Text, Linking,
 	ActivityIndicator, TouchableOpacity, View, Button, TextInput, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
@@ -77,7 +77,7 @@ class Settings extends React.Component {
 				      <View style={[allStyles.card, allStyles.center]}>
 						<Text style={allStyles.heading}>Reset My Password</Text>
 						<Text style={[allStyles.text, allStyles.center]}>
-							If you have forgotten your password, please email us at <Text style={[allStyles.link]}>kwizu.app@gmail.com</Text>.
+							If you have forgotten your password, please email us at <Text style={[allStyles.link]} onPress={() => Linking.openURL("mailto:kwizu.app@gmail.com?subject=Forgot%20Password&body=...")}>kwizu.app@gmail.com</Text>.
 						</Text>
 				      </View>
 				      <View style={[allStyles.section, allStyles.sectionClear]}>

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-import { Image, Platform, StyleSheet, Text,
+import { Image, Platform, StyleSheet, Text, Linking,
 	ActivityIndicator, TouchableOpacity, View, Button, TextInput, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
@@ -37,10 +37,10 @@ class Settings extends React.Component {
 						<Text style={allStyles.heading}>Report a User</Text>
 						<Text style={[allStyles.text, allStyles.center]}>
 							Please use this area to notify us of a problematic user on the platform. 
-							Please read over the <Text style={[allStyles.link]}>Community Guidelines </Text>
+							Please read over the <Text style={[allStyles.link]} onPress={() => this.props.navigation.push("Community Guidelines")}>Community Guidelines </Text>
 							carefully in order to better describe the situation and the user whom it concerns.
 							We will try to respond within 48 hours. For a faster response time,
-							please email us at <Text style={[allStyles.link]}>kwizu.app@gmail.com</Text>.
+							please email us at <Text style={[allStyles.link]} onPress={() => Linking.openURL("mailto:kwizu.app@gmail.com?subject=Report%20A%20User&body=...")}>kwizu.app@gmail.com</Text>.
 						</Text>
 				      </View>
 				      <View style={[allStyles.section, allStyles.sectionClear]}>

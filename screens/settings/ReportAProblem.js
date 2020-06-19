@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-import { Image, Platform, StyleSheet, Text,
+import { Image, Platform, StyleSheet, Text, Linking,
 	ActivityIndicator, TouchableOpacity, View, Button, TextInput, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
@@ -37,7 +37,7 @@ class Settings extends React.Component {
 						<Text style={[allStyles.text, allStyles.center]}>
 							Please use this area to detail any bugs, errors, or problems that you noticed
 							while using the app. We will try to respond within 48 hours. For a faster response time,
-							please email us at <Text style={[allStyles.link]}>kwizu.app@gmail.com</Text>.
+							please email us at <Text style={[allStyles.link]} onPress={() => Linking.openURL("mailto:kwizu.app@gmail.com?subject=Report%20A%20Problem&body=...")}>kwizu.app@gmail.com</Text>.
 						</Text>
 				      </View>
 				      <View style={[allStyles.section, allStyles.sectionClear]}>

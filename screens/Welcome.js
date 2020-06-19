@@ -8,7 +8,7 @@ import {
 	Image,
 	ActivityIndicator,
 	StyleSheet,
-	Link,
+	Linking,
 	TouchableOpacity,
 } from 'react-native';
 

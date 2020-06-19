@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-import { Image, Platform, StyleSheet, Text,
+import { Image, Platform, StyleSheet, Text, Linking,
 	ActivityIndicator, TouchableOpacity, View, Button, TextInput, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
@@ -33,7 +33,7 @@ class Settings extends React.Component {
 
 							<Text style={[allStyles.text, allStyles.center]}>These Terms of Use described the legally binding terms and conditions that oversee your use of the Site. BY LOGGING INTO THE SITE, YOU ARE BEING COMPLIANT THAT THESE TERMS and you represent that you have the authority and capacity to enter into these Terms. YOU SHOULD BE AT LEAST 18 YEARS OF AGE TO ACCESS THE SITE. IF YOU DISAGREE WITH ALL OF THE PROVISION OF THESE TERMS, DO NOT LOG INTO AND/OR USE THE SITE.</Text>
 
-							<Text style={[allStyles.text, allStyles.center]}>These terms require the use of arbitration Section 10.2 on an individual basis to resolve disputes and also limit the remedies available to you in the event of a dispute. These Terms of Use were created with the help of the <Text style={ allStyles.link } onPress={() => Linking.openURL("https://www.termsofusegenerator.net")}>Terms Of Use Generator</Text> and the <Text style={ allStyles.link } onPress={() => Linking.openURL("https://www.privacy-policy-sample.com")}>Privacy Policy Sample</Text>.</Text>
+							<Text style={[allStyles.text, allStyles.center]}>These terms require the use of arbitration Section 10.2 on an individual basis to resolve disputes and also limit the remedies available to you in the event of a dispute.</Text>
 
 
 							<Text style={[allStyles.subheading, allStyles.center]}>Access to the Site</Text>
@@ -78,7 +78,7 @@ class Settings extends React.Component {
 								<Text style={[allStyles.text, allStyles.center]}><Text style={ allStyles.bold }>Our Advertising Partners.</Text> Some of advertisers on our site may use cookies and web beacons. Our advertising partners are listed below. Each of our advertising partners has their own Privacy Policy for their policies on user data. For easier access, we hyperlinked to their Privacy Policies below.</Text>
 
 								<View>
-								<Text style={[allStyles.text, allStyles.center]}>• Google: <Text style={ allStyles.link } onPress={() => Linking.openURL("https://policies.google.com/technologies/ads")}>https://policies.google.com/technologies/ads</Text></Text>
+								<Text style={[allStyles.text, allStyles.center]}>• Google: <Text style={[allStyles.link]} onPress={() => Linking.openURL("https://policies.google.com/technologies/ads")}>https://policies.google.com/technologies/ads</Text></Text>
 									</View>
 
 								<Text style={[allStyles.subheading, allStyles.center]}>Disclaimers</Text>
@@ -158,7 +158,7 @@ class Settings extends React.Component {
 
 								<Text style={[allStyles.text, allStyles.center]}><Text style={ allStyles.bold }>Entire Terms.</Text> These Terms constitute the entire agreement between you and us regarding the use of the Site. Our failure to exercise or enforce any right or provision of these Terms shall not operate as a waiver of such right or provision. The section titles in these Terms are for convenience only and have no legal or contractual effect. The word "including" means "including without limitation". If any provision of these Terms is held to be invalid or unenforceable, the other provisions of these Terms will be unimpaired and the invalid or unenforceable provision will be deemed modified so that it is valid and enforceable to the maximum extent permitted by law.  Your relationship to Company is that of an independent contractor, and neither party is an agent or partner of the other.  These Terms, and your rights and obligations herein, may not be assigned, subcontracted, delegated, or otherwise transferred by you without Company’s prior written consent, and any attempted assignment, subcontract, delegation, or transfer in violation of the foregoing will be null and void.  Company may freely assign these Terms.  The terms and conditions set forth in these Terms shall be binding upon assignees.</Text>
 
-								<Text style={[allStyles.text, allStyles.center]}><Text style={ allStyles.bold }>Your Privacy.</Text> Please read <Text style={ allStyles.link } onPress={() => Linking.openURL("https://privacypolicytemplate.net/")}>our Privacy Policy</Text>.</Text>
+								<Text style={[allStyles.text, allStyles.center]}><Text style={ allStyles.bold }>Your Privacy.</Text> Please read <Text style={[allStyles.link]} onPress={() => this.props.navigation.push("Privacy Policy")}>our Privacy Policy</Text>.</Text>
 
 								<Text style={[allStyles.text, allStyles.center]}><Text style={ allStyles.bold }>Copyright/Trademark Information.</Text> Copyright ©. All rights reserved.  All trademarks, logos and service marks displayed on the Site are our property or the property of other third-parties. You are not permitted to use these Marks without our prior written consent or the consent of such third party which may own the Marks.</Text>
 

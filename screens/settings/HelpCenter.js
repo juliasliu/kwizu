@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-import { Image, Platform, StyleSheet, Text,
+import { Image, Platform, StyleSheet, Text, Linking,
 	ActivityIndicator, TouchableOpacity, View, Button, TextInput, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
@@ -37,8 +37,8 @@ class Settings extends React.Component {
 						<Text style={[allStyles.text, allStyles.center]}>
 							Please check the FAQ to see if your question has already been addressed before 
 							submitting a ticket. If you have specific concerns regarding a kwiz or user, please file 
-							a ticket using the <Text style={[allStyles.link]}>Flag Content</Text> or 
-							<Text style={[allStyles.link]}> Report a User</Text> pages instead.
+							a ticket using the <Text style={[allStyles.link]} onPress={() => this.props.navigation.push("Flag Content")}>Flag Content</Text> or 
+							<Text style={[allStyles.link]} onPress={() => this.props.navigation.push("Report a User")}> Report a User</Text> pages instead.
 						</Text>
 				      </View>
 				      <View style={[allStyles.section, allStyles.sectionClear]}>

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-import { Image, Platform, StyleSheet, Text,
+import { Image, Platform, StyleSheet, Text, Linking,
 	ActivityIndicator, TouchableOpacity, View, Button, TextInput, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
@@ -37,10 +37,10 @@ class Settings extends React.Component {
 							<Text style={allStyles.subheading}>Contact</Text>
 							<Text style={[allStyles.text, allStyles.center]}>
 								We would love to hear from you! If you have any feedback on your experience using our app, 
-								please feel free to shoot us an email at <Text style={allStyles.link}>kwizu.app@gmail.com</Text>.
+								please feel free to shoot us an email at <Text style={[allStyles.link]} onPress={() => Linking.openURL("mailto:kwizu.app@gmail.com?subject=Subject%20Here&body=...")}>kwizu.app@gmail.com</Text>.
 							</Text>
 							<Text style={[allStyles.text, allStyles.center]}>
-								Lastly, visit us on the <Text style={allStyles.link}>App Store</Text> and give us 5 stars if 
+								Lastly, visit us on the <Text style={[allStyles.link]}>App Store</Text> and give us 5 stars if 
 								you enjoyed using our platform! It would really mean the world to us. 💖
 							</Text>
 				        </View>
