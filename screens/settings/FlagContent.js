@@ -37,8 +37,8 @@ class Settings extends React.Component {
 						<Text style={allStyles.heading}>Flag Content</Text>
 						<Text style={[allStyles.text, allStyles.center]}>
 							Please use this area to notify us of problematic content published on the platform. 
-							Please read over the community guidelines carefully in order to better describe the situation
-							and the kwiz that it concerns.
+							Please read over the <Text style={[allStyles.link]}>Community Guidelines </Text> 
+							carefully in order to better describe the situation and the kwiz that it concerns.
 							We will try to respond within 48 hours. For a faster response time,
 							please email us at <Text style={[allStyles.link]}>kwizu.app@gmail.com</Text>.
 						</Text>

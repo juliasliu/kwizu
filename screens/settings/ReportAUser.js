@@ -37,8 +37,8 @@ class Settings extends React.Component {
 						<Text style={allStyles.heading}>Report a User</Text>
 						<Text style={[allStyles.text, allStyles.center]}>
 							Please use this area to notify us of a problematic user on the platform. 
-							Please read over the community guidelines carefully in order to better describe the situation
-							and the user whom it concerns.
+							Please read over the <Text style={[allStyles.link]}>Community Guidelines </Text>
+							carefully in order to better describe the situation and the user whom it concerns.
 							We will try to respond within 48 hours. For a faster response time,
 							please email us at <Text style={[allStyles.link]}>kwizu.app@gmail.com</Text>.
 						</Text>
