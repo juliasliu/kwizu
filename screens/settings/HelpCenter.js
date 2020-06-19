@@ -31,12 +31,14 @@ class Settings extends React.Component {
 					ref={ref => {
 					    this.scrollview_ref = ref;
 					  }}>
-				<View style={allStyles.container}>
+			      <View style={allStyles.container}>
 				      <View style={[allStyles.card, allStyles.center]}>
 						<Text style={allStyles.heading}>Help Center</Text>
 						<Text style={[allStyles.text, allStyles.center]}>
 							Please check the FAQ to see if your question has already been addressed before 
-							submitting a ticket.
+							submitting a ticket. If you have specific concerns regarding a kwiz or user, please file 
+							a ticket using the <Text style={[allStyles.link]}>Flag Content</Text> or 
+							<Text style={[allStyles.link]}> Report a User</Text> pages instead.
 						</Text>
 				      </View>
 				      <View style={[allStyles.section, allStyles.sectionClear]}>
@@ -45,10 +47,10 @@ class Settings extends React.Component {
 							autoCorrect={false}
 							ref='title'
 							style={ allStyles.input }
-							onChangeText={(title) => this.setProfileTitle(title)}
+							onChangeText={(title) => this.setState({title})}
 							returnKeyType='next'
 							value={this.state.title}
-							placeholder='Title (150 chars max)'
+							placeholder='Question title (150 chars max)'
 							onSubmitEditing={(event) => {
 								this.refs.content.focus();
 							}}
@@ -57,10 +59,10 @@ class Settings extends React.Component {
 							autoCapitalize='none'
 							ref='content'
 							style={[ allStyles.input, allStyles.textarea ]}
-							onChangeText={(content) => this.setProfileContent(content)}
+							onChangeText={(content) => this.setState({content})}
 							returnKeyType='next'
 							value={this.state.content}
-							placeholder='Content (1000 chars max)'
+							placeholder='Question description (1000 chars max)'
 								multiline={true}
 						/>
 							{
