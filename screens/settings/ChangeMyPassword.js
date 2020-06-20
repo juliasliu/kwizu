@@ -27,6 +27,7 @@ class Settings extends React.Component {
 	onPressResetPassword() {
 		this.props.users.reset(this.state.old_password, this.state.password, this.state.password_confirmation)
 		.then(res => {
+			this.setState({old_password: "", password: "", password_confirmation: ""})
 			this.setState({success: this.props.users.success, errors: null})
 		})
 		.catch((errors) => {
@@ -74,6 +75,7 @@ class Settings extends React.Component {
 							<Text>{this.state.success}</Text>
 						</View>
 					}
+					<View style={[allStyles.section, allStyles.sectionClear]}>
 				      <View style={[allStyles.card, allStyles.center]}>
 						<Text style={allStyles.heading}>Reset My Password</Text>
 						<Text style={[allStyles.text, allStyles.center]}>
@@ -122,6 +124,7 @@ class Settings extends React.Component {
 								</TouchableOpacity>
 							}
 					      </View>
+					  </View>
 				</View>
 			</ScrollView>
 		)

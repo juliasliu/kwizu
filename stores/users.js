@@ -175,11 +175,41 @@ class Users {
 		})
 	}
 	
-	@action reset = function(user) {
+	@action reset = function(old_password, password, password_confirmation) {
 		this.busy = true;
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then
 		
-		
+		return new Promise(function(resolve, reject) {
+			if (old_password == "" || password == "" || password_confirmation == "") {
+				that.handleErrors(["Please enter all fields"])
+				reject(["Please enter all fields"])
+				return;
+			}
+			
+			// validate password confirmation
+			if (password != password_confirmation) {
+				that.handleErrors(["Passwords did not match"])
+				reject(["Passwords did not match"])
+				return;
+			}
+			axios.put(API_ROOT + '/users/' + that.id + '/change_password', {old_password: old_password, password: password}, {withCredentials: true})
+			.then(response => {
+				if (response.data.status === 'updated') {
+					that.handleSuccess()
+					that.handleLogin(response.data.user)
+		        	that.success = "Your password was changed successfully";
+					resolve(response.data.user)
+				} else {
+					that.handleErrors(response.data.errors)
+					reject(response.data.errors)
+				}
+			})
+			.catch(errors => {
+				that.handleErrors(errors)
+				console.log('api errors:', errors)
+				reject(errors);
+			})
+		})
 	}
 	
 	@action sendRequest = function(id) {
