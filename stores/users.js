@@ -66,6 +66,13 @@ class Users {
 		}
 		
 		return new Promise(function(resolve, reject) {
+			// validate password confirmation
+			if (password != password_confirmation) {
+				that.handleErrors(["Passwords did not match"])
+				that.handleLogout()
+				reject(["Passwords did not match"])
+				return;
+			}
 			axios.post(API_ROOT + '/users', {user}, {withCredentials: true})
 			.then(response => {
 				if (response.data.status === 'created') {
@@ -168,6 +175,13 @@ class Users {
 		})
 	}
 	
+	@action reset = function(user) {
+		this.busy = true;
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+		
+		
+	}
+	
 	@action sendRequest = function(id) {
 		this.busy = true;
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then
@@ -236,6 +250,30 @@ class Users {
 	        .then(response => {
 	        	that.handleSuccess();
 	            resolve(response.data.points);
+	        })
+	        .catch(errors => {
+				that.handleErrors(errors)
+				console.log('api errors:', errors)
+				reject(errors);
+			})
+		})
+	}
+	
+	@action submitTicket = function(ticket) {
+		this.busy = true;
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+		
+		return new Promise(function(resolve, reject) {
+			axios.put(API_ROOT + '/users/' + that.id + '/submit_ticket', {ticket}, {withCredentials: true})
+	        .then(response => {
+	        	if (response.data.status === 'submitted') {
+					that.handleSuccess()
+		        	that.success = "Your ticket was submitted successfully. We will respond within 48 hours.";
+		            resolve(response.data.ticket);
+				} else {
+					that.handleErrors(response.data.errors)
+					reject(response.data.errors)
+				}
 	        })
 	        .catch(errors => {
 				that.handleErrors(errors)

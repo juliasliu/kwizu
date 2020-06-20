@@ -16,22 +16,66 @@ import styles from '../../styles/ProfileScreen';
 @inject('users') @observer
 class Settings extends React.Component {
 	state= {
-		type: "problem",
+		category: "problem",
 		title: "",
-		content: "",
+		description: "",
+		busy: false,
+		errors: null,
+		success: null,
 	}
 
-	componentDidMount() {
-		
+	submitTicket() {
+		this.props.users.submitTicket(this.state)
+		.then((res) => {
+			this.setState({title: "", description: ""});
+			this.setState({success: this.props.users.success, errors: null})
+		})
+		.catch((errors) => {
+			this.setState({errors: this.props.users.errors})
+		})
 	}
 
 	render () {
 		return (
-			      <ScrollView
+			    <ScrollView
 					ref={ref => {
 					    this.scrollview_ref = ref;
 					  }}>
 				<View style={allStyles.container}>
+				{
+					this.state.errors &&
+					<View style={ allStyles.errors }
+					onLayout={event => {
+				        const layout = event.nativeEvent.layout;
+				        this.scrollview_ref.scrollTo({
+				            x: 0,
+				            y: layout.y,
+				            animated: true,
+				        });
+				      	}}>
+						{
+							this.state.errors.map(( item, key ) =>
+							{
+								return <Text key={key} style={ allStyles.errorText }>• {item}</Text> 
+							})
+						}
+					</View>
+				}
+				{
+					this.state.success &&
+					<View style={ allStyles.success }
+					onLayout={event => {
+				        const layout = event.nativeEvent.layout;
+				        this.scrollview_ref.scrollTo({
+				            x: 0,
+				            y: layout.y,
+				            animated: true,
+				        });
+				      	}}>
+						<Text>{this.state.success}</Text>
+					</View>
+				}
+				<View style={[allStyles.section, allStyles.sectionClear]}>
 				      <View style={[allStyles.card, allStyles.center]}>
 						<Text style={allStyles.heading}>Report a Problem</Text>
 						<Text style={[allStyles.text, allStyles.center]}>
@@ -51,27 +95,28 @@ class Settings extends React.Component {
 							value={this.state.title}
 							placeholder='Problem title (150 chars max)'
 							onSubmitEditing={(event) => {
-								this.refs.content.focus();
+								this.refs.description.focus();
 							}}
 						/>
 						<TextInput
 							autoCapitalize='none'
-							ref='content'
+							ref='description'
 							style={[ allStyles.input, allStyles.textarea ]}
-							onChangeText={(content) => this.setState({content})}
+							onChangeText={(description) => this.setState({description})}
 							returnKeyType='next'
-							value={this.state.content}
+							value={this.state.description}
 							placeholder='Problem description (1000 chars max)'
 								multiline={true}
 						/>
 							{
 								this.props.users.busy ?
 										<ActivityIndicator/> :
-								<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.redButton ]} onPress={() => alert("")}>
+								<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.redButton ]} onPress={this.submitTicket.bind(this)}>
 									<Text style={ allStyles.whiteText }>Submit a Ticket</Text>
 								</TouchableOpacity>
 							}
 					      </View>
+					 </View>
 				</View>
 				</ScrollView>
 		)

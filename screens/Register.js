@@ -28,7 +28,7 @@ export default class Register extends React.Component {
 			name: '',
 			username: '',
 			password: '',
-			passwordConfirmation: ''
+			password_confirmation: ''
 	}
 	
 	onPressRegister() {
@@ -130,14 +130,14 @@ export default class Register extends React.Component {
 								secureTextEntry={true} 
 								placeholder='Password'
 								onSubmitEditing={(event) => {
-									this.refs.passwordConfirmation.focus();
+									this.refs.password_confirmation.focus();
 								}}
 							/>
 							<TextInput
-								ref='passwordConfirmation' 
+								ref='password_confirmation' 
 								style={ allStyles.input } 
-								onChangeText={(passwordConfirmation) => this.setState({passwordConfirmation})} 
-								value={this.state.passwordConfirmation} 
+								onChangeText={(password_confirmation) => this.setState({password_confirmation})} 
+								value={this.state.password_confirmation} 
 								secureTextEntry={true} 
 								placeholder='Password Confirmation'
 							/>
