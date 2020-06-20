@@ -147,7 +147,7 @@ class ChatSettings extends React.Component {
 									</View>
 								}
 								<View style={[allStyles.section, allStyles.sectionClear]}>
-      								<Text style={allStyles.sectionSubtitle}>Group Info</Text>
+      								<Text style={allStyles.sectionSubtitle}>Chat Info</Text>
 									<TextInput
 										ref='name'
 										style={ allStyles.input }
@@ -165,7 +165,7 @@ class ChatSettings extends React.Component {
 									}
 								</View>
 								<View style={[allStyles.section, allStyles.sectionClear]}>	
-	      							<Text style={allStyles.sectionSubtitle}>Group Members</Text>
+	      							<Text style={allStyles.sectionSubtitle}>Chat Members</Text>
 	      							{
 	      								membersArray
 	      							}

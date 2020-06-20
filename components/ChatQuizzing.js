@@ -20,7 +20,7 @@ import allStyles from '../styles/AllScreens';
 import styles from '../styles/ProfileScreen';
 
 @inject('quizzes') @observer
-class ChatQuiz extends React.Component {
+class ChatQuizzing extends React.Component {
 	
 	state = {
 			quiz: null,
@@ -63,7 +63,7 @@ class ChatQuiz extends React.Component {
 	}
 	
 	showQuizImage() {
-		const { image_url } = this.state.result;
+		let { image_url } = this.state.result;
 
 		if (image_url != null && image_url != undefined) {
 			return (
@@ -157,4 +157,4 @@ class ChatQuiz extends React.Component {
 	}
 }
 
-export default ChatQuiz;
+export default ChatQuizzing;

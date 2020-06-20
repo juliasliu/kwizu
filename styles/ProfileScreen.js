@@ -249,7 +249,8 @@ const styles = StyleSheet.create({
 		  shadowColor: "#1CC15F",
 	  },
 	  chatQuizMessageDescriptionContainer: {
-		  width: '75%',
+		  flex: 1,
+		  maxWidth: '75%',
 		  paddingVertical: 20,
 	  },
 	  chatMessageDescriptionContainerRight: {
@@ -270,13 +271,15 @@ const styles = StyleSheet.create({
 		  marginVertical: 10,
 	  },
 	  chatQuizImageContainer: {
-		  width: '100%',
+		  maxWidth: '100%',
+		  aspectRatio: 250/150,
 	  },
 	  chatMessageImageContainerRight: {
 		  shadowColor: "#515d6e",
 	  },
 	  chatQuizImage: {
-		  aspectRatio: 250/150,
+		  width: '100%',
+		  height: '100%',
 	  },
 	  chatQuizTitle: {
 		  marginVertical: 5,
