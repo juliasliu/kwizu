@@ -20,6 +20,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import CheckBox from 'react-native-check-box'
 import { StackActions } from '@react-navigation/native';
 import Modal from 'react-native-modal';
+import { InterstitialAd, TestIds, AdEventType} from '@react-native-firebase/admob';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
@@ -65,6 +66,21 @@ class Take extends React.Component {
 	_onRefresh = () => {
 	    this.setState({refreshing: true});
 	    this.componentDidMount();
+	}
+	
+	showInterstitialAd = () => {
+	    // Create a new instance
+	    const interstitialAd = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL);
+
+	    // Add event handlers
+	    interstitialAd.onAdEvent((type, error) => {
+	        if (type === AdEventType.LOADED) {
+	            interstitialAd.show();
+	        }
+	    });
+
+	    // Load a new advert
+	    interstitialAd.load();
 	}
 	
 	componentDidMount() {
@@ -210,6 +226,7 @@ class Take extends React.Component {
             animated: true,
         });
 		this.setState({answers: [], hasTaken: false, isDone: false})
+		this.showInterstitialAd();
 	}
 	
 	finishedQuiz() {

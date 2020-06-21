@@ -20,6 +20,7 @@ import Icon5 from 'react-native-vector-icons/FontAwesome5'
 import Modal from 'react-native-modal';
 import { StackActions } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { InterstitialAd, TestIds, AdEventType} from '@react-native-firebase/admob';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
@@ -46,7 +47,24 @@ class Leaderboard extends React.Component {
 	    this.componentDidMount();
 	  }
 	
+	showInterstitialAd = () => {
+	    // Create a new instance
+	    const interstitialAd = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL);
+
+	    // Add event handlers
+	    interstitialAd.onAdEvent((type, error) => {
+	        if (type === AdEventType.LOADED) {
+	            interstitialAd.show();
+	        }
+	    });
+
+	    // Load a new advert
+	    interstitialAd.load();
+	}
+	
 	componentDidMount() {
+		this.showInterstitialAd();
+		
 		const {quiz_id} = this.props.route.params;
 		this.props.quizzes.leader(quiz_id)
 		.then((res) => {
