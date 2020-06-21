@@ -69,6 +69,7 @@ class Take extends React.Component {
 	}
 	
 	showInterstitialAd = () => {
+		let id = "ca-app-pub-8298967838514788/3809240812";
 	    // Create a new instance
 	    const interstitialAd = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL);
 
