@@ -45,26 +45,9 @@ class Leaderboard extends React.Component {
 	_onRefresh = () => {
 	    this.setState({refreshing: true});
 	    this.componentDidMount();
-	  }
-	
-	showInterstitialAd = () => {
-	    // Create a new instance
-	    const interstitialAd = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL);
-
-	    // Add event handlers
-	    interstitialAd.onAdEvent((type, error) => {
-	        if (type === AdEventType.LOADED) {
-	            interstitialAd.show();
-	        }
-	    });
-
-	    // Load a new advert
-	    interstitialAd.load();
 	}
 	
 	componentDidMount() {
-		this.showInterstitialAd();
-		
 		const {quiz_id} = this.props.route.params;
 		this.props.quizzes.leader(quiz_id)
 		.then((res) => {

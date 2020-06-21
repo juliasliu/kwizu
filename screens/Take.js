@@ -226,7 +226,6 @@ class Take extends React.Component {
             animated: true,
         });
 		this.setState({answers: [], hasTaken: false, isDone: false})
-		this.showInterstitialAd();
 	}
 	
 	finishedQuiz() {
@@ -275,6 +274,8 @@ class Take extends React.Component {
 					});
 					this.props.users.show(this.props.users.id);
 				}
+				
+				this.showInterstitialAd();
 			})
 			.catch((errors) => {
 				console.log("o noes")
