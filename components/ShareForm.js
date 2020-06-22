@@ -17,6 +17,8 @@ import Icon5 from 'react-native-vector-icons/FontAwesome5'
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
 import TabBarIcon from '../components/TabBarIcon';
 
+import { APP_ROOT } from '../constants';
+
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
 
@@ -28,27 +30,27 @@ class ShareForm extends React.Component {
 	}
 	
 	sendChat() {
-		let url;
+		let url = "kwizu://";
 		if (this.props.user) {
-			url = "kwizu://quizzings/" + this.props.quiz.id + "/" + this.props.user.id;
+			url += "quizzings/" + this.props.quiz.id + "/" + this.props.user.id;
 		} else {
-			url = "kwizu://quizzes/" + this.props.quiz.id;
+			url += "kwizu://quizzes/" + this.props.quiz.id;
 		}
 		this.props.navigation.push("Chat Result", {message: url});
 	}
 	
 	render() {
 		// determine url based on whether you are sharing the quiz or the result
-		let url = "";
 		let message = "";
+		let url = APP_ROOT;
 		if (this.props.user) {
-			url = "kwizu://quizzings/" + this.props.quiz.id + "/" + this.props.user.id;
-			message = 'Hey! Check out this kwiz I took:';
+			message = 'Hey! Check out this kwiz I took: ';
+			url += "/quizzings/" + this.props.quiz.id + "/" + this.props.user.id;
 		} else {
-			url = "kwizu://quizzes/" + this.props.quiz.id;
-			message = 'Hey! Check out this kwiz:';
+			message = 'Hey! Check out this kwiz: ';
+			url += "/quizzes/" + this.props.quiz.id;
 		}
-
+		
 		writeToClipboard = async () => {
 			await Clipboard.setString(url);
 			this.setState({copyMessage: "Copied"});
@@ -56,6 +58,7 @@ class ShareForm extends React.Component {
 
 		let shareToMedia = async () => {
 			const result = await Share.share({
+				title: "Kwizu",
 				message: message,
 				url: url,
 			}, {
@@ -89,7 +92,7 @@ class ShareForm extends React.Component {
 						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Share the link</Text>
 					</View>
 					<View style={[ allStyles.card, styles.shareLinkCard, styles.shareButton, styles.topShareButton, { height: 'auto' } ]}>
-						<Text style={styles.shareLink}>{url}</Text>
+						<Text style={styles.shareLink} numberOfLines={1}>{url}</Text>
 						<TouchableOpacity style={[ allStyles.button, allStyles.whiteButton ]}
 			                onPress={writeToClipboard}>
 							<TabBarIcon name="md-copy" style={[ allStyles.buttonIcon ]}/>

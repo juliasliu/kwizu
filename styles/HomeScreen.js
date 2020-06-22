@@ -169,6 +169,7 @@ const styles = StyleSheet.create({
   shareLink: {
 	  padding: 20,
 	  fontSize: 16,
+	  width: '75%',
   },
   shareButton: {
 	  borderRadius: 0,
