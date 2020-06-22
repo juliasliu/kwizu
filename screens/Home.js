@@ -14,8 +14,9 @@ import styles from '../styles/HomeScreen';
 class HomeScreen extends React.Component {
 	state = {
 		quizzes: [ 
-			[ /* daily */ ],
-			[ /* seasonal */ ],
+			[ /* featured */ ],
+			[ /* recommended */ ],
+			[ /* popular */ ],
 			[ /* personality */ ],
 			[ /* trivia */ ],
 		],
@@ -31,10 +32,9 @@ class HomeScreen extends React.Component {
 		this.props.quizzes.index()
 		.then((res) => {
 			var quizzes = [...this.state.quizzes]
-			quizzes[0] = res;
-			quizzes[1] = res;
-			quizzes[2] = res;
-			quizzes[3] = res;
+			quizzes[0] = res.featured;
+			quizzes[1] = res.recommended;
+			quizzes[2] = res.popular;
 			this.setState({quizzes})
 		      this.setState({refreshing: false});
 		})
@@ -72,17 +72,17 @@ class HomeScreen extends React.Component {
 			          }>
 			      	<View style={allStyles.container}>
 					      <View style={allStyles.section}>
-					      	<Text style={allStyles.sectionTitle}>Daily</Text>
-					      	<Text style={allStyles.sectionSubtitle}>These kwizzes are updated every 24 hours. Come back every day and check them out!</Text>
+					      	<Text style={allStyles.sectionTitle}>Featured</Text>
+					      	<Text style={allStyles.sectionSubtitle}>These are some of our favorite kwizzes. Check them out and see how you do!</Text>
 					      	<ScrollView contentContainerStyle={[ allStyles.quizThumbnailContainer ]} showsHorizontalScrollIndicator={false} horizontal= {true} decelerationRate={0} snapToInterval={250} snapToAlignment={"center"}>
-					      		{
-					      			quizzesArray(0)
-					      		}
+					      	{
+					      		quizzesArray(0)
+					      	}
 							</ScrollView>
 					      </View>
 					      <View style={allStyles.section}>
-					    	<Text style={allStyles.sectionTitle}>Seasonal</Text>
-					      	<Text style={allStyles.sectionSubtitle}>We cycle through categories of kwizzes based on the time of the year. See how you do on them!</Text>
+					    	<Text style={allStyles.sectionTitle}>Recommended</Text>
+					      	<Text style={allStyles.sectionSubtitle}>We think you would like these kwizzes.</Text>
 					    	<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} showsHorizontalScrollIndicator={false} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
 					    	{
 				      			quizzesArray(1)
@@ -90,13 +90,13 @@ class HomeScreen extends React.Component {
 					  		</ScrollView>
 					      </View>
 					      <View style={allStyles.section}>
-					      	<Text style={allStyles.sectionTitle}>Personality</Text>
-					      	<Text style={allStyles.sectionSubtitle}>Take these kwizzes to uncover layers of your personality or just explore various fun aspects of life!</Text>
+					    	<Text style={allStyles.sectionTitle}>Popular</Text>
+					      	<Text style={allStyles.sectionSubtitle}>Take our all-time most popular kwizzes.</Text>
 					    	<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} showsHorizontalScrollIndicator={false} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
 					    	{
 				      			quizzesArray(2)
 				      		}
-							</ScrollView>
+					  		</ScrollView>
 					      </View>
 				      </View>
 			      </ScrollView>

@@ -44,7 +44,7 @@ class Quizzes {
 			axios.get(API_ROOT + '/quizzes', {withCredentials: true})
 	        .then(response => {
 	            that.handleSuccess()
-	        	resolve(response.data.quizzes);
+	        	resolve(response.data);
 	        })
 	        .catch(errors => reject(errors))
 		})

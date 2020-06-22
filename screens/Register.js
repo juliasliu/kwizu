@@ -77,12 +77,6 @@ export default class Register extends React.Component {
 									}
 								</View>
 							}
-							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton, styles.shareButton ]}
-				                onPress={() => alert("")}>
-								<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={[ allStyles.whiteText ]}>Sign up with Facebook</Text>
-							</TouchableOpacity>
-							<Text style={[allStyles.subheading, allStyles.center, { marginTop: 25 }, allStyles.whiteText]}>Or, if you have an email:</Text>
 							<TextInput
 								ref='name' 
 								style={ allStyles.input } 

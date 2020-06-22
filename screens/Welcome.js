@@ -42,15 +42,13 @@ class Welcome extends React.Component {
 								<Text>Sign in with email</Text>
 							</TouchableOpacity>
 							
-							<Text style={[allStyles.subheading]}>Don't have an account yet?</Text> 
-							
 							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton ]}
 				                onPress={() => this.props.navigation.navigate('Register')}>
-								<Text style={[ allStyles.whiteText ]}>Sign up</Text>
+								<Text style={[ allStyles.whiteText ]}>Sign up with email</Text>
 							</TouchableOpacity>
 							<Text style={[allStyles.text, allStyles.center, { marginTop: 25 }]}>
 								By continuing, you agree to our
-								<Text style={ allStyles.link } onPress={() => Linking.openURL('http://google.com')}> Terms of Service </Text> and 
+								<Text style={ allStyles.link } onPress={() => Linking.openURL('http://google.com')}> Terms of Service</Text> and 
 								<Text style={ allStyles.link } onPress={() => Linking.openURL('http://google.com')}> Privacy Policy</Text>.
 							</Text>
 						</View>

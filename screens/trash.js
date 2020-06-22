@@ -90,7 +90,15 @@ function OptionButton({ icon, label, onPress, isLastOption }) {
     </RectButton>
   );
 }
-
+<View style={allStyles.section}>
+	<Text style={allStyles.sectionTitle}>Personality</Text>
+	<Text style={allStyles.sectionSubtitle}>Take these kwizzes to uncover layers of your personality or just explore various fun aspects of life!</Text>
+<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} showsHorizontalScrollIndicator={false} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>
+{
+		quizzesArray(2)
+	}
+</ScrollView>
+</View>
 <View style={allStyles.section}>
 	<Text style={allStyles.sectionTitle}>Trivia</Text>
 	<Text style={allStyles.sectionSubtitle}>See how you measure up to others in your trivia game. Take these kwizzes to find out!</Text>
