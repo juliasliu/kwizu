@@ -16,7 +16,7 @@ import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import TabBarIcon from '../components/TabBarIcon';
-//import FBLoginButton from '../components/FBLoginButton';
+import FBLoginButton from '../components/FBLoginButton';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/WelcomeScreen';
@@ -31,11 +31,7 @@ class Welcome extends React.Component {
 					</View>
 					<View style={styles.welcomeButtonsContainer}>
 						<View style={ styles.welcomeButtons }>
-							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton, styles.shareButton ]}
-				                onPress={() => alert("")}>
-								<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={[ allStyles.whiteText ]}>Sign in with Facebook</Text>
-							</TouchableOpacity>
+							<FBLoginButton />
 							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
 				                onPress={() => this.props.navigation.navigate('Login')}>
 								<TabBarIcon name="md-mail" style={[ allStyles.buttonIcon ]}/>
