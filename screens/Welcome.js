@@ -23,6 +23,57 @@ import styles from '../styles/WelcomeScreen';
 
 @inject('users') @observer
 class Welcome extends React.Component {
+	
+	initUser(token) {
+		fetch('https://graph.facebook.com/v7.0/me?fields=email,name,friends&access_token=' + token)
+		  .then((response) => response.json())
+		  .then((json) => {
+		    this.setState({email: json.email, 
+		    	name: json.name, 
+		    	username: json.name.split(" ")[0].toLowerCase(), 
+		    	password: json.id, 
+		    	password_confirmation: json.id})
+		    this.loginUser();
+		  })
+		  .catch(() => {
+		    reject('ERROR GETTING DATA FROM FACEBOOK')
+		  })
+	}
+	
+	loginUser() {
+		console.log("we logging")
+		this.props.users.login(this.state.email, this.state.password)
+		.then(res => {
+			console.log("login!")
+		})
+		.catch((errors) => {
+            // register if no user exists yet, otherwise login
+			this.registerUser();
+		})
+	}
+	
+	registerUser() {
+		console.log("gotta register")
+		this.props.users.register(this.state.email, this.state.name, this.state.username, this.state.password, this.state.password_confirmation)
+		.then(res => {
+			this.props.users.addPoints(10)
+			.then(res => {
+				console.log("yay points!" + res)
+			})
+		})
+		.catch((errors) => {
+			// check if username is taken
+			if (errors.includes("Username has already been taken")) {
+				// generate random username with digits appended to the name
+				let randomDigits = Math.round(Math.random() * 100000);
+				this.setState({username: this.state.username + randomDigits})
+				this.registerUser();
+			} else {
+				this.setState({errors: this.props.users.errors})
+			}
+		})
+	}
+	
 	render() {
 		return (
 				<View style={[styles.welcomeContainer]}>
@@ -31,7 +82,12 @@ class Welcome extends React.Component {
 					</View>
 					<View style={styles.welcomeButtonsContainer}>
 						<View style={ styles.welcomeButtons }>
-							<FBLoginButton />
+							{
+								this.props.users.busy ? 
+								<ActivityIndicator/> :
+									<FBLoginButton 
+									initUser={this.initUser.bind(this)} />
+							}
 							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
 				                onPress={() => this.props.navigation.navigate('Login')}>
 								<TabBarIcon name="md-mail" style={[ allStyles.buttonIcon ]}/>
