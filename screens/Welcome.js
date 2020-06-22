@@ -30,7 +30,7 @@ class Welcome extends React.Component {
 		  .then((json) => {
 		    this.setState({email: json.email, 
 		    	name: json.name, 
-		    	username: json.name.split(" ")[0].toLowerCase(), 
+		    	username: json.email.split("@")[0].toLowerCase(), 
 		    	password: json.id, 
 		    	password_confirmation: json.id})
 		    this.loginUser();
