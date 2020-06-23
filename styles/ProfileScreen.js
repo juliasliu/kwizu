@@ -195,7 +195,6 @@ const styles = StyleSheet.create({
 		  display: 'flex',
 		  flexDirection: 'row',
 		  padding: 10,
-		  paddingVertical: 0,
 	  },
 	  chatInput: {
 		  width: '90%',

@@ -453,6 +453,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		shadowColor: 'transparent',
+		padding: 10,
 	},
 	searchIcon: {
 		color: '#8393a8',

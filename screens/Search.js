@@ -183,8 +183,8 @@ class SearchScreen extends React.Component {
 		
 		  return (
 				  <View style={allStyles.containerNoPadding}>
-					  <View style={[allStyles.searchInputContainer, allStyles.blackInputContainer]}>
-						  <View style={[ allStyles.input, allStyles.searchInput, {marginVertical: 20, margin: 20} ]}>
+					  <View style={[allStyles.searchInputContainer, allStyles.blackInputContainer, styles.searchPageInputContainer ]}>
+						  <View style={[ allStyles.input, allStyles.searchInput ]}>
 			                <Icon
 			                  name='search'
 			                  style={allStyles.searchIcon}

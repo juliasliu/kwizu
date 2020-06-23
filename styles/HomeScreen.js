@@ -217,6 +217,10 @@ const styles = StyleSheet.create({
 	  flexDirection: 'row',
 	  flexWrap: 'wrap',
   },
+  searchPageInputContainer: {
+	  padding: 10,
+	  paddingBottom: 0,
+  },
 });
 
 
