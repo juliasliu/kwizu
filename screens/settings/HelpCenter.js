@@ -77,7 +77,6 @@ class Settings extends React.Component {
 					}
 					<View style={[allStyles.section, allStyles.sectionClear]}>
 				      <View style={[allStyles.card, allStyles.center]}>
-						<Text style={allStyles.heading}>Help Center</Text>
 						<Text style={[allStyles.text, allStyles.center]}>
 							Please check the FAQ to see if your question has already been addressed before 
 							submitting a ticket. If you have specific concerns regarding a kwiz or user, please file 
@@ -112,7 +111,7 @@ class Settings extends React.Component {
 							{
 								this.props.users.busy ?
 										<ActivityIndicator/> :
-								<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.blueButton ]} onPress={this.submitTicket.bind(this)}>
+								<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.blackButton ]} onPress={this.submitTicket.bind(this)}>
 									<Text style={ allStyles.whiteText }>Submit a Ticket</Text>
 								</TouchableOpacity>
 							}

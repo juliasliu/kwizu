@@ -77,7 +77,6 @@ class Settings extends React.Component {
 					}
 					<View style={[allStyles.section, allStyles.sectionClear]}>
 				      <View style={[allStyles.card, allStyles.center]}>
-						<Text style={allStyles.heading}>Reset My Password</Text>
 						<Text style={[allStyles.text, allStyles.center]}>
 							If you have forgotten your password, please email us at <Text style={[allStyles.link]} onPress={() => Linking.openURL("mailto:kwizu.app@gmail.com?subject=Forgot%20Password&body=...")}>kwizu.app@gmail.com</Text>.
 						</Text>
@@ -118,7 +117,7 @@ class Settings extends React.Component {
 							{
 								this.props.users.busy ?
 										<ActivityIndicator/> :
-								<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.blueButton ]} 
+								<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.blackButton ]} 
 								onPress={this.onPressResetPassword.bind(this)}>
 									<Text style={ allStyles.whiteText }>Reset My Password</Text>
 								</TouchableOpacity>

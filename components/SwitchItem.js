@@ -8,7 +8,7 @@ import styles from '../styles/ProfileScreen';
 const SwitchItem = (props) => { 
 	return (
 			<TouchableOpacity>
-				<View style={[allStyles.listItem]}>
+				<View style={[allStyles.listItem, props.style]}>
 					<View style={[allStyles.listItemRight, allStyles.switchItemRight]}>
 						<Text style={[allStyles.listItemTitle]}>{ props.text }</Text>
 							<Switch

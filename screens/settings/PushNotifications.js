@@ -19,38 +19,38 @@ class Settings extends React.Component {
 	state= {
 			DATA: [
 				{
-					id: '0',
-					title: 'Daily kwiz recommendations',
+					id: 0,
+					title: 'Daily updates',
 					isEnabled: true,
 				},
 				{
-					id: '1',
-					title: 'Users who took your kwiz',
+					id: 1,
+					title: 'Users took your kwiz',
 					isEnabled: true,
 				},
 				{
-					id: '2',
-					title: 'Friends who took the same kwiz',
+					id: 2,
+					title: 'Friends took the same kwiz',
 					isEnabled: true,
 				},
 				{
-					id: '3',
+					id: 3,
 					title: 'Reminders to publish drafts',
 					isEnabled: true,
 				},
 				{
-					id: '4',
+					id: 4,
 					title: 'Chat messages received',
 					isEnabled: true,
 				},
 				{
-					id: '5',
+					id: 5,
 					title: 'Friend requests received',
 					isEnabled: true,
 				},
 				{
-					id: '6',
-					title: 'New friend accepted your request',
+					id: 6,
+					title: 'Friend requests accepted',
 					isEnabled: true,
 				},
 			],
@@ -66,24 +66,31 @@ class Settings extends React.Component {
 	render () {
 		
 		return (
+			<ScrollView
+				ref={ref => {
+					this.scrollview_ref = ref;
+				}}>
 				<View style={allStyles.container}>
-				<FlatList 
-				data={this.state.DATA} 
-				keyExtractor={(item, index) => item.id}
-				showsVerticalScrollIndicator={false} 
-				renderItem={({item}) => {
-					return ( 
-							<SwitchItem
-							id={item.id}
-							text={item.title}
-							isEnabled={item.isEnabled}
-							setIsEnabled={this.setIsEnabled.bind(this)}
-							/>
-					) 
-				}}
-				/>
-
+					<FlatList 
+					style={allStyles.card}
+					data={this.state.DATA} 
+					keyExtractor={(item, index) => item.id}
+					scrollEnabled={false}
+					showsVerticalScrollIndicator={false} 
+					renderItem={({item}) => {
+						return ( 
+								<SwitchItem
+								id={item.id}
+								style={[(item.id === this.state.DATA.length - 1) ? allStyles.bottomListItem : null]}
+								text={item.title}
+								isEnabled={item.isEnabled}
+								setIsEnabled={this.setIsEnabled.bind(this)}
+								/>
+						) 
+					}}
+					/>
 				</View>
+			</ScrollView>
 		)
 	}
 }

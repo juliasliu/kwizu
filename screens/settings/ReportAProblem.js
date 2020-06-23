@@ -77,7 +77,6 @@ class Settings extends React.Component {
 				}
 				<View style={[allStyles.section, allStyles.sectionClear]}>
 				      <View style={[allStyles.card, allStyles.center]}>
-						<Text style={allStyles.heading}>Report a Problem</Text>
 						<Text style={[allStyles.text, allStyles.center]}>
 							Please use this area to detail any bugs, errors, or problems that you noticed
 							while using the app. We will try to respond within 48 hours. For a faster response time,

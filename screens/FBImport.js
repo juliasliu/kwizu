@@ -3,40 +3,36 @@ import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import TabBarIcon from '../components/TabBarIcon';
 
-import { Image, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, Button, RefreshControl, Dimensions } from 'react-native';
+import { Image, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, Button, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Modal from 'react-native-modal';
 import { StackActions } from '@react-navigation/native';
 
-import ProfileThumbnail from '../components/ProfileThumbnail';
 import Loading from '../components/Loading';
+import ProfileChatThumbnail from '../components/ProfileChatThumbnail';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/ProfileScreen';
 
-@inject('users') @observer
-class FriendsRoute extends React.Component {
+@inject('users') @inject('chats') @observer
+class FBImport extends React.Component {
+	
 	state = {
 			friends: [],
 			searchKeyword: "",
-			isOwnProfile: false,
 			refreshing: true,
 			isModalVisible: false,
 	}
 
 	_onRefresh = () => {
-	    this.setState({refreshing: true});
-	    this.componentDidMount();
-	  }
+		this.setState({refreshing: true});
+		this.componentDidMount();
+	}
 
 	componentDidMount() {
-		const {user_id} = this.props;
-		if (user_id == this.props.users.user.id) {
-			this.setState({isOwnProfile: true})
-		}
-		this.props.users.show(this.props.user_id)
+		this.props.users.show(this.props.users.id)
 		.then((res) => {
 			console.log("gotem")
 			this.setState({friends: res.friends, refreshing: false});
@@ -55,10 +51,6 @@ class FriendsRoute extends React.Component {
 	deleteSearchKeyword() {
 		this.setState({searchKeyword: ""});
 	}
-	
-	importFacebook() {
-		
-	}
 
 	render () {
 
@@ -76,7 +68,7 @@ class FriendsRoute extends React.Component {
 		})
 		
 		let searchInput = (
-				<View style={[allStyles.searchInputContainer]}>
+			<View style={[allStyles.searchInputContainer]}>
 				<View style={[ allStyles.input, allStyles.searchInput ]}>
 				  <Icon
 				    name='search'
@@ -105,46 +97,35 @@ class FriendsRoute extends React.Component {
 
 		return (
 				<View style={allStyles.containerNoPadding}>
-				{
-					this.state.refreshing ? <Loading /> : (
-						<ScrollView
-						showsVerticalScrollIndicator={false}
-			      		refreshControl={
-				              <RefreshControl
-				              refreshing={this.state.refreshing}
-				              onRefresh={this._onRefresh}
-				            />
-				          }>
-						<View style={allStyles.container}>
-							{
-								searchInput
-							}
-					      	<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton ]}
-				                onPress={this.importFacebook.bind(this)}>
-								<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={[ allStyles.whiteText ]}>Add from Facebook</Text>
-							</TouchableOpacity>
-					      	<View style={[allStyles.section, allStyles.sectionClear]}>
+					{
+			      		this.state.refreshing ? <Loading /> : ( 
+				      	<ScrollView
+				      		showsVerticalScrollIndicator={false}
+				      		refreshControl={
+					              <RefreshControl
+					              refreshing={this.state.refreshing}
+					              onRefresh={this._onRefresh}
+					            />
+					          }>
+				      		<View style={allStyles.container}>
+					      		{
+									searchInput
+								}
+					      		<View style={[allStyles.section, allStyles.sectionClear]}>
 								{
 									this.state.friends.length > 0 ? friendsArray :
 										(
-												this.state.isOwnProfile ? (
-															<View style={[ allStyles.section, allStyles.sectionClear ]}>
-																<Text style={[ allStyles.sectionMessage ]}>No friends yet! Find people by taking more kwizzes or import your friends from Facebook!</Text>
-															</View>
-														) : (
-															<View style={[ allStyles.section, allStyles.sectionClear ]}>
-																<Text style={[ allStyles.sectionMessage ]}>This user has no friends yet. Be their first friend!</Text>
-															</View>
-														)
+											<View style={[ allStyles.section, allStyles.sectionClear ]}>
+												<Text style={[ allStyles.sectionMessage ]}>None of your Facebook friends are here yet! Share the app with them!</Text>
+											</View>
 										)
 								}
+								</View>
 							</View>
-						</View>
 						</ScrollView>
 						)
-				}
-				<Modal isVisible={this.state.isModalVisible} 
+			      	}
+			      <Modal isVisible={this.state.isModalVisible} 
 			      coverScreen={false} 
 			      backdropOpacity={0} 
 			      onBackdropPress={() => this.props.navigation.navigate("Profile")} 
@@ -161,8 +142,8 @@ class FriendsRoute extends React.Component {
 			        </TouchableOpacity>
 			      </View>
 			    </Modal>
-			 </View>
+			</View>
 		)
 	}
 }
-export default FriendsRoute;
+export default FBImport;

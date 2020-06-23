@@ -45,62 +45,62 @@ class Settings extends React.Component {
 	render () {
 		let DATA = [
 			{
-				id: '0',
+				id: 0,
 				title: 'Push Notifications',
 				icon: 'bell',
 			},
 			{
-				id: '1',
+				id: 1,
 				title: 'Facebook Settings',
 				icon: 'facebook-square',
 			},
 			{
-				id: '2',
+				id: 2,
 				title: 'Change My Password',
 				icon: 'key',
 			},
 			{
-				id: '3',
+				id: 3,
 				title: 'Report a Problem',
 				icon: 'exclamation-circle',
 			},
 			{
-				id: '4',
+				id: 4,
 				title: 'Report a User',
 				icon: 'bullhorn',
 			},
 			{
-				id: '5',
+				id: 5,
 				title: 'Flag Content',
 				icon: 'warning',
 			},
 			{
-				id: '6',
+				id: 6,
 				title: 'Frequently Asked Questions',
 				icon: 'lightbulb-o',
 			},
 			{
-				id: '7',
+				id: 7,
 				title: 'Help Center',
 				icon: 'info-circle',
 			},
 			{
-				id: '8',
+				id: 8,
 				title: 'About Us',
 				icon: 'heart',
 			},
 			{
-				id: '9',
+				id: 9,
 				title: 'Community Guidelines',
 				icon: 'globe',
 			},
 			{
-				id: '10',
+				id: 10,
 				title: 'Terms of Use',
 				icon: 'legal',
 			},
 			{
-				id: '11',
+				id: 11,
 				title: 'Privacy Policy',
 				icon: 'lock',
 			},
@@ -147,8 +147,10 @@ class Settings extends React.Component {
 							keyExtractor={(item, index) => item.id}
 							showsVerticalScrollIndicator={false} 
 							renderItem={({item}) => {
+								console.log(item.id)
 								return ( 
 										<ListItem
+										style={[(item.id === DATA.length - 1) ? allStyles.bottomListItem : null]}
 										text={item.title}
 										icon={item.icon} 
 										onPress={() => this.props.navigation.push(item.title)}

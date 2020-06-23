@@ -78,7 +78,6 @@ class Settings extends React.Component {
 					}
 					<View style={[allStyles.section, allStyles.sectionClear]}>
 				      <View style={[allStyles.card, allStyles.center]}>
-						<Text style={allStyles.heading}>Flag Content</Text>
 						<Text style={[allStyles.text, allStyles.center]}>
 							Please use this area to notify us of problematic content published on the platform. 
 							Please read over the <Text style={[allStyles.link]} onPress={() => this.props.navigation.push("Community Guidelines")}>Community Guidelines </Text> 

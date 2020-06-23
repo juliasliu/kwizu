@@ -26,6 +26,7 @@ import Match from '../screens/Match';
 import Profile from '../screens/Profile' 
 import ProfileQuizzes from '../screens/ProfileQuizzes'
 import Friends from '../screens/Friends' 
+import FBImport from '../screens/FBImport' 
 import Requests from '../screens/Requests' 
 import Chats from '../screens/Chats' 
 import Chat from '../screens/Chat' 
@@ -172,11 +173,6 @@ class HomeStackScreen extends React.Component {
 			    	  headerTitleStyle: { color: '#515d6e' },
 			    	  headerTintColor: '#a0acba',
 			      }} />
-			      <HomeStack.Screen name="Friends" component={Friends} options={{
-			    	  headerTitle: 'Friends', 
-					  headerTitleStyle: { color: '#515d6e' },
-					  headerTintColor: '#a0acba',
-			      }}/>
 			      </HomeStack.Navigator>
 			      
 			      <Modal isVisible={this.state.isModalVisible} 
@@ -264,8 +260,8 @@ function ProfileStackScreen({navigation}) {
 		  headerTitleStyle: { color: '#515d6e' },
 		  headerTintColor: '#a0acba',
       }}/>
-      <ProfileStack.Screen name="Requests" component={Requests} options={{
-    	  headerTitle: 'Requests', 
+      <ProfileStack.Screen name="FBImport" component={FBImport} options={{
+    	  headerTitle: 'Add Friends', 
 		  headerTitleStyle: { color: '#515d6e' },
 		  headerTintColor: '#a0acba',
       }}/>

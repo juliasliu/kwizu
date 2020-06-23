@@ -8,7 +8,7 @@ import styles from '../styles/ProfileScreen';
 const ListItem = (props) => { 
 	return (
 			<TouchableOpacity onPress={props.onPress}>
-				<View style={[allStyles.listItem]}>
+				<View style={[allStyles.listItem, props.style]}>
 					<View style={[allStyles.listItemLeft]}>
 						{
 							props.image && 

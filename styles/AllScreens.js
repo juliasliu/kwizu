@@ -76,6 +76,9 @@ const styles = StyleSheet.create({
 		marginLeft: 10, 
 		flexDirection: 'row'
 	},
+	bottomListItem: {
+		borderBottomWidth: 0,
+	},
 	listItemLeft: {
 		padding: 15,
 		paddingTop: 20,
