@@ -462,7 +462,7 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 	},
 	searchInputText: {
-		width: '80%',
+		width: '100%',
 	},
 	showPointsOverlayContainer: {
 		position: 'absolute',

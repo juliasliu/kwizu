@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-import { Image, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, Button } from 'react-native';
+import { Image, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, Button, KeyboardAvoidingView } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -194,59 +194,66 @@ class Chats extends React.Component {
 		}
 
 		return (
-				<View style={allStyles.containerNoPadding}>
+			<View style={allStyles.containerNoPadding}>
 				{
 					this.state.refreshing ? <Loading /> : (
-				      <View style={styles.chatContainer}>
-					      <View style={styles.chatMessagesContainer}>
-					      		<ScrollView
-					      		ref={ref => {
-								    this.scrollview_ref = ref;
-								  }}
-							    onContentSizeChange={() => this.scrollview_ref.scrollToEnd({animated: true})}
-					      		showsVerticalScrollIndicator={false}>
-						      	{
-						      		this.state.newChat ? (
-						      			<Text style={allStyles.sectionMessage}>Send a message to start a chat with {this.getStringOfUsers()}!</Text>	
-						      		) : (
-						      			<Text style={allStyles.sectionMessage}>This conversation was started {this.showChatCreatedTime()}</Text>		
-						      		)
-						      	}
-					      		{
-						      		messageArray
-						      	}
-						      	</ScrollView>
-					      </View>
-					    <View style={styles.chatBottomContainer}>
-					    	<KeyboardAwareScrollView>
-						      	<View style={[allStyles.searchInputContainer, styles.chatInputContainer]}>
-								  <View style={[ allStyles.input, allStyles.searchInput, styles.chatInput ]}>
-					                <TextInput
-					                style={[ allStyles.searchInputText ]}
-					                placeholder={'Type your message here...'}
-					                placeholderTextColor={'#8393a8'}
-					                underlineColorAndroid={'#fff'}
-									autoCapitalize='none'
-					                autoCorrect={false}
-					                returnKeyType='send'
-					                value={ this.state.message }
-					                onChangeText={(keyword) => this.setMessage(keyword)}
-					                onSubmitEditing={this.sendMessage.bind(this)}
-					                />
-					              </View>
-					              <View style={[styles.chatInputIconContainer]}>
-					                <TouchableOpacity onPress={this.sendMessage.bind(this)}>
-						              	<Icon
-						                  name='send'
-						                  style={[allStyles.buttonIcon, allStyles.whiteText]}
-						                />
-						            </TouchableOpacity>
-						          </View>
-					           </View>
-					         </KeyboardAwareScrollView>
-					      </View>
-				      </View>
-				      )
+					<KeyboardAvoidingView
+					behavior={Platform.OS == "ios" ? "padding" : "height"}
+					keyboardVerticalOffset={
+							Platform.select({
+								ios: () => 65,
+								android: () => 65
+							})()
+					}
+					style={styles.chatContainer}>
+						<View style={styles.chatMessagesContainer}>
+							<ScrollView
+							ref={ref => {
+								this.scrollview_ref = ref;
+							}}
+							onContentSizeChange={() => this.scrollview_ref.scrollToEnd({animated: true})}
+						    showsVerticalScrollIndicator={false}>
+								{
+									this.state.newChat ? (
+								    	<Text style={allStyles.sectionMessage}>Send a message to start a chat with {this.getStringOfUsers()}!</Text>	
+								    ) : (
+								    	<Text style={allStyles.sectionMessage}>This conversation was started {this.showChatCreatedTime()}</Text>		
+									)
+								}
+							    {
+								    messageArray
+								}
+							</ScrollView>
+						</View>
+						<View style={styles.chatBottomContainer}>
+							<View style={[allStyles.searchInputContainer, styles.chatInputContainer]}>
+								<View style={[ allStyles.input, allStyles.searchInput, styles.chatInput ]}>
+							    	<TextInput
+							    	ref="message"
+							        style={[ allStyles.searchInputText ]}
+							    	placeholder={'Type your message here...'}
+							    	placeholderTextColor={'#8393a8'}
+							    	underlineColorAndroid={'#fff'}
+							    	autoCapitalize='none'
+							    	autoCorrect={false}
+							    	returnKeyType='send'
+							    	value={ this.state.message }
+							    	onChangeText={(keyword) => this.setMessage(keyword)}
+							    	onSubmitEditing={this.sendMessage.bind(this)}
+							        />
+							    </View>
+						        <View style={[styles.chatInputIconContainer]}>
+						        	<TouchableOpacity onPress={this.sendMessage.bind(this)}>
+							        	<Icon
+							            name='send'
+							            style={[allStyles.buttonIcon]}
+							            />
+							        </TouchableOpacity>
+							    </View>
+						    </View>
+						</View>
+					</KeyboardAvoidingView>
+					)
 				}
 			      <Modal isVisible={this.state.isModalVisible} 
 			      coverScreen={false} 

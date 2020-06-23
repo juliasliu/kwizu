@@ -179,8 +179,8 @@ const styles = StyleSheet.create({
 		  paddingLeft: 10,
 	  },
 	  chatContainer: { 
-		  flexGrow: 1, 
-		  justifyContent: 'space-between', 
+		  flex: 1, 
+		  justifyContent: 'space-around', 
 		  flexDirection: 'column',
 	  },
 	  chatMessagesContainer: {
@@ -189,15 +189,13 @@ const styles = StyleSheet.create({
 	  },
 	  chatBottomContainer: {
 		  flex: 0,
-		  justifyContent: 'flex-end',
 	  },
 	  chatInputContainer: {
 		  width: '100%',
 		  display: 'flex',
 		  flexDirection: 'row',
-//		  justifyContent: 'flex-start',
 		  padding: 10,
-		  backgroundColor: "#515d6e",
+		  paddingVertical: 0,
 	  },
 	  chatInput: {
 		  width: '90%',
@@ -205,7 +203,6 @@ const styles = StyleSheet.create({
 	  chatInputIconContainer: {
 		  justifyContent: 'center',
 		  alignItems: 'center',
-		  paddingLeft: 10,
 		  width: '10%',
 	  },
 	  chatMessageContainer: {
