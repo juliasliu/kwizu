@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
 	},
 	text: {
 		color: '#515d6e',
-		marginVertical: 10,
+		marginVertical: 5,
 	},
 	headerIcon: {
 		color: '#a0acba',

@@ -71,24 +71,25 @@ class Settings extends React.Component {
 					this.scrollview_ref = ref;
 				}}>
 				<View style={allStyles.container}>
-					<FlatList 
-					style={allStyles.card}
-					data={this.state.DATA} 
-					keyExtractor={(item, index) => item.id}
-					scrollEnabled={false}
-					showsVerticalScrollIndicator={false} 
-					renderItem={({item}) => {
-						return ( 
-								<SwitchItem
-								id={item.id}
-								style={[(item.id === this.state.DATA.length - 1) ? allStyles.bottomListItem : null]}
-								text={item.title}
-								isEnabled={item.isEnabled}
-								setIsEnabled={this.setIsEnabled.bind(this)}
-								/>
-						) 
-					}}
-					/>
+					<View style={allStyles.card}>
+						<FlatList 
+						data={this.state.DATA} 
+						keyExtractor={(item, index) => item.id}
+						scrollEnabled={false}
+						showsVerticalScrollIndicator={false} 
+						renderItem={({item}) => {
+							return ( 
+									<SwitchItem
+									id={item.id}
+									style={[(item.id === this.state.DATA.length - 1) ? allStyles.bottomListItem : null]}
+									text={item.title}
+									isEnabled={item.isEnabled}
+									setIsEnabled={this.setIsEnabled.bind(this)}
+									/>
+							) 
+						}}
+						/>
+					</View>
 				</View>
 			</ScrollView>
 		)
