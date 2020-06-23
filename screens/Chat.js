@@ -111,6 +111,7 @@ class Chats extends React.Component {
 		.then((res) => {
 			console.log("sent a messagey message")
 			this.setState({message: "", refreshing: false});
+			this.scrollview_ref.scrollToEnd({animated: true})
 		})
 		.catch((errors) => {
 			console.log(errors);
@@ -155,7 +156,7 @@ class Chats extends React.Component {
 	}
 	
 	render () {
-		
+		console.log("render aAGAIAIAAANANAN")
 		let messageArray;
 		if (this.props.chats.chat && this.props.chats.chat.messages) {
 			messageArray = this.props.chats.chat.messages.map(( item, key ) =>
@@ -211,8 +212,10 @@ class Chats extends React.Component {
 							ref={ref => {
 								this.scrollview_ref = ref;
 							}}
-							onContentSizeChange={() => this.scrollview_ref.scrollToEnd({animated: true})}
-						    showsVerticalScrollIndicator={false}>
+						    showsVerticalScrollIndicator={false}
+							onLayout={event => {
+								this.scrollview_ref.scrollToEnd({animated: true})
+							}}>
 								{
 									this.state.newChat ? (
 								    	<Text style={allStyles.sectionMessage}>Send a message to start a chat with {this.getStringOfUsers()}!</Text>	
