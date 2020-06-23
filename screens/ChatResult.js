@@ -289,12 +289,12 @@ class ChatResult extends React.Component {
 						      					friendsArray
 						      				}
 						      			</View>
+							      		<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.blackButton ]} onPress={this.sendMessages.bind(this)}>
+											<Text style={ allStyles.whiteText }>Send!</Text>
+										</TouchableOpacity>
 						      		</View>
 			      				)
 			      			}
-				      		<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.blackButton ]} onPress={this.sendMessages.bind(this)}>
-								<Text style={ allStyles.whiteText }>Send!</Text>
-							</TouchableOpacity>
 						</View>
 					</ScrollView>
 					)

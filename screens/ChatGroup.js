@@ -133,21 +133,22 @@ class ChatGroup extends React.Component {
 					      		{
 									searchInput
 								}
-					      		{
-									<View style={[allStyles.section, allStyles.sectionClear]}>
-									 	{
-									 		this.state.friends.length > 0 ? friendsArray :
-											(
-												<View style={[ allStyles.section, allStyles.sectionClear ]}>
-													<Text style={[ allStyles.sectionMessage ]}>No friends yet! Make a friend so you can send a message to them.</Text>
-												</View>
-											)
-										}
-									</View>
-						      	}
-					      		<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.blackButton ]} onPress={this.createGroupChat.bind(this)}>
-									<Text style={ allStyles.whiteText }>Create group chat</Text>
-								</TouchableOpacity>
+								{
+									 this.state.friends.length > 0 ? (
+									 		<View style={[allStyles.section, allStyles.sectionClear]}>
+									 		{
+									 			friendsArray
+									 		}
+								 		<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.blackButton ]} onPress={this.createGroupChat.bind(this)}>
+											<Text style={ allStyles.whiteText }>Create group chat</Text>
+										</TouchableOpacity>
+										</View>
+								 	) : (
+									<View style={[ allStyles.section, allStyles.sectionClear ]}>
+											<Text style={[ allStyles.sectionMessage ]}>No friends yet! Make a friend so you can send a message to them.</Text>
+										</View>
+									)
+								}
 							</View>
 						</ScrollView>
 						)

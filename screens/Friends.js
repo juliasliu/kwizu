@@ -73,6 +73,7 @@ class Friends extends React.Component {
 		
 		let FirstRoute = () => (
 				<FriendsRoute
+				navigation={this.props.navigation}
 				user_id={this.props.route.params.user_id} />
 		);
 
