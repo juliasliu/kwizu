@@ -19,7 +19,7 @@ import styles from '../styles/HomeScreen';
 export default class TakeQuestion extends React.Component {
 	
 	headerColors = [
-		"#77A0A9", "#566C8A", "#485061",
+		"#E94E4E", "#f5a836", "#e6be4c", "#2ED673", "#25afd9", "#9877a9",
 	]
 	
 	getSelectedChoiceStyle = (type, isChecked) => {

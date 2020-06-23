@@ -86,7 +86,6 @@ class ShareForm extends React.Component {
 		}
 
 		return (
-			<View>
 				<View style={[ allStyles.section, allStyles.sectionClear ]}>
 					<View style={[ styles.quizFormHeader, styles.shareFormHeader ]}>
 						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Share the link</Text>
@@ -110,7 +109,6 @@ class ShareForm extends React.Component {
 						<Text style={[ allStyles.whiteText ]}>Share on social media</Text>
 					</TouchableOpacity>
 				</View>
-			</View>
 		)
 	} 
 }

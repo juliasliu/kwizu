@@ -36,7 +36,7 @@ export default function TakeQuiz(props) {
 								)
 						}
 						
-						<View style={[allStyles.section]}>
+						<View style={[allStyles.section, {paddingBottom: 40}]}>
 							{
 								props.viewMyResult ? (
 									<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.grayButton, styles.shareButton, styles.topShareButton ]}

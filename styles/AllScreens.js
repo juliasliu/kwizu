@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 		flex: 0,
 		borderRadius: 20,
 		alignItems: 'center',
-		shadowColor: "#d3dbe3",
+		shadowColor: "#e1e7ed",
 		shadowOffset: {
 			width: 0,
 			height: 5,
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 	},
 	modalViewDark: {
-		backgroundColor: "#515d6e",
+		backgroundColor: "#485061",
 		shadowColor: "#2F3542",
 	},
 	modalViewDanger: {
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 		shadowColor: "#BA3E3E",
 	},
 	tabBar: {
-		backgroundColor: '#515d6e',
+		backgroundColor: '#485061',
 	},
 	tabBarContainer: {
 		display: 'flex',
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
 	},
 	listItem: {
 		height: 60, 
-		borderColor: '#B2BECF',
+		borderColor: '#a0acba',
 		borderBottomWidth: 1,
 		marginLeft: 10, 
 		flexDirection: 'row'
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
 		alignSelf: 'stretch',
 		justifyContent: 'center',
 		borderBottomWidth: 1,
-		borderBottomColor: '#B2BECF',
+		borderBottomColor: '#a0acba',
 		paddingVertical: 20,
 	},
 	sectionClear: {
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 		fontSize: 20,
 		marginBottom: 10,
-		color: "#2F3542",
+		color: "#485061",
 	},
 	sectionSubtitle: {
 		fontWeight: 'bold',
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
 		fontSize: 20,  
 		fontWeight: 'bold',
 		marginVertical: 10,
-		color: "#2F3542",
+		color: "#485061",
 	},
 	subheading: {
 		fontSize: 16,  
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
 		marginVertical: 10,
 	},
 	headerIcon: {
-		color: '#B2BECF',
+		color: '#a0acba',
 		paddingHorizontal: 25,
 	},
 	success: { 
@@ -210,9 +210,9 @@ const styles = StyleSheet.create({
 		padding: 10,
 		fontSize: 14,
 		borderRadius: 20,
-		borderColor: "#d3dbe3",
+		borderColor: "#e1e7ed",
 		borderWidth: 1,
-		shadowColor: "#d3dbe3",
+		shadowColor: "#e1e7ed",
 		shadowOffset: {
 			width: 0,
 			height: 5,
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
 		width: 'auto',
 		padding: 0,
 		borderWidth: 1,
-		borderColor: '#d3dbe3',
+		borderColor: '#e1e7ed',
 	},
 	button: {
 		display: 'flex',
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
 		padding: 10,
 		borderWidth: 1,
 		borderRadius: 20,
-		shadowColor: "#d3dbe3",
+		shadowColor: "#e1e7ed",
 		shadowOffset: {
 			width: 0,
 			height: 5,
@@ -282,50 +282,50 @@ const styles = StyleSheet.create({
 		padding: 0,
 		borderWidth: 0,
 	},
-	greenButton: {
-		backgroundColor: '#2ED673',
-		shadowColor: "#1CC15F",
-		borderColor: "#1CC15F",
-	},
-	blueButton: {
-		backgroundColor: '#4d70bd',
-		shadowColor: "#3C5999",
-		borderColor: '#3C5999',
-	},
 	redButton: {
 		backgroundColor: '#E94E4E',
 		shadowColor: "#BA3E3E",
 		borderColor: "#BA3E3E",
 	},
-	whiteButton: {
-		backgroundColor: '#fff',
-		shadowColor: "#d3dbe3",
-		borderColor: "#d3dbe3",
+	orangeButton: {
+		backgroundColor: '#f5a836',
+		shadowColor: '#d99025',
+		borderColor: '#d99025',
 	},
 	yellowButton: {
 		backgroundColor: '#FFD660',
 		shadowColor: '#e6be4c',
 		borderColor: '#e6be4c',
 	},
+	greenButton: {
+		backgroundColor: '#2ED673',
+		shadowColor: "#1CC15F",
+		borderColor: "#1CC15F",
+	},
+	blueButton: {
+		backgroundColor: '#25afd9',
+		shadowColor: "#1798bf",
+		borderColor: '#1798bf',
+	},
+	purpleButton: {
+		backgroundColor: "#9877a9",
+		shadowColor: "#78558a",
+		borderColor: "#78558a",
+	},
+	whiteButton: {
+		backgroundColor: '#fff',
+		shadowColor: "#e1e7ed",
+		borderColor: "#e1e7ed",
+	},
+	grayButton: {
+		backgroundColor: "#a0acba",
+		shadowColor: "#8393a8",
+		borderColor: "#8393a8",
+	},
 	blackButton: {
 		backgroundColor: "#485061",
 		shadowColor: "#2F3542",
 		borderColor: "#2F3542",
-	},
-	grayButton: {
-		backgroundColor: "#a0acba",
-		shadowColor: "#8b9db0",
-		borderColor: "#8b9db0",
-	},
-	purpleButton: {
-		backgroundColor: "#69596e",
-		shadowColor: "#4b2e39",
-		borderColor: "#4b2e39",
-	},
-	lavenderButton: {
-		backgroundColor: "#b298b5",
-		shadowColor: "#937596",
-		borderColor: "#937596",
 	},
 	facebookButton: {
 		backgroundColor: '#4d70bd',
@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
 		padding: 10,
 		borderRadius: 20,
 		backgroundColor: "#fff",
-		shadowColor: "#d3dbe3",
+		shadowColor: "#e1e7ed",
 		shadowOffset: {
 			width: 0,
 			height: 5,
@@ -424,7 +424,7 @@ const styles = StyleSheet.create({
 	profileThumbnailCard: {
 		borderRadius: 0,
 		borderWidth: 1,
-		borderColor: "#d3dbe3",
+		borderColor: "#e1e7ed",
 	},
 	topProfileThumbnailCard: {
 		borderTopLeftRadius: 20,
@@ -442,11 +442,8 @@ const styles = StyleSheet.create({
 		color: '#515d6e',
 		textAlign: 'center',
 	},
-	searchInputContainer: {
-		backgroundColor: "#F1F2F6",
-	},
 	blackInputContainer: {
-		backgroundColor: "#515d6e",
+		backgroundColor: "#485061",
 	},
 	searchInput: {
 		display: 'flex',

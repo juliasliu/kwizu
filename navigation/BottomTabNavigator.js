@@ -111,7 +111,7 @@ class HomeStackScreen extends React.Component {
 			      <HomeStack.Screen name="Home" component={Home} options={{
 			    	  headerTitle: 'Kwizu', 
 			    	  headerTitleStyle: { color: '#515d6e' },
-			    	  headerTintColor: '#B2BECF',
+			    	  headerTintColor: '#a0acba',
 			    	  headerLeft: () => (
 								<TabBarIcon
 								onPress={() => this.props.navigation.push("Search")}
@@ -130,52 +130,52 @@ class HomeStackScreen extends React.Component {
 			      <HomeStack.Screen name="Search" component={Search} options={{
 			    	  headerTitle: 'Search', 
 			    	  headerTitleStyle: { color: '#515d6e' },
-			    	  headerTintColor: '#B2BECF',
+			    	  headerTintColor: '#a0acba',
 			      }} />
 			      <HomeStack.Screen name="Take Kwiz" component={Take} options={{
 			    	  headerTitle: 'Take Kwiz',
 			    	  headerTitleStyle: { color: '#515d6e' },
-			    	  headerTintColor: '#B2BECF',
+			    	  headerTintColor: '#a0acba',
 			      	}} />
 			      <HomeStack.Screen name="Kwiz Result" component={ViewTake} options={{
 			    	  headerTitle: 'Kwiz Result',
 			    	  headerTitleStyle: { color: '#515d6e' },
-			    	  headerTintColor: '#B2BECF',
+			    	  headerTintColor: '#a0acba',
 			      	}} />
 			      <HomeStack.Screen name="Chat Result" component={ChatResult} options={{
 			    	  headerTitle: 'Send Chat', 
 					  headerTitleStyle: { color: '#515d6e' },
-					  headerTintColor: '#B2BECF',
+					  headerTintColor: '#a0acba',
 			      }}/>
 			      <HomeStack.Screen name="New Kwiz" component={New} options={{
 			    	  headerTitle: 'New Kwiz',
 			    	  headerTitleStyle: { color: '#515d6e' },
-			    	  headerTintColor: '#B2BECF',
+			    	  headerTintColor: '#a0acba',
 			      	}} />
 			      <HomeStack.Screen name="Publish and Share Kwiz" component={Publish} options={{
 			    	  headerTitle: 'Your Kwiz',
 			    	  headerTitleStyle: { color: '#515d6e' },
-			    	  headerTintColor: '#B2BECF',
+			    	  headerTintColor: '#a0acba',
 			      	}} />
 			      <HomeStack.Screen name="Kwiz Results" component={Leaderboard} options={{
 			    	  headerTitle: 'Kwiz Leaderboard',
 			    	  headerTitleStyle: { color: '#515d6e' },
-			    	  headerTintColor: '#B2BECF',
+			    	  headerTintColor: '#a0acba',
 			      	}} />
 			      <HomeStack.Screen name="Profile" component={Profile} options={{
 			    	  headerTitle: 'Profile', 
 			    	  headerTitleStyle: { color: '#515d6e' },
-			    	  headerTintColor: '#B2BECF',
+			    	  headerTintColor: '#a0acba',
 			      }} />
 			      <HomeStack.Screen name="Profile Kwizzes" component={ProfileQuizzes} options={{
 			    	  headerTitle: 'Kwizzes', 
 			    	  headerTitleStyle: { color: '#515d6e' },
-			    	  headerTintColor: '#B2BECF',
+			    	  headerTintColor: '#a0acba',
 			      }} />
 			      <HomeStack.Screen name="Friends" component={Friends} options={{
 			    	  headerTitle: 'Friends', 
 					  headerTitleStyle: { color: '#515d6e' },
-					  headerTintColor: '#B2BECF',
+					  headerTintColor: '#a0acba',
 			      }}/>
 			      </HomeStack.Navigator>
 			      
@@ -214,7 +214,7 @@ function MatchStackScreen() {
       <MatchStack.Screen name="Match" component={Match} options={{
     	  headerTitle: 'Match', 
     	  headerTitleStyle: { color: '#515d6e' },
-    	  headerTintColor: '#B2BECF',
+    	  headerTintColor: '#a0acba',
     	  headerRight: () => (
 				<TabBarIcon
 				onPress={() => alert('This is a button!')}
@@ -226,12 +226,12 @@ function MatchStackScreen() {
       <MatchStack.Screen name="Profile" component={Profile} options={{
     	  headerTitle: 'Profile', 
     	  headerTitleStyle: { color: '#515d6e' },
-    	  headerTintColor: '#B2BECF',
+    	  headerTintColor: '#a0acba',
       }} />
       <MatchStack.Screen name="Friends" component={Friends} options={{
     	  headerTitle: 'Friends', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
       }}/>
     </MatchStack.Navigator>
   );
@@ -245,7 +245,7 @@ function ProfileStackScreen({navigation}) {
       <ProfileStack.Screen name="Profile" component={Profile} options={{
     	  headerTitle: 'Profile', 
     	  headerTitleStyle: { color: '#515d6e' },
-    	  headerTintColor: '#B2BECF',
+    	  headerTintColor: '#a0acba',
     	  headerRight: () => (
     			  <TabBarIcon
     			  onPress={() => navigation.push("Settings") }
@@ -257,22 +257,22 @@ function ProfileStackScreen({navigation}) {
       <ProfileStack.Screen name="Profile Kwizzes" component={ProfileQuizzes} options={{
     	  headerTitle: 'Kwizzes', 
     	  headerTitleStyle: { color: '#515d6e' },
-    	  headerTintColor: '#B2BECF',
+    	  headerTintColor: '#a0acba',
       }} />
       <ProfileStack.Screen name="Friends" component={Friends} options={{
     	  headerTitle: 'Friends', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
       }}/>
       <ProfileStack.Screen name="Requests" component={Requests} options={{
     	  headerTitle: 'Requests', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
       }}/>
       <ProfileStack.Screen name="Chats" component={Chats} options={{
     	  headerTitle: 'Chats', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
     	  headerRight: () => (
 					<TabBarIcon
 					onPress={() => navigation.push("Chat Group")}
@@ -284,12 +284,12 @@ function ProfileStackScreen({navigation}) {
       <ProfileStack.Screen name="Chat Group" component={ChatGroup} options={{
     	  headerTitle: 'Make Group Chat', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
       }}/>
       <ProfileStack.Screen name="Chat" component={Chat} options={{
     	  headerTitle: 'Chat', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
     	  headerRight: () => (
 					<TabBarIcon
 					onPress={() => navigation.push("Chat Settings")}
@@ -301,107 +301,107 @@ function ProfileStackScreen({navigation}) {
       <ProfileStack.Screen name="Chat Settings" component={ChatSettings} options={{
     	  headerTitle: 'Chat Settings', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
       }}/>
       <ProfileStack.Screen name="Chat Result" component={ChatResult} options={{
     	  headerTitle: 'Send Chat', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
       }}/>
       <ProfileStack.Screen name="Customize" component={Customize} options={{
     	  headerTitle: 'Edit Profile', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
       }} />
       <ProfileStack.Screen name="Settings" component={Settings} options={{
     	  headerTitle: 'Settings', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
       }} />	
       <ProfileStack.Screen name="Push Notifications" component={PushNotifications} options={{
     	  headerTitle: 'Push Notifications', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
       }} />	
       <ProfileStack.Screen name="Facebook Settings" component={FacebookSettings} options={{
     	  headerTitle: 'Facebook Settings', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
       }} />	
       <ProfileStack.Screen name="Change My Password" component={ChangeMyPassword} options={{
     	  headerTitle: 'Change My Password', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
       }} />	
       <ProfileStack.Screen name="Report a Problem" component={ReportAProblem} options={{
     	  headerTitle: 'Report a Problem', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
       }} />	
       <ProfileStack.Screen name="Report a User" component={ReportAUser} options={{
     	  headerTitle: 'Report a User', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
       }} />	
       <ProfileStack.Screen name="Flag Content" component={FlagContent} options={{
     	  headerTitle: 'Flag Content', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
       }} />	
       <ProfileStack.Screen name="Frequently Asked Questions" component={FrequentlyAskedQuestions} options={{
     	  headerTitle: 'FAQ', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
       }} />	
       <ProfileStack.Screen name="Help Center" component={HelpCenter} options={{
     	  headerTitle: 'Help Center', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
       }} />	
       <ProfileStack.Screen name="About Us" component={AboutUs} options={{
     	  headerTitle: 'About Us', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
       }} />	
       <ProfileStack.Screen name="Community Guidelines" component={CommunityGuidelines} options={{
     	  headerTitle: 'Community Guidelines', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
       }} />	
       <ProfileStack.Screen name="Terms of Use" component={TermsOfUse} options={{
     	  headerTitle: 'Terms of Use', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
       }} />	
       <ProfileStack.Screen name="Privacy Policy" component={PrivacyPolicy} options={{
     	  headerTitle: 'Privacy Policy', 
 		  headerTitleStyle: { color: '#515d6e' },
-		  headerTintColor: '#B2BECF',
+		  headerTintColor: '#a0acba',
       }} />	
       <ProfileStack.Screen name="Take Kwiz" component={Take} options={{
     	  headerTitle: 'Take Kwiz',
     	  headerTitleStyle: { color: '#515d6e' },
-    	  headerTintColor: '#B2BECF',
+    	  headerTintColor: '#a0acba',
       }} />
       <ProfileStack.Screen name="Kwiz Result" component={ViewTake} options={{
     	  headerTitle: 'Kwiz Result',
     	  headerTitleStyle: { color: '#515d6e' },
-    	  headerTintColor: '#B2BECF',
+    	  headerTintColor: '#a0acba',
       	}} />
       <ProfileStack.Screen name="New Kwiz" component={New} options={{
     	  headerTitle: 'New Kwiz',
     	  headerTitleStyle: { color: '#515d6e' },
-    	  headerTintColor: '#B2BECF',
+    	  headerTintColor: '#a0acba',
       }} />
       <ProfileStack.Screen name="Publish and Share Kwiz" component={Publish} options={{
     	  headerTitle: 'Your Kwiz',
     	  headerTitleStyle: { color: '#515d6e' },
-    	  headerTintColor: '#B2BECF',
+    	  headerTintColor: '#a0acba',
       }} />
       <ProfileStack.Screen name="Kwiz Results" component={Leaderboard} options={{
     	  headerTitle: 'Kwiz Leaderboard',
     	  headerTitleStyle: { color: '#515d6e' },
-    	  headerTintColor: '#B2BECF',
+    	  headerTintColor: '#a0acba',
       }} />
     </ProfileStack.Navigator>
   );
@@ -420,7 +420,7 @@ export default function BottomTabNavigator({ navigation, route }) {
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME} 
       tabBarOptions={{
         activeTintColor: '#515d6e',
-        inactiveTintColor: '#B2BECF',
+        inactiveTintColor: '#a0acba',
       }}>
       <BottomTab.Screen
         name="Home"

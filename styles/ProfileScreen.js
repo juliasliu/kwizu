@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
 	  profileThumbnailCard: {
 		  borderRadius: 0,
 		  borderWidth: 1,
-		  borderColor: "#e6e6e6",
+		  borderColor: "#e1e7ed",
 	  },
 	  topProfileThumbnailCard: {
 		  borderTopLeftRadius: 20,
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
 	  chatThumbnailCard: {
 		  borderRadius: 0,
 		  borderWidth: 1,
-		  borderColor: "#e6e6e6",
+		  borderColor: "#e1e7ed",
 	  },
 	  topChatThumbnailCard: {
 		  borderTopLeftRadius: 20,
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 		  justifyContent: 'center',
 		  width: '50%',
 		  marginVertical: 20,
-		  shadowColor: "#e6e6e6",
+		  shadowColor: "#e1e7ed",
 		  shadowOffset: {
 			  width: 0,
 			  height: 5,
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
 		  position: 'absolute',
 		  right: 0,
 		  fontSize: 24,
-		  color: "#B2BECF",
+		  color: "#a0acba",
 		  paddingLeft: 10,
 	  },
 	  chatContainer: { 
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
 		  paddingVertical: 10,
 		  borderRadius: 20,
 		  backgroundColor: "#fff",
-		  shadowColor: "#e6e6e6",
+		  shadowColor: "#e1e7ed",
 		  shadowOffset: {
 			  width: 0,
 			  height: 5,

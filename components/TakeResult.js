@@ -30,7 +30,7 @@ export default function TakeResult(props) {
 	}
 	
 		return (
-			<View style={{ marginTop: 20, }}>
+			<View style={allStyles.containerNoPadding}>
 				<View style={[ allStyles.card, allStyles.quizResult, styles.takeResult ]}>
 						<View style={[ allStyles.quizResultContainer, styles.takeResultContainer ]}>
 							<View style={[ allStyles.card, allStyles.quizResultImageContainer ]}>
