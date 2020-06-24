@@ -24,6 +24,15 @@ import styles from '../styles/WelcomeScreen';
 @inject('users') @observer
 class Welcome extends React.Component {
 	
+	state = {
+			email: "",
+			name: "",
+			username: "",
+			password: "",
+			password_confirmation: "",
+			facebook_id: "",
+	}
+	
 	initUser(token) {
 		fetch('https://graph.facebook.com/v7.0/me?fields=email,name,friends&access_token=' + token)
 		  .then((response) => response.json())
@@ -32,7 +41,8 @@ class Welcome extends React.Component {
 		    	name: json.name, 
 		    	username: json.email.split("@")[0].toLowerCase(), 
 		    	password: json.id, 
-		    	password_confirmation: json.id})
+		    	password_confirmation: json.id, 
+		    	facebook_id: json.id})
 		    this.loginUser();
 		  })
 		  .catch(() => {
@@ -42,7 +52,7 @@ class Welcome extends React.Component {
 	
 	loginUser() {
 		console.log("we logging")
-		this.props.users.login(this.state.email, this.state.password)
+		this.props.users.login(null, null, this.state.facebook_id)
 		.then(res => {
 			console.log("login!")
 		})
@@ -54,7 +64,7 @@ class Welcome extends React.Component {
 	
 	registerUser() {
 		console.log("gotta register")
-		this.props.users.register(this.state.email, this.state.name, this.state.username, this.state.password, this.state.password_confirmation)
+		this.props.users.register(this.state.email, this.state.name, this.state.username, this.state.password, this.state.password_confirmation, this.state.facebook_id)
 		.then(res => {
 			this.props.users.addPoints(10)
 			.then(res => {

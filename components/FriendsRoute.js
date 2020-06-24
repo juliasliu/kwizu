@@ -55,10 +55,6 @@ class FriendsRoute extends React.Component {
 	deleteSearchKeyword() {
 		this.setState({searchKeyword: ""});
 	}
-	
-	importFacebook() {
-		
-	}
 
 	render () {
 
@@ -120,7 +116,7 @@ class FriendsRoute extends React.Component {
 								searchInput
 							}
 					      	<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton ]}
-				                onPress={this.importFacebook.bind(this)}>
+				                onPress={() => this.props.navigation.push("FBImport")}>
 								<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 								<Text style={[ allStyles.whiteText ]}>Add from Facebook</Text>
 							</TouchableOpacity>

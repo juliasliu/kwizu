@@ -10,13 +10,14 @@ class Users {
 	@observable errors = null;
 	@observable success = null;
 	
-	@action login = function(email, password) {
+	@action login = function(email, password, facebook_id) {
 		this.busy = true;
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then
 		
 		let user = {
 				email: email,
-				password: password
+				password: password, 
+				facebook_id: facebook_id
 		}
 		
 		return new Promise(function(resolve, reject) {
@@ -53,7 +54,7 @@ class Users {
 			})
 		})
 	}
-	@action register = function(email, name, username, password, password_confirmation) {
+	@action register = function(email, name, username, password, password_confirmation, facebook_id) {
 		this.busy = true;
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then
 
@@ -62,7 +63,8 @@ class Users {
 				name: name,
 				username: username,
 				password: password,
-				password_confirmation: password_confirmation
+				password_confirmation: password_confirmation,
+				facebook_id: facebook_id
 		}
 		
 		return new Promise(function(resolve, reject) {
@@ -112,6 +114,31 @@ class Users {
 					this.handleErrors(errors)
 					console.log('api errors:', errors)
 				})
+	}
+	
+	@action connectFacebook = function(facebook_id) {
+		this.busy = true;
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+		
+		return new Promise(function(resolve, reject) {
+			axios.put(API_ROOT + '/users/' + that.id + '/connect_facebook', {facebook_id}, {withCredentials: true})
+	        .then(response => {
+	        	if (response.data.status === 'updated') {
+					that.handleSuccess()
+					that.handleLogin(response.data.user)
+		        	that.success = "Your Facebook account was connected successfully";
+		            resolve(response.data.user);
+				} else {
+					that.handleErrors(response.data.errors)
+					reject(response.data.errors)
+				}
+	        })
+	        .catch(errors => {
+				that.handleErrors(errors)
+				console.log('api errors:', errors)
+				reject(errors);
+			})
+		})
 	}
 	
 	@action search = function(keyword) {

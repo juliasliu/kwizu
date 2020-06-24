@@ -29,9 +29,9 @@ class Customize extends React.Component {
 	}
 	
 	_onRefresh = () => {
-	    this.setState({refreshing: true});
-	    this.componentDidMount();
-	  }
+		this.setState({refreshing: true});
+		this.componentDidMount();
+	}
 
 	componentDidMount() {
 		this.props.users.show(this.props.users.id)

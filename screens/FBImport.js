@@ -20,6 +20,7 @@ import styles from '../styles/ProfileScreen';
 class FBImport extends React.Component {
 	
 	state = {
+			facebook_id: null,
 			friends: [],
 			searchKeyword: "",
 			refreshing: true,
@@ -35,7 +36,7 @@ class FBImport extends React.Component {
 		this.props.users.show(this.props.users.id)
 		.then((res) => {
 			console.log("gotem")
-			this.setState({friends: res.friends, refreshing: false});
+			this.setState({facebook_id: res.facebook_id, refreshing: false});
 		})
 		.catch((errors) => {
 			console.log("and i oop")
@@ -113,12 +114,22 @@ class FBImport extends React.Component {
 								}
 					      		<View style={[allStyles.section, allStyles.sectionClear]}>
 								{
-									this.state.friends.length > 0 ? friendsArray :
-										(
-											<View style={[ allStyles.section, allStyles.sectionClear ]}>
-												<Text style={[ allStyles.sectionMessage ]}>None of your Facebook friends are here yet! Share the app with them!</Text>
-											</View>
-										)
+									this.state.facebook_id ? (
+										this.state.friends.length > 0 ? friendsArray :
+											(
+												<View style={[ allStyles.section, allStyles.sectionClear ]}>
+													<Text style={[ allStyles.sectionMessage ]}>None of your Facebook friends are here yet! Share the app with them!</Text>
+												</View>
+											)
+									) : (
+										<View style={[ allStyles.section, allStyles.sectionClear ]}>
+											<Text style={[ allStyles.sectionMessage ]}>You must connect your Facebook account in order to view your friends.</Text>
+											<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton ]}
+								                onPress={() => this.props.navigation.push('Facebook Settings')}>
+												<Text style={[ allStyles.whiteText ]}>Go to Facebook settings</Text>
+											</TouchableOpacity>
+										</View>
+									)
 								}
 								</View>
 							</View>
