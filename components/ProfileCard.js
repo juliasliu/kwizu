@@ -30,6 +30,8 @@ class ProfileCard extends React.Component {
 			sentRequest: false,
 			receivedRequest: false,
 			isFriends: false,
+			busy: false,
+			chatBusy: false,
 	}
 	  
 	componentDidMount() {
@@ -214,9 +216,11 @@ class ProfileCard extends React.Component {
 					)
 				} else {
 					let navigateToChat = () => {
+						this.setState({chatBusy: true}, () =>
 						this.props.chats.find(this.props.user.id)
 						.then((res) => {
 							console.log("got this chatty " + res.id)
+							this.setState({chatBusy: false})
 							if (res.id) this.props.navigation.push("Chat", {chat_id: res.id})
 							else this.props.navigation.push("Chat", {users: [this.props.user]})
 						})
@@ -224,6 +228,7 @@ class ProfileCard extends React.Component {
 							console.log("and i oop")
 							console.log(error);
 						})
+						)
 					}
 					
 					return (
@@ -233,11 +238,13 @@ class ProfileCard extends React.Component {
 							}
 							{
 								this.state.isFriends ? (
-									<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.blackButton ]}
-					                	onPress={navigateToChat}>
-										<Icon name="commenting" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-										<Text style={ allStyles.whiteText }>Chat</Text>
-									</TouchableOpacity>	
+										this.state.chatBusy ? <ActivityIndicator /> : (
+												<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.blackButton ]}
+								                	onPress={navigateToChat}>
+													<Icon name="commenting" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+													<Text style={ allStyles.whiteText }>Chat</Text>
+												</TouchableOpacity>
+											)
 								) : (
 									<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.grayButton ]}>
 										<Icon name="commenting" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
