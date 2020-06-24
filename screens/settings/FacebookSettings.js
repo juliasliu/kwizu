@@ -48,17 +48,17 @@ class Settings extends React.Component {
 		fetch('https://graph.facebook.com/v7.0/me?fields=email,name,friends&access_token=' + token)
 		  .then((response) => response.json())
 		  .then((json) => {
-			  this.setState({facebook_id: json.id}, this.connectFacebook)
+			  this.connectFacebook(json.id)
 		  })
 		  .catch(() => {
 			  reject('ERROR GETTING DATA FROM FACEBOOK')
 		  })
 	}
 
-	connectFacebook() {
+	connectFacebook(facebook_id) {
 		console.log("gotta connectt to FB")
-		  console.log(this.state.facebook_id)
-		this.props.users.connectFacebook(this.state.facebook_id)
+		console.log(this.state.facebook_id)
+		this.props.users.connectFacebook(facebook_id)
 		.then(res => {
 			this.setState({facebook_id: res.facebook_id})
 			this.setState({success: this.props.users.success})

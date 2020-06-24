@@ -141,6 +141,34 @@ class Users {
 		})
 	}
 	
+	@action importFacebookFriends = function(token) {
+		this.busy = true;
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+		
+		return new Promise(function(resolve, reject) {
+			fetch('https://graph.facebook.com/v7.0/me?fields=email,name,friends&access_token=' + token)
+			.then((response) => response.json())
+			.then((json) => {
+				// get all friends with the facebook_id
+				let { data } = json.friends;
+				let ids = data.map(user => {
+				    return user.id
+				})
+				axios.put(API_ROOT + '/users/' + that.id + '/facebook_friends', {user_ids: ids}, {withCredentials: true})
+		        .then(response => {
+		            that.handleSuccess()
+					resolve(response.data.friends);
+		        })
+		        .catch(errors => reject(errors))
+			})
+			.catch(errors => {
+				that.handleErrors(errors)
+				console.log('api errors:', errors)
+				reject(errors);
+			})
+		})
+	}
+	
 	@action search = function(keyword) {
 		this.busy = true;
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then

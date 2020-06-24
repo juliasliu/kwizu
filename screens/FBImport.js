@@ -9,6 +9,7 @@ import * as WebBrowser from 'expo-web-browser';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Modal from 'react-native-modal';
 import { StackActions } from '@react-navigation/native';
+import { LoginManager, AccessToken } from "react-native-fbsdk";
 
 import Loading from '../components/Loading';
 import ProfileChatThumbnail from '../components/ProfileChatThumbnail';
@@ -36,13 +37,33 @@ class FBImport extends React.Component {
 		this.props.users.show(this.props.users.id)
 		.then((res) => {
 			console.log("gotem")
-			this.setState({facebook_id: res.facebook_id, refreshing: false});
+			this.setState({facebook_id: res.facebook_id, refreshing: false}, this.importFriends);
 		})
 		.catch((errors) => {
 			console.log("and i oop")
 			console.log(errors);
 			this.setState({isModalVisible: true});
 		})
+	}
+	
+	importFriends() {
+		if (this.state.facebook_id) {
+			// generate access token
+			AccessToken.getCurrentAccessToken().then((data) => {
+				const { accessToken } = data
+				console.log(accessToken)
+				this.props.users.importFacebookFriends(accessToken)
+				.then((res) => {
+					console.log("gotem")
+					this.setState({friends: res, refreshing: false});
+				})
+				.catch((errors) => {
+					console.log("and i oop")
+					console.log(errors);
+					this.setState({isModalVisible: true});
+				})
+			})
+		}
 	}
 	
 	setSearchKeyword(searchKeyword) {
