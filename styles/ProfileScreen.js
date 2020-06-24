@@ -171,6 +171,17 @@ const styles = StyleSheet.create({
 		  flexDirection: 'row',
 		  justifyContent: 'space-between',
 	  },
+	  profileSocialButtonBadge: {
+		  flex: 1,
+	  },
+	  profileSocialButton: {
+		  flex: 1,
+		  marginRight: '2.75%',
+	  },
+	  tabViewBadge: {
+		  top: -5,
+		  right: -25,
+	  },
 	  customizeButton: {
 		  position: 'absolute',
 		  right: 0,

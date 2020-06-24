@@ -2,7 +2,8 @@ import React, { PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-import { Image, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, Button, KeyboardAvoidingView } from 'react-native';
+import { Image, Platform, StyleSheet, Text, TextInput, TouchableOpacity, 
+	View, Button, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -25,6 +26,7 @@ class Chats extends React.Component {
 			newChat: false,
 			refreshing: true,
 			isModalVisible: false,
+			busy: false,
 	}
 
 	_onRefresh = () => {
@@ -86,7 +88,7 @@ class Chats extends React.Component {
 			this.setState({refreshing: false});
 			return;
 		}
-
+		this.setState({busy: true})
 		if(this.state.newChat) {
 			// open new channel
 			const users = this.props.route.params.users;
@@ -111,6 +113,7 @@ class Chats extends React.Component {
 		.then((res) => {
 			console.log("sent a messagey message")
 			this.setState({message: "", refreshing: false});
+			this.setState({busy: false})
 			this.scrollview_ref.scrollToEnd({animated: true})
 		})
 		.catch((errors) => {
@@ -239,6 +242,7 @@ class Chats extends React.Component {
 							    	underlineColorAndroid={'#fff'}
 							    	autoCapitalize='none'
 							    	autoCorrect={false}
+							    	autoFocus={true}
 							    	returnKeyType='send'
 							    	value={ this.state.message }
 							    	onChangeText={(keyword) => this.setMessage(keyword)}
@@ -246,12 +250,16 @@ class Chats extends React.Component {
 							        />
 							    </View>
 						        <View style={[styles.chatInputIconContainer]}>
-						        	<TouchableOpacity onPress={this.sendMessage.bind(this)}>
-							        	<Icon
-							            name='send'
-							            style={[allStyles.buttonIcon]}
-							            />
-							        </TouchableOpacity>
+						        {
+									this.state.busy ? <ActivityIndicator /> : (
+										<TouchableOpacity onPress={this.sendMessage.bind(this)}>
+								        	<Icon
+								            name='send'
+								            style={[allStyles.buttonIcon]}
+								            />
+								        </TouchableOpacity>
+									)
+						        }
 							    </View>
 						    </View>
 						</View>

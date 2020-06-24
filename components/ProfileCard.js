@@ -9,6 +9,7 @@ import {
 	TouchableOpacity,
 	  Dimensions,
 } from 'react-native';
+import { Badge } from 'react-native-elements'
 import { observer, inject } from 'mobx-react';
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
 import TabBarIcon from '../components/TabBarIcon';
@@ -135,11 +136,22 @@ class ProfileCard extends React.Component {
 		  let friendButton = () => {
 				if (this.state.isOwnProfile) {
 					return (
-							<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.grayButton ]}
-							 	onPress={() => this.props.navigation.push('Friends', {user_id: this.props.user.id})}>
-								<Icon name="user" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={ allStyles.whiteText }>{this.props.user.friends.length} friends</Text>
-							</TouchableOpacity>
+							<View style={[allStyles.buttonBadge, styles.profileSocialButtonBadge]}>
+								<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.grayButton, styles.profileSocialButton ]}
+								 	onPress={() => this.props.navigation.push('Friends', {user_id: this.props.user.id})}>
+									<Icon name="user" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+									<Text style={ allStyles.whiteText }>{this.props.user.friends.length} friends</Text>
+								</TouchableOpacity>
+								{
+									this.props.user.friends_received.length != 0 && (
+											<Badge
+											value={this.props.user.friends_received.length}
+											status="error"
+											containerStyle={allStyles.badge}
+											/>	
+									)
+								}
+							</View>
 					)
 				} else if (this.state.isFriends) {
 					return (
@@ -182,11 +194,22 @@ class ProfileCard extends React.Component {
 							{
 								this.state.busy ? <ActivityIndicator /> : friendButton()
 							}
-							<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.blackButton ]}
-			                	onPress={() => this.props.navigation.push('Chats')}>
-								<Icon name="comments" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={ allStyles.whiteText }>View chats</Text>
-							</TouchableOpacity>
+							<View style={[allStyles.buttonBadge, styles.profileSocialButtonBadge]}>
+								<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.blackButton, styles.profileSocialButton ]}
+				                	onPress={() => this.props.navigation.push('Chats')}>
+									<Icon name="comments" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+									<Text style={ allStyles.whiteText }>View chats</Text>
+								</TouchableOpacity>
+								{
+									this.props.user.chats.length != 0 && (
+											<Badge
+											value={this.props.user.chats.length}
+											status="success"
+											containerStyle={allStyles.badge}
+										/>
+									)
+								}
+							</View>
 						</View>
 					)
 				} else {

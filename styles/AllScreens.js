@@ -102,6 +102,14 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		color: '#515d6e',
 	},
+	buttonBadge: {
+		flexDirection: 'row'
+	},
+	badge: {
+		position: 'absolute',
+	    top: 5,
+	    right: 5,
+	},
 	section: {
 		alignSelf: 'stretch',
 		justifyContent: 'center',

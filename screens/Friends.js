@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import TabBarIcon from '../components/TabBarIcon';
+import { Badge } from 'react-native-elements'
 
 import { Image, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, Button, RefreshControl, Dimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -12,6 +13,7 @@ import { StackActions } from '@react-navigation/native';
 
 import ProfileThumbnail from '../components/ProfileThumbnail';
 import FriendsRoute from '../components/FriendsRoute';
+import RequestsRoute from '../components/RequestsRoute';
 import Loading from '../components/Loading';
 
 import allStyles from '../styles/AllScreens';
@@ -20,9 +22,9 @@ import styles from '../styles/ProfileScreen';
 @inject('users') @observer
 class Friends extends React.Component {
 	state = {
-			friends_received: [],
+			friends: null,
+			friends_received: null,
 			isOwnProfile: false,
-			refreshing: true,
 			isModalVisible: false,
 			index: 0,
 			routes: [
@@ -30,11 +32,6 @@ class Friends extends React.Component {
 				{ key: 'second', title: 'Requests' },
 			],
 	}
-
-	_onRefresh = () => {
-	    this.setState({refreshing: true});
-	    this.componentDidMount();
-	  }
 
 	componentDidMount() {
 		const {user_id} = this.props.route.params;
@@ -44,7 +41,7 @@ class Friends extends React.Component {
 		this.props.users.show(user_id)
 		.then((res) => {
 			console.log("gotem")
-			this.setState({friends_received: res.friends_received, refreshing: false});
+			this.setState({friends: res.friends, friends_received: res.friends_received});
 		})
 		.catch((errors) => {
 			console.log("and i oop")
@@ -59,69 +56,18 @@ class Friends extends React.Component {
 
 	render () {
 		
-		let friendsReceivedArray = this.state.friends_received.map(( item, key ) =>
-		{
-			return item != undefined && (
-					<ProfileThumbnail navigation={this.props.navigation}
-					user={item}
-					key={key}
-					style={[ (key === this.state.friends_received.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
-							 (key === 0) ? allStyles.topProfileThumbnailCard : null,
-						]} />
-			)
-		})
-		
 		let FirstRoute = () => (
 				<FriendsRoute
+				friends={this.state.friends}
 				navigation={this.props.navigation}
 				user_id={this.props.route.params.user_id} />
 		);
 
 		let SecondRoute = () => (
-				<View style={allStyles.containerNoPadding}>
-				{
-					!this.state.refreshing && (
-							<ScrollView
-							showsVerticalScrollIndicator={false}
-							refreshControl={
-									<RefreshControl
-									refreshing={this.state.refreshing}
-									onRefresh={this._onRefresh}
-									/>
-							}>
-							<View style={allStyles.container}>
-								<View style={[allStyles.section, allStyles.sectionClear]}>
-								{
-									this.state.friends_received.length > 0 ? friendsReceivedArray :
-										(
-												<View style={[ allStyles.section, allStyles.sectionClear ]}>
-												<Text style={[ allStyles.sectionMessage ]}>You have no incoming friend requests! You're all caught up.</Text>
-												</View>
-										)
-								}
-								</View>
-							</View>
-							</ScrollView>
-						)
-				}
-				<Modal isVisible={this.state.isModalVisible} 
-			      coverScreen={false} 
-			      backdropOpacity={0} 
-			      onBackdropPress={() => this.props.navigation.navigate("Profile")} 
-			      animationIn="slideInDown"
-			      animationOut="slideOutUp"
-			      style={[ allStyles.modal ]}>
-			      <View style={[ allStyles.card, allStyles.modalView, allStyles.modalViewDanger ]}>
-			        <Text style={ allStyles.modalTitle }>Oh no, something went wrong.</Text>
-			        <TouchableOpacity onPress={() => this.props.navigation.navigate("Profile")} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.whiteButton ]}>
-			        	<Text>Go to Profile</Text>
-			        </TouchableOpacity>
-			        <TouchableOpacity onPress={() => this.props.navigation.dispatch(StackActions.pop(1))} style={[ allStyles.button, allStyles.fullWidthButton, allStyles.clearButton ]}>
-			        	<Text style={ allStyles.whiteText }>Go Back</Text>
-			        </TouchableOpacity>
-			      </View>
-			    </Modal>
-				</View>
+				<RequestsRoute
+				friends_received={this.state.friends_received}
+				navigation={this.props.navigation}
+				user_id={this.props.route.params.user_id} />
 		);
 
 		const renderTabBar = props => (
@@ -130,7 +76,7 @@ class Friends extends React.Component {
 				indicatorStyle={ allStyles.tabIndicator }
 				style={ allStyles.tabBar }
 				renderLabel={({ route, focused, color }) => (
-						<View style={allStyles.tabBarContainer}>
+						<View style={[allStyles.tabBarContainer, styles.profileSocialButtonBadge]}>
 							<Icon
 						    name={
 						    		route.title == "Requests" ? (
@@ -145,6 +91,16 @@ class Friends extends React.Component {
 							<Text style={[ allStyles.tabBarLabel, { color }]}>
 								{route.title}
 						    </Text>
+						    {
+						    	(route.title == "Requests" && 
+						    	this.state.friends_received && this.state.friends_received.length != 0 ) && (
+						    			<Badge
+										value={this.state.friends_received.length}
+										status="error"
+										containerStyle={[allStyles.badge, styles.tabViewBadge]}
+										/>	
+						    	)
+						    }
 						 </View>
 					  )}
 				activeColor={"#fff"}

@@ -19,7 +19,7 @@ import styles from '../styles/ProfileScreen';
 @inject('users') @observer
 class FriendsRoute extends React.Component {
 	state = {
-			friends: [],
+			friends_received: [],
 			searchKeyword: "",
 			isOwnProfile: false,
 			refreshing: true,
@@ -36,8 +36,8 @@ class FriendsRoute extends React.Component {
 		if (user_id == this.props.users.user.id) {
 			this.setState({isOwnProfile: true})
 		}
-		if (this.props.friends) {
-			this.setState({friends: this.props.friends, refreshing: false})
+		if (this.props.friends_received) {
+			this.setState({friends_received: this.props.friends_received, refreshing: false})
 		}
 	}
 	
@@ -49,7 +49,7 @@ class FriendsRoute extends React.Component {
 		this.props.users.show(this.props.user_id)
 		.then((res) => {
 			console.log("gotem")
-			this.setState({friends: res.friends, refreshing: false});
+			this.setState({friends_received: res.friends_received, refreshing: false});
 		})
 		.catch((errors) => {
 			console.log("and i oop")
@@ -57,97 +57,46 @@ class FriendsRoute extends React.Component {
 			this.setState({isModalVisible: true});
 		})
 	}
-	
-	setSearchKeyword(searchKeyword) {
-		this.setState({searchKeyword})
-	}
-
-	deleteSearchKeyword() {
-		this.setState({searchKeyword: ""});
-	}
 
 	render () {
 
-		let friendsArray = this.state.friends.filter(elem => elem.name.toLowerCase().includes(this.state.searchKeyword.toLowerCase()) || elem.username.toLowerCase().includes(this.state.searchKeyword.toLowerCase()))
-		friendsArray = friendsArray.map(( item, key ) =>
+		let friendsReceivedArray = this.state.friends_received.map(( item, key ) =>
 		{
 			return item != undefined && (
 					<ProfileThumbnail navigation={this.props.navigation}
 					user={item}
 					key={key}
-					style={[ (key === friendsArray.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
+					style={[ (key === this.state.friends_received.length - 1) ? allStyles.bottomProfileThumbnailCard : null,
 							 (key === 0) ? allStyles.topProfileThumbnailCard : null,
 						]} />
 			)
 		})
-		
-		let searchInput = (
-				<View style={[allStyles.searchInputContainer]}>
-				<View style={[ allStyles.input, allStyles.searchInput ]}>
-				  <Icon
-				    name='search'
-				    style={allStyles.searchIcon}
-				  />
-				  <TextInput
-				  style={[ allStyles.searchInputText ]}
-				  placeholder={'Search...'}
-				  placeholderTextColor={'#8393a8'}
-				  underlineColorAndroid={'#fff'}
-				  autoCapitalize='none'
-				  autoCorrect={false}
-				  returnKeyType='search'
-				  value={ this.state.searchKeyword }
-				  onChangeText={(keyword) => this.setSearchKeyword(keyword)}
-				  />
-				  <TouchableOpacity onPress={this.deleteSearchKeyword.bind(this)}>
-				      <TabBarIcon
-				        name='md-close'
-				        style={[allStyles.searchIcon, allStyles.searchDeleteIcon]}
-				      />
-				  </TouchableOpacity>
-				</View>
-			</View>	
-		)
 
 		return (
 				<View style={allStyles.containerNoPadding}>
 				{
 					this.state.refreshing ? <Loading /> : (
-						<ScrollView
-						showsVerticalScrollIndicator={false}
-			      		refreshControl={
-				              <RefreshControl
-				              refreshing={this.state.refreshing}
-				              onRefresh={this._onRefresh}
-				            />
-				          }>
-						<View style={allStyles.container}>
-							{
-								searchInput
-							}
-					      	<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton ]}
-				                onPress={() => this.props.navigation.push("FBImport")}>
-								<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={[ allStyles.whiteText ]}>Add from Facebook</Text>
-							</TouchableOpacity>
-					      	<View style={[allStyles.section, allStyles.sectionClear]}>
+							<ScrollView
+							showsVerticalScrollIndicator={false}
+							refreshControl={
+									<RefreshControl
+									refreshing={this.state.refreshing}
+									onRefresh={this._onRefresh}
+									/>
+							}>
+							<View style={allStyles.container}>
+								<View style={[allStyles.section, allStyles.sectionClear]}>
 								{
-									this.state.friends.length > 0 ? friendsArray :
+									this.state.friends_received.length > 0 ? friendsReceivedArray :
 										(
-												this.state.isOwnProfile ? (
-															<View style={[ allStyles.section, allStyles.sectionClear ]}>
-																<Text style={[ allStyles.sectionMessage ]}>No friends yet! Find people by taking more kwizzes or import your friends from Facebook!</Text>
-															</View>
-														) : (
-															<View style={[ allStyles.section, allStyles.sectionClear ]}>
-																<Text style={[ allStyles.sectionMessage ]}>This user has no friends yet. Be their first friend!</Text>
-															</View>
-														)
+												<View style={[ allStyles.section, allStyles.sectionClear ]}>
+												<Text style={[ allStyles.sectionMessage ]}>You have no incoming friend requests! You're all caught up.</Text>
+												</View>
 										)
 								}
+								</View>
 							</View>
-						</View>
-						</ScrollView>
+							</ScrollView>
 						)
 				}
 				<Modal isVisible={this.state.isModalVisible} 
@@ -167,7 +116,7 @@ class FriendsRoute extends React.Component {
 			        </TouchableOpacity>
 			      </View>
 			    </Modal>
-			 </View>
+				</View>
 		)
 	}
 }

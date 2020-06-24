@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { Badge } from 'react-native-elements'
 
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button, RefreshControl, Dimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -122,7 +123,7 @@ class Requests extends React.Component {
 				indicatorStyle={ allStyles.tabIndicator }
 				style={ allStyles.tabBar }
 				renderLabel={({ route, focused, color }) => (
-						<View style={allStyles.tabBarContainer}>
+						<View style={[allStyles.tabBarContainer, styles.profileSocialButtonBadge]}>
 							<Icon
 						    name={
 						    		route.title == "Requests" ? (
@@ -134,9 +135,15 @@ class Requests extends React.Component {
 						    color={color}
 						    style={ allStyles.tabBarIcon }
 						    />
-							<Text style={[ allStyles.tabBarLabel, { color }]}>
-								{route.title}
-						    </Text>
+								<Text style={[ allStyles.tabBarLabel, { color }]}>
+									{route.title}
+							    </Text>
+	
+								<Badge
+								value={this.state.friends_requested.length}
+								status="success"
+								containerStyle={allStyles.badge}
+								/>
 						 </View>
 					  )}
 				activeColor={"#fff"}
