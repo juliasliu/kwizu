@@ -109,6 +109,12 @@ function OptionButton({ icon, label, onPress, isLastOption }) {
 </ScrollView>
 </View>
 
+<CheckBox
+onClick={() => this.props.setSelectedChoiceValue(this.props.question.id, item.weight, item.id)}
+checkBoxColor= {this.getSelectedChoiceStyle("checkbox", isChecked)}
+isChecked={isChecked}
+/>
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

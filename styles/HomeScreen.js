@@ -121,6 +121,16 @@ const styles = StyleSheet.create({
   choiceContainer: {
 	  marginVertical: 10,
   },
+  choicesArray: {
+	  display: 'flex',
+	  flexDirection: 'row',
+	  flexWrap: 'wrap',
+	  alignItems: 'stretch',
+	  alignContent: 'stretch',
+  },
+  selectChoiceContainer: {
+	  width: '100%',
+  },
   choiceInput: {
 		display: 'flex',
 		flexDirection: 'row',
@@ -209,8 +219,8 @@ const styles = StyleSheet.create({
 		  marginVertical: 0,
   },
   choiceText: {
-	  width: '90%',
-	  paddingLeft: '10%',
+	  width: '100%',
+	  paddingHorizontal: 5,
   },
   searchQuizContainer: {
 	  display: 'flex',

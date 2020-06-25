@@ -145,8 +145,8 @@ class ChatGroup extends React.Component {
 										</View>
 								 	) : (
 									<View style={[ allStyles.section, allStyles.sectionClear ]}>
-											<Text style={[ allStyles.sectionMessage ]}>No friends yet! Make a friend so you can send a message to them.</Text>
-										</View>
+										<Text style={[ allStyles.sectionMessage ]}>No friends yet! Make a friend so you can send a message to them.</Text>
+									</View>
 									)
 								}
 							</View>

@@ -85,7 +85,7 @@ class Leaderboard extends React.Component {
 			if (!this.state.isOwner) {
 				let that = this;
 				usersForResult[result_id] = usersForQuizzings.filter(function (el) {
-					return that.props.users.user.friends.filter(function(e) { return e.id === el.id; }).length > 0;
+					return el.id == that.props.users.id || that.props.users.user.friends.filter(function(e) { return e.id === el.id; }).length > 0;
 				})
 			} else {
 				usersForResult[result_id] = usersForQuizzings
@@ -115,11 +115,11 @@ class Leaderboard extends React.Component {
 							</View>
 							)
 				}
-				return (
-						<View style={[allStyles.card, allStyles.profileThumbnailCard, allStyles.bottomProfileThumbnailCard ]}>
-							<Text style={[allStyles.leaderboardResultNone]}>None of your friends got this result.</Text>
-						</View>
-						)
+//				return (
+//						<View style={[allStyles.card, allStyles.profileThumbnailCard, allStyles.bottomProfileThumbnailCard ]}>
+//							<Text style={[allStyles.leaderboardResultNone]}>None of your friends got this result.</Text>
+//						</View>
+//						)
 			} else {
 				return this.state.usersForResult[result_id] && (this.state.usersForResult[result_id].map(( item, key ) => 
 				{
@@ -138,7 +138,7 @@ class Leaderboard extends React.Component {
 		let resultsArray = this.state.results.filter(elem => elem.title.toLowerCase().includes(this.state.searchKeyword.toLowerCase()))
 		resultsArray = resultsArray.map(( item, key ) =>
 		{
-			return item != undefined && (
+			return item != undefined && this.state.usersForResult[item.id] && this.state.usersForResult[item.id].length != 0 && (
 					<View 
 					key={key}
 					style={[allStyles.leaderboardResult]}>
@@ -204,6 +204,13 @@ class Leaderboard extends React.Component {
 									searchInput
 								}
 								<View style={[ allStyles.section, allStyles.sectionClear ]}>
+									{
+										this.state.isOwner ? (
+											<Text style={allStyles.sectionSubtitle}>All users</Text>	
+										) : (
+											<Text style={allStyles.sectionSubtitle}>You & your friends</Text>	
+										)
+									}
 									{
 										resultsArray
 									}

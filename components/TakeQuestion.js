@@ -18,9 +18,9 @@ import styles from '../styles/HomeScreen';
 
 export default class TakeQuestion extends React.Component {
 	
-	headerColors = [
-		"#E94E4E", "#f5a836", "#e6be4c", "#2ED673", "#25afd9", "#9877a9",
-	]
+//	headerColors = [
+//		"#E94E4E", "#f5a836", "#e6be4c", "#2ED673", "#25afd9", "#9877a9",
+//	]
 	
 	getSelectedChoiceStyle = (type, isChecked) => {
 		if (type == "button")
@@ -31,10 +31,10 @@ export default class TakeQuestion extends React.Component {
 			return isChecked && allStyles.whiteText
 	}
 	
-	randomHeaderColor = () => {
-		let index = Math.floor(Math.random() * this.headerColors.length);
-		return { backgroundColor: this.headerColors[index] };
-	}
+//	randomHeaderColor = () => {
+//		let index = Math.floor(Math.random() * this.headerColors.length);
+//		return { backgroundColor: this.headerColors[index] };
+//	}
 	
 	render() {
 		let choicesArray = this.props.question.choices.map(( item, key ) =>
@@ -42,14 +42,9 @@ export default class TakeQuestion extends React.Component {
 			// isChecked is true if there is an answer in this.props.answers with the same questionId and choiceWeight
 			let isChecked = this.props.answers.findIndex(elem => elem.questionId === this.props.question.id && elem.choiceWeight === item.weight) != -1;
 			return item != undefined && (
-					<View style={[ styles.choiceContainer]} key = { key } >
+					<View style={[ styles.choiceContainer, styles.selectChoiceContainer ]} key = { key } >
 						<TouchableOpacity style={[ allStyles.button, styles.choice, this.getSelectedChoiceStyle("button", isChecked) ]}
 							onPress={() => this.props.setSelectedChoiceValue(this.props.question.id, item.weight, item.id)}>
-							<CheckBox
-								onClick={() => this.props.setSelectedChoiceValue(this.props.question.id, item.weight, item.id)}
-								checkBoxColor= {this.getSelectedChoiceStyle("checkbox", isChecked)}
-								isChecked={isChecked}
-							/>
 							<Text style={[ styles.choiceText, this.getSelectedChoiceStyle("text", isChecked) ]}>{item.content}</Text>
 						</TouchableOpacity>
 					</View>
@@ -58,15 +53,17 @@ export default class TakeQuestion extends React.Component {
 		
 		return (
 				<View style={[ styles.quizForm ]}>
-					<View style={[ styles.quizFormHeader, styles.questionHeader, this.randomHeaderColor() ]}>
+					<View style={[ styles.quizFormHeader, styles.questionHeader ]}>
 						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Question {this.props.index + 1}</Text>
 					</View>
 					<View style={[ allStyles.card ]}>
 					
 					<Text style={styles.question}>{ this.props.question.title }</Text>
-					{
-						choicesArray
-					}
+					<View style={[styles.choicesArray]}>
+						{
+							choicesArray
+						}
+					</View>
 				</View>
 			</View>
 		)

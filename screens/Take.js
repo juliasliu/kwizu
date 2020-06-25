@@ -169,20 +169,13 @@ class Take extends React.Component {
 	        });
 		} else if(questionId) {
 			// scroll to next incomplete question if not done
-			var nextIndex = this.state.quiz.questions.length;
-			for (var i = questionId; i < this.state.quiz.questions.length; i++) {
-				if (this.state.answers.findIndex(elem => elem.questionId === i) < 0) {
-					nextIndex = i;
-					break;
-				}
-			}
-			if (nextIndex < this.state.quiz.questions.length) {
-		        this.scrollview_ref.scrollTo({
-		            x: 0,
-		            y: this.state.scrollIndices[nextIndex],
-		            animated: true,
-		        });
-			}
+			var nextIndex = this.state.quiz.questions.findIndex(q => this.state.answers.findIndex(a => a.questionId == q.id) < 0)
+			this.scrollview_ref.scrollTo({
+				x: 0,
+				y: this.state.scrollIndices[nextIndex],
+				animated: true,
+			});
+			console.log("enxt questiono!! " + nextIndex + "scroll to " + this.state.scrollIndices[nextIndex])
 		}
 	}
 	
@@ -231,10 +224,8 @@ class Take extends React.Component {
 	
 	finishedQuiz() {
 		/* calculate the result of the quiz
-		 * sum all the weights from each of the answer choices selected
-		 * average across total number of questions
-		 * round the average to the nearest integer weight
-		 * that weight is the weight of the corresponding result
+		 * collect the frequency of each choice weight picked
+		 * pick the result corresponding to the most frequently picked weight
 		 */
 
 		// if quizzing exists, get the result id
@@ -245,11 +236,22 @@ class Take extends React.Component {
 		}
 		// if not taken, calculate the result
 		else {
-			var sum = this.state.answers.reduce(function(a, b) {
-				return a + b.choiceWeight;
-			}, 0);
-			var roundedWeight = Math.round(sum / this.state.quiz.questions.length);
-			var resultOfQuiz = this.state.quiz.results[this.state.quiz.results.findIndex(elem => elem.weight === roundedWeight)];
+			let weightDict = new Map()
+			for (var i = 0; i < this.state.answers.length; i++) {
+				if (!weightDict.has(this.state.answers[i].choiceWeight)) {
+					weightDict.set(this.state.answers[i].choiceWeight, 0)
+				}
+				let prevFreq = weightDict.get(this.state.answers[i].choiceWeight)
+				weightDict.set(this.state.answers[i].choiceWeight, prevFreq + 1)
+			}
+			let weightDictEntries = [...weightDict.entries()]
+			let mostFreqEntry = weightDictEntries.reduce((prev, curr) => curr[1] > prev[1] ? curr : prev)
+			let mostFreqWeight = mostFreqEntry[0]
+//			var sum = this.state.answers.reduce(function(a, b) {
+//				return a + b.choiceWeight;
+//			}, 0);
+//			var roundedWeight = Math.round(sum / this.state.quiz.questions.length);
+			var resultOfQuiz = this.state.quiz.results[this.state.quiz.results.findIndex(elem => elem.weight === mostFreqWeight)];
 			this.setState({resultOfQuiz: resultOfQuiz})
 
 			console.log("retake or save")
