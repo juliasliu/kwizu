@@ -22,7 +22,8 @@ export default function NewQuestionForm(props) {
 		let data = []
 		for(var i = 0; i < props.results.length; i++) {
 			let weight = props.results[i].weight
-			data.push({ label: "Result " + weight, value: weight})
+			let title = props.results[i].title
+			data.push({ label: title, value: weight})
 		}
 		
 		let choicesArray = props.question.choices.map(( item, key ) =>

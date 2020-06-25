@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 0,
 	},
 	dropdownPicker: {
-		width: 'auto',
+		width: '80%',
 		padding: 0,
 		borderWidth: 1,
 		borderColor: '#e1e7ed',
