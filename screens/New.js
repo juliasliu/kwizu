@@ -593,7 +593,7 @@ class New extends React.Component {
 														{
 															this.props.quizzes.busy ? 
 															<ActivityIndicator/> :
-															<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
+															<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton ]}
 												                onPress={() => this.onPressCreate(true)}>
 																<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 																<Text style={[ allStyles.whiteText ]}>Update your kwiz</Text>
@@ -615,7 +615,7 @@ class New extends React.Component {
 														{
 															this.props.quizzes.busy ? 
 															<ActivityIndicator/> :
-															<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
+															<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton ]}
 												                onPress={() => this.onPressCreate(true)}>
 																<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 																<Text style={[ allStyles.whiteText ]}>Publish and share</Text>
@@ -640,7 +640,7 @@ class New extends React.Component {
 											{
 												this.props.quizzes.busy ? 
 												<ActivityIndicator/> :
-												<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blueButton ]}
+												<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton ]}
 									                onPress={() => this.onPressCreate(true)}>
 													<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
 													<Text style={[ allStyles.whiteText ]}>Publish and share</Text>
