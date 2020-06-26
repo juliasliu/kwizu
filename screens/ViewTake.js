@@ -92,7 +92,7 @@ class ViewTake extends React.Component {
 		this.props.navigation.push("Take Kwiz", {quiz_id: this.state.quiz.id, fromPublish: true})
 	}
 	
-	showPickedImage() {
+	showPickedAvatar() {
 		const { avatar_url } = this.state.user;
 
 		if (avatar_url != null && avatar_url != undefined) {
@@ -108,6 +108,22 @@ class ViewTake extends React.Component {
 					source={ Thumbnails.avatar }
 					style={{borderRadius: 50, width: 25, height: 25}}
 					/>
+			);
+		}
+	}
+	
+	showPickedImage = () => {
+		const { image_url } = this.state.quiz;
+
+		if (image_url != null && image_url != undefined) {
+			return (
+					<Image source={{ uri: image_url }} 
+					style={[styles.quizImage]} />
+			);
+		} else {
+			return (
+					<Image source={Thumbnails.quiz} 
+					style={[styles.quizImage]} />
 			);
 		}
 	}
@@ -129,10 +145,18 @@ class ViewTake extends React.Component {
 					            />
 					          }>
 							<View style={allStyles.container}>
-								<Text style={ allStyles.title }>{ this.state.quiz.title }</Text>
+								<View style={[ allStyles.card, styles.quizCard ]}>
+									<View style={[styles.quizImageContainer]}>
+										{
+											this.showPickedImage()
+										}
+										<View style={[styles.quizImageOverlay]} />
+									</View>
+									<Text style={[ allStyles.title, styles.quizTitle ]}>{ this.state.quiz.title }</Text>
+								</View>
 								<TouchableOpacity style={{display: 'flex', flexDirection: 'row', alignItems: 'center',}} 
 								onPress={() => this.props.navigation.push("Profile", {user_id: this.state.user.id})}>
-									{this.showPickedImage()}
+									{this.showPickedAvatar()}
 									<Text style={[ allStyles.heading, {marginLeft: 10,} ]}>{ this.state.user.name } got the result:</Text>
 								</TouchableOpacity>
 								{
