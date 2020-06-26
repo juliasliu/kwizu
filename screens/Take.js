@@ -155,19 +155,28 @@ class Take extends React.Component {
 		for (var i = 1; i < this.state.quiz.questions.length + 1; i++) {
 			scrollIndices[i] = scrollIndices[i-1] + this.state.scrollHeights[i];
 		}
-		this.setState({scrollIndices})
+		this.setState({scrollIndices}, () => { if (this.state.isDone) this.scrollIfDone() })
 	}
 	
-	scrollToNext(questionId) {
+	scrollIfDone() {
+		var scrollIndex = this.state.scrollIndices[this.state.quiz.questions.length-1] + this.state.scrollHeights[this.state.quiz.questions.length-1]
+		console.log("scroll to result " + scrollIndex)
+        this.scrollview_ref.scrollTo({
+            x: 0,
+            y: scrollIndex,
+            animated: true,
+        });
+		return scrollIndex;
+	}
+	
+	scrollToNext() {
 		if (this.state.isDone) {
-			var scrollIndex = this.state.scrollIndices[this.state.quiz.questions.length-1] + this.state.scrollHeights[this.state.quiz.questions.length-1]
-	        console.log("scroll to result " + scrollIndex)
-	        this.scrollview_ref.scrollTo({
-	            x: 0,
-	            y: scrollIndex,
-	            animated: true,
-	        });
-		} else if(questionId) {
+			var scrollIndex = this.scrollIfDone();
+	        if (Number.isNaN(scrollIndex)) {
+	        	this.scrollIndexHelper();
+				console.log("is it NAN?? " + scrollIndex)
+	        }
+		} else {
 			// scroll to next incomplete question if not done
 			var nextIndex = this.state.quiz.questions.findIndex(q => this.state.answers.findIndex(a => a.questionId == q.id) < 0)
 			this.scrollview_ref.scrollTo({
@@ -179,17 +188,17 @@ class Take extends React.Component {
 		}
 	}
 	
-	updateIsDone(questionId) {
+	updateIsDone() {
 		// helper function for checking if all answers are done
-		this.setState({ isDone: this.state.answers.length == this.state.quiz.questions.length }, () => this.isDoneAndScroll(questionId))
+		this.setState({ isDone: this.state.answers.length == this.state.quiz.questions.length }, () => this.isDoneAndScroll())
 	}
 	
-	isDoneAndScroll(questionId) {
+	isDoneAndScroll() {
 		if (this.state.isDone) {
 			this.scrollToNext();
 			this.finishedQuiz();
 		} else {
-			this.scrollToNext(questionId)
+			this.scrollToNext()
 		}
 	}
 	
@@ -208,7 +217,7 @@ class Take extends React.Component {
 			answers = [...answers, newAnswer]
 
 			this.setState({answers}, () => {
-				this.updateIsDone(questionId)
+				this.updateIsDone()
 			})
 		}
 	}
