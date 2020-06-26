@@ -25,6 +25,8 @@ import { InterstitialAd, TestIds, AdEventType} from '@react-native-firebase/admo
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
 
+import Thumbnails from '../constants/Thumbnails';
+
 import TabBarIcon from '../components/TabBarIcon';
 import Loading from '../components/Loading';
 
@@ -56,7 +58,7 @@ class Take extends React.Component {
 		resultOfQuiz : null,	// stores the result object
 		isDone: false,			// if quizzing exists or done taking the quiz, isDone = true
 		hasTaken: false,		// if quizzing exists, hasTaken = true; if retake the quiz or quiz has been changed, hasTaken = false
-		scrollIndices: [80,],	// starting scroll position is 70 given the title heading of the kwiz
+		scrollIndices: [100,],	// starting scroll position is 70 given the title heading of the kwiz
 		scrollHeights: [],
 	    refreshing: true,
 	    recommended: [],		// list of recommended quizzes based on this quiz
@@ -308,6 +310,22 @@ class Take extends React.Component {
 		})
 	}
 	
+	showPickedImage = () => {
+		const { image_url } = this.state.quiz;
+
+		if (image_url != null && image_url != undefined) {
+			return (
+					<Image source={{ uri: image_url }} 
+					style={[styles.quizImage]} />
+			);
+		} else {
+			return (
+					<Image source={Thumbnails.quiz} 
+					style={[styles.quizImage]} />
+			);
+		}
+	}
+	
 	render() {
 		
 		let questionsArray = this.state.quiz.questions.map(( item, key ) =>
@@ -317,8 +335,9 @@ class Take extends React.Component {
 					key={key}
 					onLayout={event => {
 				        const layout = event.nativeEvent.layout;
-				        this.state.scrollHeights[key] = layout.height;
-						this.scrollIndexHelper();
+						var scrollHeights = [...this.state.scrollHeights]
+						scrollHeights[key] = layout.height;
+				        this.setState({scrollHeights}, this.scrollIndexHelper)
 				      }}>
 						<TakeQuestion
 						question={item}
@@ -346,7 +365,21 @@ class Take extends React.Component {
 					            />
 					          }>
 						<View style={allStyles.container}>
-							<Text style={ allStyles.title }>{ this.state.quiz.title }</Text>
+							<View style={[ allStyles.card, styles.quizCard ]}>
+								<View style={[styles.quizImageContainer]}
+								onLayout={event => {
+							        const layout = event.nativeEvent.layout;
+							        var scrollIndices = [...this.state.scrollIndices]
+							        scrollIndices[0] = layout.height + 25;
+							        this.setState({scrollIndices}, this.scrollIndexHelper)
+							      }}>
+									{
+										this.showPickedImage()
+									}
+									<View style={[styles.quizImageOverlay]} />
+								</View>
+								<Text style={[ allStyles.title, styles.quizTitle ]}>{ this.state.quiz.title }</Text>
+							</View>
 							
 							{
 								questionsArray

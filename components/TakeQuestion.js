@@ -18,23 +18,22 @@ import styles from '../styles/HomeScreen';
 
 export default class TakeQuestion extends React.Component {
 	
-//	headerColors = [
-//		"#E94E4E", "#f5a836", "#e6be4c", "#2ED673", "#25afd9", "#9877a9",
-//	]
+	headerColors = [
+		"#E94E4E", "#f5a836", "#e6be4c", "#2ED673", "#25afd9", "#9877a9",
+	]
 	
 	getSelectedChoiceStyle = (type, isChecked) => {
 		if (type == "button")
-			return isChecked && allStyles.greenButton
-		if (type == "checkbox")
-			return isChecked ? '#fff' : "#77A0A9"
+			return isChecked && allStyles.grayButton
+//		if (type == "checkbox")
+//			return isChecked ? '#fff' : "#77A0A9"
 		if (type == "text")
 			return isChecked && allStyles.whiteText
 	}
 	
-//	randomHeaderColor = () => {
-//		let index = Math.floor(Math.random() * this.headerColors.length);
-//		return { backgroundColor: this.headerColors[index] };
-//	}
+	randomHeaderColor = (index) => {
+		return { backgroundColor: this.headerColors[index % this.headerColors.length] };
+	}
 	
 	render() {
 		let choicesArray = this.props.question.choices.map(( item, key ) =>
@@ -53,7 +52,7 @@ export default class TakeQuestion extends React.Component {
 		
 		return (
 				<View style={[ styles.quizForm ]}>
-					<View style={[ styles.quizFormHeader, styles.questionHeader ]}>
+					<View style={[ styles.quizFormHeader, styles.questionHeader, this.randomHeaderColor(this.props.index) ]}>
 						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Question {this.props.index + 1}</Text>
 					</View>
 					<View style={[ allStyles.card ]}>

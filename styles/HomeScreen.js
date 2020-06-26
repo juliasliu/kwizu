@@ -11,6 +11,10 @@ const styles = StyleSheet.create({
 	    flexDirection: 'row',
 	    alignItems: 'flex-end',
   },
+  quizTitle: {
+	  padding: 20,
+	  color: '#fff',
+  },
   quizPreview: {
 	  maxWidth: (Dimensions.get('window').width - 80) * 3 / 4,
 	  width: (Dimensions.get('window').width - 80) * 3 / 4,
@@ -77,7 +81,7 @@ const styles = StyleSheet.create({
 	  width: '90%',
   },
   questionHeader: {
-	  width: '33.333%',
+	  width: 'auto',
 	  marginLeft: '5%',
 	  marginRight: 'auto',
   },
