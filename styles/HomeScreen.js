@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 		width: '100%',
 		height: '100%',
 		borderRadius: 20,
-	    opacity: 0.15,
+	    opacity: 0.25,
 	    backgroundColor: '#000',
   },
   quizDraftOverlay: {
