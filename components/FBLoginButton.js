@@ -17,7 +17,7 @@ export default class FBLoginButton extends Component {
 	loginFB() {
         let that = this
 		// Attempt a login using the Facebook login dialog asking for default permissions.
-        LoginManager.logInWithPermissions(["public_profile", "email", "user_friends"]).then(
+        LoginManager.logInWithPermissions(["public_profile", "email"]).then(
           function(result) {
             if (result.isCancelled) {
               console.log("Login cancelled");

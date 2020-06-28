@@ -34,7 +34,7 @@ class Welcome extends React.Component {
 	}
 	
 	initUser(token) {
-		fetch('https://graph.facebook.com/v7.0/me?fields=email,name,friends&access_token=' + token)
+		fetch('https://graph.facebook.com/v7.0/me?fields=email,name&access_token=' + token)
 		  .then((response) => response.json())
 		  .then((json) => {
 		    this.setState({email: json.email, 
