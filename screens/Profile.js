@@ -114,7 +114,7 @@ class Profile extends React.Component {
 									/>
 									{
 										(this.state.isOwnProfile || this.state.isFriends) ? (
-											<View style={allStyles.containerNoPadding}>
+											<View>
 											<View style={[allStyles.section, {marginTop: 10}]}>
 												<View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
 													<Text style={[ allStyles.sectionTitle ]}>Kwiz Feed</Text>
