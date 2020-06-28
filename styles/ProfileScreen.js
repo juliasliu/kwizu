@@ -172,11 +172,10 @@ const styles = StyleSheet.create({
 		  justifyContent: 'space-between',
 	  },
 	  profileSocialButtonBadge: {
-		  flex: 1,
+		  width: '47.5%',
 	  },
 	  profileSocialButton: {
 		  flex: 1,
-		  marginRight: '2.75%',
 	  },
 	  tabViewBadge: {
 		  top: -5,
