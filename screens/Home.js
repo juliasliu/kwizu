@@ -89,7 +89,7 @@ class HomeScreen extends React.Component {
 				      		}
 					  		</ScrollView>
 					      </View>
-					      <View style={allStyles.section}>
+					      <View style={[allStyles.section, allStyles.sectionClear]}>
 					    	<Text style={allStyles.sectionTitle}>Popular</Text>
 					      	<Text style={allStyles.sectionSubtitle}>Take our all-time most popular kwizzes.</Text>
 					    	<ScrollView contentContainerStyle={allStyles.quizThumbnailContainer} showsHorizontalScrollIndicator={false} horizontal= {true} decelerationRate={0} snapToInterval={150} snapToAlignment={"center"}>

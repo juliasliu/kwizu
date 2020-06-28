@@ -108,90 +108,99 @@ class Profile extends React.Component {
 						            />
 						          }>
 						      <View style={allStyles.container}>
-									<ProfileCard user={this.state.user}
+									<ProfileCard
+										user={this.state.user}
 										navigation={this.props.navigation}
 									/>
-									<View style={[allStyles.section, {marginTop: 10}]}>
-										<View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-											<Text style={[ allStyles.sectionTitle ]}>Kwiz Feed</Text>
-							   				<TouchableOpacity onPress={() => this.props.navigation.push("Profile Kwizzes", {user_id: this.state.user.id, type: "taken"})}>
-							   					<Text style={allStyles.sectionSubtitle}>View all</Text>
-							   				</TouchableOpacity>
-							   			</View>
-								      	{ this.state.isOwnProfile ?
-								      		<Text style={allStyles.sectionSubtitle}>The kwizzes you have taken will show up here. See if your friends also got the same results!</Text>
-								      		: <Text style={allStyles.sectionSubtitle}>{this.state.user.name} has taken these kwizzes. Take them to find out if you got the same results!</Text> }
+									{
+										(this.state.isOwnProfile || this.state.isFriends) ? (
+											<View style={allStyles.containerNoPadding}>
+											<View style={[allStyles.section, {marginTop: 10}]}>
+												<View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+													<Text style={[ allStyles.sectionTitle ]}>Kwiz Feed</Text>
+									   				<TouchableOpacity onPress={() => this.props.navigation.push("Profile Kwizzes", {user_id: this.state.user.id, type: "taken"})}>
+											   			<Text style={allStyles.sectionSubtitle}>View all</Text>
+											   		</TouchableOpacity>
+									   			</View>
+										      	{ this.state.isOwnProfile ?
+										      		<Text style={allStyles.sectionSubtitle}>The kwizzes you have taken will show up here. See if your friends also got the same results!</Text>
+										      		: <Text style={allStyles.sectionSubtitle}>{this.state.user.name} has taken these kwizzes. Take them to find out if you got the same results!</Text> }
 
-								      	{
-								      		(this.state.quizzes[0].length > 0) ? (
-								      				<ScrollView contentContainerStyle={[ allStyles.quizThumbnailContainer ]} showsHorizontalScrollIndicator={false} horizontal= {true} decelerationRate={0} snapToInterval={250} snapToAlignment={"center"}>
-								      				{
-								      					quizzesArray(0)
-								      				}
-								      				</ScrollView>
-								      		) : (
-								      				this.state.isOwnProfile ? (
-								      						<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.greenButton ]} onPress={() => this.props.navigation.navigate("Home")}>
-															<TabBarIcon name="md-happy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-										      				<Text style={ allStyles.whiteText }>Take a Kwiz</Text>
-										      				</TouchableOpacity>
-								      				) : (
-								      						<View>
-									      						<Text style={[ allStyles.sectionMessage ]}>{this.state.user.name} has not taken any kwizzes yet.</Text>
-									      					</View>
-								      					)
-								      		)
-								      	}
+										      	{
+										      		(this.state.quizzes[0].length > 0) ? (
+										      				<ScrollView contentContainerStyle={[ allStyles.quizThumbnailContainer ]} showsHorizontalScrollIndicator={false} horizontal= {true} decelerationRate={0} snapToInterval={250} snapToAlignment={"center"}>
+										      				{
+										      					quizzesArray(0)
+										      				}
+										      				</ScrollView>
+										      		) : (
+										      				this.state.isOwnProfile ? (
+										      						<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.greenButton ]} onPress={() => this.props.navigation.navigate("Home")}>
+																	<TabBarIcon name="md-happy" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+												      				<Text style={ allStyles.whiteText }>Take a Kwiz</Text>
+												      				</TouchableOpacity>
+										      				) : (
+										      						<View>
+												      					<Text style={[ allStyles.sectionMessage ]}>{this.state.user.name} has not taken any kwizzes yet.</Text>
+												      				</View>
+										      					)
+										      		)
+										      	}
 
-								   </View>
-								   <View style={allStyles.section}>
-								   		{ this.state.isOwnProfile ?
-								   				(
-												   		<View>
-									   						<View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-												   				<Text style={allStyles.sectionTitle}>Your Kwizzes</Text>
-												   				<TouchableOpacity onPress={() => this.props.navigation.push("Profile Kwizzes", {user_id: this.state.user.id, type: "created"})}>
-												   					<Text style={allStyles.sectionSubtitle}>View all</Text>
-												   				</TouchableOpacity>
-												   			</View>
-									   						<Text style={allStyles.sectionSubtitle}>All your homemade kwizzes show up here. Edit them, share them, or even create a new one in Home!</Text>
-													    </View>
-								   					)
-									      		: (
-												   		<View>
-												   			<View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-												   				<Text style={allStyles.sectionTitle}>{this.state.user.name}'s Kwizzes</Text>
-												   				<TouchableOpacity onPress={() => this.props.navigation.push("Profile Kwizzes", {user_id: this.state.user.id, type: "created"})}>
-												   					<Text style={allStyles.sectionSubtitle}>View all</Text>
-												   				</TouchableOpacity>
-													   		</View>
-										      				<Text style={allStyles.sectionSubtitle}>Check out the kwizzes {this.state.user.name} has created! Share the results that you got with your friends!</Text>
-													    </View>
-									      				)
-									      		}
-									      	{
-									      		(this.state.quizzes[1].length > 0) ? (
-									      				<ScrollView contentContainerStyle={[ allStyles.quizThumbnailContainer ]} showsHorizontalScrollIndicator={false} horizontal= {true} decelerationRate={0} snapToInterval={250} snapToAlignment={"center"}>
-									      				{
-									      					quizzesArray(1)
-									      				}
-									      				</ScrollView>
-									      		) : (
-									      				this.state.isOwnProfile ? (
-									      						<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.greenButton ]} onPress={() => this.props.navigation.navigate("Home")}>
-																<TabBarIcon name="md-create" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-											      				<Text style={ allStyles.whiteText }>Create a Kwiz</Text>
-											      				</TouchableOpacity>
-									      				) : (
-									      					<View>
-									      						<Text style={[ allStyles.sectionMessage ]}>{this.state.user.name} has not created any kwizzes yet.</Text>
-									      					</View>
-									      				)
-
-									      		)
-									      	}
-
-									      </View>
+										   </View>
+										   <View style={[allStyles.section, allStyles.sectionClear]}>
+										   		{ this.state.isOwnProfile ?
+										   				(
+														   		<View>
+											   						<View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+														   				<Text style={allStyles.sectionTitle}>Your Kwizzes</Text>
+														   				<TouchableOpacity onPress={() => this.props.navigation.push("Profile Kwizzes", {user_id: this.state.user.id, type: "created"})}>
+														   					<Text style={allStyles.sectionSubtitle}>View all</Text>
+														   				</TouchableOpacity>
+														   			</View>
+											   						<Text style={allStyles.sectionSubtitle}>All your homemade kwizzes show up here. Edit them, share them, or even create a new one in Home!</Text>
+															    </View>
+										   					)
+											      		: (
+														   		<View>
+														   			<View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+														   				<Text style={allStyles.sectionTitle}>{this.state.user.name}'s Kwizzes</Text>
+														   				<TouchableOpacity onPress={() => this.props.navigation.push("Profile Kwizzes", {user_id: this.state.user.id, type: "created"})}>
+																	   		<Text style={allStyles.sectionSubtitle}>View all</Text>
+																	   	</TouchableOpacity>
+															   		</View>
+												      				<Text style={allStyles.sectionSubtitle}>Check out the kwizzes {this.state.user.name} has created! Share the results that you got with your friends!</Text>
+															    </View>
+											      				)
+											      		}
+											      	{
+											      		(this.state.quizzes[1].length > 0) ? (
+													      		<ScrollView contentContainerStyle={[ allStyles.quizThumbnailContainer ]} showsHorizontalScrollIndicator={false} horizontal= {true} decelerationRate={0} snapToInterval={250} snapToAlignment={"center"}>
+													      		{
+													      			quizzesArray(1)
+													      		}
+													      		</ScrollView>
+													    ) : (
+													    		this.state.isOwnProfile ? (
+													    			<TouchableOpacity style={[ allStyles.button, allStyles.fullWidthButton, allStyles.greenButton ]} onPress={() => this.props.navigation.navigate("Home")}>
+																		<TabBarIcon name="md-create" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+														     			<Text style={ allStyles.whiteText }>Create a Kwiz</Text>
+													      			</TouchableOpacity>
+												     			) : (
+												     				<View>
+													    				<Text style={[ allStyles.sectionMessage ]}>{this.state.user.name} has not created any kwizzes yet.</Text>
+													      			</View>
+											      				)
+											      		)
+											      	}
+											      </View>
+											</View>
+										) : (
+											<View style={[allStyles.section, allStyles.sectionClear]}>
+					      						<Text style={[ allStyles.sectionMessage ]}>You must be friends with {this.state.user.name} to view their profile.</Text>
+					      					</View>
+										)
+									}
 									  </View>
 								</ScrollView>
 						)

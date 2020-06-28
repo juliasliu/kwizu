@@ -129,7 +129,7 @@ class ProfileThumbnail extends React.Component {
 							<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}>
 							<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon ]}/>
 							<Text>Friends</Text>
-							</TouchableOpacity>				
+							</TouchableOpacity>			
 					)
 				} else if (this.state.sentRequest) {
 					return (

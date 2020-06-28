@@ -86,7 +86,7 @@ export default function TakeQuiz(props) {
 					      </View>
 						{
 							props.viewMyResult && (
-								<View style={[allStyles.section]}>
+								<View style={[allStyles.section, allStyles.sectionClear]}>
 									<Text style={allStyles.sectionTitle}>Share your results!</Text>
 									<Text style={allStyles.sectionSubtitle}>Share the fun by sending the Kwiz to your friends or posting on social media.</Text>
 									<ShareForm 

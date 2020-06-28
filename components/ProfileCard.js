@@ -157,10 +157,11 @@ class ProfileCard extends React.Component {
 					)
 				} else if (this.state.isFriends) {
 					return (
-							<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.whiteButton ]}>
-							<TabBarIcon name="md-checkmark" style={[ allStyles.buttonIcon ]}/>
-							<Text>Friends</Text>
-							</TouchableOpacity>				
+							<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.grayButton ]}
+								onPress={() => this.props.navigation.push('Friends', {user_id: this.props.user.id})}>
+							<Icon name="user" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
+							<Text style={ allStyles.whiteText }>{this.props.user.friends.length} Friends</Text>
+							</TouchableOpacity>
 					)
 				} else if (this.state.sentRequest) {
 					return (

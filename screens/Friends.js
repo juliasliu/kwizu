@@ -40,7 +40,7 @@ class Friends extends React.Component {
 		}
 		this.props.users.show(user_id)
 		.then((res) => {
-			console.log("gotem")
+			console.log("gotem frands")
 			this.setState({friends: res.friends, friends_received: res.friends_received});
 		})
 		.catch((errors) => {
@@ -56,8 +56,9 @@ class Friends extends React.Component {
 
 	render () {
 		
-		let FirstRoute = () => (
+		let FirstRoute = (reload) => (
 				<FriendsRoute
+				reload={reload}
 				friends={this.state.friends}
 				navigation={this.props.navigation}
 				user_id={this.props.route.params.user_id} />
@@ -110,18 +111,24 @@ class Friends extends React.Component {
 
 		return (
 				<View style={allStyles.containerNoPadding}>
-					<TabView
-				      navigationState={{ index: this.state.index, routes: this.state.routes }}
-				      renderScene={
-							SceneMap({
-								first: FirstRoute,
-								second: SecondRoute,
-							})
-						}
-				      onIndexChange={this.setIndex.bind(this)}
-				      initialLayout={{ width: Dimensions.get('window').width }}
-						renderTabBar={renderTabBar}
-				    />
+					{
+						this.state.isOwnProfile ? (
+								<TabView
+							      navigationState={{ index: this.state.index, routes: this.state.routes }}
+							      renderScene={
+										SceneMap({
+											first: FirstRoute,
+											second: SecondRoute,
+										})
+									}
+							      onIndexChange={this.setIndex.bind(this)}
+							      initialLayout={{ width: Dimensions.get('window').width }}
+									renderTabBar={renderTabBar}
+							    />
+						) : (
+								FirstRoute(true)
+						)
+					}
 				</View>
 		)
 	}

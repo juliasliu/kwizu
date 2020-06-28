@@ -37,7 +37,11 @@ class FriendsRoute extends React.Component {
 			this.setState({isOwnProfile: true})
 		}
 		if (this.props.friends) {
+			console.log("hi frandssss")
 			this.setState({friends: this.props.friends, refreshing: false})
+		}
+		if (this.props.reload) {
+			this.refreshFriends();
 		}
 	}
 	
@@ -125,18 +129,13 @@ class FriendsRoute extends React.Component {
 							{
 								searchInput
 							}
-					      	<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.facebookButton ]}
-				                onPress={() => this.props.navigation.push("FBImport")}>
-								<Icon name="facebook" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-								<Text style={[ allStyles.whiteText ]}>Add from Facebook</Text>
-							</TouchableOpacity>
 					      	<View style={[allStyles.section, allStyles.sectionClear]}>
 								{
 									this.state.friends.length > 0 ? friendsArray :
 										(
 												this.state.isOwnProfile ? (
 															<View style={[ allStyles.section, allStyles.sectionClear ]}>
-																<Text style={[ allStyles.sectionMessage ]}>No friends yet! Find people by taking more kwizzes or import your friends from Facebook!</Text>
+																<Text style={[ allStyles.sectionMessage ]}>No friends yet! Find people by taking more kwizzes or invite your friends from Facebook!</Text>
 															</View>
 														) : (
 															<View style={[ allStyles.section, allStyles.sectionClear ]}>
