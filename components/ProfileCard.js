@@ -138,7 +138,7 @@ class ProfileCard extends React.Component {
 		  let friendButton = () => {
 				if (this.state.isOwnProfile) {
 					return (
-							<View style={[allStyles.buttonBadge, styles.profileSocialButtonBadge]}>
+							<View style={[allStyles.buttonBadge, styles.profileSocialButtonBadge, {flex: 0, width: '47.5%'}]}>
 								<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.grayButton, styles.profileSocialButton ]}
 								 	onPress={() => this.props.navigation.push('Friends', {user_id: this.props.user.id})}>
 									<Icon name="user" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
@@ -197,7 +197,7 @@ class ProfileCard extends React.Component {
 							{
 								this.state.busy ? <ActivityIndicator /> : friendButton()
 							}
-							<View style={[allStyles.buttonBadge, styles.profileSocialButtonBadge]}>
+							<View style={[allStyles.buttonBadge, styles.profileSocialButtonBadge, {flex: 0, width: '47.5%'}]}>
 								<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.blackButton, styles.profileSocialButton ]}
 				                	onPress={() => this.props.navigation.push('Chats')}>
 									<Icon name="comments" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
