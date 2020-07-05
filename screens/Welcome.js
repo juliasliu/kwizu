@@ -18,6 +18,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import TabBarIcon from '../components/TabBarIcon';
 import FBLoginButton from '../components/FBLoginButton';
 
+import { APP_ROOT } from '../constants';
+
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/WelcomeScreen';
 
@@ -110,8 +112,8 @@ class Welcome extends React.Component {
 							</TouchableOpacity>
 							<Text style={[allStyles.text, allStyles.center, { marginTop: 25 }]}>
 								By continuing, you agree to our
-								<Text style={ allStyles.link } onPress={() => Linking.openURL('http://google.com')}> Terms of Service</Text> and 
-								<Text style={ allStyles.link } onPress={() => Linking.openURL('http://google.com')}> Privacy Policy</Text>.
+								<Text style={ allStyles.link } onPress={() => Linking.openURL(APP_ROOT + '/#/terms-of-service')}> Terms of Service</Text> and 
+								<Text style={ allStyles.link } onPress={() => Linking.openURL(APP_ROOT + '/#/privacy-policy')}> Privacy Policy</Text>.
 							</Text>
 						</View>
 					</View>

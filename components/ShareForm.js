@@ -41,15 +41,15 @@ class ShareForm extends React.Component {
 	
 	render() {
 		// determine url based on whether you are sharing the quiz or the result
-		let message = "";
+		let message = "Hey! Check out this app: ";
 		let url = APP_ROOT;
-		if (this.props.user) {
-			message = 'Hey! Check out this kwiz I took: ';
-			url += "/quizzings/" + this.props.quiz.id + "/" + this.props.user.id;
-		} else {
-			message = 'Hey! Check out this kwiz: ';
-			url += "/quizzes/" + this.props.quiz.id;
-		}
+//		if (this.props.user) {
+//			message = 'Hey! Check out this kwiz I took: ';
+//			url += "/quizzings/" + this.props.quiz.id + "/" + this.props.user.id;
+//		} else {
+//			message = 'Hey! Check out this kwiz: ';
+//			url += "/quizzes/" + this.props.quiz.id;
+//		}
 		
 		writeToClipboard = async () => {
 			await Clipboard.setString(url);
@@ -91,7 +91,7 @@ class ShareForm extends React.Component {
 						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Share the link</Text>
 					</View>
 					<View style={[ allStyles.card, styles.shareLinkCard, styles.shareButton, styles.topShareButton, { height: 'auto' } ]}>
-						<Text style={styles.shareLink} numberOfLines={1}>{url}</Text>
+						<Text style={styles.shareLink} numberOfLines={1}>{APP_ROOT}</Text>
 						<TouchableOpacity style={[ allStyles.button, allStyles.whiteButton ]}
 			                onPress={writeToClipboard}>
 							<TabBarIcon name="md-copy" style={[ allStyles.buttonIcon ]}/>
@@ -106,7 +106,7 @@ class ShareForm extends React.Component {
 					<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.blackButton, styles.shareButton, styles.bottomShareButton ]}
 		                onPress={shareToMedia}>
 						<TabBarIcon name="md-share" style={[ allStyles.buttonIcon, allStyles.whiteText ]}/>
-						<Text style={[ allStyles.whiteText ]}>Share on social media</Text>
+						<Text style={[ allStyles.whiteText ]}>Share the app on social media</Text>
 					</TouchableOpacity>
 				</View>
 		)
