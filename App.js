@@ -6,6 +6,8 @@ import useCachedResources from './hooks/useCachedResources';
 import { Provider } from 'mobx-react';
 import {users, chats, quizzes} from './stores';
 
+import PushNotificationManager from './PushNotifications'
+
 import Main from './screens/Main';
 
 export default function App(props) {
@@ -18,7 +20,9 @@ export default function App(props) {
       <View style={styles.container}>
 				{Platform.OS === 'ios' && <StatusBar barStyle="default" /> }
 				<Provider users={users} quizzes={quizzes} chats={chats}>
-					<Main/>
+					<PushNotificationManager>
+						<Main/>
+					</PushNotificationManager>
 				</Provider>
 			</View>
     );

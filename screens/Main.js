@@ -28,7 +28,6 @@ export default class Main extends React.Component {
 	
 	render() {
 		
-		
 		if(this.props.users.isLoggedIn){
 			return (
 					<NavigationContainer>
