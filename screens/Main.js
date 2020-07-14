@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Platform, View } from 'react-native'
 import { observer, inject } from 'mobx-react'
+import messaging from '@react-native-firebase/messaging';
 
 import Welcome from '../screens/Welcome'
 import Login from '../screens/Login'
@@ -26,9 +27,33 @@ export default class Main extends React.Component {
 		this.props.users.loginStatus()
 	}
 	
+	requestUserPermission = async () => {
+		const authStatus = await messaging().requestPermission();
+		const enabled =
+			authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+			authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+		if (enabled) {
+			getFcmToken();
+			console.log('Authorization status:', authStatus);
+		}
+	}
+
+	getFcmToken = async () => {
+		const fcmToken = await messaging().getToken();
+		if (fcmToken) {
+			users.setNotificationToken(fcmToken);
+			console.log("Your Firebase Token is:", fcmToken);
+		} else {
+			console.log("Failed", "No token received");
+		}
+	}
+	
 	render() {
 		
 		if(this.props.users.isLoggedIn){
+			this.requestUserPermission();
+			
 			return (
 					<NavigationContainer>
 			          <Stack.Navigator>
