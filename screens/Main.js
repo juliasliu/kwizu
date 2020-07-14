@@ -34,7 +34,7 @@ export default class Main extends React.Component {
 			authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
 		if (enabled) {
-			getFcmToken();
+			this.getFcmToken();
 			console.log('Authorization status:', authStatus);
 		}
 	}
@@ -42,7 +42,7 @@ export default class Main extends React.Component {
 	getFcmToken = async () => {
 		const fcmToken = await messaging().getToken();
 		if (fcmToken) {
-			users.setNotificationToken(fcmToken);
+			this.props.users.setNotificationToken(fcmToken);
 			console.log("Your Firebase Token is:", fcmToken);
 		} else {
 			console.log("Failed", "No token received");
