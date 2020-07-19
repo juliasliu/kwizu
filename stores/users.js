@@ -324,6 +324,24 @@ class Users {
 		})
 	}
 	
+	@action setNotificationToken = function(token) {
+		this.busy = true;
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+		
+		return new Promise(function(resolve, reject) {
+			axios.put(API_ROOT + '/users/' + that.id + '/notification_token', {token}, {withCredentials: true})
+	        .then(response => {
+	        	that.handleSuccess();
+	            resolve(response.data.user);
+	        })
+	        .catch(errors => {
+				that.handleErrors(errors)
+				console.log('api errors:', errors)
+				reject(errors);
+			})
+		})
+	}
+	
 	@action addPoints = function(points, id) {
 		this.busy = true;
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then
