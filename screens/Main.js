@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Platform, View } from 'react-native'
+import { Platform, View, Alert } from 'react-native'
 import { observer, inject } from 'mobx-react'
 import messaging from '@react-native-firebase/messaging';
+import { withInAppNotification } from 'react-native-in-app-notification';
 
 import Welcome from '../screens/Welcome'
 import Login from '../screens/Login'
@@ -17,7 +18,7 @@ import BottomTabNavigator from '../navigation/BottomTabNavigator';
 const Stack = createStackNavigator();
 
 @inject('users') @observer
-export default class Main extends React.Component {
+class Main extends React.Component {
 
 	constructor() {
 		super();
@@ -25,6 +26,18 @@ export default class Main extends React.Component {
 	
 	componentDidMount() {
 		this.props.users.loginStatus()
+		
+		//Register background handler
+		messaging().setBackgroundMessageHandler(async remoteMessage => {
+		  console.log('Message handled in the background!', remoteMessage);
+		});
+		
+		messaging().onMessage(async remoteMessage => {
+			this.props.showNotification({
+				title: remoteMessage.notification.title,
+				message: remoteMessage.notification.body,
+			});
+		});
 	}
 	
 	requestUserPermission = async () => {
@@ -77,3 +90,4 @@ export default class Main extends React.Component {
 		}
 	}
 }
+export default withInAppNotification(Main);

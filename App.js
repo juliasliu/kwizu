@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { Platform, StatusBar, StyleSheet, View, Alert } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { InAppNotificationProvider } from 'react-native-in-app-notification';
 import messaging from '@react-native-firebase/messaging';
 
 import useCachedResources from './hooks/useCachedResources';
@@ -8,21 +9,9 @@ import { Provider } from 'mobx-react';
 import {users, chats, quizzes} from './stores';
 
 import Main from './screens/Main';
+import NotificationBody from './components/NotificationBody';
 
 export default function App(props) {
-	//Register background handler
-	messaging().setBackgroundMessageHandler(async remoteMessage => {
-	  console.log('Message handled in the background!', remoteMessage);
-	});
-	
-	useEffect(() => {
-//		requestUserPermission();
-		const unsubscribe = messaging().onMessage(async remoteMessage => {
-			Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-		});
-//
-		return unsubscribe;
-	}, []);
 	
 	const isLoadingComplete = useCachedResources();
 
@@ -33,7 +22,9 @@ export default function App(props) {
 				<View style={styles.container}>
 				{Platform.OS === 'ios' && <StatusBar barStyle="default" /> }
 					<Provider users={users} quizzes={quizzes} chats={chats}>
-						<Main/>
+						<InAppNotificationProvider backgroundColour={"transparent"} notificationBodyComponent={NotificationBody}>
+							<Main/>
+						</InAppNotificationProvider>
 					</Provider>
 				</View>
 		);
