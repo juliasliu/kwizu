@@ -1,6 +1,7 @@
 import {observable, computed, map, toJS, action} from 'mobx'; 
 import axios from 'axios'
 import { API_ROOT } from '../constants';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class Users {
 	@observable user = null;
@@ -10,20 +11,22 @@ class Users {
 	@observable errors = null;
 	@observable success = null;
 	
-	@action login = function(email, password, facebook_id) {
+	@action login = function(email, password, facebook_id, id) {
 		this.busy = true;
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then
 		
 		let user = {
 				email: email,
 				password: password, 
-				facebook_id: facebook_id
+				facebook_id: facebook_id,
+				id: id,
 		}
 		
 		return new Promise(function(resolve, reject) {
 			axios.post(API_ROOT + '/login', {user}, {withCredentials: true})
 			.then(response => {
 				if (response.data.logged_in) {
+					console.log("LOGGED IN")
 					that.handleSuccess()
 					that.handleLogin(response.data.user)
 					resolve(response.data.user)
@@ -99,21 +102,18 @@ class Users {
 		this.isLoggedIn = false; 
 		console.log("check log in")
 		
-		axios.get(API_ROOT + '/logged_in', 
-				{withCredentials: true})
-				.then(response => {
-					if (response.data.logged_in) {
-						this.handleSuccess()
-						this.handleLogin(response.data.user)
-					} else {
-						this.handleErrors(response.data.errors)
-						this.handleLogout()
-					}
-				})
-				.catch(errors => {
-					this.handleErrors(errors)
-					console.log('api errors:', errors)
-				})
+		try {
+			const jsonValue = await AsyncStorage.getItem('@user')
+			var user = jsonValue != null ? JSON.parse(jsonValue) : null;
+			if (user) {
+				this.login(null, null, null, user.id);
+			} else {
+				this.handleLogout();
+			}
+		} catch(errors) {
+			this.handleLogout()
+			console.log('async storage errors:', errors)
+		}
 	}
 	
 	@action connectFacebook = function(facebook_id) {
@@ -402,12 +402,35 @@ class Users {
 		this.user = user;
 		this.id = user.id;
 		this.isLoggedIn = true;
+		this.storeLoginToken(user);
+	}
+
+	async storeLoginToken(user) {
+		console.log("storing login token")
+		try {
+			const jsonValue = JSON.stringify(user)
+			await AsyncStorage.setItem('@user', jsonValue)
+		} catch (errors) {
+			// saving error
+			console.log('async storage errors:', errors)
+		}
 	}
 	
 	handleLogout() {
 		this.user = null; 
 		this.id = null;
 		this.isLoggedIn = false;
+		this.removeLoginToken();
+	}
+	
+	async removeLoginToken() {
+		try {
+			await AsyncStorage.removeItem('@user')
+		} catch(errors) {
+			// remove error
+			console.log('async storage errors:', errors)
+		}
+		console.log('Done.')
 	}
 }
 

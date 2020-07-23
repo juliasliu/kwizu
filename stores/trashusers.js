@@ -1,3 +1,20 @@
+//		axios.get(API_ROOT + '/logged_in', 
+//				{withCredentials: true})
+//				.then(response => {
+//					if (response.data.logged_in) {
+//						this.handleSuccess()
+//						this.handleLogin(response.data.user)
+//					} else {
+//						this.handleErrors(response.data.errors)
+//						this.handleLogout()
+//					}
+//				})
+//				.catch(errors => {
+//					this.handleErrors(errors)
+//					console.log('api errors:', errors)
+//				})
+
+
 import {observable, computed, map, toJS, action} from 'mobx'; 
 import axios from 'axios'
 import chats from './chats'
