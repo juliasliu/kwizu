@@ -109,6 +109,13 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 	    top: 5,
 	    right: 5,
+	    height: 20,
+	    width: 20,
+		borderWidth: 0,
+	},
+	redBadge: {
+		backgroundColor: '#E94E4E',	
+		color: "#fff",
 	},
 	section: {
 		alignSelf: 'stretch',

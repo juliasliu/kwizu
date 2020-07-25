@@ -146,11 +146,10 @@ class ProfileCard extends React.Component {
 								</TouchableOpacity>
 								{
 									this.props.user.friends_received.length != 0 && (
-											<Badge
-											value={this.props.user.friends_received.length}
-											status="error"
-											containerStyle={allStyles.badge}
-											/>	
+											<Badge 
+											badgeStyle={[allStyles.badge, allStyles.redBadge]}
+											value={<Text style={allStyles.whiteText}>{this.props.user.friends_received.length}</Text>}
+											/>
 									)
 								}
 							</View>
@@ -205,11 +204,10 @@ class ProfileCard extends React.Component {
 								</TouchableOpacity>
 								{
 									this.props.user.chats.length != 0 && (
-											<Badge
-											value={this.props.user.chats.length}
-											status="success"
-											containerStyle={allStyles.badge}
-										/>
+											<Badge 
+											badgeStyle={[allStyles.badge, allStyles.redBadge]}
+											value={<Text style={allStyles.whiteText}>{this.props.user.chats.length}</Text>}
+											/>
 									)
 								}
 							</View>

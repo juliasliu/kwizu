@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
 		  flex: 1,
 	  },
 	  tabViewBadge: {
-		  top: -5,
+		  top: -20,
 		  right: -25,
 	  },
 	  customizeButton: {
