@@ -526,7 +526,7 @@ class New extends React.Component {
 							} 
 							
 							<TextInput
-								returnKeyType='next' 
+								returnKeyType='done' 
 								style={ allStyles.input } 
 								onChangeText={(title) => this.setState({title})} 
 								value={this.state.title} 

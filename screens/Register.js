@@ -131,9 +131,11 @@ export default class Register extends React.Component {
 								ref='password_confirmation' 
 								style={ allStyles.input } 
 								onChangeText={(password_confirmation) => this.setState({password_confirmation})} 
+								returnKeyType='go' 
 								value={this.state.password_confirmation} 
 								secureTextEntry={true} 
 								placeholder='Password Confirmation'
+								onSubmitEditing={this.onPressRegister.bind(this)}
 							/>
 							<View style={ allStyles.flexContainer }>
 								<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.redButton ]}

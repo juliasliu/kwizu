@@ -152,7 +152,7 @@ class ChatSettings extends React.Component {
 										ref='name'
 										style={ allStyles.input }
 										onChangeText={(title) => this.updateTitle(title)}
-										returnKeyType='next'
+										returnKeyType='done'
 										value={this.state.title}
 										placeholder='Name of chat'
 									/>

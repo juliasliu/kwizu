@@ -25,17 +25,16 @@ export default function NewResultForm(props) {
 					<View style={[ allStyles.card ]}>
 						
 						<TextInput
-							returnKeyType='next' 
+							returnKeyType='done' 
 							style={ allStyles.input } 
 							onChangeText={(value) => props.setTitleValue(props.result.index, value)} 
 							value={props.result.title} 
 							placeholder='Result title (150 chars max)'
 						/>
 						<TextInput 
-							returnKeyType='next' 
+							returnKeyType='default' 
 							style={[ allStyles.input, allStyles.textarea ]} 
 							onChangeText={(value) => props.setDescriptionValue(props.result.index, value)} 
-							returnKeyType='next' 
 							value={props.result.description} 
 							multiline={true}
 					    	numberOfLines={5}

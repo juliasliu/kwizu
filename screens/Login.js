@@ -86,10 +86,12 @@ class Login extends React.Component {
 							<TextInput
 								ref='password' 
 								style={ allStyles.input } 
+								returnKeyType='go'
 								onChangeText={(password) => this.setState({password})} 
 								value={this.state.password} 
 								secureTextEntry={true} 
 								placeholder='Password'
+								onSubmitEditing={this.onLogin.bind(this)}
 							/>
 							<View style={ allStyles.flexContainer }>
 								<TouchableOpacity style={[ allStyles.halfWidthButton, allStyles.button, allStyles.redButton ]}

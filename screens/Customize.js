@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import { Image, Platform, StyleSheet, Text,
 	ActivityIndicator, TouchableOpacity, View, Button, TextInput, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import * as WebBrowser from 'expo-web-browser';
 import ImagePicker from 'react-native-image-picker';
 import Modal from 'react-native-modal';
@@ -146,15 +147,17 @@ class Customize extends React.Component {
 		return <View style={allStyles.containerNoPadding}>
 				{
 					this.state.refreshing ? <Loading /> : (
-						<ScrollView
-						showsVerticalScrollIndicator={false}
-							ref={ref => {
+						<KeyboardAwareScrollView
+							showsVerticalScrollIndicator={false} 
+							innerRef={ref => {
 							    this.scrollview_ref = ref;
-							  }}>
-						      <RefreshControl
+							  }}
+				      		refreshControl={
+					              <RefreshControl
 					              refreshing={this.state.refreshing}
 					              onRefresh={this._onRefresh}
 					            />
+					          }>
 						      <View style={allStyles.container}>
 								{
 									this.state.errors &&
@@ -247,7 +250,7 @@ class Customize extends React.Component {
 										ref='caption'
 										style={[ allStyles.input, allStyles.textarea ]}
 										onChangeText={(caption) => this.setProfileCaption(caption)}
-										returnKeyType='next'
+										returnKeyType='default'
 										value={this.state.user.caption}
 										placeholder='Caption (100 chars max)'
 											multiline={true}
@@ -262,7 +265,7 @@ class Customize extends React.Component {
 									}
 							</View>
 					</View>
-				</ScrollView>
+				</KeyboardAwareScrollView>
 				)
 				}
 				<Modal isVisible={this.state.isModalVisible} 

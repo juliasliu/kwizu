@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 import { Image, Platform, StyleSheet, Text, TextInput, TouchableOpacity, 
-	View, Button, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
+	View, Button, KeyboardAvoidingView, ActivityIndicator, Dimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -204,10 +204,7 @@ class Chats extends React.Component {
 					<KeyboardAvoidingView
 					behavior={Platform.OS == "ios" ? "padding" : "height"}
 					keyboardVerticalOffset={
-							Platform.select({
-								ios: () => 65,
-								android: () => 65
-							})()
+							Dimensions.get('window').height >= 896 ? 85 : 65
 					}
 					style={styles.chatContainer}>
 						<View style={styles.chatMessagesContainer}>

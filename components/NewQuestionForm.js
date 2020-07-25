@@ -44,7 +44,7 @@ export default function NewQuestionForm(props) {
 							dropdownOffset={{top: 50, left: 20}}
 					      />
 						<TextInput 
-							returnKeyType='next' 
+							returnKeyType='done' 
 							style={[ allStyles.input, styles.choiceInputField ]} 
 							onChangeText={(value) => props.setChoiceValue(props.question.index, item.index, value)}
 							value={props.question.choices[actualArrayIndex].content} 
@@ -67,7 +67,7 @@ export default function NewQuestionForm(props) {
 					<View style={[ allStyles.card ]}>
 					
 					<TextInput
-						returnKeyType='next' 
+						returnKeyType='default' 
 						style={[ allStyles.input, allStyles.textarea ]} 
 						onChangeText={(value) => props.setQuestionValue(props.question.index, value)} 
 						value={props.question.title} 
