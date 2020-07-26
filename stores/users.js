@@ -103,10 +103,9 @@ class Users {
 		console.log("check log in")
 		
 		try {
-			const jsonValue = await AsyncStorage.getItem('@user')
-			var user = jsonValue != null ? JSON.parse(jsonValue) : null;
-			if (user) {
-				this.login(null, null, null, user.id);
+			const user_id = await AsyncStorage.getItem('@user_id')
+			if (user_id) {
+				this.login(null, null, null, user_id);
 			} else {
 				this.handleLogout();
 			}
@@ -402,14 +401,13 @@ class Users {
 		this.user = user;
 		this.id = user.id;
 		this.isLoggedIn = true;
-		this.storeLoginToken(user);
+		this.storeLoginToken(user.id);
 	}
 
-	async storeLoginToken(user) {
+	async storeLoginToken(user_id) {
 		console.log("storing login token")
 		try {
-			const jsonValue = JSON.stringify(user)
-			await AsyncStorage.setItem('@user', jsonValue)
+			await AsyncStorage.setItem('@user_id', JSON.stringify(user_id))
 		} catch (errors) {
 			// saving error
 			console.log('async storage errors:', errors)
@@ -425,7 +423,7 @@ class Users {
 	
 	async removeLoginToken() {
 		try {
-			await AsyncStorage.removeItem('@user')
+			await AsyncStorage.removeItem('@user_id')
 		} catch(errors) {
 			// remove error
 			console.log('async storage errors:', errors)
