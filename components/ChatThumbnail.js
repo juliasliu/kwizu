@@ -89,6 +89,20 @@ class ChatThumbnail extends React.Component {
 			);
 		}
 	}
+	
+	messageFilter(message) {
+		let regex = /kwizu:\/\/quizzes\/(\d*)/
+		let matches = message.match(regex);
+		if (matches) {
+			return "Sent a kwiz";
+		}
+		regex = /kwizu:\/\/quizzings\/(\d*)\/(\d*)/
+		matches = message.match(regex);
+		if (matches) {
+			return "Sent a kwiz result";
+		}
+		return message;
+	}
 		
 	render() {
 
@@ -114,7 +128,7 @@ class ChatThumbnail extends React.Component {
 													<Text>You: </Text>
 												)
 									}
-									{this.state.lastMessage.text}
+									{this.messageFilter(this.state.lastMessage.text)}
 								</Text>
 								<Text style={ styles.chatThumbnailTime }>{this.state.lastMessageTime}</Text>
 							</View>

@@ -137,29 +137,20 @@ class Chats extends React.Component {
 	}
 	
 	messageToUrl(message) {
-		console.log(message)
-		let regex = /(\w*):\/\/(\w*)\/(\d*)/
+		let regex = /kwizu:\/\/quizzes\/(\d*)/
 		let matches = message.match(regex);
 		if (matches) {
-			let [full, app, type, quiz_id, user_id] = matches;
-			console.log(matches);
-			if (app === "kwizu" && type === "quizzes" && quiz_id) {
-				return {type: type, quiz_id: quiz_id};
-			}
+			return {type: "quizzes", quiz_id: matches[1]};
 		}
-		regex = /(\w*):\/\/(\w*)\/(\d*)\/(\d*)/;
+		regex = /kwizu:\/\/quizzings\/(\d*)\/(\d*)/
 		matches = message.match(regex);
 		if (matches) {
-			let [full, app, type, quiz_id, user_id] = matches;
-			if (app === "kwizu" && type === "quizzings" && quiz_id && user_id) {
-				return {type: type, quiz_id: quiz_id, user_id: user_id};
-			}
+			return {type: "quizzings", quiz_id: matches[1], user_id: matches[2]};
 		}
 		return false;
 	}
 	
 	render () {
-		console.log("render aAGAIAIAAANANAN")
 		let messageArray;
 		if (this.props.chats.chat && this.props.chats.chat.messages) {
 			messageArray = this.props.chats.chat.messages.map(( item, key ) =>
@@ -195,6 +186,10 @@ class Chats extends React.Component {
 						key={key} />
 				)
 			})
+			
+			if (this.scrollview_ref) {
+				setTimeout(() => this.scrollview_ref.scrollToEnd({animated: true}), 200);
+			}
 		}
 
 		return (

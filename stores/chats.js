@@ -166,7 +166,6 @@ class Chats {
 	handleReceived(data) {
 		console.log("HANDLE RECEIVED")
 		console.log(data)
-		console.log(this)
 		// if data is a message
 		if (data.chat_id) {
 			// add the latest message to the right chat it if doesn't exist yet
