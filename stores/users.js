@@ -37,7 +37,11 @@ class Users {
 					reject(response.data.errors);
 				}
 			})
-			.catch(errors => console.log('api errors:', errors))
+			.catch(errors => {
+				AsyncStorage.clear();
+				that.handleLogout();
+				console.log('api errors:', errors)
+			})
 		})
 	}
 	@action logout = function() {
