@@ -28,7 +28,7 @@ class Login extends React.Component {
 	}
 	
 	onLogin() { 
-		this.props.users.login(this.state.email, this.state.password)
+		this.props.users.login(null, this.state.email, this.state.password)
 		.then(res => {
 			console.log("login!")
 		})

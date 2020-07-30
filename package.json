@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^10.2.0",
+    "@invertase/react-native-apple-authentication": "^1.1.2",
     "@kesha-antonov/react-native-action-cable": "^1.0.5",
     "@react-native-community/async-storage": "^1.11.0",
     "@react-native-community/masked-view": "0.1.6",

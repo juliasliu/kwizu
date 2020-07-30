@@ -47,6 +47,21 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		padding: 50,
 	},
+	appleButton: {
+		height: 45,
+		fontSize: 15,
+		marginVertical: 10,
+		padding: 10,
+		borderWidth: 0,
+		shadowColor: "#e1e7ed",
+		shadowOffset: {
+			width: 0,
+			height: 5,
+		},
+		shadowOpacity: 1,
+		shadowRadius: 0,
+		elevation: 1,
+	},
 })
 
 export default styles;

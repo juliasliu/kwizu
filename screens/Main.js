@@ -5,6 +5,7 @@ import { Platform, View, Alert } from 'react-native'
 import { observer, inject } from 'mobx-react'
 import messaging from '@react-native-firebase/messaging';
 import { withInAppNotification } from 'react-native-in-app-notification';
+import appleAuth from '@invertase/react-native-apple-authentication';
 
 import Welcome from '../screens/Welcome'
 import Login from '../screens/Login'
@@ -38,6 +39,17 @@ class Main extends React.Component {
 				message: remoteMessage.notification.body,
 			});
 		});
+		
+		if (appleAuth.isSupported) {
+			appleAuth.onCredentialRevoked(async () => {
+				//logout request
+				const responseObject = await appleAuth.performRequest({
+					requestedOperation: AppleAuthRequestOperation.LOGOUT,
+				});
+				this.props.users.logout();
+				console.warn('If this function executes, User Credentials have been Revoked');
+			});
+		}
 	}
 	
 	requestUserPermission = async () => {

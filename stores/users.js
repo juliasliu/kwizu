@@ -11,15 +11,16 @@ class Users {
 	@observable errors = null;
 	@observable success = null;
 	
-	@action login = function(email, password, facebook_id, id) {
+	@action login = function(id, email, password, facebook_id, apple_id) {
 		this.busy = true;
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then
 		
 		let user = {
+				id: id,
 				email: email,
 				password: password, 
 				facebook_id: facebook_id,
-				id: id,
+				apple_id: apple_id,
 		}
 		
 		return new Promise(function(resolve, reject) {
@@ -57,7 +58,7 @@ class Users {
 			})
 		})
 	}
-	@action register = function(email, name, username, password, password_confirmation, facebook_id) {
+	@action register = function(email, name, username, password, password_confirmation, facebook_id, apple_id) {
 		this.busy = true;
 		let that = this;	// have to reassign because 'this' changes scope within the promise.then
 
@@ -67,7 +68,8 @@ class Users {
 				username: username,
 				password: password,
 				password_confirmation: password_confirmation,
-				facebook_id: facebook_id
+				facebook_id: facebook_id,
+				apple_id: apple_id
 		}
 		
 		return new Promise(function(resolve, reject) {
@@ -105,7 +107,7 @@ class Users {
 		try {
 			const user_id = await AsyncStorage.getItem('@user_id')
 			if (user_id) {
-				this.login(null, null, null, user_id);
+				this.login(user_id);
 			} else {
 				this.handleLogout();
 			}
@@ -113,6 +115,28 @@ class Users {
 			this.handleLogout()
 			console.log('async storage errors:', errors)
 		}
+	}
+	
+	@action verifyAppleToken = function(identity_token, user_identity) {
+		this.busy = true;
+		let that = this;	// have to reassign because 'this' changes scope within the promise.then
+		
+		return new Promise(function(resolve, reject) {
+			axios.put(API_ROOT + '/apple_token', {identity_token, user_identity}, {withCredentials: true})
+	        .then(response => {
+	        	if (response.data.status === 'verified') {
+		            resolve(response.data.apple_id);
+				} else {
+					that.handleErrors(response.data.errors)
+					reject(response.data.errors)
+				}
+	        })
+	        .catch(errors => {
+				that.handleErrors(errors)
+				console.log('api errors:', errors)
+				reject(errors);
+			})
+		})
 	}
 	
 	@action connectFacebook = function(facebook_id) {
