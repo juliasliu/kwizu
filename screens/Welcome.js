@@ -19,6 +19,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import TabBarIcon from '../components/TabBarIcon';
 import FBLoginButton from '../components/FBLoginButton';
 import appleAuth, {
+	  AppleButton,
 	  AppleAuthError,
 	  AppleAuthRequestScope,
 	  AppleAuthRequestOperation,
@@ -195,11 +196,13 @@ class Welcome extends React.Component {
 									<ActivityIndicator/> : 
 									(
 										appleAuth.isSupported &&
-										<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
-							                onPress={this.initUserApple.bind(this)}>
-											<Icon name="apple" style={[ allStyles.buttonIcon ]}/>
-											<Text>Sign in with Apple</Text>
-										</TouchableOpacity>
+										<AppleButton
+									      buttonStyle={AppleButton.Style.WHITE}
+									      buttonType={AppleButton.Type.SIGN_IN}
+										  cornerRadius={20}
+									      style={styles.appleButton}
+									      onPress={this.initUserApple.bind(this)}
+									    />
 									)
 								}
 								{
