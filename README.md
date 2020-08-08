@@ -4,7 +4,29 @@
 
 Take our quizzes to find out which color represents you, who you would be in fictional universes, what kind of food or beverage you would be, and more. Get personalized quiz recommendations and customize your profile. Invite your friends to join the platform, and even create quizzes of your own!
 
-<img src="promo.png">
+<div style="display: flex;">
+  <span>
+    <img src="mocks/kwizu-app-store-panoramic-1.png" height="400">
+  </span>
+  <span>
+    <img src="mocks/kwizu-app-store-panoramic-2.png" height="400">
+  </span>
+  <span>
+  <img src="mocks/kwizu-app-store-screenshot-1.png" height="400">
+  </span>
+  <span>
+  <img src="mocks/kwizu-app-store-screenshot-2.png" height="400">
+  </span>
+  <span>
+  <img src="mocks/kwizu-app-store-screenshot-3.png" height="400">
+  </span>
+  <span>
+  <img src="mocks/kwizu-app-store-screenshot-4.png" height="400">
+  </span>
+  <span>
+  <img src="mocks/kwizu-app-store-screenshot-5.png" height="400">
+  </span>
+</div>
 
 ### Download
 
