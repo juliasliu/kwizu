@@ -8,10 +8,12 @@ import {
 } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { observer, inject } from 'mobx-react'
 
 import Modal from 'react-native-modal';
 
 import TabBarIcon from '../components/TabBarIcon';
+import { Badge } from 'react-native-elements'
 
 import Home from '../screens/Home';
 import Search from '../screens/Search';
@@ -406,34 +408,51 @@ function ProfileStackScreen({navigation}) {
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
 
-export default function BottomTabNavigator({ navigation, route }) {
+@inject('users') @observer
+export default class BottomTabNavigator extends React.Component { // ({ navigation, route })
   // Set the header title on the parent stack navigator depending on the
   // currently active tab. Learn more in the documentation:
   // https://reactnavigation.org/docs/en/screen-options-resolution.html
-  navigation.setOptions({ headerShown: false });
+  componentDidMount() {
+	  this.props.navigation.setOptions({ headerShown: false });
+  }
   
-  return (
-    <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME} 
-      tabBarOptions={{
-        activeTintColor: '#515d6e',
-        inactiveTintColor: '#a0acba',
-      }}>
-      <BottomTab.Screen
-        name="Home"
-        component={HomeStackScreen}
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ focused, color }) => <TabBarIcon focused={focused} style={{ color: color }} name="md-home" />,
-        }}
-      />
-      <BottomTab.Screen
-        name="Profile"
-        component={ProfileStackScreen}
-        options={{
-          title: 'Profile',
-          tabBarIcon: ({ focused, color }) => <TabBarIcon focused={focused} style={{ color: color }} color={color} name="md-person" />,
-        }}
-      />
-    </BottomTab.Navigator>
-  );
+  render() {
+	  return (
+			    <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME} 
+			      tabBarOptions={{
+			        activeTintColor: '#515d6e',
+			        inactiveTintColor: '#a0acba',
+			      }}>
+			      <BottomTab.Screen
+			        name="Home"
+			        component={HomeStackScreen}
+			        options={{
+			          title: 'Home',
+			          tabBarIcon: ({ focused, color }) => <TabBarIcon focused={focused} style={{ color: color }} name="md-home" />,
+			        }}
+			      />
+			      <BottomTab.Screen
+			        name="Profile"
+			        component={ProfileStackScreen}
+			        options={{
+			          title: 'Profile',
+			          tabBarIcon: ({ focused, color }) => (
+			        		  <View style={[allStyles.buttonBadge]}>
+				        		  <TabBarIcon focused={focused} style={{ color: color }} color={color} name="md-person" />
+				        		  {
+										this.props.users.user.friends_received.length != 0 && (
+												<Badge 
+												badgeStyle={[allStyles.badge, allStyles.redBadge, allStyles.tabBarBadge]}
+												value={<Text style={allStyles.whiteText}>{this.props.users.user.friends_received.length}</Text>}
+												/>
+										)
+									}
+			        		  </View>
+			          	)
+			        }}
+			      />
+			    </BottomTab.Navigator>
+			  );
+  }
 }

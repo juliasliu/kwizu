@@ -30,7 +30,7 @@ class Profile extends React.Component {
 			receivedRequest: false,
 			isFriends: false,
 		    isModalVisible: false,
-		}
+	}
 
 	_onRefresh = () => {
 	    this.setState({refreshing: true});
@@ -89,8 +89,10 @@ class Profile extends React.Component {
 				return item != undefined && (
 						<QuizThumbnail
 						quiz={item}
+						userId={this.state.user.id}
 						key={key}
-						type={ "thumbnail" }
+						type={"thumbnail"}
+						isOwnProfile={this.state.isOwnProfile}
 						navigation={this.props.navigation}/>
 				)
 			})

@@ -113,6 +113,10 @@ const styles = StyleSheet.create({
 	    width: 20,
 		borderWidth: 0,
 	},
+	tabBarBadge: {
+		top: 0,
+		right: -20,
+	},
 	redBadge: {
 		backgroundColor: '#E94E4E',	
 		color: "#fff",

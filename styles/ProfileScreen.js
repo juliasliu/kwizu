@@ -89,6 +89,9 @@ const styles = StyleSheet.create({
 		  marginVertical: 10,
 		  paddingLeft: 10,
 	  },
+	  profileResultDescriptionContainer: {
+		  width: '100%',
+	  },
 	  chatThumbnailDescriptionContainer: {
 		  width: '75%',
 		  marginVertical: 10,

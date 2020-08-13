@@ -19,6 +19,8 @@ class ProfileQuizzes extends React.Component {
 		quizzes: [],
 		searchKeyword: "",
 	    refreshing: true,
+	    userId: null,
+		isOwnProfile: false,
 	}
 	
 	_onRefresh = () => {
@@ -30,20 +32,30 @@ class ProfileQuizzes extends React.Component {
 		var user_id;
 		if (!this.props.route.params) user_id = this.props.users.id;
 		else user_id = this.props.route.params.user_id;
-
+		console.log(user_id)
 		const {type} = this.props.route.params;
 		this.props.users.show(user_id)
 		.then((res) => {
 			let quizzes;
 			if (type == "taken") quizzes = res.taken_quizzes;
 			else if (type == "created") quizzes = res.quizzes;
-			this.setState({quizzes: quizzes, refreshing: false})
+			this.setState({quizzes: quizzes}, () => this.loadUser(user_id))
 		})
 		.catch((errors) => {
 			console.log("o no")
 			console.log(errors);
 			this.setState({isModalVisible: true});
 		})
+	}
+	
+	loadUser(user_id) {
+		console.log(user_id)
+		// check if profile user is same as logged in user
+		if (user_id == this.props.users.id) {
+			console.log('SAME USER')
+			this.setState({isOwnProfile: true})
+		}
+		this.setState({userId: user_id, refreshing: false});
 	}
 	
 	setSearchKeyword(searchKeyword) {
@@ -62,8 +74,10 @@ class ProfileQuizzes extends React.Component {
 			return item != undefined && (
 					<QuizThumbnail 
 					quiz={item}
+					userId={this.state.userId}
 					key={key}
 					type={"thumbnail"}
+					isOwnProfile={this.state.isOwnProfile}
 					navigation={this.props.navigation}/>
 			)
 		});

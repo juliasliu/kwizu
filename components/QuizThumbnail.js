@@ -49,7 +49,12 @@ export default function QuizThumbnail(props) {
 	
 	return (
 			<TouchableOpacity style={[ allStyles.card, styles.quizCard, this.getCardStyle(props.type) ]} 
-				onPress={() => props.navigation.push("Take Kwiz", {quiz_id: props.quiz.id})}>
+				onPress={() => {
+					console.log("WHO IS HERE" + props.userId)
+					if (!props.isOwnProfile && props.userId) props.navigation.push("Kwiz Result", {quiz_id: props.quiz.id, user_id: props.userId})
+					else props.navigation.push("Take Kwiz", {quiz_id: props.quiz.id})
+					}
+				}>
 				<View style={[styles.quizImageContainer]}>
 					{
 						this.showPickedImage()

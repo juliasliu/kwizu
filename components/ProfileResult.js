@@ -66,7 +66,7 @@ class ProfileThumbnail extends React.Component {
 						<View style={[ styles.profilePictureContainer, styles.profileThumbnailPictureContainer ] }>
 							{this.showPickedImage()}
 						</View>
-						<View style={[ styles.profileDescriptionContainer, styles.profileThumbnailDescriptionContainer ] }>
+						<View style={[ styles.profileDescriptionContainer, styles.profileThumbnailDescriptionContainer, styles.profileResultDescriptionContainer ] }>
 							<TouchableOpacity style={[ allStyles.clearButton ]}
 		                		onPress={navigateToProfile}>
 								<Text style={[ styles.profileName, styles.profileThumbnailName ]}>{ this.props.user.name }</Text>

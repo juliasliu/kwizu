@@ -195,14 +195,12 @@ class Welcome extends React.Component {
 									this.props.users.busy ? 
 									<ActivityIndicator/> : 
 									(
-										appleAuth.isSupported &&
-										<AppleButton
-									      buttonStyle={AppleButton.Style.WHITE}
-									      buttonType={AppleButton.Type.SIGN_IN}
-										  cornerRadius={20}
-									      style={styles.appleButton}
-									      onPress={this.initUserApple.bind(this)}
-									    />
+										appleAuth.isSupported && 
+										<TouchableOpacity style={[ allStyles.fullWidthButton, allStyles.button, allStyles.whiteButton ]}
+											onPress={this.initUserApple.bind(this)}>
+											<Icon name="apple" style={[ allStyles.buttonIcon, {color: '#000'} ]}/>
+											<Text style={{color: '#000'}}>Sign in with Apple</Text>
+										</TouchableOpacity>
 									)
 								}
 								{
