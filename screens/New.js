@@ -530,7 +530,7 @@ class New extends React.Component {
 								style={ allStyles.input } 
 								onChangeText={(title) => this.setState({title})} 
 								value={this.state.title} 
-								placeholder='Title (150 chars max)'
+								placeholder='Title (100 chars max)'
 							/>
 						
 								{this.showPickedImage("quiz")}

@@ -310,14 +310,14 @@ const styles = StyleSheet.create({
 		borderColor: "#BA3E3E",
 	},
 	orangeButton: {
-		backgroundColor: '#f5a836',
-		shadowColor: '#d99025',
-		borderColor: '#d99025',
+		backgroundColor: '#FFA836',
+		shadowColor: '#E59730',
+		borderColor: '#E59730',
 	},
 	yellowButton: {
-		backgroundColor: '#FFD660',
-		shadowColor: '#e6be4c',
-		borderColor: '#e6be4c',
+		backgroundColor: '#FEC660',
+		shadowColor: '#E6B357',
+		borderColor: '#E6B357',
 	},
 	greenButton: {
 		backgroundColor: '#2ED673',

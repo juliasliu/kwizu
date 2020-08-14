@@ -38,7 +38,7 @@ export default function NewResultForm(props) {
 							value={props.result.description} 
 							multiline={true}
 					    	numberOfLines={5}
-							placeholder='Result description (1000 chars max)'
+							placeholder='Result description (500 chars max)'
 						/>
 							
 						{props.showPickedImage("result", props.result.index)}

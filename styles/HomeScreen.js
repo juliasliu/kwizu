@@ -129,16 +129,33 @@ const styles = StyleSheet.create({
 	  display: 'flex',
 	  flexDirection: 'row',
 	  flexWrap: 'wrap',
+	  justifyContent: 'space-between',
 	  alignItems: 'stretch',
 	  alignContent: 'stretch',
+	  marginTop: 10,
   },
   selectChoiceContainer: {
-	  width: '100%',
+	  width: '49%',
+  },
+  selectChoiceButton: {
+	  display: 'flex',
+	  flexDirection: 'column',
+  },
+  selectChoiceImageContainer: {
+	  maxHeight: 100,
+  },
+  selectedChoiceButton: {
+	  backgroundColor: "#a0acba",
+	  borderColor: "#8393a8",
+	  shadowColor: "#8393a8",
+  },
+  selectedChoiceImageContainer: {
+	  shadowColor: "#8393a8",
   },
   choiceInput: {
 		display: 'flex',
 		flexDirection: 'row',
-		  alignItems: 'center',
+		alignItems: 'center',
 		width: '100%',
   },
   choiceInputSelect: {

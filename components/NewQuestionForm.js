@@ -48,7 +48,7 @@ export default function NewQuestionForm(props) {
 							style={[ allStyles.input, styles.choiceInputField ]} 
 							onChangeText={(value) => props.setChoiceValue(props.question.index, item.index, value)}
 							value={props.question.choices[actualArrayIndex].content} 
-							placeholder='Choice (150 chars max)'
+							placeholder='Choice (100 chars max)'
 						/>
 						<TouchableOpacity style={[ allStyles.button, allStyles.grayButton, styles.choiceInputDelete ]}
 			                onPress={() => props.onPressDeleteChoice(props.question.index, item.index)}>
@@ -73,7 +73,7 @@ export default function NewQuestionForm(props) {
 						value={props.question.title} 
 						multiline={true}
 				    	numberOfLines={3}
-						placeholder='Question (300 chars max)'
+						placeholder='Question (150 chars max)'
 					/>
 
 					{

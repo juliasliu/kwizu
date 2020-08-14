@@ -58,7 +58,7 @@ class Take extends React.Component {
 		resultOfQuiz : null,	// stores the result object
 		isDone: false,			// if quizzing exists or done taking the quiz, isDone = true
 		hasTaken: false,		// if quizzing exists, hasTaken = true; if retake the quiz or quiz has been changed, hasTaken = false
-		scrollIndices: [100,],	// starting scroll position is 70 given the title heading of the kwiz
+		scrollIndices: [20,],	// add padding of 20 at the beginning
 		scrollHeights: [],
 	    refreshing: true,
 	    recommended: [],		// list of recommended quizzes based on this quiz
@@ -73,7 +73,7 @@ class Take extends React.Component {
 	showInterstitialAd = () => {
 		let id = "ca-app-pub-8298967838514788/3809240812";
 	    // Create a new instance
-	    const interstitialAd = InterstitialAd.createForAdRequest(id);
+	    const interstitialAd = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL);
 
 	    // Add event handlers
 	    interstitialAd.onAdEvent((type, error) => {
@@ -154,21 +154,21 @@ class Take extends React.Component {
 	scrollIndexHelper() {
 		// helper function for setting the position of where to scroll to for each question
 		var scrollIndices = [...this.state.scrollIndices]
-		for (var i = 1; i < this.state.quiz.questions.length + 1; i++) {
-			scrollIndices[i] = scrollIndices[i-1] + this.state.scrollHeights[i];
+		for (var i = 1; i < this.state.quiz.questions.length + 2; i++) {
+			scrollIndices[i] = scrollIndices[i-1] + this.state.scrollHeights[i-1];
+			if (i == this.state.quiz.questions.length + 1) scrollIndices[i] += 10;
 		}
 		this.setState({scrollIndices}, () => { if (this.state.isDone) this.scrollIfDone() })
 	}
 	
 	scrollIfDone() {
-		var scrollIndex = this.state.scrollIndices[this.state.quiz.questions.length-1] + this.state.scrollHeights[this.state.quiz.questions.length-1]
-		console.log("scroll to result " + scrollIndex)
         this.scrollview_ref.scrollTo({
             x: 0,
-            y: scrollIndex,
+            y: this.state.scrollIndices[this.state.quiz.questions.length+1],
             animated: true,
         });
-		return scrollIndex;
+        console.log('SCROLL TO RESULT ' + this.state.scrollIndices[this.state.quiz.questions.length+1])
+		return this.state.scrollIndices[this.state.quiz.questions.length+1];
 	}
 	
 	scrollToNext() {
@@ -183,10 +183,10 @@ class Take extends React.Component {
 			var nextIndex = this.state.quiz.questions.findIndex(q => this.state.answers.findIndex(a => a.questionId == q.id) < 0)
 			this.scrollview_ref.scrollTo({
 				x: 0,
-				y: this.state.scrollIndices[nextIndex],
+				y: this.state.scrollIndices[nextIndex+1],
 				animated: true,
 			});
-			console.log("enxt questiono!! " + nextIndex + "scroll to " + this.state.scrollIndices[nextIndex])
+			console.log("enxt questiono!! " + nextIndex + "scroll to " + this.state.scrollIndices[nextIndex+1])
 		}
 	}
 	
@@ -227,9 +227,10 @@ class Take extends React.Component {
 	retakeQuiz() {
 		this.scrollview_ref.scrollTo({
             x: 0,
-            y: 0,
+            y: this.state.scrollIndices[1],	// add on result heading height
             animated: true,
         });
+		console.log("RETAKE SCROLL TO " + this.state.scrollIndices[1]);
 		this.setState({answers: [], hasTaken: false, isDone: false})
 	}
 	
@@ -336,25 +337,45 @@ class Take extends React.Component {
 					onLayout={event => {
 				        const layout = event.nativeEvent.layout;
 						var scrollHeights = [...this.state.scrollHeights]
-						scrollHeights[key] = layout.height;
+						scrollHeights[key+1] = layout.height;
 				        this.setState({scrollHeights}, this.scrollIndexHelper)
-				      }}>
+				      }}
+					onContentSizeChange={(w, h) => {
+						var scrollHeights = [...this.state.scrollHeights]
+						scrollHeights[key+1] = h;
+				        this.setState({scrollHeights}, this.scrollIndexHelper)
+					}}>
 						<TakeQuestion
 						question={item}
 						key={key}
 						index={key}
 						answers={this.state.answers}
 						setSelectedChoiceValue={this.setSelectedChoiceValue.bind(this)}
-						/>	
+						/>
 					</View>
 			)
 		});
 		
+		let resultView = 
+			this.state.isDone && <View>
+				<Text style={[ allStyles.heading, {marginLeft: 10,} ]}>You got the result:</Text>
+				<TakeQuiz 
+				navigation={this.props.navigation}
+				resultOfQuiz={this.state.resultOfQuiz}
+				quiz={this.state.quiz}
+				user={this.props.users.user}
+				recommended={this.state.recommended}
+				viewMyResult={true}
+				scrollIndexHelper={this.scrollIndexHelper.bind(this)}
+				scrollToNext={this.scrollToNext.bind(this)}
+				retakeQuiz={this.retakeQuiz.bind(this)} />
+			</View>	
+		
+		
 		return <View style={allStyles.containerNoPadding}>
 				{
 					this.state.refreshing ? <Loading /> : (
-						<ScrollView
-						showsVerticalScrollIndicator={false} 
+						<ScrollView 
 						ref={ref => {
 						    this.scrollview_ref = ref;
 						  }}
@@ -369,9 +390,9 @@ class Take extends React.Component {
 								<View style={[styles.quizImageContainer]}
 								onLayout={event => {
 							        const layout = event.nativeEvent.layout;
-							        var scrollIndices = [...this.state.scrollIndices]
-							        scrollIndices[0] = layout.height + 25;
-							        this.setState({scrollIndices}, this.scrollIndexHelper)
+							        var scrollHeights = [...this.state.scrollHeights]
+							        scrollHeights[0] = layout.height;
+							        this.setState({scrollHeights}, this.scrollIndexHelper)
 							      }}>
 									{
 										this.showPickedImage()
@@ -384,20 +405,11 @@ class Take extends React.Component {
 							{
 								questionsArray
 							}
-							
+						
 							{
-								this.state.isDone && 
-								<TakeQuiz 
-								navigation={this.props.navigation}
-								resultOfQuiz={this.state.resultOfQuiz}
-								quiz={this.state.quiz}
-								user={this.props.users.user}
-								recommended={this.state.recommended}
-								viewMyResult={true}
-								scrollIndexHelper={this.scrollIndexHelper.bind(this)}
-								scrollToNext={this.scrollToNext.bind(this)}
-								retakeQuiz={this.retakeQuiz.bind(this)} />
+								resultView
 							}
+							
 						</View>
 						</ScrollView>
 					)

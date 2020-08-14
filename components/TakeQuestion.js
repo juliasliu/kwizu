@@ -12,6 +12,7 @@ import {
 import CheckBox from 'react-native-check-box'
 
 import TabBarIcon from '../components/TabBarIcon';
+import TakeChoice from '../components/TakeChoice';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
@@ -19,35 +20,29 @@ import styles from '../styles/HomeScreen';
 export default class TakeQuestion extends React.Component {
 	
 	headerColors = [
-		"#E94E4E", "#f5a836", "#e6be4c", "#2ED673", "#25afd9", "#9877a9",
+		allStyles.redButton, allStyles.orangeButton, allStyles.yellowButton, allStyles.greenButton, allStyles.blueButton, allStyles.purpleButton,
 	]
 	
-	getSelectedChoiceStyle = (type, isChecked) => {
-		if (type == "button")
-			return isChecked && allStyles.grayButton
-//		if (type == "checkbox")
-//			return isChecked ? '#fff' : "#77A0A9"
-		if (type == "text")
-			return isChecked && allStyles.whiteText
-	}
-	
 	randomHeaderColor = (index) => {
-		return { backgroundColor: this.headerColors[index % this.headerColors.length] };
+		return this.headerColors[index % this.headerColors.length];
+	}
+	randomShadowColor = (index) => {
+		return { backgroundColor: this.headerColors[index % this.headerColors.length].shadowColor };
 	}
 	
 	render() {
 		let choicesArray = this.props.question.choices.map(( item, key ) =>
 		{
-			// isChecked is true if there is an answer in this.props.answers with the same questionId and choiceWeight
-			let isChecked = this.props.answers.findIndex(elem => elem.questionId === this.props.question.id && elem.choiceWeight === item.weight) != -1;
 			return item != undefined && (
-					<View style={[ styles.choiceContainer, styles.selectChoiceContainer ]} key = { key } >
-						<TouchableOpacity style={[ allStyles.button, styles.choice, this.getSelectedChoiceStyle("button", isChecked) ]}
-							onPress={() => this.props.setSelectedChoiceValue(this.props.question.id, item.weight, item.id)}>
-							<Text style={[ styles.choiceText, this.getSelectedChoiceStyle("text", isChecked) ]}>{item.content}</Text>
-						</TouchableOpacity>
-					</View>
-					)
+					<TakeChoice
+					choice={item}
+					question={this.props.question}
+					answers={this.props.answers}
+					setSelectedChoiceValue={this.props.setSelectedChoiceValue}
+					key={key}
+					index={key}
+					/>
+				)
 		});
 		
 		return (
@@ -56,15 +51,14 @@ export default class TakeQuestion extends React.Component {
 						<Text style={[ styles.quizFormNumber, allStyles.whiteText ]}>Question {this.props.index + 1}</Text>
 					</View>
 					<View style={[ allStyles.card ]}>
-					
-					<Text style={styles.question}>{ this.props.question.title }</Text>
+						<Text style={[styles.question ]}>{ this.props.question.title }</Text>
+					</View>
 					<View style={[styles.choicesArray]}>
 						{
 							choicesArray
 						}
 					</View>
 				</View>
-			</View>
 		)
 	}
 }
