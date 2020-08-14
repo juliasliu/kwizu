@@ -20,6 +20,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import CheckBox from 'react-native-check-box'
 import { StackActions } from '@react-navigation/native';
 import Modal from 'react-native-modal';
+import { InterstitialAd, TestIds, AdEventType} from '@react-native-firebase/admob';
 
 import allStyles from '../styles/AllScreens';
 import styles from '../styles/HomeScreen';
@@ -50,6 +51,22 @@ class ViewTake extends React.Component {
 	    this.componentDidMount();
 	}
 	
+	showInterstitialAd = () => {
+		let id = "ca-app-pub-8298967838514788/3809240812";
+	    // Create a new instance
+	    const interstitialAd = InterstitialAd.createForAdRequest(id);
+
+	    // Add event handlers
+	    interstitialAd.onAdEvent((type, error) => {
+	        if (type === AdEventType.LOADED) {
+	            interstitialAd.show();
+	        }
+	    });
+
+	    // Load a new advert
+	    interstitialAd.load();
+	}
+	
 	componentDidMount() {
 		const {user_id} = this.props.route.params;
 		const {quiz_id} = this.props.route.params;
@@ -66,6 +83,7 @@ class ViewTake extends React.Component {
 				console.log("succeedded")
 				var resultOfQuiz = res.quiz.results[res.quiz.results.findIndex(elem => elem.id === res.quizzing.result_id)];
 				this.setState({quiz: res.quiz, quizzing: res.quizzing, resultOfQuiz: resultOfQuiz}, () => this.recommendQuiz(user_id))
+				this.showInterstitialAd();
 			}
 		})
 		.catch((errors) => {

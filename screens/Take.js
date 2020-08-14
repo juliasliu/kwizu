@@ -73,7 +73,7 @@ class Take extends React.Component {
 	showInterstitialAd = () => {
 		let id = "ca-app-pub-8298967838514788/3809240812";
 	    // Create a new instance
-	    const interstitialAd = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL);
+	    const interstitialAd = InterstitialAd.createForAdRequest(id);
 
 	    // Add event handlers
 	    interstitialAd.onAdEvent((type, error) => {
@@ -245,6 +245,8 @@ class Take extends React.Component {
 			console.log("already taken")
 			var resultOfQuiz = this.state.quiz.results[this.state.quiz.results.findIndex(elem => elem.id === this.state.quizzing.result_id)];
 			this.setState({resultOfQuiz: resultOfQuiz})
+			
+			this.showInterstitialAd();
 		}
 		// if not taken, calculate the result
 		else {
