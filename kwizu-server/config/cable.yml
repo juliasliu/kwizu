@@ -1,0 +1,10 @@
+development:
+  adapter: async
+
+test:
+  adapter: test
+
+production:
+  adapter: redis
+  url: redis://redistogo:cbbb0d3b34a0f9943e9e039bd8d2910a@pike.redistogo.com:11326/
+  channel_prefix: kwizu_server_production

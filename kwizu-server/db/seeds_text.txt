@@ -1,0 +1,293 @@
+~
+Quiz 1: Which boba tea drink are you?
+[boba/boba.jpg]
+Result 1: Brown Sugar Milk Tea
+You are a natural sweet tooth and seek the flamboyant fun in life. You never cease to try new things, always entertaining the inner adrenaline junkie inside you, and are energized by being at parties and around crowds of people. You have a fun-loving view of life, where the happiness of yourself and the people you love is your utmost importance.
+[boba/brown_sugar_boba.png]
+Result 2: Matcha Milk Tea
+You are the token “hard worker” of the group––most likely to be voted as “employee of the month” or always the top student of the class. You are constantly searching for new challenges or creative projects to invest in, and though you may initially be seen as unrelenting and aloof, people come to realize your sensitive and caring side for others.
+[boba/matcha_boba.jpg]
+Result 3: Thai Milk Tea
+You are an idealist, whether that be spending mornings daydreaming or losing yourself in the world of fiction. You like to be inspired by reading books, watching home makeovers, browsing interior designs, or online shopping. As you are very open about your thoughts and feelings, you are grateful when others reciprocate the same level of trust and honesty.
+[boba/thai_tea_boba.jpg]
+Result 4: Taro Milk Tea
+You are an unpredictable mystery. You frequently like unpopular things, and gravitate away from the crowd-followed trends, as you value being honest to your own interests and opinions. You not only have a uniquely contagious laugh and smile that radiates warmth and happiness, but also possess a dark edgier side that adds to your charm.
+[boba/taro_boba.jpg]
+Result 5: Cheese Foam Milk Tea
+You are the joker! You have a great sense of humor and find any opportunity to make others laugh, as you feel deeply uncomfortable in unnerving silence and tension. Given your comedic talents, it is no surprise that you are observant, quick-witted, and spontaneous, often making questionable life decisions that make for hilarious stories for your friends.
+[boba/cheese_foam_boba.jpg]
+Result 6: Mango Green Tea
+You are the classic girl/boy next door, charming and likable yet pure and modest. With a daring fashion sense and style, you might seem intimidating at first, but people will be drawn to your approachable smile. Your hobbies include painting, baking, gardening, or taking yourself on a romantic trip to a new city, as you find joy in spending time alone.
+[boba/mango_green_tea.jpg]
+Result 7: Passion Fruit Black Tea
+You are the life of the party, as an extroverted and warm-hearted individual. You love going on social outings and despite your social butterfly tendencies, value the loyal presence of your closest friends. Like that girl you stumble upon in bathroom lines at the club, you are always there to hype others up, uplifting and supporting everyone around you.
+[boba/passion_fruit_black_tea.jpg]
+Question 1: What does your ideal weekend look like?
+Choice 1: Partying at the club
+[boba/partying_club.jpg]
+Choice 3: Cozying up with a new book
+[boba/reading_books.png]
+Choice 7: Playing games with friends
+[boba/board_games.jpg]
+Choice 2: Drawing or painting
+[boba/painting.jpg]
+Choice 4: Hiking a new trail
+[boba/hiking.jpg]
+Choice 5: Catching up on a TV show
+[boba/watching_tv.jpg]
+Choice 6: Going shopping at the mall
+[boba/shopping_mall.jpg]
+Question 2: What genre of movies or TV shows do you enjoy the most?
+Choice 4: Horror or mystery
+[boba/horror.jpg]
+Choice 7: Action or superhero
+[boba/action_superhero.jpg]
+Choice 1: Romantic chick-flick
+[boba/chick_flick.jpg]
+Choice 5: Comedy show
+[boba/comedy.jpg]
+Choice 3: Animated film
+[boba/disney_pixar.jpg]
+Choice 6: Musical
+[boba/musical.jpg]
+Choice 2: Sci-fi thriller
+[boba/ex_machina.jpg]
+Question 3: If you could time travel backwards or forwards, where would you go?
+Choice 5: The Wall-E future: how far can technology go?
+[boba/wall_e.jpg]
+Choice 3: The end of time: if that even exists
+[boba/end_of_time.jpg]
+Choice 2: Birth of industrialization: ingenious inventions
+[boba/industrialization.jpg]
+Choice 7: Stone age: the hard-knock life
+[boba/stone_age.jpg]
+Choice 4: Vikings and voyages: discovering new lands
+[boba/vikings.jpg]
+Choice 1: Roaring Twenties: party party party!
+[boba/roaring_twenties.jpg]
+Choice 6: Renaissance: I’m a patron of the arts
+[boba/renaissance.jpg]
+Question 4: What do you look for the most in a best friend?
+Choice 4: Brutal honesty
+Choice 2: Sense and intellect
+Choice 3: Good listener
+Choice 5: Same sense of humor
+Choice 1: Fun-loving and shared interests
+Choice 6: Matches your style
+Choice 7: Loyalty and emotional presence
+Question 5: Which smell or fragrance appeals to you the most?
+Choice 1: Freshly baked cookies
+[boba/freshly_baked_cookies.jpg]
+Choice 6: Rose petals and flowers
+[boba/rose_petals_perfume.jpg]
+Choice 5: Burnt wood fireplace
+[boba/wood_fireplace.jpg]
+Choice 2: Salty beach waves
+[boba/beach_waves.jpg]
+Choice 7: Fruits and citrus
+[boba/citrus_fruits.jpeg]
+Choice 3: Toasty hot chocolate
+[boba/hot_chocolate.jpg]
+Choice 4: Peppermint spices
+[boba/peppermint_mocha.jpg]
+Question 6: What are your hardest-to-swallow pills?
+Choice 5: You can’t stand silence in a conversation
+Choice 1: You act confident but seek constant validation from other people
+Choice 7: You always compliment others while deep-down you’re insecure
+Choice 3: You idealize relationships but have commitment issues
+Choice 6: You like being independent because you only care about yourself
+Choice 4: You like unpopular things because it makes you feel cooler than others
+Choice 2: You have to work hard because you can’t afford not to
+Question 7: You and a friend get into a heated argument. What do you do?
+Choice 1: Continue to one-up your friend’s attacks
+Choice 7: Apologize profusely and ask what’s wrong
+Choice 3: Defend and determinedly justify your emotions
+Choice 6: Proceed calmly and use a leveled tone of voice
+Choice 4: Be completely honest about how the argument makes you feel
+Choice 5: Crack some lighthearted jokes to ease the tension
+Choice 2: Use reasoning to evaluate each side of the argument
+Question 8: Which Asian fast food snack would you like with your boba?
+Choice 1: Popcorn chicken
+[boba/popcorn_chicken.jpg]
+Choice 7: Waffle fries
+[boba/waffle_fries.jpg]
+Choice 6: Sweet potato fries
+[boba/sweet_potato_fries.jpg]
+Choice 5: Korean cheese hot dogs
+[boba/korean_cheese_corn_dogs.jpg]
+Choice 2: Chinese fried dough stick
+[boba/you_tiao.jpg]
+Choice 4: Beef skewers
+[boba/beef_skewers.jpg]
+Choice 3: Spring rolls
+[boba/spring_rolls.jpg]
+Question 9: What is your average sweetness level that you ask for in your tea?
+Choice 5: 200%: sugar is more important than tea
+Choice 1: 100%: I like sugar!
+Choice 7: 70%: I try to control my sugar intake
+Choice 3: 50%: a perfect mathematical balance
+Choice 6: 30%: I like a little bitterness
+Choice 2: 0%: I just want the tea
+Choice 4: I don’t specify the sweetness
+Question 10: What is your favorite boba drink topping?
+Choice 6: Aloe vera
+[boba/aloe_vera.jpg]
+Choice 1: Boba
+[boba/pearls.jpg]
+Choice 5: Pudding
+[boba/pudding.jpg]
+Choice 3: Grass jelly
+[boba/grass_jelly.jpg]
+Choice 4: Red bean
+[boba/red_bean.jpg]
+Choice 7: Mango stars
+[boba/mango_stars.jpg]
+Choice 2: No toppings
+[boba/no_toppings.jpg]
+~
+Quiz 2: What color are you?
+[colors/colors.jpg]
+Result 1: White
+You are kind, pure, and clean. Comforting like the soft snow and a clean white T-shirt, you emanate an aura of kindness and honesty. You have an innocent beauty that blooms like white blossoms, drawing endless love and admiration.
+[colors/white.jpg]
+Result 2: Red
+You are aggressive, passionate, and assertive. Your emotions and thoughts spread like wildfire, igniting those around you. You love deep and hard, as red symbolizes the vivid color of lips and richness of blood pumping through our hearts.
+[colors/red.jpg]
+Result 3: Orange
+You are spontaneous, wild, and cheerful. You like to let go of the rigidities in life and jump into piles of warm autumn leaves. You are best friends with a Red, or transitioning to one yourself, likely because of your bright and fervent passion.
+[colors/orange.jpg]
+Result 4: Yellow
+You are active, positive, and friendly. Your inspiring energy is blinding like the sun, and you spread warmth to everyone around you. You are approachable and easygoing, like a welcoming meadow filled with sunflowers and yellow daffodils.
+[colors/yellow.jpg]
+Result 5: Green
+You are reliable, wise, and responsible. As sturdy as a redwood but flexible as a willow, you are smart and well-rounded in your actions. Your unwavering faith and commitment are like evergreen trees, steady through seasons of hardship.
+[colors/green.jpg]
+Result 6: Blue
+You are trustworthy, intelligent, and confident. Your knowledge is as vast as the blue sky and the ocean, and you are self-assured in your answers. People place immense trust in you and gravitate towards your dependable charisma.
+[colors/blue.jpg]
+Result 7: Purple
+You are gentle, supportive, and sensitive. You are light and pleasant like lavender and tender like the flesh of sweet potatoes. You bring out the best in others, like the strong and vibrant pigment in beets, plums, and dark cherries.
+[colors/purple.jpg]
+Result 8: Gray
+You are temperate, graceful, and protective. You are calm and moderate with things in life, and neat and dignified with your style. As an affectionate and loving person, you are the clouds that shield others from harm and shower them with love. 
+[colors/gray.jpg]
+Result 9: Black
+You are powerful, elegant, and mysterious. You command the respect of others with your formidable power and puzzling secrets. Like smooth obsidian and ebony or the night sky sprinkled with stars, you are stylish and sophisticated.
+[colors/black.jpg]
+Question 1: How would your friends best describe you?
+Choice 1: Super nice to everyone
+Choice 2: Loud and overzealous
+Choice 4: Sees the bright side of everything
+Choice 7: Understanding and empathetic
+Choice 6: Smart and knowledgeable
+Choice 9: Intimidating and strong
+Choice 8: A motherly figure
+Choice 3: Unpredictable, always going places
+Choice 5: Can always count on you
+Question 2: What genre of music do you listen to the most?
+Choice 4: Dance and EDM
+[colors/dance_edm.jpg]
+Choice 9: Soul and R&B
+[colors/soul_rnb.jpg]
+Choice 6: Movie soundtracks
+[colors/movie.jpg]
+Choice 7: Gentle jazz
+[colors/jazz.jpg]
+Choice 1: Classical
+[colors/classical.jpg]
+Choice 5: Pop and upbeat songs
+[colors/pop.jpg]
+Choice 8: Indie and folk
+[colors/indie.jpg]
+Choice 3: Literally anything
+[colors/any_song.jpg]
+Choice 2: Trap and hip-hop
+[colors/trap_hiphop.jpg]
+Question 3: What is your sense of style?
+Choice 2: Bold and scandalous
+[colors/scandalous.jpeg]
+Choice 4: Neon and bright colors
+[colors/neon.jpg]
+Choice 5: Comfy loungewear
+[colors/loungewear.jpg]
+Choice 9: Classy and chic
+[colors/classy.jpg]
+Choice 1: Clean and minimalist
+[colors/minimalist.jpg]
+Choice 7: Monochrome outfits
+[colors/purple_monochrome.jpeg]
+Choice 8: Vintage fashion
+[colors/vintage.jpg]
+Choice 3: Artsy and experimental
+[colors/artsy.jpg]
+Choice 6: Denim, denim, denim
+[colors/denim.jpg]
+Question 4: What would your dream vacation be like?
+Choice 2: Bungee jumping or skydiving over the Swiss Alps
+[colors/skydiving.jpg]
+Choice 5: Trekking through a cloud forest in Costa Rica
+[colors/cloud_forest.jpg]
+Choice 6: Going on a picnic at the beach in Hawaii
+[colors/picnic_beach.jpg]
+Choice 8: Camping with your friends or family in Yosemite
+[colors/yosemite_camping.jpg]
+Choice 9: Walking the glass bridge in Zhangjiajie
+[colors/glass_bridge.jpg]
+Choice 1: Going skiing or snowboarding at a Reno resort
+[colors/ski_resort.jpg]
+Choice 3: Last-minute decisions; who knows!
+[colors/question_mark.jpg]
+Choice 4: Visiting a botanical garden in London
+[colors/botanical_garden.jpg]
+Choice 7: Riding a gondola through Venice
+[colors/gondola.jpeg]
+Question 5: There is an extra hour in the day. How do you spend it?
+Choice 7: Go shopping for some gifts for family and friends
+[colors/shopping_gifts.jpg]
+Choice 8: Cook a nice and healthy meal for others
+[colors/cook_meals.jpg]
+Choice 5: Get a head start on work or side projects
+[colors/work.jpg]
+Choice 1: Do your laundry, vacuum the house, and reorganize your closet
+[colors/cleaning.jpg]
+Choice 3: I don’t usually plan out how I will spend my day
+[colors/no_plan.jpg]
+Choice 6: Read a news article or catch up on books
+[colors/reading.jpg]
+Choice 2: Hit up all your friends and throw a party
+[colors/party.jpg]
+Choice 4: Go to the gym or go hiking at a local park
+[colors/workout.jpg]
+Choice 9: It is a secret
+[colors/secret.jpg]
+Question 6: If you could give advice to your younger self, what would it be?
+Choice 1: Being kind always rewards you in the end
+Choice 6: Never stop learning and challenging yourself
+Choice 8: Remember, less is more in life
+Choice 5: Stay true to yourself and your loved ones
+Choice 3: Live life in the moment and don’t worry about the future
+Choice 2: You miss 100% of the shots you don’t take
+Choice 7: Treat others the way you want to be treated
+Choice 4: Always make friends wherever you go
+Choice 9: With great power comes great responsibility
+Question 7: Someone you love is going through a hard time. What do you do?
+Choice 4: Tell a joke or funny story
+Choice 5: Give them a shoulder to lean on
+Choice 6: Rationalize their thoughts and feelings
+Choice 7: Listen intently and empathize
+Choice 8: Make them their favorite food
+Choice 1: Give them warm hugs
+Choice 3: Try anything to cheer them up
+Choice 2: Take them out to drink away their sorrows
+Choice 9: Show them little signs of your love
+Question 8: What brings you the most discomfort?
+Choice 8: Knowing you can’t be there for someone
+Choice 9: Being exposed or stripped of power
+Choice 4: Having few or no friends
+Choice 5: Losing your sense of direction in life
+Choice 1: Seeing people get hurt
+Choice 2: Feeling bored and uninspired
+Choice 3: Being controlled by others
+Choice 7: Saying something you regret
+Choice 6: Not being able to solve a problem
+~

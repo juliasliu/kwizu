@@ -1,0 +1,6 @@
+module Pods_Kwizu {
+  umbrella header "Pods-Kwizu-umbrella.h"
+
+  export *
+  module * { export * }
+}
