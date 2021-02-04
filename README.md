@@ -6,25 +6,25 @@ Take our quizzes to find out which color represents you, who you would be in fic
 
 <div style="display: flex;">
   <span>
-    <img src="mocks/app_store/iphone-6.6/kwizu-app-store-panoramic-1.png" height="400">
+    <img src="mocks/app_store/iphone-6.5/kwizu-app-store-panoramic-1.png" height="400">
   </span>
   <span>
-    <img src="mocks/app_store/iphone-6.6/kwizu-app-store-panoramic-2.png" height="400">
+    <img src="mocks/app_store/iphone-6.5/kwizu-app-store-panoramic-2.png" height="400">
   </span>
   <span>
-  <img src="mocks/app_store/iphone-6.6/kwizu-app-store-screenshot-1.png" height="400">
+  <img src="mocks/app_store/iphone-6.5/kwizu-app-store-screenshot-1.png" height="400">
   </span>
   <span>
-  <img src="mocks/app_store/iphone-6.6/kwizu-app-store-screenshot-2.png" height="400">
+  <img src="mocks/app_store/iphone-6.5/kwizu-app-store-screenshot-2.png" height="400">
   </span>
   <span>
-  <img src="mocks/app_store/iphone-6.6/kwizu-app-store-screenshot-3.png" height="400">
+  <img src="mocks/app_store/iphone-6.5/kwizu-app-store-screenshot-3.png" height="400">
   </span>
   <span>
-  <img src="mocks/app_store/iphone-6.6/kwizu-app-store-screenshot-4.png" height="400">
+  <img src="mocks/app_store/iphone-6.5/kwizu-app-store-screenshot-4.png" height="400">
   </span>
   <span>
-  <img src="mocks/app_store/iphone-6.6/kwizu-app-store-screenshot-5.png" height="400">
+  <img src="mocks/app_store/iphone-6.5/kwizu-app-store-screenshot-5.png" height="400">
   </span>
 </div>
 
